@@ -802,9 +802,8 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
         this._signalsHandler.removeWithLabel(PREVIEW_HOVER_LABEL);
 
-        if (this._previewMenu) {
+        if (this._previewMenu)
             this._previewMenu.disableHover();
-        }
     }
 
     // Try to do the right thing when attempting to launch a new window of an app. In
