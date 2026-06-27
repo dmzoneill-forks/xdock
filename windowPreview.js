@@ -26,7 +26,6 @@ import {
     Utils,
 } from './imports.js';
 
-const PREVIEW_MAX_WIDTH = 250;
 const PREVIEW_MAX_HEIGHT = 150;
 
 const PREVIEW_ANIMATION_DURATION = 250;
@@ -34,12 +33,15 @@ const MAX_PREVIEW_GENERATION_ATTEMPTS = 15;
 
 const MENU_MARGINS = 10;
 
+const HOVER_ENTER_TIMEOUT = 300;
+const HOVER_MENU_LEAVE_TIMEOUT = 300;
+const WINDOW_INIT_TIMEOUT = 200;
+
 export class WindowPreviewMenu extends PopupMenu.PopupMenu {
     constructor(source) {
         super(source, 0.5, Utils.getPosition());
 
-        // We want to keep the item hovered while the menu is up
-        this.blockSourceEvents = true;
+        this.blockSourceEvents = false;
 
         this._source = source;
         this._app = this._source.app;
@@ -48,9 +50,10 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
         const {scaleFactor} = St.ThemeContext.get_for_stage(global.stage);
 
         this.actor.add_style_class_name('app-menu');
-        this.actor.set_style(
-            `max-width: ${Math.round(workArea.width / scaleFactor) - MENU_MARGINS}px; ` +
-            `max-height: ${Math.round(workArea.height / scaleFactor) - MENU_MARGINS}px;`);
+
+        this._maxWidth = Math.round(workArea.width / scaleFactor) - MENU_MARGINS;
+        this._maxHeight = Math.round(workArea.height / scaleFactor) - MENU_MARGINS;
+
         this.actor.hide();
 
         // Chain our visibility and lifecycle to that of the source
@@ -62,13 +65,22 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
 
         Utils.addActor(Main.uiGroup, this.actor);
 
+        this._enterSourceId = 0;
+        this._leaveSourceId = 0;
+        this._enterMenuId = 0;
+        this._leaveMenuId = 0;
+        this._hoverOpenTimeoutId = null;
+        this._hoverCloseTimeoutId = null;
+        this.fromHover = false;
+        this._windowsChangedId = 0;
+
         this.connect('destroy', this._onDestroy.bind(this));
     }
 
     _redisplay() {
         if (this._previewBox)
             this._previewBox.destroy();
-        this._previewBox = new WindowPreviewList(this._source);
+        this._previewBox = new WindowPreviewList(this._source, this.fromHover);
         this.addMenuItem(this._previewBox);
         this._previewBox._redisplay();
     }
@@ -76,14 +88,260 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
     popup() {
         const windows = this._source.getInterestingWindows();
         if (windows.length > 0) {
-            this._redisplay();
-            this.open(BoxPointer.PopupAnimation.FULL);
-            this.actor.navigate_focus(null, St.DirectionType.TAB_FORWARD, false);
+            const needsRedisplay = !this._previewBox ||
+                this._needsRedisplay(windows);
+
+            if (needsRedisplay)
+                this._redisplay();
+
+            this.blockSourceEvents = !this.fromHover;
+
+            const workArea = Main.layoutManager.getWorkAreaForMonitor(
+                this._source.monitorIndex);
+            const {scaleFactor} = St.ThemeContext.get_for_stage(global.stage);
+            const maxPreviewWidth = Math.round((workArea.width * 0.9) / scaleFactor);
+
+            if (this.fromHover) {
+                this.actor.set_style(`max-width: ${maxPreviewWidth}px; min-width: 0;`);
+            } else {
+                this.actor.set_style(
+                    `max-width: ${this._maxWidth}px; ` +
+                    `max-height: ${this._maxHeight}px;`);
+            }
+
+            if (!this.isOpen) {
+                this.open(BoxPointer.PopupAnimation.FULL);
+                if (!this.fromHover)
+                    this.actor.navigate_focus(null, St.DirectionType.TAB_FORWARD, false);
+            }
+
             this._source.emit('sync-tooltip');
         }
     }
 
+    _needsRedisplay(currentWindows) {
+        if (!this._previewBox)
+            return true;
+
+        const displayedItems = this._previewBox._getMenuItems().filter(item => item._window);
+        const displayedWindows = displayedItems.map(item => item._window);
+
+        if (currentWindows.length !== displayedWindows.length)
+            return true;
+
+        const sortedCurrent = currentWindows.slice().sort((a, b) =>
+            a.get_stable_sequence() - b.get_stable_sequence());
+        const sortedDisplayed = displayedWindows.slice().sort((a, b) =>
+            a.get_stable_sequence() - b.get_stable_sequence());
+
+        return !sortedCurrent.every((win, i) => win === sortedDisplayed[i]);
+    }
+
+    enableHover(menuManager) {
+        this.blockSourceEvents = false;
+
+        // PopupMenuManager's capture-event handler closes menus on outside clicks;
+        // hover menus handle closing via hover events instead.
+        if (menuManager) {
+            menuManager.removeMenu(this);
+            this._menuManager = menuManager;
+        }
+
+        this._boxPointer.set_reactive(false);
+        this._boxPointer.set_track_hover(false);
+
+        if (this._boxPointer.actor) {
+            this._boxPointer.actor.set_reactive(false);
+            this._boxPointer.actor.set_track_hover(false);
+        }
+
+        this._boxPointer.bin.set_reactive(true);
+        this._boxPointer.bin.set_track_hover(true);
+
+        this._enterSourceId = this._source.connect('enter-event', () => this._onEnter());
+        this._leaveSourceId = this._source.connect('leave-event', () => this._onLeave());
+
+        this._enterMenuId = this._boxPointer.bin.connect('enter-event',
+            () => this._onMenuEnter());
+        this._leaveMenuId = this._boxPointer.bin.connect('leave-event',
+            () => this._onMenuLeave());
+
+        this._windowsChangedId = this._app.connect('windows-changed',
+            () => this._onWindowsChanged());
+    }
+
+    disableHover() {
+        this.blockSourceEvents = true;
+
+        if (this._menuManager) {
+            this._menuManager.addMenu(this);
+            this._menuManager = null;
+        }
+
+        this.cancelOpen();
+        this.cancelClose();
+
+        if (this._enterSourceId) {
+            this._source.disconnect(this._enterSourceId);
+            this._enterSourceId = 0;
+        }
+        if (this._leaveSourceId) {
+            this._source.disconnect(this._leaveSourceId);
+            this._leaveSourceId = 0;
+        }
+
+        if (this._enterMenuId) {
+            this._boxPointer.bin.disconnect(this._enterMenuId);
+            this._enterMenuId = 0;
+        }
+        if (this._leaveMenuId) {
+            this._boxPointer.bin.disconnect(this._leaveMenuId);
+            this._leaveMenuId = 0;
+        }
+
+        if (this._windowsChangedId) {
+            this._app.disconnect(this._windowsChangedId);
+            this._windowsChangedId = 0;
+        }
+    }
+
+    _onEnter() {
+        if (this._source._appIconsHoverList) {
+            this._source._appIconsHoverList.forEach(appIcon => {
+                if (appIcon !== this._source && appIcon._previewMenu &&
+                    appIcon._previewMenu.fromHover) {
+                    appIcon._previewMenu.hoverClose();
+                    if (!appIcon._previewMenu.isOpen && appIcon._previewMenu.actor.visible)
+                        appIcon._previewMenu.actor.hide();
+                }
+            });
+        }
+
+        this.cancelOpen();
+        this.cancelClose();
+
+        this._hoverOpenTimeoutId = GLib.timeout_add(
+            GLib.PRIORITY_DEFAULT,
+            HOVER_ENTER_TIMEOUT,
+            () => {
+                this.hoverOpen();
+                return GLib.SOURCE_REMOVE;
+            }
+        );
+    }
+
+    _onLeave() {
+        this.cancelOpen();
+
+        if (this._boxPointer?.bin?.has_pointer)
+            return;
+        if (this._source.has_pointer)
+            return;
+
+        this._hoverCloseTimeoutId = GLib.timeout_add(
+            GLib.PRIORITY_DEFAULT,
+            HOVER_MENU_LEAVE_TIMEOUT,
+            () => {
+                this.hoverClose();
+                return GLib.SOURCE_REMOVE;
+            }
+        );
+    }
+
+    cancelOpen() {
+        if (this._hoverOpenTimeoutId) {
+            GLib.source_remove(this._hoverOpenTimeoutId);
+            this._hoverOpenTimeoutId = null;
+        }
+    }
+
+    cancelClose() {
+        if (this._hoverCloseTimeoutId) {
+            GLib.source_remove(this._hoverCloseTimeoutId);
+            this._hoverCloseTimeoutId = null;
+        }
+    }
+
+    hoverOpen() {
+        this._hoverOpenTimeoutId = null;
+        this.fromHover = true;
+        if (!this.isOpen)
+            this.popup();
+    }
+
+    hoverClose() {
+        this._hoverCloseTimeoutId = null;
+
+        if (this._boxPointer?.bin?.has_pointer || this._source.has_pointer)
+            return;
+
+        if (this.isOpen) {
+            if (this.fromHover) {
+                this._boxPointer.close(BoxPointer.PopupAnimation.FADE, () => {
+                    this.actor.hide();
+                    this.isOpen = false;
+                    if (this._previewBox) {
+                        this._previewBox.destroy();
+                        this._previewBox = null;
+                    }
+
+                    Docking.DockManager.allDocks.forEach(dock => {
+                        if (dock._intellihideIsEnabled && dock._intellihide)
+                            dock._intellihide.forceUpdate();
+                    });
+
+                    this.emit('menu-closed');
+                });
+            } else {
+                this.close(BoxPointer.PopupAnimation.FADE);
+            }
+        }
+    }
+
+    _onMenuEnter() {
+        this.cancelClose();
+    }
+
+    _onMenuLeave() {
+        this.cancelOpen();
+
+        if (this._hoverCloseTimeoutId)
+            return;
+
+        this._hoverCloseTimeoutId = GLib.timeout_add(
+            GLib.PRIORITY_DEFAULT,
+            HOVER_MENU_LEAVE_TIMEOUT,
+            () => {
+                this.hoverClose();
+                return GLib.SOURCE_REMOVE;
+            }
+        );
+    }
+
+    _onWindowsChanged() {
+        const windows = this._source.getInterestingWindows();
+
+        if (this.fromHover && !this.isOpen && windows.length > 0 &&
+            this._source.has_pointer) {
+            this.cancelOpen();
+            this.cancelClose();
+
+            this._hoverOpenTimeoutId = GLib.timeout_add(
+                GLib.PRIORITY_DEFAULT,
+                WINDOW_INIT_TIMEOUT,
+                () => {
+                    if (this._source.has_pointer)
+                        this.popup();
+                    this._hoverOpenTimeoutId = null;
+                    return GLib.SOURCE_REMOVE;
+                }
+            );
+        }
+    }
+
     _onDestroy() {
+        this.disableHover();
+
         if (this._mappedId)
             this._source.disconnect(this._mappedId);
 
@@ -93,7 +351,7 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
 }
 
 class WindowPreviewList extends PopupMenu.PopupMenuSection {
-    constructor(source) {
+    constructor(source, isHoverMenu = false) {
         super();
         this.actor = new St.ScrollView({
             name: 'dashtodockWindowScrollview',
@@ -109,22 +367,36 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
         this.isHorizontal = position === St.Side.BOTTOM || position === St.Side.TOP;
         this.box.set_vertical(!this.isHorizontal);
         this.box.set_name('dashtodockWindowList');
+
+        this.box.x_expand = false;
+        this.box.x_align = Clutter.ActorAlign.CENTER;
+
         Utils.addActor(this.actor, this.box);
         this.actor._delegate = this;
 
-        this._shownInitially = false;
+        this._shownInitially = isHoverMenu;
 
         this._source = source;
         this.app = source.app;
+        this._isHoverMenu = isHoverMenu;
 
-        this._redisplayId = Main.initializeDeferredWork(this.actor, this._redisplay.bind(this));
+        if (!isHoverMenu) {
+            this._redisplayId = Main.initializeDeferredWork(this.actor,
+                this._redisplay.bind(this));
+            this._stateChangedId = this.app.connect('windows-changed',
+                this._queueRedisplay.bind(this));
+        } else {
+            this._redisplayId = null;
+            this._stateChangedId = 0;
+        }
 
         this.actor.connect('destroy', this._onDestroy.bind(this));
-        this._stateChangedId = this.app.connect('windows-changed',
-            this._queueRedisplay.bind(this));
     }
 
     _queueRedisplay() {
+        if (this._isHoverMenu)
+            return;
+
         Main.queueDeferredWork(this._redisplayId);
     }
 
@@ -174,8 +446,13 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
     }
 
     _onDestroy() {
-        this.app.disconnect(this._stateChangedId);
-        this._stateChangedId = 0;
+        if (this._stateChangedId > 0) {
+            this.app.disconnect(this._stateChangedId);
+            this._stateChangedId = 0;
+        }
+
+        if (this._redisplayId)
+            this._redisplayId = null;
     }
 
     _createPreviewItem(window) {
@@ -285,7 +562,8 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
         // of width-for-height in St.BoxLayout and St.ScrollView. This looks bad
         // when we *don't* need it, so turn off the scrollbar when that's true.
         // Dynamic changes in whether we need it aren't handled properly.
-        const needsScrollbar = this._needsScrollbar();
+        const topMenu = this._getTopMenu();
+        const needsScrollbar = !topMenu.fromHover && this._needsScrollbar();
         const scrollbarPolicy = needsScrollbar
             ? St.PolicyType.AUTOMATIC : St.PolicyType.NEVER;
         if (this.isHorizontal)
@@ -330,6 +608,7 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         this._window = window;
         this._destroyId = 0;
         this._windowAddedId = 0;
+        this._peekingWindows = [];
 
         // We don't want this: it adds spacing on the left of the item.
         this.remove_child(this._ornamentIcon);
@@ -370,8 +649,11 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         overlayGroup.add_child(this._cloneBin);
         overlayGroup.add_child(this.closeButton);
 
-        const label = new St.Label({text: window.get_title()});
-        label.set_style(`max-width: ${PREVIEW_MAX_WIDTH}px`);
+        const label = new St.Label({
+            text: window.get_title(),
+            style_class: 'window-preview-label',
+        });
+        label.set_style(`max-width: ${PREVIEW_MAX_HEIGHT * 2}px`);
         const labelBin = new St.Bin({
             child: label,
             x_align: Clutter.ActorAlign.CENTER,
@@ -384,7 +666,8 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         const box = new St.BoxLayout({
             vertical: true,
             reactive: true,
-            x_expand: true,
+            x_expand: false,
+            x_align: Clutter.ActorAlign.CENTER,
         });
 
         if (box.add) {
@@ -429,11 +712,8 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
 
         let {previewSizeScale: scale} = Docking.DockManager.settings;
         if (!scale) {
-            // a simple example with 1680x1050:
-            // * 250/1680 = 0,1488
-            // * 150/1050 = 0,1429
-            // => scale is 0,1429
-            scale = Math.min(1.0, PREVIEW_MAX_WIDTH / width, PREVIEW_MAX_HEIGHT / height);
+            const maxWidth = PREVIEW_MAX_HEIGHT * 2;
+            scale = Math.min(1.0, maxWidth / width, PREVIEW_MAX_HEIGHT / height);
         }
 
         scale *= St.ThemeContext.get_for_stage(global.stage).scaleFactor;
@@ -571,12 +851,62 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
 
     vfunc_enter_event(crossingEvent) {
         this._showCloseButton();
+        this._startAeroPeek();
         return super.vfunc_enter_event(crossingEvent);
     }
 
     vfunc_leave_event(crossingEvent) {
         this._hideCloseButton();
+        this._endAeroPeek();
         return super.vfunc_leave_event(crossingEvent);
+    }
+
+    _startAeroPeek() {
+        const workspace = this._window.get_workspace();
+        if (!workspace)
+            return;
+
+        const allWindows = global.display.sort_windows_by_stacking(
+            workspace.list_windows()
+        ).reverse();
+
+        const targetIndex = allWindows.indexOf(this._window);
+        if (targetIndex === -1)
+            return;
+
+        allWindows.slice(0, targetIndex).forEach(win => {
+            const actor = win.get_compositor_private();
+            if (actor && !win.minimized) {
+                if (!actor._originalOpacity)
+                    actor._originalOpacity = actor.opacity;
+
+                this._peekingWindows.push(actor);
+
+                actor.ease({
+                    opacity: 3,
+                    duration: 200,
+                    mode: Clutter.AnimationMode.EASE_OUT_QUAD,
+                });
+            }
+        });
+    }
+
+    _endAeroPeek() {
+        this._peekingWindows.forEach(actor => {
+            if (actor && !actor.is_destroyed()) {
+                const originalOpacity = actor._originalOpacity || 255;
+                actor.ease({
+                    opacity: originalOpacity,
+                    duration: 200,
+                    mode: Clutter.AnimationMode.EASE_OUT_QUAD,
+                    onComplete: () => {
+                        delete actor._originalOpacity;
+                    },
+                });
+            }
+        });
+
+        this._peekingWindows = [];
     }
 
     _idleToggleCloseButton() {
@@ -650,6 +980,8 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
     }
 
     _onDestroy() {
+        this._endAeroPeek();
+
         if (this._cloneTextureLater) {
             Utils.laterRemove(this._cloneTextureLater);
             delete this._cloneTextureLater;
