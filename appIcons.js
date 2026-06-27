@@ -81,6 +81,8 @@ let recentlyClickedAppWindows = null;
 let recentlyClickedAppIndex = 0;
 let recentlyClickedAppMonitor = -1;
 
+const PREVIEW_HOVER_LABEL = Symbol('preview-hover');
+
 /**
  * Extend AppIcon
  *
@@ -234,6 +236,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
         this._previewMenuManager = null;
         this._previewMenu = null;
+        this._hoverIsEnabled = false;
     }
 
     _onDestroy() {
@@ -442,6 +445,12 @@ export const DockAbstractAppIcon = GObject.registerClass({
         this._removeMenuTimeout?.();
         this.fake_release();
         this._draggable.fakeRelease?.();
+
+        if (this._previewMenu) {
+            this._previewMenu.cancelOpen();
+            if (this._previewMenu.isOpen)
+                this._previewMenu.close(~0);
+        }
 
         if (!this._menu) {
             this._menu = new DockAppIconMenu(this);
@@ -750,12 +759,41 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
         this.emit('menu-state-changed', !this._previewMenu.isOpen);
 
-        if (this._previewMenu.isOpen)
+        if (this._previewMenu.isOpen) {
             this._previewMenu.close();
-        else
+        } else {
+            this._previewMenu.fromHover = false;
             this._previewMenu.popup();
+            this._previewMenu.actor.navigate_focus(null,
+                St.DirectionType.TAB_FORWARD, false);
+        }
 
         return false;
+    }
+
+    enableHover(appIcons) {
+        if (this._hoverIsEnabled)
+            return;
+        this._hoverIsEnabled = true;
+
+        if (!this._previewMenu) {
+            this._windowPreviews();
+            if (this._previewMenu.isOpen)
+                this._previewMenu.close();
+        }
+
+        this._appIconsHoverList = appIcons;
+
+        this._previewMenu.enableHover(this._previewMenuManager);
+    }
+
+    disableHover() {
+        this._hoverIsEnabled = false;
+
+        this._signalsHandler.removeWithLabel(PREVIEW_HOVER_LABEL);
+
+        if (this._previewMenu)
+            this._previewMenu.disableHover();
     }
 
     // Try to do the right thing when attempting to launch a new window of an app. In
