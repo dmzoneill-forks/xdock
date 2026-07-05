@@ -50,7 +50,7 @@ const {gettext: __} = Extension;
 
 const {signals: Signals} = imports;
 
-const DOCK_DWELL_EDGE_PX = 2
+const DOCK_DWELL_EDGE_PX = 2;
 const DOCK_DWELL_CHECK_INTERVAL = 100;
 const ICON_ANIMATOR_DURATION = 3000;
 const STARTUP_ANIMATION_TIME = 500;
@@ -396,7 +396,7 @@ const DockedDash = GObject.registerClass({
         // Watch the panelBox (on the main dock only) and restore visibility
         // immediately whenever it is hidden outside the overview.
         if (this.isMain) {
-            const panelBox = Main.layoutManager.panelBox;
+            const {panelBox} = Main.layoutManager;
             if (panelBox) {
                 this._signalsHandler.add(panelBox, 'notify::visible', () => {
                     if (!panelBox.visible && !Main.overview.visibleTarget) {
@@ -683,6 +683,10 @@ const DockedDash = GObject.registerClass({
             },
         ], [
             settings,
+            'changed::dock-margin-size',
+            this._resetPosition.bind(this),
+        ], [
+            settings,
             'changed::show-favorites',
             () => {
                 this.dash.resetAppIcons();
@@ -861,6 +865,20 @@ const DockedDash = GObject.registerClass({
      * overview visibility
      */
     updateDashVisibility() {
+        // GNOME 50: Chrome actors with affectsStruts can be hidden by the
+        // Shell during struts recalculation (overview, minimize, restack).
+        const {panelBox} = Main.layoutManager;
+        if (panelBox && !panelBox.visible) {
+            panelBox.visible = true;
+            panelBox.show();
+        }
+
+        [this, this._slider, this._box, this.dash].forEach(actor => {
+            if (actor && !actor.visible) {
+                actor.visible = true;
+                actor.show();
+            }
+        });
         if (DockManager.settings.manualhide) {
             this._ignoreHover = true;
             this._removeAnimations();
@@ -931,7 +949,7 @@ const DockedDash = GObject.registerClass({
 
         // GNOME 50: panelBox.visible becomes false during the overview-to-desktop
         // transition when an extension registers Chrome actors with affectsStruts.
-        const panelBox = Main.layoutManager.panelBox;
+        const {panelBox} = Main.layoutManager;
         if (panelBox && !panelBox.visible) {
             panelBox.visible = true;
             panelBox.show();
@@ -1441,6 +1459,11 @@ const DockedDash = GObject.registerClass({
 
     _resetPosition() {
         const {dockFixed: fixedIsEnabled, dockExtended: extendHeight} = DockManager.settings;
+        const {
+            dockFixed: fixedIsEnabled,
+            dockExtended: extendHeight,
+            dockMarginSize: margin,
+        } = DockManager.settings;
 
         if (fixedIsEnabled)
             this.add_style_class_name('fixed');
@@ -1765,11 +1788,11 @@ const KeyboardShortcuts = class DashToDockKeyboardShortcuts {
         this._gnomeKeysOverridden = false;
         this._savedGnomeKeys = [];
 
-        if (DockManager.settings.hotKeys) {
+        if (DockManager.settings.hotKeys)
             this._enableHotKeys();
-        } else {
+        else
             this._overrideGnomeKeys();
-        }
+
 
         this._signalsHandler.add([
             DockManager.settings,
@@ -2201,6 +2224,486 @@ export class DockManager {
     get trash() {
         return this._trash;
     }
+
+    get categoryIcons() {
+        return this._categoryIcons ?? [];
+    }
+
+    // ── User-Category Management ────────────────────────────────────────────
+
+    // ── dock-order: single authoritative order list ─────────────────────────
+
+    getDockOrder() {
+        let order = this._settings.get_strv('dock-order');
+        if (order.length === 0) {
+            order = this._buildInitialDockOrder();
+            this._settings.set_strv('dock-order', order);
+        }
+        return order;
+    }
+
+    setDockOrder(order) {
+        this._settings.set_strv('dock-order', order);
+    }
+
+    /** Builds dock-order on first run from legacy user-categories positions + favorites. */
+    _buildInitialDockOrder() {
+        const configs = this._readUserCategories();
+        const catIds = new Set(configs.flatMap(c => c.apps));
+        const favs = AppFavorites.getAppFavorites().getFavorites()
+            .filter(a => !catIds.has(a.get_id()))
+            .map(a => a.get_id());
+
+        // Insert category IDs at their legacy position
+        const order = [...favs];
+        const sorted = [...configs].sort((a, b) => (a.position ?? -1) - (b.position ?? -1));
+        for (const cfg of sorted) {
+            const pos = cfg.position >= 0 ? Math.min(cfg.position, order.length) : order.length;
+            order.splice(pos, 0, cfg.id);
+        }
+        return order;
+    }
+
+    /**
+     * Keeps dock-order in sync after an external change to favorite-apps.
+     * Only appends newly pinned favorites -- never removes entries.
+     */
+    _syncDockOrderWithFavorites() {
+        const order = this._settings.get_strv('dock-order');
+        if (order.length === 0) return; // not yet migrated
+
+        const catAppIds = new Set(this._readUserCategories().flatMap(c => c.apps));
+        const validFavIds = new Set(
+            AppFavorites.getAppFavorites().getFavorites()
+                .filter(a => !catAppIds.has(a.get_id()))
+                .map(a => a.get_id())
+        );
+
+        let changed = false;
+        for (const id of validFavIds) {
+            if (!order.includes(id)) {
+                order.push(id);
+                changed = true;
+            }
+        }
+
+        if (changed)
+            this._settings.set_strv('dock-order', order);
+    }
+
+    // ───────────────────────────────────────────────────────────────────────
+
+    _readUserCategories() {
+        try {
+            const parsed = JSON.parse(this._settings.get_string('user-categories'));
+            return Array.isArray(parsed) ? parsed : [];
+        } catch (_e) {
+            return [];
+        }
+    }
+
+    _writeUserCategories(configs) {
+        this._settings.set_string('user-categories', JSON.stringify(configs));
+    }
+
+    /**
+     * Sanitizes user-categories: removes invalid entries, removes apps
+     * that are simultaneously in favorite-apps from the favorites.
+     */
+    _repairUserCategories(configs) {
+        const appSystem = Shell.AppSystem.get_default();
+
+        const cleaned = configs
+            .filter(c => c && typeof c.id === 'string' && Array.isArray(c.apps))
+            .map(c => ({
+                id: c.id,
+                apps: c.apps.filter(a => typeof a === 'string' && appSystem.lookup_app(a) !== null),
+            }))
+            .filter(c => c.apps.length >= 2);
+
+        const configsChanged = JSON.stringify(cleaned) !== JSON.stringify(configs);
+        if (configsChanged)
+            this._writeUserCategories(cleaned);
+
+        // Remove from favorites any app that belongs to a category
+        const categorizedIds = new Set(cleaned.flatMap(c => c.apps));
+        if (categorizedIds.size > 0) {
+            const favs = AppFavorites.getAppFavorites();
+            const favMap = favs.getFavoriteMap();
+            for (const appId of categorizedIds) {
+                if (appId in favMap)
+                    favs.removeFavorite(appId);
+            }
+        }
+
+        return cleaned;
+    }
+
+    /**
+     * Creates a new category with two apps at the given dock position.
+     */
+    createUserCategory(appId1, appId2, dockInsertIdx) {
+        const newId = Locations.generateCategoryId();
+        const configs = this._readUserCategories();
+        configs.push({id: newId, apps: [appId1, appId2]});
+        this._writeUserCategories(configs);
+
+        // Update dock-order: remove the two app IDs, insert the category ID
+        const order = this.getDockOrder();
+        const filtered = order.filter(id => id !== appId1 && id !== appId2);
+        const insertAt = dockInsertIdx != null
+            ? Math.min(dockInsertIdx, filtered.length)
+            : filtered.length;
+        filtered.splice(insertAt, 0, newId);
+        this.setDockOrder(filtered);
+    }
+
+    /**
+     * Adds an app to an existing category (if not already present).
+     */
+    addAppToUserCategory(categoryId, appId) {
+        const configs = this._readUserCategories();
+        const cat = configs.find(c => c.id === categoryId);
+        if (!cat) return;
+        if (!cat.apps.includes(appId))
+            cat.apps.push(appId);
+        this._writeUserCategories(configs);
+    }
+
+    /**
+     * Removes an app from a category.
+     * If the category then has < 2 apps, it is dissolved:
+     *   - the remaining app is inserted as a favorite at the category position.
+     *   - the category is deleted.
+     * Returns whether the category was dissolved.
+     */
+    removeAppFromUserCategory(categoryId, appId) {
+        const configs = this._readUserCategories();
+        const idx = configs.findIndex(c => c.id === categoryId);
+        if (idx < 0) return false;
+
+        const cat = configs[idx];
+        cat.apps = cat.apps.filter(id => id !== appId);
+
+        if (cat.apps.length < 2) {
+            // Dissolve category
+            const remaining = cat.apps[0] ?? null;
+            configs.splice(idx, 1);
+            this._writeUserCategories(configs);
+
+            // dock-order: replace category ID with remaining app ID (or just remove)
+            const order = this._settings.get_strv('dock-order');
+            if (order.length > 0) {
+                const catPos = order.indexOf(categoryId);
+                if (catPos >= 0) {
+                    if (remaining)
+                        order.splice(catPos, 1, remaining);
+                    else
+                        order.splice(catPos, 1);
+                    this._settings.set_strv('dock-order', order);
+                }
+            }
+
+            if (remaining) {
+                const favs = AppFavorites.getAppFavorites();
+                if (!(remaining in favs.getFavoriteMap())) {
+                    const newOrder = this._settings.get_strv('dock-order');
+                    const catAppIds = new Set(configs.flatMap(c => c.apps));
+                    let favPos = 0;
+                    for (const id of newOrder) {
+                        if (id === remaining) break;
+                        if (!new Set(configs.map(c => c.id)).has(id) && !catAppIds.has(id))
+                            favPos++;
+                    }
+                    favs.addFavoriteAtPos(remaining, favPos);
+                }
+            }
+            return true;
+        }
+
+        this._writeUserCategories(configs);
+        return false;
+    }
+
+    /**
+     * Merges two categories -- apps from the source category are moved
+     * to the target category, the source category is deleted.
+     */
+    mergeUserCategories(sourceCategoryId, targetCategoryId) {
+        if (sourceCategoryId === targetCategoryId) return;
+        const configs = this._readUserCategories();
+        const src = configs.find(c => c.id === sourceCategoryId);
+        const tgt = configs.find(c => c.id === targetCategoryId);
+        if (!src || !tgt) return;
+
+        for (const appId of src.apps) {
+            if (!tgt.apps.includes(appId))
+                tgt.apps.push(appId);
+        }
+
+        configs.splice(configs.indexOf(src), 1);
+        this._writeUserCategories(configs);
+
+        // Remove source category ID from dock-order
+        const order = this._settings.get_strv('dock-order');
+        const pos = order.indexOf(sourceCategoryId);
+        if (pos >= 0) {
+            order.splice(pos, 1);
+            this._settings.set_strv('dock-order', order);
+        }
+    }
+
+    /**
+     * Returns all app IDs that belong to a user category.
+     */
+    getCategorizedAppIds() {
+        return new Set(this._readUserCategories().flatMap(c => c.apps));
+    }
+
+    // ───────────────────────────────────────────────────────────────────────
+
+    get categoryIcons() {
+        return this._categoryIcons ?? [];
+    }
+
+    // ── User-Category Management ────────────────────────────────────────────
+
+    // ── dock-order: single authoritative order list ─────────────────────────
+
+    getDockOrder() {
+        let order = this._settings.get_strv('dock-order');
+        if (order.length === 0) {
+            order = this._buildInitialDockOrder();
+            this._settings.set_strv('dock-order', order);
+        }
+        return order;
+    }
+
+    setDockOrder(order) {
+        this._settings.set_strv('dock-order', order);
+    }
+
+    /** Builds dock-order on first run from legacy user-categories positions + favorites. */
+    _buildInitialDockOrder() {
+        const configs = this._readUserCategories();
+        const catIds = new Set(configs.flatMap(c => c.apps));
+        const favs = AppFavorites.getAppFavorites().getFavorites()
+            .filter(a => !catIds.has(a.get_id()))
+            .map(a => a.get_id());
+
+        // Insert category IDs at their legacy position
+        const order = [...favs];
+        const sorted = [...configs].sort((a, b) => (a.position ?? -1) - (b.position ?? -1));
+        for (const cfg of sorted) {
+            const pos = cfg.position >= 0 ? Math.min(cfg.position, order.length) : order.length;
+            order.splice(pos, 0, cfg.id);
+        }
+        return order;
+    }
+
+    /**
+     * Keeps dock-order in sync after an external change to favorite-apps.
+     * Only appends newly pinned favorites -- never removes entries.
+     */
+    _syncDockOrderWithFavorites() {
+        const order = this._settings.get_strv('dock-order');
+        if (order.length === 0)
+            return; // not yet migrated
+
+        const catAppIds = new Set(this._readUserCategories().flatMap(c => c.apps));
+        const validFavIds = new Set(
+            AppFavorites.getAppFavorites().getFavorites()
+                .filter(a => !catAppIds.has(a.get_id()))
+                .map(a => a.get_id())
+        );
+
+        let changed = false;
+        for (const id of validFavIds) {
+            if (!order.includes(id)) {
+                order.push(id);
+                changed = true;
+            }
+        }
+
+        if (changed)
+            this._settings.set_strv('dock-order', order);
+    }
+
+    // ───────────────────────────────────────────────────────────────────────
+
+    _readUserCategories() {
+        try {
+            const parsed = JSON.parse(this._settings.get_string('user-categories'));
+            return Array.isArray(parsed) ? parsed : [];
+        } catch (_e) {
+            return [];
+        }
+    }
+
+    _writeUserCategories(configs) {
+        this._settings.set_string('user-categories', JSON.stringify(configs));
+    }
+
+    /**
+     * Sanitizes user-categories: removes invalid entries, removes apps
+     * that are simultaneously in favorite-apps from the favorites.
+     */
+    _repairUserCategories(configs) {
+        const appSystem = Shell.AppSystem.get_default();
+
+        const cleaned = configs
+            .filter(c => c && typeof c.id === 'string' && Array.isArray(c.apps))
+            .map(c => ({
+                id: c.id,
+                apps: c.apps.filter(a => typeof a === 'string' && appSystem.lookup_app(a) !== null),
+            }))
+            .filter(c => c.apps.length >= 2);
+
+        const configsChanged = JSON.stringify(cleaned) !== JSON.stringify(configs);
+        if (configsChanged)
+            this._writeUserCategories(cleaned);
+
+        // Remove from favorites any app that belongs to a category
+        const categorizedIds = new Set(cleaned.flatMap(c => c.apps));
+        if (categorizedIds.size > 0) {
+            const favs = AppFavorites.getAppFavorites();
+            const favMap = favs.getFavoriteMap();
+            for (const appId of categorizedIds) {
+                if (appId in favMap)
+                    favs.removeFavorite(appId);
+            }
+        }
+
+        return cleaned;
+    }
+
+    /**
+     * Creates a new category with two apps at the given dock position.
+     */
+    createUserCategory(appId1, appId2, dockInsertIdx) {
+        const newId = Locations.generateCategoryId();
+        const configs = this._readUserCategories();
+        configs.push({id: newId, apps: [appId1, appId2]});
+        this._writeUserCategories(configs);
+
+        // Update dock-order: remove the two app IDs, insert the category ID
+        const order = this.getDockOrder();
+        const filtered = order.filter(id => id !== appId1 && id !== appId2);
+        const insertAt = dockInsertIdx != null
+            ? Math.min(dockInsertIdx, filtered.length)
+            : filtered.length;
+        filtered.splice(insertAt, 0, newId);
+        this.setDockOrder(filtered);
+    }
+
+    /**
+     * Adds an app to an existing category (if not already present).
+     */
+    addAppToUserCategory(categoryId, appId) {
+        const configs = this._readUserCategories();
+        const cat = configs.find(c => c.id === categoryId);
+        if (!cat)
+            return;
+        if (!cat.apps.includes(appId))
+            cat.apps.push(appId);
+        this._writeUserCategories(configs);
+    }
+
+    /**
+     * Removes an app from a category.
+     * If the category then has < 2 apps, it is dissolved:
+     *   - the remaining app is inserted as a favorite at the category position.
+     *   - the category is deleted.
+     * Returns whether the category was dissolved.
+     */
+    removeAppFromUserCategory(categoryId, appId) {
+        const configs = this._readUserCategories();
+        const idx = configs.findIndex(c => c.id === categoryId);
+        if (idx < 0)
+            return false;
+
+        const cat = configs[idx];
+        cat.apps = cat.apps.filter(id => id !== appId);
+
+        if (cat.apps.length < 2) {
+            // Dissolve category
+            const remaining = cat.apps[0] ?? null;
+            configs.splice(idx, 1);
+            this._writeUserCategories(configs);
+
+            // dock-order: replace category ID with remaining app ID (or just remove)
+            const order = this._settings.get_strv('dock-order');
+            if (order.length > 0) {
+                const catPos = order.indexOf(categoryId);
+                if (catPos >= 0) {
+                    if (remaining)
+                        order.splice(catPos, 1, remaining);
+                    else
+                        order.splice(catPos, 1);
+                    this._settings.set_strv('dock-order', order);
+                }
+            }
+
+            if (remaining) {
+                const favs = AppFavorites.getAppFavorites();
+                if (!(remaining in favs.getFavoriteMap())) {
+                    const newOrder = this._settings.get_strv('dock-order');
+                    const catAppIds = new Set(configs.flatMap(c => c.apps));
+                    let favPos = 0;
+                    for (const id of newOrder) {
+                        if (id === remaining)
+                            break;
+                        if (!new Set(configs.map(c => c.id)).has(id) && !catAppIds.has(id))
+                            favPos++;
+                    }
+                    favs.addFavoriteAtPos(remaining, favPos);
+                }
+            }
+            return true;
+        }
+
+        this._writeUserCategories(configs);
+        return false;
+    }
+
+    /**
+     * Merges two categories -- apps from the source category are moved
+     * to the target category, the source category is deleted.
+     */
+    mergeUserCategories(sourceCategoryId, targetCategoryId) {
+        if (sourceCategoryId === targetCategoryId)
+            return;
+        const configs = this._readUserCategories();
+        const src = configs.find(c => c.id === sourceCategoryId);
+        const tgt = configs.find(c => c.id === targetCategoryId);
+        if (!src || !tgt)
+            return;
+
+        for (const appId of src.apps) {
+            if (!tgt.apps.includes(appId))
+                tgt.apps.push(appId);
+        }
+
+        configs.splice(configs.indexOf(src), 1);
+        this._writeUserCategories(configs);
+
+        // Remove source category ID from dock-order
+        const order = this._settings.get_strv('dock-order');
+        const pos = order.indexOf(sourceCategoryId);
+        if (pos >= 0) {
+            order.splice(pos, 1);
+            this._settings.set_strv('dock-order', order);
+        }
+    }
+
+    /**
+     * Returns all app IDs that belong to a user category.
+     */
+    getCategorizedAppIds() {
+        return new Set(this._readUserCategories().flatMap(c => c.apps));
+    }
+
+    // ───────────────────────────────────────────────────────────────────────
 
     get desktopIconsUsableArea() {
         return this._desktopIconsUsableArea;
