@@ -386,6 +386,19 @@ export const DockAbstractAppIcon = GObject.registerClass({
                 if (focusWin)
                     isFocused = focusWin.get_monitor() === this.monitorIndex;
             }
+            // When all windows are minimized, GNOME Shell's
+            // tracker.focus_app may still report this app as focused.
+            // Clear the focus indicator so the icon highlight is removed
+            // and click-to-raise works on the next click (#107).
+            if (isFocused) {
+                const windows = this.getInterestingWindows();
+                const activeWs = global.workspace_manager.get_active_workspace();
+                const hasVisibleWindow = windows.some(
+                    w => w.get_workspace() === activeWs &&
+                         w.showing_on_its_workspace());
+                if (windows.length > 0 && !hasVisibleWindow)
+                    isFocused = false;
+            }
         }
         this.focused = isFocused && this.running;
     }
