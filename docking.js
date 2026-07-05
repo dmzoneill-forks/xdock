@@ -1705,6 +1705,32 @@ const DockedDash = GObject.registerClass({
         if (appIndex < apps.length)
             apps[appIndex].activate(button);
     }
+
+    /**
+     * Cycle through windows of the app at the given dock position.
+     *
+     * @param {number} appIndex - position in the dock
+     * @param {boolean} reversed - cycle backwards when true
+     */
+    _cycleAppWindows(appIndex, reversed) {
+        const children = this.dash._box.get_children().filter(actor => {
+            return actor.child &&
+                       actor.child.app;
+        });
+
+        const apps = children.map(actor => {
+            return actor.child;
+        });
+
+        if (appIndex < apps.length) {
+            const appIcon = apps[appIndex];
+            const windows = appIcon.getInterestingWindows();
+            if (windows.length > 0)
+                appIcon._cycleThroughWindows(reversed);
+            else
+                appIcon.activate(1);
+        }
+    }
 });
 
 /*
@@ -1809,7 +1835,10 @@ const KeyboardShortcuts = class DashToDockKeyboardShortcuts {
                                 dockManager.mainDock;
                         }
 
-                        dock.activateApp(appNum);
+                        if (key === 'app-shift-hotkey')
+                            dock._cycleAppWindows(appNum, true);
+                        else
+                            dock.activateApp(appNum);
                         this._showOverlay({docks: [dock]});
                     });
             }
