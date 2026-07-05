@@ -622,7 +622,17 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
         // We check if the app is running, and that the # of windows is > 0 in
         // case we use workspace isolation.
-        const windows = this.getInterestingWindows();
+        let windows = this.getInterestingWindows();
+
+        // When monitor isolation filters out all windows (e.g. a window was
+        // moved to another monitor), fall back to the full unfiltered list so
+        // that clicking the icon activates/restores the window instead of
+        // launching a new instance (#81).
+        if (windows.length === 0 && this.running) {
+            const allWindows = this.getWindows().filter(w => !w.skipTaskbar);
+            if (allWindows.length > 0)
+                windows = allWindows;
+        }
 
         // Check if any window is actually visible (not minimized) on the
         // current workspace.  When all windows are minimized the app may
