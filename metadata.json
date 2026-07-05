@@ -9,9 +9,9 @@
 ],
 "uuid": "dash-2-x@github.com",
 "name": "Dash 2 X",
-"description": "A dock for the Gnome Shell. This extension moves the dash out of the overview transforming it in a dock for an easier launching of applications and a faster switching between windows and desktops. Side and bottom placement options are available. Forked from Dash to Dock.",
+"description": "A community-driven dock for the GNOME Shell. Moves the dash out of the overview into a dock for easier app launching and window switching. Features hover previews, icon categories, and more. Community fork of Dash to Dock — focused on timely updates and user-centric development.",
 "original-author": "micxgx@gmail.com",
-"url": "",
+"url": "https://github.com/dmzoneill-forks/dash-2-x",
 "gettext-domain": "dash2x",
 "version": 105
 }
