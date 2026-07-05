@@ -1980,6 +1980,10 @@ export class Removables {
             'mount-added',
             (_, mount) => this._onMountAdded(mount),
         ], [
+            this._monitor,
+            'mount-removed',
+            (_, mount) => this._onMountRemoved(mount),
+        ], [
             Docking.DockManager.settings,
             'changed::show-mounts-only-mounted',
             () => this._updateVolumes(),
@@ -2005,6 +2009,14 @@ export class Removables {
         this.emit('changed');
 
         this._monitor.get_volumes().forEach(v => this._onVolumeAdded(v));
+
+        // Also pick up mounts that have no associated GVolume (e.g. systemd
+        // .mount/.automount units, or fstab entries managed outside udisks).
+        // These mounts are visible in Nautilus but have no GVolume object.
+        this._monitor.get_mounts().forEach(m => {
+            if (!m.get_volume())
+                this._onVolumelessMountAdded(m);
+        });
     }
 
     _onVolumeAdded(volume) {
@@ -2059,19 +2071,66 @@ export class Removables {
         }
     }
 
+    _onMountRemoved(mount) {
+        // Clean up volume-less mount apps (systemd mounts, etc.)
+        const mountIndex = this._volumeApps.findIndex(app =>
+            app._volumelessMount === mount);
+        if (mountIndex !== -1) {
+            const [mountApp] = this._volumeApps.splice(mountIndex, 1);
+            mountApp.appInfo.cancellable = null;
+            mountApp.destroy();
+            this.emit('changed');
+        }
+    }
+
+    _onVolumelessMountAdded(mount) {
+        Removables.initMountPromises(mount);
+
+        if (mount.is_shadowed())
+            return;
+        if (!mount.can_eject() && !mount.can_unmount())
+            return;
+
+        // Check for duplicate
+        if (this._volumeApps.find(({appInfo}) => appInfo.mount === mount))
+            return;
+
+        const location = mount.get_default_location();
+        const appInfo = new LocationAppInfo({
+            location,
+            name: mount.get_name(),
+            icon: mount.get_icon(),
+            cancellable: new Utils.CancellableChild(this._cancellable),
+        });
+
+        const mountApp = makeLocationApp({
+            appInfo,
+            fallbackIconName: FALLBACK_REMOVABLE_MEDIA_ICON,
+        });
+
+        // Tag for removal tracking
+        mountApp._volumelessMount = mount;
+
+        mountApp._signalConnections.add(mountApp, 'windows-changed',
+            () => this.emit('windows-changed', mountApp));
+
+        this._volumeApps.push(mountApp);
+        this.emit('changed');
+    }
+
     _onMountAdded(mount) {
         Removables.initMountPromises(mount);
 
-        if (!Docking.DockManager.settings.showMountsOnlyMounted)
-            return;
+        const volume = mount.get_volume();
+        if (volume) {
+            if (!Docking.DockManager.settings.showMountsOnlyMounted)
+                return;
 
-        if (!this._volumeApps.find(({appInfo}) => appInfo.mount === mount)) {
-            // In some Gio.Mount implementations the volume may be set after
-            // mount is emitted, so we could just ignore it as we'll get it
-            // later via volume-added
-            const volume = mount.get_volume();
-            if (volume)
+            if (!this._volumeApps.find(({appInfo}) => appInfo.mount === mount))
                 this._onVolumeAdded(volume);
+        } else {
+            // Volume-less mount (systemd, fstab, etc.)
+            this._onVolumelessMountAdded(mount);
         }
     }
 
