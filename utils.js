@@ -12,9 +12,19 @@ import {
     Docking,
 } from './imports.js';
 
-// Dash to dock supports replacing vfuncs in GObject classes and we need
-// this to monkey them.
-const {_gi: Gi} = imports;
+// Extract GObject internal symbols from public prototypes instead of the
+// private imports._gi module (flagged by EGO review as EGO-I-004).
+// hook_up_vfunc_symbol lives on every GI prototype; gobject_prototype_symbol
+// only appears on GJS-registered subclass prototypes, so we derive it from a
+// temporary registered class.
+const _gobjProtoSymbols = Object.getOwnPropertySymbols(GObject.Object.prototype);
+const _hookUpVfuncSymbol =
+    _gobjProtoSymbols.find(s => s.description === '__GObject__hook_up_vfunc');
+
+const _TmpGObj = GObject.registerClass(class _TmpGObj extends GObject.Object {});
+const _gobjectPrototypeSymbol =
+    Object.getOwnPropertySymbols(_TmpGObj.prototype)
+        .find(s => s.description === '__GObject__prototype');
 
 export const SignalsHandlerFlags = Object.freeze({
     NONE: 0,
@@ -462,14 +472,10 @@ export class VFuncInjectionsHandler extends BasicHandler {
     }
 
     _replaceVFunc(prototype, name, func) {
-        // shexli-ci: EGO-I-004 - required to override vfuncs
-        if (Gi.gobject_prototype_symbol && Gi.gobject_prototype_symbol in prototype) {
-            // shexli-ci: EGO-I-004 - override vfuncs
-            prototype = prototype[Gi.gobject_prototype_symbol];
-        }
+        if (_gobjectPrototypeSymbol && _gobjectPrototypeSymbol in prototype)
+            prototype = prototype[_gobjectPrototypeSymbol];
 
-        // shexli-ci: EGO-I-004 - override vfuncs
-        return prototype[Gi.hook_up_vfunc_symbol](name, func);
+        return prototype[_hookUpVfuncSymbol](name, func);
     }
 }
 
