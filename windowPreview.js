@@ -279,10 +279,27 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
                 debugLog(`[PREVIEW] popup() calling this.open() with animation=${config.boxPointer}`);
                 this.open(config.boxPointer);
                 debugLog(`[PREVIEW] popup() this.open() completed, isOpen=${this.isOpen}`);
-                if (!this.fromHover)
-                    this.actor.navigate_focus(null, St.DirectionType.TAB_FORWARD, false);
             } else {
                 debugLog(`[PREVIEW] popup() skipping open because isOpen=${this.isOpen}`);
+            }
+
+            if (!this.fromHover) {
+                // Focus preview item for currently active window instead of
+                // always focusing first item.
+                const focusWindow = global.display.focus_window;
+                let focusTarget = null;
+                if (focusWindow && this._previewBox) {
+                    const items = this._previewBox._getMenuItems()
+                        .filter(item => item._window);
+                    const activeItem = items.find(
+                        item => item._window === focusWindow);
+                    if (activeItem)
+                        focusTarget = activeItem;
+                }
+                if (focusTarget)
+                    focusTarget.grab_key_focus();
+                else
+                    this.actor.navigate_focus(null, St.DirectionType.TAB_FORWARD, false);
             }
 
             this._source.emit('sync-tooltip');
