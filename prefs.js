@@ -211,19 +211,30 @@ const DockSettings = GObject.registerClass({
     }
 
     _onWindowsClosed() {
+        // Flush any pending scale/size/opacity values before destroying
+        // the timeouts — otherwise the dock reverts to old values.
         if (this._dock_size_timeout) {
             GLib.source_remove(this._dock_size_timeout);
-            delete this._dock_size_timeout;
+            this._dock_size_timeout = 0;
+            const dockSizeScale = this._builder.get_object('dock_size_scale');
+            if (dockSizeScale)
+                this._settings.set_double('height-fraction', dockSizeScale.get_value());
         }
 
         if (this._icon_size_timeout) {
             GLib.source_remove(this._icon_size_timeout);
-            delete this._icon_size_timeout;
+            this._icon_size_timeout = 0;
+            const iconSizeScale = this._builder.get_object('icon_size_scale');
+            if (iconSizeScale)
+                this._settings.set_int('dash-max-icon-size', iconSizeScale.get_value());
         }
 
         if (this._opacity_timeout) {
             GLib.source_remove(this._opacity_timeout);
-            delete this._opacity_timeout;
+            this._opacity_timeout = 0;
+            const customOpacityScale = this._builder.get_object('custom_opacity_scale');
+            if (customOpacityScale)
+                this._settings.set_double('background-opacity', customOpacityScale.get_value());
         }
     }
 
