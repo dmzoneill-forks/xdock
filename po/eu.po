@@ -66,7 +66,54 @@ msgstr "Leiho guztiak"
 msgid "Dash to Dock %s"
 msgstr "Dash to Dock %s"
 
-#: locations.js:65
+#: appIcons.js:1560
+msgid "Dash 2 X"
+msgstr "Dash to Dock"
+
+#: appIcons.js:1562
+msgid "Settings"
+msgstr "Ezarpenak"
+
+#: locations.js:540
+msgid "Mount"
+msgstr "Muntatu"
+
+#: locations.js:542
+msgid "Unmount"
+msgstr "Desmuntatu"
+
+#: locations.js:544
+msgid "Eject"
+msgstr "Egotzi"
+
+#: locations.js:604
+#, javascript-format
+msgid "Failed to mount “%s”"
+msgstr "Ezin izan da “%s” muntatu"
+
+#: locations.js:609
+#, javascript-format
+msgid "Failed to unmount “%s”"
+msgstr "Ezin izan da “%s” desmuntatu"
+
+#: locations.js:614
+#, javascript-format
+msgid "Failed to eject “%s”"
+msgstr "Ezin izan da “%s” egotzi"
+
+#: locations.js:627
+msgid "Mount operation already in progress"
+msgstr "Dagoeneko martxan dago muntatze eragiketa"
+
+#: locations.js:632
+msgid "Unmount operation already in progress"
+msgstr "Dagoeneko martxan dago desmuntatze eragiketa"
+
+#: locations.js:637
+msgid "Eject operation already in progress"
+msgstr "Dagoeneko martxan dago egozte eragiketa"
+
+#: locations.js:763
 msgid "Trash"
 msgstr "Zakarrontzia"
 
