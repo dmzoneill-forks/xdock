@@ -94,6 +94,8 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
         this._app = this._source.app;
         const workArea = Main.layoutManager.getWorkAreaForMonitor(
             this._source.monitorIndex);
+        // NOTE: scaleFactor from ThemeContext is global; for per-monitor scale
+        // consider global.display.get_monitor_scale(monitorIndex) when available.
         const {scaleFactor} = St.ThemeContext.get_for_stage(global.stage);
 
         this.actor.add_style_class_name('app-menu');
@@ -259,6 +261,7 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
 
             // Calculate max width as 90% of desktop width
             const workArea = Main.layoutManager.getWorkAreaForMonitor(this._source.monitorIndex);
+            // NOTE: global scaleFactor; per-monitor scale not yet used here.
             const {scaleFactor} = St.ThemeContext.get_for_stage(global.stage);
             const maxPreviewWidth = Math.round((workArea.width * 0.9) / scaleFactor);
 
@@ -1084,6 +1087,7 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
             scale = Math.min(1.0, maxWidth / width, maxHeight / height);
         }
 
+        // NOTE: global scaleFactor; per-monitor scale not yet used here.
         scale *= St.ThemeContext.get_for_stage(global.stage).scaleFactor;
 
         // width and height that we wanna multiply by scale
