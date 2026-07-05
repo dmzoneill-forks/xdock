@@ -607,6 +607,15 @@ export const DockAbstractAppIcon = GObject.registerClass({
         // case we use workspace isolation.
         const windows = this.getInterestingWindows();
 
+        // Check if any window is actually visible (not minimized) on the
+        // current workspace.  When all windows are minimized the app may
+        // still report as "focused" (tracker.focus_app), but clicking
+        // should raise a window instead of trying to re-minimize.
+        const currentWorkspace = global.workspace_manager.get_active_workspace();
+        const hasVisibleWindows = windows.some(
+            w => w.get_workspace() === currentWorkspace && w.showing_on_its_workspace());
+        const effectiveFocused = this.focused && hasVisibleWindows;
+
         // Some action modes (e.g. MINIMIZE_OR_OVERVIEW) require overview to remain open
         // This variable keeps track of this
         let shouldHideOverview = true;
@@ -622,7 +631,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
                 if (!Main.overview.visible || modifiers) {
                     // If we have button=2 or a modifier, allow minimization even if
                     // the app is not focused
-                    if (this.focused && !hasUrgentWindows || button === 2 ||
+                    if (effectiveFocused && !hasUrgentWindows || button === 2 ||
                         modifiers & Clutter.ModifierType.SHIFT_MASK) {
                         // minimize all windows on double click and always in
                         // the case of primary click without additional modifiers
@@ -644,7 +653,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
                 // (no modifiers, no middle click).
                 if (singleOrUrgentWindows && !modifiers && button === 1) {
                     const [w] = windows;
-                    if (this.focused) {
+                    if (effectiveFocused) {
                         if (buttonAction !== clickAction.FOCUS_OR_APP_SPREAD) {
                             // Window is raised, minimize it
                             this._minimizeWindow(w);
@@ -666,7 +675,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
                 const shouldMinimize = buttonAction === clickAction.CYCLE_OR_MINIMIZE;
 
                 const shouldCycle =
-                    this.focused ||
+                    effectiveFocused ||
                         (
                             shouldMinimize &&
                             recentlyClickedApp === this.app &&
@@ -691,7 +700,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
             }
 
             case clickAction.FOCUS_OR_PREVIEWS:
-                if (this.focused && !hasUrgentWindows &&
+                if (effectiveFocused && !hasUrgentWindows &&
                     (windows.length > 1 || modifiers || button !== 1)) {
                     this._windowPreviews();
                 } else {
@@ -702,7 +711,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
                 break;
 
             case clickAction.FOCUS_MINIMIZE_OR_PREVIEWS:
-                if (this.focused && !hasUrgentWindows) {
+                if (effectiveFocused && !hasUrgentWindows) {
                     if (windows.length > 1 || modifiers || button !== 1)
                         this._windowPreviews();
                     else if (!Main.overview.visible)
@@ -742,7 +751,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
                 if (!Main.overview.visible) {
                     if (singleOrUrgentWindows && !modifiers && button === 1) {
                         const [w] = windows;
-                        if (this.focused) {
+                        if (effectiveFocused) {
                             // Window is raised, minimize it
                             this._minimizeWindow(w);
                         } else {
@@ -759,7 +768,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
                 break;
 
             case clickAction.FOCUS_OR_APP_SPREAD:
-                if (this.focused && !singleOrUrgentWindows && !modifiers && button === 1) {
+                if (effectiveFocused && !singleOrUrgentWindows && !modifiers && button === 1) {
                     shouldHideOverview = false;
                     this._doubleClickGesture?.cancel();
                     Docking.DockManager.getDefault().appSpread.toggle(this.app);
@@ -770,11 +779,11 @@ export const DockAbstractAppIcon = GObject.registerClass({
                 break;
 
             case clickAction.FOCUS_MINIMIZE_OR_APP_SPREAD:
-                if (this.focused && !singleOrUrgentWindows && !modifiers && button === 1) {
+                if (effectiveFocused && !singleOrUrgentWindows && !modifiers && button === 1) {
                     shouldHideOverview = false;
                     this._doubleClickGesture?.cancel();
                     Docking.DockManager.getDefault().appSpread.toggle(this.app);
-                } else if (!this.focused) {
+                } else if (!effectiveFocused) {
                     // Activate the first window
                     Main.activateWindow(windows[0]);
                 } else {
@@ -1822,7 +1831,6 @@ export function itemShowLabel() {
     }
 
     // keep the label inside the screen border
-    // Only needed fot the x coordinate.
 
     // Leave a few pixel gap
     const gap = 5;
@@ -1831,6 +1839,11 @@ export function itemShowLabel() {
         x += monitor.x - x + labelOffset;
     else if (x + labelWidth > monitor.x + monitor.width - gap)
         x -= x + labelWidth - (monitor.x + monitor.width) + gap;
+
+    if (y - monitor.y < gap)
+        y = monitor.y + gap;
+    else if (y + labelHeight > monitor.y + monitor.height - gap)
+        y = monitor.y + monitor.height - labelHeight - gap;
 
     this.label.remove_all_transitions();
     this.label.set_position(x, y);
