@@ -375,6 +375,22 @@ const DockedDash = GObject.registerClass({
             ]);
         }
 
+        // GNOME 50: Chrome actors with affectsStruts can have their visible
+        // property set to false asynchronously during struts recalculation.
+        // Watch the panelBox (on the main dock only) and restore visibility
+        // immediately whenever it is hidden outside the overview.
+        if (this.isMain) {
+            const panelBox = Main.layoutManager.panelBox;
+            if (panelBox) {
+                this._signalsHandler.add(panelBox, 'notify::visible', () => {
+                    if (!panelBox.visible && !Main.overview.visibleTarget) {
+                        panelBox.visible = true;
+                        panelBox.show();
+                    }
+                });
+            }
+        }
+
         this._themeManager = new Theming.ThemeManager(this);
         this._signalsHandler.add(this._themeManager, 'updated',
             () => this.dash.resetAppIcons());
@@ -385,8 +401,13 @@ const DockedDash = GObject.registerClass({
         // Since the actor is not a topLevel child and its parent is now not added to the Chrome,
         // the allocation change of the parent container (slide in and slideout) doesn't trigger
         // anymore an update of the input regions. Force the update manually.
-        this.connect('notify::allocation',
-            Main.layoutManager._queueUpdateRegions.bind(Main.layoutManager));
+        // However, skip region updates while a panel popup menu is open (Quick
+        // Settings, Notifications, etc.) to avoid stealing input from those menus.
+        this.connect('notify::allocation', () => {
+            if (Main.panel?.menuManager?.activeMenu)
+                return;
+            Main.layoutManager._queueUpdateRegions();
+        });
 
 
         // Since Clutter has no longer ClutterAllocationFlags,
@@ -394,8 +415,11 @@ const DockedDash = GObject.registerClass({
         this.dash._container.connect('notify::allocation', this._updateStaticBox.bind(this));
         this._slider.connect(this._isHorizontal ? 'notify::x' : 'notify::y',
             this._updateStaticBox.bind(this));
-        this._slider.connect('notify::slide-x',
-            Main.layoutManager._queueUpdateRegions.bind(Main.layoutManager));
+        this._slider.connect('notify::slide-x', () => {
+            if (Main.panel?.menuManager?.activeMenu)
+                return;
+            Main.layoutManager._queueUpdateRegions();
+        });
 
         // Load optional features that need to be activated for one dock only
         if (this.isMain)
