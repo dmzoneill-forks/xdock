@@ -282,6 +282,11 @@ export class ThemeManager {
 
         newStyle = borderMissingStyle;
 
+        // Apply custom border radius if configured
+        const customBorderRadius = settings.customBorderRadius;
+        if (customBorderRadius >= 0)
+            newStyle = `${newStyle}border-radius: ${customBorderRadius}px; `;
+
         if (newStyle) {
             // I do call set_style possibly twice so that only the background gets the transition.
             // The transition-property css rules seems to be unsupported
@@ -313,7 +318,8 @@ export class ThemeManager {
             'custom-theme-shrink',
             'custom-theme-running-dots',
             'extend-height',
-            'force-straight-corner'];
+            'force-straight-corner',
+            'custom-border-radius'];
 
         this._signalsHandler.addWithLabel(Labels.THEME_CHANGED, ...keys.map(key => [
             Docking.DockManager.settings,

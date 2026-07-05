@@ -2156,6 +2156,44 @@
                             <property name="margin_top">12</property>
                             <property name="margin_bottom">12</property>
                             <child>
+                              <object class="GtkLabel" id="custom_border_radius_label">
+                                <property name="hexpand">1</property>
+                                <property name="can_focus">0</property>
+                                <property name="valign">center</property>
+                                <property name="halign">start</property>
+                                <property name="label" translatable="yes">Border radius (-1 for theme default)</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton" id="custom_border_radius_spinbutton">
+                                <property name="valign">center</property>
+                                <property name="adjustment">
+                                  <object class="GtkAdjustment" id="custom_border_radius_adjustment">
+                                    <property name="lower">-1</property>
+                                    <property name="upper">99</property>
+                                    <property name="step_increment">1</property>
+                                    <property name="page_increment">5</property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="width_request">100</property>
+                        <property name="height_request">80</property>
+                        <property name="child">
+                          <object class="GtkBox">
+                            <property name="can_focus">0</property>
+                            <property name="spacing">32</property>
+                            <property name="margin_start">12</property>
+                            <property name="margin_end">12</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
+                            <child>
                               <object class="GtkLabel">
                                 <property name="hexpand">1</property>
                                 <property name="can_focus">0</property>

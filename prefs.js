@@ -1224,6 +1224,10 @@ const DockSettings = GObject.registerClass({
             this._builder.get_object('force_straight_corner_switch'),
             'active', Gio.SettingsBindFlags.DEFAULT);
 
+        this._settings.bind('custom-border-radius',
+            this._builder.get_object('custom_border_radius_spinbutton'),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+
         this._settings.bind('disable-overview-on-startup',
             this._builder.get_object('show_overview_on_startup_switch'),
             'active', Gio.SettingsBindFlags.INVERT_BOOLEAN);
