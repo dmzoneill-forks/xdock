@@ -2823,8 +2823,10 @@ export class DockManager {
                     dummyDash.destroy();
                     if (this._settings.disableOverviewOnStartup) {
                         this._propertyInjections.removeWithLabel(Labels.STARTUP_ANIMATION);
-                        this.overviewControls._stateAdjustment.value =
-                            OverviewControls.ControlsState.HIDDEN;
+                        // Avoid invalid state transitions while overview is animating.
+                        const adjustment = this.overviewControls?._stateAdjustment;
+                        if (adjustment && !Main.overview.animationInProgress)
+                            adjustment.value = OverviewControls.ControlsState.HIDDEN;
                         if (Main.overview.visible)
                             Main.overview.hide();
                     }
