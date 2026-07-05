@@ -824,6 +824,7 @@ export class UnityIndicator extends IndicatorBase {
     }
 
     _updateNotificationBadgeStyle() {
+        // ThemeContext here is for font metrics, not monitor-specific scale.
         const themeContext = St.ThemeContext.get_for_stage(global.stage);
         const fontDesc = themeContext.get_font();
         const defaultFontSize = fontDesc.get_size() / 1024;
@@ -914,6 +915,7 @@ export class UnityIndicator extends IndicatorBase {
         this._source._iconContainer.add_child(this._notificationBadgeBin);
         this._updateNotificationBadgeStyle();
 
+        // ThemeContext used for signal connections; not monitor-specific.
         const themeContext = St.ThemeContext.get_for_stage(global.stage);
         this._signalsHandler.addWithLabel(UnityIndicator.notificationBadgeSignals, [
             themeContext,
@@ -1036,6 +1038,7 @@ export class UnityIndicator extends IndicatorBase {
     }
 
     _drawProgressOverlay(area) {
+        // NOTE: global scaleFactor; per-monitor scale not yet used here.
         const {scaleFactor} = St.ThemeContext.get_for_stage(global.stage);
         const [surfaceWidth, surfaceHeight] = area.get_surface_size();
         const cr = area.get_context();
