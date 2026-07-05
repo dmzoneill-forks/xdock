@@ -194,10 +194,10 @@ const DockSettings = GObject.registerClass({
 
         this.widget = this._builder.get_object('settings_notebook');
 
-        // Set a reasonable initial window height
+        // Set a reasonable initial window size
         this.widget.connect('realize', () => {
             const rootWindow = this.widget.get_root();
-            rootWindow.set_default_size(-1, 850);
+            rootWindow.set_default_size(700, 850);
             rootWindow.connect('close-request', () => this._onWindowsClosed());
         });
 
