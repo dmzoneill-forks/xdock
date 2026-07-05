@@ -2142,6 +2142,8 @@
                           </object>
                         </property>
                       </object>
+                    </child>
+                    <child>
                       <object class="GtkListBoxRow">
                         <property name="width_request">100</property>
                         <property name="height_request">80</property>
