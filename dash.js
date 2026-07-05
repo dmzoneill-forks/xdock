@@ -39,6 +39,7 @@ const DASH_ANIMATION_TIME = Dash.DASH_ANIMATION_TIME ?? 200;
 const DASH_VISIBILITY_TIMEOUT = 3;
 
 const Labels = Object.freeze({
+    DASH_LEAVE: Symbol('dash-leave'),
     SHOW_MOUNTS: Symbol('show-mounts'),
     FIRST_LAST_CHILD_WORKAROUND: Symbol('first-last-child-workaround'),
 });
@@ -201,7 +202,8 @@ export const DockDash = GObject.registerClass({
             enable_mouse_scrolling: false,
         });
 
-        this._scrollView.connect('scroll-event', this._onScrollEvent.bind(this));
+        this._signalsHandler.add(this._scrollView, 'scroll-event',
+            this._onScrollEvent.bind(this));
 
         this._boxContainer = new St.BoxLayout({
             name: 'dashtodockBoxContainer',
@@ -231,16 +233,17 @@ export const DockDash = GObject.registerClass({
         this._showAppsIcon.icon.setIconSize(this.iconSize);
         this._showAppsIcon.x_expand = false;
         this._showAppsIcon.y_expand = false;
-        this.showAppsButton.connect('notify::hover', a => {
+        this._signalsHandler.add(this.showAppsButton, 'notify::hover', a => {
             if (this._showAppsIcon.get_parent() === this._boxContainer)
                 this._ensureItemVisibility(a);
         });
         if (!this._isHorizontal)
             this._showAppsIcon.y_align = Clutter.ActorAlign.START;
         this._hookUpLabel(this._showAppsIcon);
-        this._showAppsIcon.connect('menu-state-changed', (_icon, opened) => {
-            this._itemMenuStateChanged(this._showAppsIcon, opened);
-        });
+        this._signalsHandler.add(this._showAppsIcon, 'menu-state-changed',
+            (_icon, opened) => {
+                this._itemMenuStateChanged(this._showAppsIcon, opened);
+            });
         this.updateShowAppsButton();
 
         this._background = new St.Widget({
@@ -318,7 +321,7 @@ export const DockDash = GObject.registerClass({
             this._togglePreviewHover.bind(this),
         ]);
 
-        this.connect('destroy', this._onDestroy.bind(this));
+        this._signalsHandler.add(this, 'destroy', this._onDestroy.bind(this));
     }
 
     vfunc_get_preferred_height(forWidth) {
@@ -988,40 +991,39 @@ export const DockDash = GObject.registerClass({
         });
 
         // Close all preview menus when mouse leaves the dash
-        this._dashLeaveId = this.connect('leave-event', () => {
-            // Use a small timeout to allow moving from icon to menu
-            if (this._dashLeaveTimeoutId)
-                GLib.source_remove(this._dashLeaveTimeoutId);
+        this._signalsHandler.addWithLabel(Labels.DASH_LEAVE,
+            this, 'leave-event', () => {
+                // Use a small timeout to allow moving from icon to menu
+                if (this._dashLeaveTimeoutId)
+                    GLib.source_remove(this._dashLeaveTimeoutId);
 
-            this._dashLeaveTimeoutId = GLib.timeout_add(
-                GLib.PRIORITY_DEFAULT,
-                100,
-                () => {
-                    const icons = this.getAppIcons();
-                    icons.forEach(appIcon => {
-                        if (appIcon._previewMenu?.isOpen) {
-                            if (appIcon._previewMenu.fromHover) {
-                                appIcon._previewMenu._boxPointer.close(BoxPointer.PopupAnimation.FADE, () => {
-                                    appIcon._previewMenu.actor.hide();
-                                    appIcon._previewMenu.isOpen = false;
-                                });
-                            } else {
-                                appIcon._previewMenu.close(BoxPointer.PopupAnimation.FADE);
+                this._dashLeaveTimeoutId = GLib.timeout_add(
+                    GLib.PRIORITY_DEFAULT,
+                    100,
+                    () => {
+                        const icons = this.getAppIcons();
+                        icons.forEach(appIcon => {
+                            if (appIcon._previewMenu?.isOpen) {
+                                if (appIcon._previewMenu.fromHover) {
+                                    const {_boxPointer} = appIcon._previewMenu;
+                                    _boxPointer.close(BoxPointer.PopupAnimation.FADE, () => {
+                                        appIcon._previewMenu.actor.hide();
+                                        appIcon._previewMenu.isOpen = false;
+                                    });
+                                } else {
+                                    appIcon._previewMenu.close(BoxPointer.PopupAnimation.FADE);
+                                }
                             }
-                        }
-                    });
-                    this._dashLeaveTimeoutId = null;
-                    return GLib.SOURCE_REMOVE;
-                }
-            );
-        });
+                        });
+                        this._dashLeaveTimeoutId = null;
+                        return GLib.SOURCE_REMOVE;
+                    }
+                );
+            });
     }
 
     _disableHover() {
-        if (this._dashLeaveId) {
-            this.disconnect(this._dashLeaveId);
-            this._dashLeaveId = null;
-        }
+        this._signalsHandler.removeWithLabel(Labels.DASH_LEAVE);
 
         if (this._dashLeaveTimeoutId) {
             GLib.source_remove(this._dashLeaveTimeoutId);
