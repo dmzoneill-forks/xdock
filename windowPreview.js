@@ -773,6 +773,8 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
             reactive: true,
             width: this._width * this._scale,
             height: this._height * this._scale,
+            minification_filter: Clutter.ScalingFilter.TRILINEAR,
+            magnification_filter: Clutter.ScalingFilter.TRILINEAR,
         });
 
         // when the source actor is destroyed, i.e. the window closed, first destroy the clone
