@@ -643,7 +643,6 @@ export const DockDash = GObject.registerClass({
                     icons.forEach(appIcon => {
                         if (appIcon._previewMenu?.isOpen) {
                             if (appIcon._previewMenu.fromHover) {
-                                // Manually close hover menus
                                 appIcon._previewMenu._boxPointer.close(BoxPointer.PopupAnimation.FADE, () => {
                                     appIcon._previewMenu.actor.hide();
                                     appIcon._previewMenu.isOpen = false;

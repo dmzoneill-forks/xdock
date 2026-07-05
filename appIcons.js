@@ -797,9 +797,8 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (this._previewMenu.isOpen) {
             this._previewMenu.close();
         } else {
-            this._previewMenu.fromHover = false; // Mark as click-opened
+            this._previewMenu.fromHover = false;
             this._previewMenu.popup();
-            // Set keyboard navigation for click-opened menus
             this._previewMenu.actor.navigate_focus(null, St.DirectionType.TAB_FORWARD, false);
         }
 
@@ -812,20 +811,14 @@ export const DockAbstractAppIcon = GObject.registerClass({
         this._hoverIsEnabled = true;
 
         if (!this._previewMenu) {
-            // Create preview menu if it doesn't exist
             this._windowPreviews();
-            // Close it immediately since we only wanted to initialize it
             if (this._previewMenu.isOpen)
                 this._previewMenu.close();
         }
 
-        // Store reference to app icons list for hover transitions
         this._appIconsHoverList = appIcons;
 
-        // Note: Removed menu-closed handler that was causing infinite loop
-        // Icon-to-icon transitions are now handled directly in windowPreview.js _onEnter()
 
-        // Pass the menu manager so hover mode can disable its event capture
         this._previewMenu.enableHover(this._previewMenuManager);
     }
 
