@@ -1,5 +1,7 @@
 # Dash 2 X
 
+[![shexli](https://github.com/dmzoneill-forks/dash-2-x/actions/workflows/shexli.yml/badge.svg)](https://github.com/dmzoneill-forks/dash-2-x/actions/workflows/shexli.yml)
+
 A community-driven dock for the GNOME Shell.
 
 **Forked from [Dash to Dock](https://github.com/micheleg/dash-to-dock) by Michele (micxgx@gmail.com).**
@@ -36,11 +38,16 @@ In addition to all the original Dash to Dock functionality, Dash 2 X includes:
 
 ### Build Dependencies
 
-To compile the stylesheet you'll need an implementation of SASS. Dash 2 X supports `dart-sass` (`sass`), `sassc`, and `ruby-sass`. We recommend `dart-sass` or `sassc`.
+To compile the stylesheet you'll need an implementation of SASS. The default is `dart-sass` (the `sass` command). You can also use `sassc` or `ruby-sass` by setting the `SASS` variable.
 
 ```bash
-export SASS=dart
-# or...
+# Install dart-sass (default, recommended)
+npm install -g sass
+
+# To use sassc instead:
+export SASS=sassc
+
+# To use ruby-sass instead:
 export SASS=ruby
 ```
 
