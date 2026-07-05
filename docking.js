@@ -2535,7 +2535,7 @@ export class DockManager {
         try {
             const parsed = JSON.parse(this._settings.get_string('user-categories'));
             return Array.isArray(parsed) ? parsed : [];
-        } catch (_e) {
+        } catch (_) {
             return [];
         }
     }
@@ -2754,6 +2754,32 @@ export class DockManager {
             this._trash = null;
         }
 
+        // ── User Category Icons ─────────────────────────────────────
+        if (!this._categoryIcons)
+            this._categoryIcons = [];
+
+        let configs = [];
+        try {
+            configs = JSON.parse(this._settings.get_string('user-categories'));
+        } catch (_) {}
+        if (!Array.isArray(configs))
+            configs = [];
+
+        // Self-repair: sanitize configs and remove cross-contamination with favorites
+        configs = this._repairUserCategories(configs);
+
+        // Destroy surplus icons
+        while (this._categoryIcons.length > configs.length)
+            this._categoryIcons.pop().destroy();
+
+        // Update existing / create new
+        for (let i = 0; i < configs.length; i++) {
+            if (this._categoryIcons[i])
+                this._categoryIcons[i].updateConfig(configs[i]);
+            else
+                this._categoryIcons[i] = new Locations.CategoryIcon(configs[i]);
+        }
+        // ───────────────────────────────────────────────────────────
         Locations.unWrapFileManagerApp();
         [this._methodInjections, this._propertyInjections].forEach(
             injections => injections.removeWithLabel(Labels.LOCATIONS));

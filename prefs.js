@@ -612,6 +612,20 @@ const DockSettings = GObject.registerClass({
         this._builder.get_object('preview_size_scale').set_value(
             this._settings.get_double('preview-size-scale'));
 
+        // Dock Margin Size
+        const dockMarginSizeScale = this._builder.get_object(
+            'dock_margin_size_scale'
+        );
+        dockMarginSizeScale.set_format_value_func((_, value) => {
+            return `${value} px`; // Display the value in pixels
+        });
+
+        this._settings.bind(
+            'dock-margin-size',
+            this._builder.get_object('dock_margin_size_adjustment'),
+            'value',
+            Gio.SettingsBindFlags.DEFAULT
+        );
         // Corrent for rtl languages
         if (this._rtl) {
             // Flip value position: this is not done automatically
@@ -637,6 +651,11 @@ const DockSettings = GObject.registerClass({
             this._builder.get_object('dock_size_scale'),
             'sensitive',
             Gio.SettingsBindFlags.INVERT_BOOLEAN);
+        this._settings.bind(
+            'extend-height',
+            this._builder.get_object('dock_margin_size_scale'),
+            'sensitive',
+            Gio.SettingsBindFlags.DEFAULT);
         this._settings.bind('always-center-icons',
             this._builder.get_object('dock_center_icons_check'),
             'active',
