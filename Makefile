@@ -91,12 +91,12 @@ POTFILES = $(shell cat $(POTFILES_IN))
 ./stylesheet.css: ./_stylesheet.scss
 ifeq ($(SASS), ruby)
 	sass --sourcemap=none --no-cache --scss _stylesheet.scss stylesheet.css
-else ifeq ($(SASS), dart)
-	sass --no-source-map _stylesheet.scss stylesheet.css
 else ifeq ($(SASS), sassc)
 	sassc --omit-map-comment _stylesheet.scss stylesheet.css
+else ifeq ($(SASS), dart)
+	sass --no-source-map _stylesheet.scss stylesheet.css
 else
-	sassc --omit-map-comment _stylesheet.scss stylesheet.css
+	sass --no-source-map _stylesheet.scss stylesheet.css
 endif
 
 install: install-local
