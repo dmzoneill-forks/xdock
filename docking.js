@@ -922,6 +922,38 @@ const DockedDash = GObject.registerClass({
 
     _onOverviewHidden() {
         this.remove_style_class_name('overview');
+
+        // GNOME 50: panelBox.visible becomes false during the overview-to-desktop
+        // transition when an extension registers Chrome actors with affectsStruts.
+        const panelBox = Main.layoutManager.panelBox;
+        if (panelBox && !panelBox.visible) {
+            panelBox.visible = true;
+            panelBox.show();
+        }
+
+        // GNOME 50: same root cause hides dock actor tree.
+        if (!this.visible) {
+            this.visible = true;
+            this.show();
+        }
+        if (this._slider && !this._slider.visible) {
+            this._slider.visible = true;
+            this._slider.show();
+        }
+        if (this._box && !this._box.visible) {
+            this._box.visible = true;
+            this._box.show();
+        }
+        if (this.dash && !this.dash.visible) {
+            this.dash.visible = true;
+            this.dash.show();
+        }
+
+        if (this._box?.get_stage())
+            this._box.sync_hover();
+        // Force intellihide to recheck overlap after overview is hidden
+        if (this._intellihide?.forceUpdate)
+            this._intellihide.forceUpdate();
         this.updateDashVisibility();
     }
 
@@ -933,7 +965,8 @@ const DockedDash = GObject.registerClass({
 
     _onMenuClosed() {
         delete this._menuOpened;
-        this._box.sync_hover();
+        if (this._box?.get_stage())
+            this._box.sync_hover();
         this._hoverChanged();
         this.updateDashVisibility();
     }
@@ -951,7 +984,7 @@ const DockedDash = GObject.registerClass({
             // and autohide-in-fullscreen is enabled (multi-monitor case).
             if (DockManager.settings.autohideInFullscreen &&
                 this._monitor.inFullscreen) {
-                this._hide();
+                this.hideDock();
                 return;
             }
 
@@ -1221,6 +1254,11 @@ const DockedDash = GObject.registerClass({
         // in such case the leave event would never be triggered and the dock
         // would stay visible forever.
         this._triggerTimeoutId =  GLib.timeout_add(GLib.PRIORITY_DEFAULT, 250, () => {
+            // Guard against accessing destroyed state
+            if (!this._staticBox || !this._monitor) {
+                this._triggerTimeoutId = 0;
+                return GLib.SOURCE_REMOVE;
+            }
             const [x, y, mods_] = global.get_pointer();
             let shouldHide = true;
             switch (this._position) {
@@ -1455,6 +1493,9 @@ const DockedDash = GObject.registerClass({
     }
 
     _updateStaticBox() {
+        if (!this._box?.get_stage())
+            return;
+
         const x = this.x + this._slider.x -
             (this._position === St.Side.RIGHT ? this._box.width : 0);
         const y = this.y + this._slider.y -
@@ -1508,7 +1549,8 @@ const DockedDash = GObject.registerClass({
             delete this._oldIgnoreHover;
         }
 
-        this._box.sync_hover();
+        if (this._box?.get_stage())
+            this._box.sync_hover();
         this.updateDashVisibility();
     }
 
