@@ -8,11 +8,23 @@ export let dockManager;
 
 export default class DashToDockExtension extends Extension.Extension {
     enable() {
-        dockManager = new DockManager(this);
+        try {
+            dockManager = new DockManager(this);
+        } catch (e) {
+            // Catch initialization errors to prevent the extension from
+            // crashing the entire GNOME Shell session (especially on
+            // Wayland where a crash forces a full session restart).
+            logError(e, 'Dash-2-X: Failed to initialize DockManager');
+            dockManager = null;
+        }
     }
 
     disable() {
-        dockManager?.destroy();
+        try {
+            dockManager?.destroy();
+        } catch (e) {
+            logError(e, 'Dash-2-X: Failed to destroy DockManager');
+        }
         dockManager = null;
     }
 }
