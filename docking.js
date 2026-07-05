@@ -1579,17 +1579,26 @@ const KeyboardShortcuts = class DashToDockKeyboardShortcuts {
         this._signalsHandler = new Utils.GlobalSignalsHandler();
 
         this._hotKeysEnabled = false;
-        if (DockManager.settings.hotKeys)
+        this._gnomeKeysOverridden = false;
+        this._savedGnomeKeys = [];
+
+        if (DockManager.settings.hotKeys) {
             this._enableHotKeys();
+        } else {
+            this._overrideGnomeKeys();
+        }
 
         this._signalsHandler.add([
             DockManager.settings,
             'changed::hot-keys',
             () => {
-                if (DockManager.settings.hotKeys)
+                if (DockManager.settings.hotKeys) {
+                    this._restoreGnomeKeys();
                     this._enableHotKeys.bind(this)();
-                else
+                } else {
                     this._disableHotKeys.bind(this)();
+                    this._overrideGnomeKeys();
+                }
             },
         ]);
 
@@ -1606,8 +1615,42 @@ const KeyboardShortcuts = class DashToDockKeyboardShortcuts {
 
         // Remove keybindings
         this._disableHotKeys();
+        this._restoreGnomeKeys();
         this._disableExtraShortcut();
         this._signalsHandler.destroy();
+    }
+
+    _overrideGnomeKeys() {
+        if (this._gnomeKeysOverridden)
+            return;
+
+        // When the user disables hot-keys, GNOME Shell's built-in
+        // switch-to-application-N shortcuts (Super+N) would still
+        // activate favorite apps. Override them with empty bindings
+        // so that Super+N truly does nothing for app activation.
+        const shellSettings = new Gio.Settings({schema_id: 'org.gnome.shell.keybindings'});
+        this._savedGnomeKeys = [];
+        for (let i = 1; i <= 9; i++) {
+            const key = `switch-to-application-${i}`;
+            this._savedGnomeKeys.push({
+                key,
+                value: shellSettings.get_strv(key),
+            });
+            shellSettings.set_strv(key, []);
+        }
+        this._gnomeKeysOverridden = true;
+    }
+
+    _restoreGnomeKeys() {
+        if (!this._gnomeKeysOverridden)
+            return;
+
+        const shellSettings = new Gio.Settings({schema_id: 'org.gnome.shell.keybindings'});
+        for (const {key, value} of this._savedGnomeKeys)
+            shellSettings.set_strv(key, value);
+
+        this._savedGnomeKeys = [];
+        this._gnomeKeysOverridden = false;
     }
 
     _enableHotKeys() {
