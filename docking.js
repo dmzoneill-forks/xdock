@@ -318,7 +318,10 @@ const DockedDash = GObject.registerClass({
         ], [
             global.display,
             'in-fullscreen-changed',
-            this._updateBarrier.bind(this),
+            () => {
+                this._updateBarrier();
+                this._updateDashVisibility();
+            },
         ], [
             // Monitor windows overlapping
             this._intellihide,
@@ -801,6 +804,16 @@ const DockedDash = GObject.registerClass({
             return;
 
         const {settings} = DockManager;
+
+        // When autohide-in-fullscreen is enabled and this monitor is in
+        // fullscreen, force-hide the dock.  Some apps (notably Firefox)
+        // use client-side fullscreen which may not be detected by the
+        // Chrome tracking layer, so we check explicitly here.
+        if (settings.autohideInFullscreen && this._monitor.inFullscreen) {
+            this._ignoreHover = false;
+            this._animateOut(settings.animationTime, 0);
+            return;
+        }
 
         if (DockManager.settings.dockFixed) {
             this._removeAnimations();
