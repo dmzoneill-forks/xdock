@@ -42,6 +42,7 @@ export function startBounceAnimation(icon) {
     let placeholderConnActor = null;
     let hasCompletedOneBounce = false;
     let shouldStop = false;
+    const pendingTimers = new Set();
 
     try {
         const [gx, gy] = icon.get_transformed_position();
@@ -99,10 +100,12 @@ export function startBounceAnimation(icon) {
             // sync icon x position to follow placeholder when dock layout changes
             icon.set_position(Math.round(px), currentY);
         } catch { /* ignore */ }
-        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 16, () => {
+        const id = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 16, () => {
+            pendingTimers.delete(id);
             syncPositionToPlaceholder();
             return GLib.SOURCE_REMOVE;
         });
+        pendingTimers.add(id);
     }
 
     function step() {
@@ -145,10 +148,12 @@ export function startBounceAnimation(icon) {
                             cleanup();
                             return;
                         }
-                        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 80, () => {
+                        const stepId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 80, () => {
+                            pendingTimers.delete(stepId);
                             step();
                             return GLib.SOURCE_REMOVE;
                         });
+                        pendingTimers.add(stepId);
                     },
                 });
             },
@@ -158,6 +163,9 @@ export function startBounceAnimation(icon) {
     function cleanup() {
         try {
             running = false;
+            // remove any pending GLib timers
+            pendingTimers.forEach(id => GLib.source_remove(id));
+            pendingTimers.clear();
             // disconnect placeholder allocation listener
             if (placeholderConnActor && placeholderConnId) {
                 try {
@@ -217,6 +225,9 @@ export function startBounceAnimation(icon) {
             // We've completed at least one bounce, so stop immediately
             running = false;
             handle.isActive = false;
+            // cancel pending timers so they don't fire during the settle animation
+            pendingTimers.forEach(id => GLib.source_remove(id));
+            pendingTimers.clear();
             try {
                 target.remove_all_transitions();
             } catch { /* ignore */ }
