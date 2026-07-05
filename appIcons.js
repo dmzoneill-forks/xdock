@@ -1079,6 +1079,8 @@ export const DockAbstractAppIcon = GObject.registerClass({
             this._minimizeWindow(w);
         } else {
             Main.activateWindow(window);
+            if (window.get_monitor() !== this.monitorIndex)
+                window.move_to_monitor(this.monitorIndex);
         }
     }
 
