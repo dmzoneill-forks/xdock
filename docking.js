@@ -537,8 +537,10 @@ const DockedDash = GObject.registerClass({
             delete this._marginLater;
         }
 
-        if (this._triggerTimeoutId)
+        if (this._triggerTimeoutId) {
             GLib.source_remove(this._triggerTimeoutId);
+            this._triggerTimeoutId = 0;
+        }
 
         // Remove barrier timeout
         if (this._removeBarrierTimeoutId > 0) {
@@ -550,6 +552,9 @@ const DockedDash = GObject.registerClass({
         this._removeBarrier();
 
         this._removeDockWatch();
+        this._cancelDockDwell();
+
+        // Cancel any pending dock dwell timeout
         this._cancelDockDwell();
 
         if (this._optionalScrollWorkspaceSwitchDeadTimeId) {
