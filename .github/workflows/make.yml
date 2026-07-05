@@ -17,7 +17,9 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Install dependencies.
-        run: sudo apt-get install -y sassc gettext
+        run: |
+          sudo apt-get install -y gettext
+          sudo npm install -g sass
 
       - name: Make
         run: make
