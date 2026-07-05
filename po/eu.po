@@ -121,18 +121,6 @@ msgstr "Zakarrontzia"
 msgid "Empty Trash"
 msgstr "Hustu zakarrontzia"
 
-#: locations.js:189
-msgid "Mount"
-msgstr "Muntatu"
-
-#: locations.js:232
-msgid "Eject"
-msgstr "Egotzi"
-
-#: locations.js:237
-msgid "Unmount"
-msgstr "Desmuntatu"
-
 #: Settings.ui.h:1
 msgid ""
 "When set to minimize, double clicking minimizes all the windows of the "
