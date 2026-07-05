@@ -370,8 +370,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
     }
 
     _updateFocusState() {
-        let isFocused;
-        isFocused = Docking.DockManager.windowTracker.focus_app === this.app;
+        let isFocused = Docking.DockManager.windowTracker.focus_app === this.app;
         // Fallback when focus_app is stale or references a different app
         // object than this pinned icon (#122).
         if (!isFocused) {
@@ -380,12 +379,27 @@ export const DockAbstractAppIcon = GObject.registerClass({
                 isFocused = Docking.DockManager.windowTracker.get_window_app(focusWin) ===
                     this.app;
         }
+
         // When isolate-monitors is active, only show focus if the focused
         // window actually belongs to this monitor (#105).
         if (isFocused && Docking.DockManager.settings.isolateMonitors) {
             const focusWin = global.display.focus_window;
             if (focusWin)
                 isFocused = focusWin.get_monitor() === this.monitorIndex;
+        }
+
+        // When all windows are minimized, GNOME Shell's tracker.focus_app may
+        // still report this app as focused. Clear stale icon highlighting.
+        if (isFocused) {
+            const windows = this.getInterestingWindows();
+            const activeWs = global.workspace_manager.get_active_workspace();
+            const hasVisibleWindow = windows.some(
+                w => w.get_workspace() === activeWs &&
+                     w.showing_on_its_workspace());
+            if (windows.length > 0 && !hasVisibleWindow)
+                isFocused = false;
+        }
+
         this.focused = isFocused && this.running;
     }
 
