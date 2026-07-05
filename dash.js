@@ -1199,7 +1199,11 @@ export const DockDash = GObject.registerClass({
         // Apps that are in a user category are not shown as standalone icons
         const categorizedAppIds = dockManager.getCategorizedAppIds?.() ?? new Set();
 
-        const favorites = AppFavorites.getAppFavorites().getFavoriteMap();
+        // Copy the favorites map to avoid mutating the internal AppFavorites
+        // state. Without this copy, deleting categorized app IDs below would
+        // permanently remove entries from the internal favorites, causing
+        // running apps to vanish from the dock after unpin operations (#69).
+        const favorites = {...AppFavorites.getAppFavorites().getFavoriteMap()};
 
         // Filter categorized apps out of standalone display
         for (const catId of categorizedAppIds)
