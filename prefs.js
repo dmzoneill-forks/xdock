@@ -609,16 +609,16 @@ const DockSettings = GObject.registerClass({
 
         // Dock Margin Size
         const dockMarginSizeScale = this._builder.get_object(
-            "dock_margin_size_scale"
+            'dock_margin_size_scale'
         );
         dockMarginSizeScale.set_format_value_func((_, value) => {
             return `${value} px`; // Display the value in pixels
         });
 
         this._settings.bind(
-            "dock-margin-size",
-            this._builder.get_object("dock_margin_size_adjustment"),
-            "value",
+            'dock-margin-size',
+            this._builder.get_object('dock_margin_size_adjustment'),
+            'value',
             Gio.SettingsBindFlags.DEFAULT
         );
 
@@ -651,9 +651,9 @@ const DockSettings = GObject.registerClass({
             'sensitive',
             Gio.SettingsBindFlags.INVERT_BOOLEAN);
         this._settings.bind(
-            "extend-height",
-            this._builder.get_object("dock_margin_size_scale"),
-            "sensitive",
+            'extend-height',
+            this._builder.get_object('dock_margin_size_scale'),
+            'sensitive',
             Gio.SettingsBindFlags.DEFAULT);
         this._settings.bind('always-center-icons',
             this._builder.get_object('dock_center_icons_check'),

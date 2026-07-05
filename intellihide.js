@@ -373,8 +373,8 @@ export class Intellihide {
         if (ignoreApps.includes(wmApp) && metaWindow.is_skip_taskbar())
             return false;
 
-		if (metaWindow.get_title() === 'wl-clipboard')
-			return false;
+        if (metaWindow.get_title() === 'wl-clipboard')
+            return false;
 
         // The DropDownTerminal extension uses the POPUP_MENU window type hint
         // so we match its window by wm class instead

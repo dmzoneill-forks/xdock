@@ -284,7 +284,7 @@ export class ThemeManager {
         newStyle = borderMissingStyle;
 
         // Apply custom border radius if configured
-        const customBorderRadius = settings.customBorderRadius;
+        const {customBorderRadius} = settings;
         if (customBorderRadius >= 0)
             newStyle = `${newStyle}border-radius: ${customBorderRadius}px; `;
 
