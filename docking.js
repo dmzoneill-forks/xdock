@@ -323,11 +323,13 @@ const DockedDash = GObject.registerClass({
             reactive: true,
             track_hover: true,
         });
-        this._box.connect('notify::hover', this._hoverChanged.bind(this));
-
         // Connect global signals
         this._signalsHandler = new Utils.GlobalSignalsHandler(this);
         this._signalsHandler.add([
+            this._box,
+            'notify::hover',
+            this._hoverChanged.bind(this),
+        ], [
             // update when workarea changes, for instance if  other extensions modify the struts
             // (like moving th panel at the bottom)
             global.display,
@@ -453,13 +455,25 @@ const DockedDash = GObject.registerClass({
                 return GLib.SOURCE_REMOVE;
             });
         };
-        this.connect('notify::allocation', scheduleRegionUpdate);
-
-        // Since Clutter has no longer ClutterAllocationFlags,
-        // "allocation-changed" signal has been removed. MR !1245
-        this.dash._container.connect('notify::allocation', this._updateStaticBox.bind(this));
-        this._slider.connect('notify::allocation', () => this._updateStaticBox());
-        this._slider.connect('notify::slide-x', scheduleRegionUpdate);
+        this._signalsHandler.add([
+            this,
+            'notify::allocation',
+            scheduleRegionUpdate,
+        ], [
+            // Since Clutter has no longer ClutterAllocationFlags,
+            // "allocation-changed" signal has been removed. MR !1245
+            this.dash._container,
+            'notify::allocation',
+            this._updateStaticBox.bind(this),
+        ], [
+            this._slider,
+            'notify::allocation',
+            () => this._updateStaticBox(),
+        ], [
+            this._slider,
+            'notify::slide-x',
+            scheduleRegionUpdate,
+        ]);
 
         // Load optional features that need to be activated for one dock only
         if (this.isMain)
@@ -501,15 +515,21 @@ const DockedDash = GObject.registerClass({
 
         // GNOME 50: the dock itself (a Chrome actor) can be hidden by struts
         // recalculation.  Re-show it immediately unless intentionally hidden.
-        this.connect('notify::visible', () => {
-            if (!this.visible && !Main.overview.visibleTarget &&
-                !DockManager.settings.manualhide) {
-                this.visible = true;
-                this.show();
-            }
-        });
-
-        this.connect('destroy', this._onDestroy.bind(this));
+        this._signalsHandler.add([
+            this,
+            'notify::visible',
+            () => {
+                if (!this.visible && !Main.overview.visibleTarget &&
+                    !DockManager.settings.manualhide) {
+                    this.visible = true;
+                    this.show();
+                }
+            },
+        ], [
+            this,
+            'destroy',
+            this._onDestroy.bind(this),
+        ]);
     }
 
     get position() {
@@ -554,11 +574,11 @@ const DockedDash = GObject.registerClass({
 
         if (this._position === St.Side.RIGHT) {
             this.translation_x = -this.width;
-            this.connect('notify::width', () =>
+            this._signalsHandler.add(this, 'notify::width', () =>
                 (this.translation_x = -this.width));
         } else if (this._position === St.Side.BOTTOM) {
             this.translation_y = -this.height;
-            this.connect('notify::height', () =>
+            this._signalsHandler.add(this, 'notify::height', () =>
                 (this.translation_y = -this.height));
         }
 
@@ -3646,6 +3666,7 @@ export class IconAnimator {
         this._animations = {
             wiggle: [],
         };
+        this._signalsHandler = new Utils.GlobalSignalsHandler();
         this._timeline = new Clutter.Timeline({
             duration: AnimationUtils.adjustAnimationTime(ICON_ANIMATOR_DURATION) || 1,
             repeat_count: -1,
@@ -3653,16 +3674,21 @@ export class IconAnimator {
         });
 
         this._updateSettings();
-        this._settingsChangedId = St.Settings.get().connect('notify',
-            () => this._updateSettings());
-
-        this._newFrameID = this._timeline.connect('new-frame', () => {
-            const progress = this._timeline.get_progress();
-            const wiggleRotation = progress < 1 / 6 ? 15 * Math.sin(progress * 24 * Math.PI) : 0;
-            const wigglers = this._animations.wiggle;
-            for (let i = 0, iMax = wigglers.length; i < iMax; i++)
-                wigglers[i].target.rotation_angle_z = wiggleRotation;
-        });
+        this._signalsHandler.add([
+            St.Settings.get(),
+            'notify',
+            () => this._updateSettings(),
+        ], [
+            this._timeline,
+            'new-frame',
+            () => {
+                const progress = this._timeline.get_progress();
+                const wiggleRotation = progress < 1 / 6 ? 15 * Math.sin(progress * 24 * Math.PI) : 0;
+                const wigglers = this._animations.wiggle;
+                for (let i = 0, iMax = wigglers.length; i < iMax; i++)
+                    wigglers[i].target.rotation_angle_z = wiggleRotation;
+            },
+        ]);
     }
 
     _updateSettings() {
@@ -3671,8 +3697,7 @@ export class IconAnimator {
     }
 
     destroy() {
-        St.Settings.get().disconnect(this._settingsChangedId);
-        this._timeline.disconnect(this._newFrameID);
+        this._signalsHandler.destroy();
         this._timeline.stop();
         delete this._timeline;
         for (const pairs of Object.values(this._animations)) {
