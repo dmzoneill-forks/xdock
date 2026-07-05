@@ -33,6 +33,9 @@ const RunningIndicatorStyle = Object.freeze({
     SOLID: 5,
     CILIORA: 6,
     METRO: 7,
+    BINARY: 8,
+    DOT: 9,
+    NONE: 10,
 });
 
 const MonitorsConfig = GObject.registerClass({
@@ -1001,11 +1004,15 @@ const DockSettings = GObject.registerClass({
             }
         );
 
-        if (this._settings.get_enum('running-indicator-style') === RunningIndicatorStyle.DEFAULT)
+        const indicatorStyle = this._settings.get_enum('running-indicator-style');
+        if (indicatorStyle === RunningIndicatorStyle.DEFAULT ||
+            indicatorStyle === RunningIndicatorStyle.NONE)
             this._builder.get_object('running_indicators_advance_settings_button').set_sensitive(false);
 
         this._settings.connect('changed::running-indicator-style', () => {
-            if (this._settings.get_enum('running-indicator-style') === RunningIndicatorStyle.DEFAULT)
+            const style = this._settings.get_enum('running-indicator-style');
+            if (style === RunningIndicatorStyle.DEFAULT ||
+                style === RunningIndicatorStyle.NONE)
                 this._builder.get_object('running_indicators_advance_settings_button').set_sensitive(false);
             else
                 this._builder.get_object('running_indicators_advance_settings_button').set_sensitive(true);

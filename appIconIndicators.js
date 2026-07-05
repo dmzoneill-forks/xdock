@@ -31,6 +31,7 @@ const RunningIndicatorStyle = Object.freeze({
     METRO: 7,
     BINARY: 8,
     DOT: 9,
+    NONE: 10,
 });
 
 const MAX_WINDOWS_CLASSES = 4;
@@ -100,6 +101,10 @@ export class AppIconIndicator {
 
         case RunningIndicatorStyle.DOT:
             runningIndicator = new RunningIndicatorDot(source);
+            break;
+
+        case RunningIndicatorStyle.NONE:
+            runningIndicator = new RunningIndicatorNone(source);
             break;
 
         default:
@@ -714,6 +719,24 @@ class RunningIndicatorDot extends RunningIndicatorDots {
         cr.strokePreserve();
         Utils.cairoSetSourceColor(cr, this._bodyColor);
         cr.fill();
+    }
+}
+
+// Hide all running indicators entirely
+class RunningIndicatorNone extends RunningIndicatorBase {
+    constructor(source) {
+        super(source);
+        this._hideDefaultDot();
+    }
+
+    update() {
+        // Do not call super.update() to avoid showing the default dot
+        this._updateCounterClass();
+    }
+
+    destroy() {
+        this._restoreDefaultDot();
+        super.destroy();
     }
 }
 
