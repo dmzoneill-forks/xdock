@@ -593,7 +593,6 @@ const DockedDash = GObject.registerClass({
             this._hoverCheckId = 0;
         }
 
-        this._restoreUnredirect();
         // Remove barrier timeout
         if (this._removeBarrierTimeoutId > 0) {
             GLib.source_remove(this._removeBarrierTimeoutId);
@@ -823,7 +822,8 @@ const DockedDash = GObject.registerClass({
         // of a fullscreen window of its monitor.
         // Otherwise the compositor-wide inhibition would prevent fullscreen
         // windows in other monitors to run in direct rendering mode.
-        if (!this.visible)
+        // Skip inhibition during fullscreen to preserve VRR/Freesync.
+        if (!this.visible || this._monitor?.inFullscreen)
             return false;
 
         switch (this.dockState) {
