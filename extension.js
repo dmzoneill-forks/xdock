@@ -11,13 +11,23 @@ export default class DashToDockExtension extends Extension.Extension {
         // TODO: Remove this when upstream will disable extensions on shutdown
         // See: https://gitlab.gnome.org/GNOME/gnome-shell/-/merge_requests/4214
         this._shutdownID = global.connect('shutdown', () => this.disable());
-        dockManager = new DockManager(this);
+        try {
+            dockManager = new DockManager(this);
+        } catch (e) {
+            // Prevent initialization errors from crashing the GNOME session.
+            logError(e, 'Dash-2-X: Failed to initialize DockManager');
+            dockManager = null;
+        }
     }
 
     disable() {
         global.disconnect(this._shutdownID);
         delete this._shutdownID;
-        dockManager?.destroy();
+        try {
+            dockManager?.destroy();
+        } catch (e) {
+            logError(e, 'Dash-2-X: Failed to destroy DockManager');
+        }
         dockManager = null;
     }
 }
