@@ -403,11 +403,25 @@ const DockedDash = GObject.registerClass({
         // anymore an update of the input regions. Force the update manually.
         // However, skip region updates while a panel popup menu is open (Quick
         // Settings, Notifications, etc.) to avoid stealing input from those menus.
-        this.connect('notify::allocation', () => {
+        // Use a deferred (idle) call to avoid re-entrant allocation loops that
+        // can crash the compositor (e.g. when the screenshot overlay appears and
+        // triggers stage view updates while the dock is mid-allocation).
+        this._regionUpdateScheduled = false;
+        const scheduleRegionUpdate = () => {
             if (Main.panel?.menuManager?.activeMenu)
                 return;
-            Main.layoutManager._queueUpdateRegions();
-        });
+            if (this._regionUpdateScheduled)
+                return;
+            this._regionUpdateScheduled = true;
+            GLib.idle_add(GLib.PRIORITY_DEFAULT, () => {
+                this._regionUpdateScheduled = false;
+                if (!this._staticBox)
+                    return GLib.SOURCE_REMOVE;
+                Main.layoutManager._queueUpdateRegions();
+                return GLib.SOURCE_REMOVE;
+            });
+        };
+        this.connect('notify::allocation', scheduleRegionUpdate);
 
 
         // Since Clutter has no longer ClutterAllocationFlags,
@@ -415,11 +429,7 @@ const DockedDash = GObject.registerClass({
         this.dash._container.connect('notify::allocation', this._updateStaticBox.bind(this));
         this._slider.connect(this._isHorizontal ? 'notify::x' : 'notify::y',
             this._updateStaticBox.bind(this));
-        this._slider.connect('notify::slide-x', () => {
-            if (Main.panel?.menuManager?.activeMenu)
-                return;
-            Main.layoutManager._queueUpdateRegions();
-        });
+        this._slider.connect('notify::slide-x', scheduleRegionUpdate);
 
         // Load optional features that need to be activated for one dock only
         if (this.isMain)
