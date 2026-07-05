@@ -264,7 +264,6 @@ const DockSettings = GObject.registerClass({
 
         this._updatingSettings = true;
         this._settings.set_string('preferred-monitor-by-connector', preferredMonitor);
-        this._settings.set_int('preferred-monitor', -2);
         this._updatingSettings = false;
     }
 
@@ -382,7 +381,6 @@ const DockSettings = GObject.registerClass({
 
     _updateMonitorsSettings() {
         // Monitor options
-        const preferredMonitor = this._settings.get_int('preferred-monitor');
         const preferredMonitorByConnector = this._settings.get_string('preferred-monitor-by-connector');
         const dockMonitorCombo = this._builder.get_object('dock_monitor_combo');
 
@@ -392,7 +390,7 @@ const DockSettings = GObject.registerClass({
 
         // Add connected monitors
         for (const monitor of this._monitorsConfig.monitors) {
-            if (!monitor.active && monitor.index !== preferredMonitor)
+            if (!monitor.active)
                 continue;
 
             if (monitor.isPrimary) {
@@ -410,8 +408,7 @@ const DockSettings = GObject.registerClass({
 
             this._monitors.push(monitor);
 
-            if (monitor.index === preferredMonitor ||
-                (preferredMonitor === -2 && preferredMonitorByConnector === monitor.connector))
+            if (preferredMonitorByConnector === monitor.connector)
                 dockMonitorCombo.set_active(this._monitors.length - 1);
         }
 
@@ -429,8 +426,6 @@ const DockSettings = GObject.registerClass({
 
         this._updateMonitorsSettings();
         this._monitorsConfig.connect('updated',
-            () => this._updateMonitorsSettings());
-        this._settings.connect('changed::preferred-monitor',
             () => this._updateMonitorsSettings());
         this._settings.connect('changed::preferred-monitor-by-connector',
             () => this._updateMonitorsSettings());
