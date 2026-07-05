@@ -1,4 +1,6 @@
 #!/usr/bin/env gjs
+// SPDX-License-Identifier: GPL-2.0-or-later
+// SPDX-FileCopyrightText: Contributors to Dash 2 X
 
 import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
