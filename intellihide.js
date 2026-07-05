@@ -30,17 +30,17 @@ const IntellihideMode = Object.freeze({
 });
 
 // List of windows type taken into account. Order is important (keep the original
-// enum order).
+// enum order).  MENU and DROPDOWN_MENU are intentionally excluded: transient
+// popup and context sub-menus from applications should not alter the dock's
+// overlap status (see issue #141).
 const handledWindowTypes = [
     Meta.WindowType.NORMAL,
     Meta.WindowType.DOCK,
     Meta.WindowType.DIALOG,
     Meta.WindowType.MODAL_DIALOG,
     Meta.WindowType.TOOLBAR,
-    Meta.WindowType.MENU,
     Meta.WindowType.UTILITY,
     Meta.WindowType.SPLASHSCREEN,
-    Meta.WindowType.DROPDOWN_MENU,
 ];
 
 // List of applications, ignore windows of these applications in considering intellihide
