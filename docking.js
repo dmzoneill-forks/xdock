@@ -934,7 +934,8 @@ const DockedDash = GObject.registerClass({
             this.dash.show();
         }
 
-        this._box.sync_hover();
+        if (this._box?.get_stage())
+            this._box.sync_hover();
         // Force intellihide to recheck overlap after overview is hidden
         if (this._intellihideIsEnabled)
             this._intellihide.forceUpdate();
@@ -947,7 +948,8 @@ const DockedDash = GObject.registerClass({
 
     _onMenuClosed() {
         this._ignoreHover = false;
-        this._box.sync_hover();
+        if (this._box?.get_stage())
+            this._box.sync_hover();
         this._hoverChanged();
         this._updateDashVisibility();
     }
@@ -1204,6 +1206,11 @@ const DockedDash = GObject.registerClass({
         // in such case the leave event would never be triggered and the dock
         // would stay visible forever.
         this._triggerTimeoutId =  GLib.timeout_add(GLib.PRIORITY_DEFAULT, 250, () => {
+            // Guard against accessing destroyed state
+            if (!this._staticBox || !this._monitor) {
+                this._triggerTimeoutId = 0;
+                return GLib.SOURCE_REMOVE;
+            }
             const [x, y, mods_] = global.get_pointer();
             let shouldHide = true;
             switch (this._position) {
@@ -1419,6 +1426,13 @@ const DockedDash = GObject.registerClass({
     }
 
     _updateStaticBox() {
+        // Guard: skip if the dock's box is not on stage (e.g. during
+        // destruction or workspace switch transitions).  Calling
+        // get_transformed_position on an unmapped actor triggers warnings
+        // and can contribute to SIGSEGV crashes.
+        if (!this._box?.get_stage())
+            return;
+
         // Base the static box on transformed coordinates, then normalize only the
         // sliding axis so overlap checks always use the fully visible dock edge.
         let [staticX, staticY] = this._box.get_transformed_position();
@@ -1465,7 +1479,8 @@ const DockedDash = GObject.registerClass({
         if (this._oldIgnoreHover)
             this._ignoreHover = this._oldIgnoreHover;
         this._oldIgnoreHover = null;
-        this._box.sync_hover();
+        if (this._box?.get_stage())
+            this._box.sync_hover();
         this._updateDashVisibility();
     }
 
