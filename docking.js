@@ -773,6 +773,15 @@ const DockedDash = GObject.registerClass({
     }
 
     _disableUnredirect() {
+        // Do not disable unredirection when a monitor is in fullscreen.
+        // Disabling unredirect forces the compositor to composite every
+        // frame, which breaks VRR/Freesync on fullscreen applications.
+        // The dock should not need to be rendered on top of a fullscreen
+        // surface anyway (unless autohide-in-fullscreen is explicitly
+        // enabled, which has its own visibility logic) (#62).
+        if (this._monitor?.inFullscreen)
+            return;
+
         if (!this._unredirectDisabled) {
             if (Meta.disable_unredirect_for_display !== undefined)
                 Meta.disable_unredirect_for_display(global.display);
