@@ -85,10 +85,13 @@ class DockDashItemContainer extends Dash.DashItemContainer {
             duration: animate ? DASH_ANIMATION_TIME : 0,
             mode: Clutter.AnimationMode.EASE_OUT_QUAD,
             onComplete: () => {
-                // when the animation is ended, we simulate
-                // a hover to gain back focus and unblur the
-                // background
+                // Force a re-render to unblur the icon background by
+                // toggling hover on and immediately off.  Previously
+                // only set_hover(true) was called, which left the icon
+                // in hover state and caused neighbouring icons to shift
+                // position, producing the visible shake/flicker (#104).
                 this.set_hover(true);
+                this.set_hover(false);
             },
         });
     }
