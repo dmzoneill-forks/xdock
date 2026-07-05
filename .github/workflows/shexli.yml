@@ -20,7 +20,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install shexli
-        run: pip install shexli 'tree-sitter==0.23.2' 'tree-sitter-javascript==0.23.1'
+        run: pip install 'tree-sitter==0.23.2' 'tree-sitter-javascript==0.23.1' && pip install --no-deps shexli
 
       - name: Install build dependencies
         run: sudo apt-get install -y sassc gettext
