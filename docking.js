@@ -912,6 +912,14 @@ const DockedDash = GObject.registerClass({
         });
 
         if (!this._ignoreHover && !hasOpenPreviewMenu) {
+            // Never show the dock via hover when the monitor is in fullscreen
+            // and autohide-in-fullscreen is enabled (multi-monitor case).
+            if (DockManager.settings.autohideInFullscreen &&
+                this._monitor.inFullscreen) {
+                this._hide();
+                return;
+            }
+
             // Skip if dock is not in autohide mode for instance because it is shown
             // by intellihide.
             if (this._autohideIsEnabled) {
