@@ -372,13 +372,20 @@ export const DockAbstractAppIcon = GObject.registerClass({
     _updateFocusState() {
         let isFocused;
         isFocused = Docking.DockManager.windowTracker.focus_app === this.app;
+        // Fallback when focus_app is stale or references a different app
+        // object than this pinned icon (#122).
+        if (!isFocused) {
+            const focusWin = global.display.focus_window;
+            if (focusWin)
+                isFocused = Docking.DockManager.windowTracker.get_window_app(focusWin) ===
+                    this.app;
+        }
         // When isolate-monitors is active, only show focus if the focused
         // window actually belongs to this monitor (#105).
         if (isFocused && Docking.DockManager.settings.isolateMonitors) {
             const focusWin = global.display.focus_window;
             if (focusWin)
                 isFocused = focusWin.get_monitor() === this.monitorIndex;
-        }
         this.focused = isFocused && this.running;
     }
 
@@ -1148,6 +1155,8 @@ const DockAppIcon = GObject.registerClass({
 
         const {windowTracker} = Docking.DockManager;
         this._signalsHandler.add(windowTracker, 'notify::focus-app',
+            () => this._updateFocusState());
+        this._signalsHandler.add(global.display, 'notify::focus-window',
             () => this._updateFocusState());
     }
 });
