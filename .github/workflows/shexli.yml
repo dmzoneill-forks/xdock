@@ -1,0 +1,56 @@
+---
+name: shexli
+'on':
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  shexli:
+    name: GNOME Extensions Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install shexli
+        run: pip install shexli 'tree-sitter==0.23.2' 'tree-sitter-javascript==0.23.1'
+
+      - name: Install build dependencies
+        run: sudo apt-get install -y sassc gettext
+
+      - name: Build extension
+        run: make
+
+      - name: Create extension zip
+        run: |
+          make _build
+          cd _build && zip -qr ../extension.zip .
+
+      - name: Run shexli
+        run: |
+          set +e
+          output=$(shexli extension.zip 2>&1)
+          rc=$?
+          echo "$output"
+
+          errors=$(echo "$output" | grep -oP '(\d+)\s+error' | grep -oP '^\d+' || echo "0")
+          if [ -z "$errors" ]; then
+            errors=0
+          fi
+
+          echo "Errors found: $errors"
+
+          if [ "$errors" -gt 0 ]; then
+            echo "::error::shexli reported $errors error(s)"
+            exit 1
+          fi
+
+          echo "shexli passed (warnings are allowed)"
+          exit 0
