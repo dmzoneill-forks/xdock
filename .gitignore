@@ -9,3 +9,6 @@ Settings.ui.h
 _build
 dash-2-x@github.com.zip
 venv/
+node_modules/
+package.json
+package-lock.json
