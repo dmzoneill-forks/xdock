@@ -466,7 +466,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
     popupMenu() {
         this._removeMenuTimeout?.();
         this.fake_release();
-        this._draggable.fakeRelease?.();
+        this._draggable?.fakeRelease?.();
 
         // Close hover-opened preview menus when opening right-click menu
         if (this._previewMenu) {
@@ -1142,14 +1142,27 @@ const DockLocationAppIcon = GObject.registerClass({
 
         super._init(app, monitorIndex, iconAnimator);
 
-        if (Docking.DockManager.settings.isolateLocations) {
-            this._signalsHandler.add(tracker, 'notify::focus-app', () => this._updateFocusState());
+        if (app._categoryIconInstance) {
+            this._setupCompositeIcon(app._categoryIconInstance);
+            this.popupMenu = () => {};
         } else {
-            this._signalsHandler.add(global.display, 'notify::focus-window',
-                () => this._updateFocusState());
+            if (Docking.DockManager.settings.isolateLocations) {
+                this._signalsHandler.add(tracker, 'notify::focus-app', () => this._updateFocusState());
+            } else {
+                this._signalsHandler.add(global.display, 'notify::focus-window',
+                    () => this._updateFocusState());
+            }
+            this._signalsHandler.add(this.app, 'notify::icon', () => this.icon.update());
         }
+    }
 
-        this._signalsHandler.add(this.app, 'notify::icon', () => this.icon.update());
+    _setupCompositeIcon(categoryIcon) {
+        // Override createIcon so it always creates a fresh composite (BaseIcon destroys the previous one)
+        this.icon.createIcon = size => categoryIcon.createCompositeIcon(size);
+        categoryIcon._baseIcon = this.icon;
+        this.icon._createIconTexture(this.icon.iconSize);
+        // Override getDragActor so the composite icon appears when dragging
+        this.getDragActor = () => categoryIcon.createCompositeIcon(this.icon.iconSize);
     }
 
     get location() {
@@ -1348,6 +1361,8 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
 
             const canFavorite = global.settings.is_writable('favorite-apps') &&
                 (this.sourceActor instanceof DockAppIcon) &&
+                !this.sourceActor._d2dInCategoryId &&
+                !this.sourceActor._d2dIsTransient &&
                 ParentalControlsManager.getDefault().shouldShowApp(app.appInfo);
 
             if (canFavorite) {
