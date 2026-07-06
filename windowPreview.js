@@ -39,6 +39,11 @@ const HOVER_ENTER_TIMEOUT = 300;
 const HOVER_MENU_LEAVE_TIMEOUT = 300;
 const WINDOW_INIT_TIMEOUT = 200;
 
+const Labels = Object.freeze({
+    HOVER: Symbol('hover'),
+    WINDOW_ADDED: Symbol('window-added'),
+});
+
 export class WindowPreviewMenu extends PopupMenu.PopupMenu {
     constructor(source) {
         super(source, 0.5, Utils.getPosition());
@@ -60,23 +65,20 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
 
         this.actor.hide();
 
+        this._signalsHandler = new Utils.GlobalSignalsHandler();
+
         // Chain our visibility and lifecycle to that of the source
-        this._mappedId = this._source.connect('notify::mapped', () => {
+        this._signalsHandler.add(this._source, 'notify::mapped', () => {
             if (!this._source.mapped)
                 this.close();
         });
-        this._destroyId = this._source.connect('destroy', this.destroy.bind(this));
+        this._signalsHandler.add(this._source, 'destroy', this.destroy.bind(this));
 
         Utils.addActor(Main.uiGroup, this.actor);
 
-        this._enterSourceId = 0;
-        this._leaveSourceId = 0;
-        this._enterMenuId = 0;
-        this._leaveMenuId = 0;
         this._hoverOpenTimeoutId = null;
         this._hoverCloseTimeoutId = null;
         this.fromHover = false;
-        this._windowsChangedId = 0;
 
         this.connect('destroy', this._onDestroy.bind(this));
     }
@@ -180,16 +182,18 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
         this._boxPointer.bin.set_reactive(true);
         this._boxPointer.bin.set_track_hover(true);
 
-        this._enterSourceId = this._source.connect('enter-event', () => this._onEnter());
-        this._leaveSourceId = this._source.connect('leave-event', () => this._onLeave());
+        this._signalsHandler.addWithLabel(Labels.HOVER,
+            this._source, 'enter-event', () => this._onEnter());
+        this._signalsHandler.addWithLabel(Labels.HOVER,
+            this._source, 'leave-event', () => this._onLeave());
 
-        this._enterMenuId = this._boxPointer.bin.connect('enter-event',
-            () => this._onMenuEnter());
-        this._leaveMenuId = this._boxPointer.bin.connect('leave-event',
-            () => this._onMenuLeave());
+        this._signalsHandler.addWithLabel(Labels.HOVER,
+            this._boxPointer.bin, 'enter-event', () => this._onMenuEnter());
+        this._signalsHandler.addWithLabel(Labels.HOVER,
+            this._boxPointer.bin, 'leave-event', () => this._onMenuLeave());
 
-        this._windowsChangedId = this._app.connect('windows-changed',
-            () => this._onWindowsChanged());
+        this._signalsHandler.addWithLabel(Labels.HOVER,
+            this._app, 'windows-changed', () => this._onWindowsChanged());
     }
 
     disableHover() {
@@ -203,28 +207,7 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
         this.cancelOpen();
         this.cancelClose();
 
-        if (this._enterSourceId) {
-            this._source.disconnect(this._enterSourceId);
-            this._enterSourceId = 0;
-        }
-        if (this._leaveSourceId) {
-            this._source.disconnect(this._leaveSourceId);
-            this._leaveSourceId = 0;
-        }
-
-        if (this._enterMenuId) {
-            this._boxPointer.bin.disconnect(this._enterMenuId);
-            this._enterMenuId = 0;
-        }
-        if (this._leaveMenuId) {
-            this._boxPointer.bin.disconnect(this._leaveMenuId);
-            this._leaveMenuId = 0;
-        }
-
-        if (this._windowsChangedId) {
-            this._app.disconnect(this._windowsChangedId);
-            this._windowsChangedId = 0;
-        }
+        this._signalsHandler.removeWithLabel(Labels.HOVER);
     }
 
     _onEnter() {
@@ -364,11 +347,7 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
     _onDestroy() {
         this.disableHover();
 
-        if (this._mappedId)
-            this._source.disconnect(this._mappedId);
-
-        if (this._destroyId)
-            this._source.disconnect(this._destroyId);
+        this._signalsHandler.destroy();
     }
 }
 
@@ -401,15 +380,15 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
         this._source = source;
         this.app = source.app;
         this._isHoverMenu = isHoverMenu;
+        this._signalsHandler = new Utils.GlobalSignalsHandler();
 
         if (!isHoverMenu) {
             this._redisplayId = Main.initializeDeferredWork(this.actor,
                 this._redisplay.bind(this));
-            this._stateChangedId = this.app.connect('windows-changed',
+            this._signalsHandler.add(this.app, 'windows-changed',
                 this._queueRedisplay.bind(this));
         } else {
             this._redisplayId = null;
-            this._stateChangedId = 0;
         }
 
         this.actor.connect('destroy', this._onDestroy.bind(this));
@@ -468,10 +447,7 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
     }
 
     _onDestroy() {
-        if (this._stateChangedId > 0) {
-            this.app.disconnect(this._stateChangedId);
-            this._stateChangedId = 0;
-        }
+        this._signalsHandler.destroy();
 
         if (this._redisplayId)
             this._redisplayId = null;
@@ -628,8 +604,7 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         super._init(params);
 
         this._window = window;
-        this._destroyId = 0;
-        this._windowAddedId = 0;
+        this._signalsHandler = new Utils.GlobalSignalsHandler(this);
         this._peekingWindows = [];
 
         // We don't want this: it adds spacing on the left of the item.
@@ -681,7 +656,7 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
             x_align: Clutter.ActorAlign.CENTER,
         });
 
-        this._windowTitleId = this._window.connect('notify::title', () => {
+        this._signalsHandler.add(this._window, 'notify::title', () => {
             label.set_text(this._window.get_title());
         });
 
@@ -785,10 +760,8 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
 
         // when the source actor is destroyed, i.e. the window closed, first destroy the clone
         // and then destroy the menu item (do this animating out)
-        this._destroyId = mutterWindow.connect('destroy', () => {
+        this._signalsHandler.add(mutterWindow, 'destroy', () => {
             clone.destroy();
-            this._destroyId = 0; // avoid to try to disconnect this signal from mutterWindow in _onDestroy(),
-            // as the object was just destroyed
             this._animateOutAndDestroy();
         });
 
@@ -796,13 +769,6 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         this._mutterWindow = mutterWindow;
         this._cloneBin.set_child(this._clone);
 
-        this._clone.connect('destroy', () => {
-            if (this._destroyId) {
-                mutterWindow.disconnect(this._destroyId);
-                this._destroyId = 0;
-            }
-            this._clone = null;
-        });
     }
 
     _windowCanClose() {
@@ -817,7 +783,8 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         // It forces window activation if the windows don't get closed,
         // for instance because asking user confirmation, by monitoring the opening of
         // such additional confirmation window
-        this._windowAddedId = this._workspace.connect('window-added',
+        this._signalsHandler.addWithLabel(Labels.WINDOW_ADDED,
+            this._workspace, 'window-added',
             this._onWindowAdded.bind(this));
 
         this.deleteAllWindows();
@@ -837,12 +804,12 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         this._window.delete(global.get_current_time());
     }
 
-    _onWindowAdded(workspace, win) {
+    _onWindowAdded(_workspace, win) {
         const metaWindow = this._window;
 
         if (win.get_transient_for() === metaWindow) {
-            workspace.disconnect(this._windowAddedId);
-            this._windowAddedId = 0;
+            // Remove the window-added handler now that it has fired
+            this._signalsHandler.removeWithLabel(Labels.WINDOW_ADDED);
 
             // use an idle handler to avoid mapping problems -
             // see comment in Workspace._windowAdded
@@ -1017,19 +984,8 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
             delete this._windowAddedLater;
         }
 
-        if (this._windowAddedId > 0) {
-            this._workspace.disconnect(this._windowAddedId);
-            this._windowAddedId = 0;
-        }
-
-        if (this._destroyId > 0) {
-            this._mutterWindow.disconnect(this._destroyId);
-            this._destroyId = 0;
-        }
-
-        if (this._windowTitleId > 0) {
-            this._window.disconnect(this._windowTitleId);
-            this._windowTitleId = 0;
-        }
+        // All signal connections (window title, mutter window destroy,
+        // workspace window-added) are cleaned up by the GlobalSignalsHandler
+        // which auto-destroys with this actor.
     }
 });
