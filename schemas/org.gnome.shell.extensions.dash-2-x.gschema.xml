@@ -773,6 +773,10 @@
       <default><![CDATA[['<Super>space']]]></default>
       <summary>Command palette keyboard shortcut</summary>
       <description>Keyboard shortcut to toggle the dock command palette.</description>
+    <key name="live-window-thumbnails" type="b">
+      <default>false</default>
+      <summary>Show live window thumbnails as dock icons</summary>
+      <description>Replace static app icons with live miniature previews of running app windows. The thumbnail updates in real time and reverts to the static icon when the app is not running.</description>
     </key>
   </schema>
 </schemalist>

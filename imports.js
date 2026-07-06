@@ -15,6 +15,7 @@ export * as Extension from './extension.js';
 export * as FileManager1API from './fileManager1API.js';
 export * as Intellihide from './intellihide.js';
 export * as LauncherAPI from './launcherAPI.js';
+export * as LiveThumbnails from './liveThumbnails.js';
 export * as Locations from './locations.js';
 export * as MediaControls from './mediaControls.js';
 export * as MprisMonitor from './mprisMonitor.js';
