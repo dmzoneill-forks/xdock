@@ -37,6 +37,7 @@ import {
     Intellihide,
     LauncherAPI,
     Locations,
+    MprisMonitor,
     NotificationsMonitor,
     ScreencastMonitor,
     Theming,
@@ -2213,6 +2214,7 @@ export class DockManager {
         this._notificationsMonitor = new NotificationsMonitor.NotificationsMonitor();
         this._windowTracker = Shell.WindowTracker.get_default();
         this._screencastMonitor = new ScreencastMonitor.ScreencastMonitor();
+        this._mprisMonitor = new MprisMonitor.MprisMonitor();
 
         const needsRemoteModel = () =>
             !this._notificationsMonitor.dndMode && this._settings.showIconsEmblems;
@@ -2828,6 +2830,10 @@ export class DockManager {
 
     get screencastMonitor() {
         return this._screencastMonitor;
+    }
+
+    get mprisMonitor() {
+        return this._mprisMonitor;
     }
 
     getDockByMonitor(monitorIndex) {
@@ -3687,6 +3693,8 @@ export class DockManager {
         }
         this._notificationsMonitor.destroy();
         this._screencastMonitor.destroy();
+        this._mprisMonitor?.destroy();
+        this._mprisMonitor = null;
         this._appSpread.destroy();
         this._trash?.destroy();
         this._trash = null;
