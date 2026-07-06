@@ -42,6 +42,7 @@ import {
     NotificationsMonitor,
     ScreencastMonitor,
     SpringAnimation,
+    PinnedCommands,
     Theming,
     Utils,
     VolumeControl,
@@ -2410,6 +2411,10 @@ export class DockManager {
         return this._trash;
     }
 
+    get pinnedCommandsManager() {
+        return this._pinnedCommandsManager;
+    }
+
     get categoryIcons() {
         return this._categoryIcons ?? [];
     }
@@ -3026,6 +3031,17 @@ export class DockManager {
                 this._categoryIcons[i] = new Locations.CategoryIcon(configs[i]);
         }
         // ───────────────────────────────────────────────────────────
+
+        // ── Pinned Commands ─────────────────────────────────────────
+        if (this.settings.showPinnedCommands) {
+            if (!this._pinnedCommandsManager)
+                this._pinnedCommandsManager = new PinnedCommands.PinnedCommandsManager();
+        } else if (this._pinnedCommandsManager) {
+            this._pinnedCommandsManager.destroy();
+            this._pinnedCommandsManager = null;
+        }
+        // ───────────────────────────────────────────────────────────
+
         Locations.unWrapFileManagerApp();
         [this._methodInjections, this._propertyInjections].forEach(
             injections => injections.removeWithLabel(Labels.LOCATIONS));
@@ -3243,6 +3259,30 @@ export class DockManager {
             this._settings,
             'changed::isolate-locations',
             () => this._ensureLocations(),
+        ], [
+            this._settings,
+            'changed::user-categories',
+            () => {
+                this._ensureLocations();
+                DockManager.allDocks.forEach(dock => dock.dash._queueRedisplay());
+            },
+        ], [
+            this._settings,
+            'changed::show-pinned-commands',
+            () => {
+                this._ensureLocations();
+                DockManager.allDocks.forEach(dock => dock.dash.resetAppIcons());
+            },
+        ], [
+            this._settings,
+            'changed::pinned-commands',
+            () => {
+                DockManager.allDocks.forEach(dock => dock.dash._queueRedisplay());
+            },
+        ], [
+            AppFavorites.getAppFavorites(),
+            'changed',
+            () => this._syncDockOrderWithFavorites(),
         ], [
             this._settings,
             'changed::intellihide',
@@ -3883,6 +3923,10 @@ export class DockManager {
         this._appSpread.destroy();
         this._trash?.destroy();
         this._trash = null;
+        this._pinnedCommandsManager?.destroy();
+        this._pinnedCommandsManager = null;
+        this._categoryIcons?.forEach(ci => ci.destroy());
+        this._categoryIcons = [];
         Locations.unWrapFileManagerApp();
         this._removables?.destroy();
         this._removables = null;
