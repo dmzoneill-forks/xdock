@@ -1228,7 +1228,7 @@ function makeLocationApp(params) {
         /* eslint-enable no-invalid-this */
     });
 
-    const {fm1Client} = Docking.DockManager.getDefault();
+    const {fm1Client} = Docking.DockManager.getDefault() ?? {};
     shellApp._setDtdData({
         _needsResort: true,
 
@@ -1295,7 +1295,10 @@ export function wrapFileManagerApp() {
     const originalGetWindows = fileManagerApp.get_windows;
     wrapWindowsBackedApp(fileManagerApp);
 
-    const {removables, trash} = Docking.DockManager.getDefault();
+    const dockManager = Docking.DockManager.getDefault();
+    if (!dockManager)
+        return null;
+    const {removables, trash} = dockManager;
     fileManagerApp._signalConnections.addWithLabel(Labels.WINDOWS_CHANGED,
         fileManagerApp, 'windows-changed', () => {
             fileManagerApp.stop_emission_by_name('windows-changed');
@@ -1470,7 +1473,7 @@ class CategoryPanel {
         this._categoryData = categoryData;
         this._onClose = onClose;
 
-        const {mainDock} = Docking.DockManager.getDefault();
+        const {mainDock} = Docking.DockManager.getDefault() ?? {};
         this._iconSize = mainDock?.dash?.iconSize ?? 48;
         this._position = Utils.getPosition();
 
@@ -1604,7 +1607,7 @@ class CategoryPanel {
     }
 
     _syncTheme() {
-        const {mainDock} = Docking.DockManager.getDefault();
+        const {mainDock} = Docking.DockManager.getDefault() ?? {};
         if (!mainDock)
             return;
 
@@ -1630,7 +1633,7 @@ class CategoryPanel {
         this.isOpen = true;
 
         // Keep dock visible while panel is open
-        this._dash = Docking.DockManager.getDefault().mainDock?.dash;
+        this._dash = Docking.DockManager.getDefault()?.mainDock?.dash;
         if (this._dash)
             this._dash.requiresVisibility = true;
 
@@ -1692,7 +1695,7 @@ class CategoryPanel {
         });
 
         // Close panel when dock hides — connect with delay
-        const {mainDock} = Docking.DockManager.getDefault();
+        const {mainDock} = Docking.DockManager.getDefault() ?? {};
         if (mainDock) {
             GLib.timeout_add(GLib.PRIORITY_DEFAULT, 600, () => {
                 if (!this.isOpen)
@@ -1794,7 +1797,7 @@ class CategoryPanel {
         }
 
         if (this._dockHidingId) {
-            Docking.DockManager.getDefault().mainDock?.disconnect(this._dockHidingId);
+            Docking.DockManager.getDefault()?.mainDock?.disconnect(this._dockHidingId);
             this._dockHidingId = null;
         }
         if (this._overlay) {
@@ -1813,7 +1816,7 @@ class CategoryPanel {
 
     destroy() {
         if (this._dockHidingId) {
-            Docking.DockManager.getDefault().mainDock?.disconnect(this._dockHidingId);
+            Docking.DockManager.getDefault()?.mainDock?.disconnect(this._dockHidingId);
             this._dockHidingId = null;
         }
         if (this._overlay) {
@@ -2156,6 +2159,8 @@ Signals.addSignalMethods(Removables.prototype);
  */
 function getApps() {
     const dockManager = Docking.DockManager.getDefault();
+    if (!dockManager)
+        return [];
     const locationApps = [];
 
     if (dockManager.removables)

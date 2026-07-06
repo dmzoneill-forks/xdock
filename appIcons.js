@@ -192,7 +192,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         });
         this.notify('updating');
 
-        const {notificationsMonitor} = Docking.DockManager.getDefault();
+        const {notificationsMonitor} = Docking.DockManager.getDefault() ?? {};
 
         this._signalsHandler.add(this, 'notify::urgent', () => {
             const icon = this.icon._iconBin;
@@ -410,8 +410,8 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (this.focused && Docking.DockManager.settings.clearNotificationsOnFocus) {
             const appId = this.app?.id;
             if (appId) {
-                const {notificationsMonitor} = Docking.DockManager.getDefault();
-                notificationsMonitor.acknowledgeAppNotifications(appId);
+                const {notificationsMonitor} = Docking.DockManager.getDefault() ?? {};
+                notificationsMonitor?.acknowledgeAppNotifications(appId);
             }
         }
     }
@@ -612,12 +612,12 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
         switch (buttonAction) {
         case clickAction.FOCUS_OR_APP_SPREAD:
-            if (!Docking.DockManager.getDefault().appSpread.supported)
+            if (!Docking.DockManager.getDefault()?.appSpread?.supported)
                 buttonAction = clickAction.FOCUS_OR_PREVIEWS;
             break;
 
         case clickAction.FOCUS_MINIMIZE_OR_APP_SPREAD:
-            if (!Docking.DockManager.getDefault().appSpread.supported)
+            if (!Docking.DockManager.getDefault()?.appSpread?.supported)
                 buttonAction = clickAction.FOCUS_MINIMIZE_OR_PREVIEWS;
             break;
         }
@@ -802,7 +802,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
             case clickAction.FOCUS_OR_APP_SPREAD:
                 if (effectiveFocused && !singleOrUrgentWindows && !modifiers && button === 1) {
                     shouldHideOverview = false;
-                    Docking.DockManager.getDefault().appSpread.toggle(this.app);
+                    Docking.DockManager.getDefault()?.appSpread?.toggle(this.app);
                 } else {
                     // Activate the first window
                     Main.activateWindow(windows[0]);
@@ -812,7 +812,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
             case clickAction.FOCUS_MINIMIZE_OR_APP_SPREAD:
                 if (effectiveFocused && !singleOrUrgentWindows && !modifiers && button === 1) {
                     shouldHideOverview = false;
-                    Docking.DockManager.getDefault().appSpread.toggle(this.app);
+                    Docking.DockManager.getDefault()?.appSpread?.toggle(this.app);
                 } else if (!effectiveFocused) {
                     // Activate the first window
                     Main.activateWindow(windows[0]);
@@ -1290,7 +1290,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
 
         Main.uiGroup.add_child(this.actor);
 
-        const {remoteModel} = Docking.DockManager.getDefault();
+        const {remoteModel} = Docking.DockManager.getDefault() ?? {};
         const remoteModelApp = remoteModel?.lookupById(this.sourceActor?.app?.id);
         if (remoteModelApp && DBusMenu) {
             const [onQuickList, onDynamicSection] = Utils.splitHandler((sender,
@@ -1402,7 +1402,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
             }
 
             if (!this.sourceActor.updating &&
-                Docking.DockManager.getDefault().discreteGpuAvailable &&
+                Docking.DockManager.getDefault()?.discreteGpuAvailable &&
                 app.state === Shell.AppState.STOPPED) {
                 const appPrefersNonDefaultGPU = appInfo.get_boolean('PrefersNonDefaultGPU');
                 const gpuPref = appPrefersNonDefaultGPU

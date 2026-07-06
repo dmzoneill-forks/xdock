@@ -1468,7 +1468,9 @@ const DockedDash = GObject.registerClass({
         if (!this._intellihideIsEnabled)
             return;
 
-        const {desktopIconsUsableArea} = DockManager.getDefault();
+        const {desktopIconsUsableArea} = DockManager.getDefault() ?? {};
+        if (!desktopIconsUsableArea)
+            return;
         if (this._position === St.Side.BOTTOM)
             desktopIconsUsableArea.setMargins(this.monitorIndex, 0, this._box.height, 0, 0);
         else if (this._position === St.Side.TOP)
@@ -1812,7 +1814,9 @@ const KeyboardShortcuts = class DashToDockKeyboardShortcuts {
         // Setup keyboard bindings for dash elements
         // Super+N activates the app, Super+Shift+N cycles backwards through
         // its windows, and Super+Ctrl+N opens a new window.
-        const {mainDock} = DockManager.getDefault();
+        const {mainDock} = DockManager.getDefault() ?? {};
+        if (!mainDock)
+            return;
         for (let i = 0; i < NUM_HOTKEYS; i++) {
             const appNum = i;
             Main.wm.addKeybinding(`app-hotkey-${i + 1}`, DockManager.settings,
@@ -2109,15 +2113,15 @@ export class DockManager {
     }
 
     static get allDocks() {
-        return DockManager.getDefault()._allDocks;
+        return DockManager.getDefault()?._allDocks ?? [];
     }
 
     static get extension() {
-        return DockManager.getDefault().extension;
+        return DockManager.getDefault()?.extension ?? null;
     }
 
     static get settings() {
-        return DockManager.getDefault().settings;
+        return DockManager.getDefault()?.settings ?? null;
     }
 
     get extension() {
@@ -2129,7 +2133,7 @@ export class DockManager {
     }
 
     static get iconTheme() {
-        return DockManager.getDefault().iconTheme;
+        return DockManager.getDefault()?.iconTheme ?? null;
     }
 
     get settings() { // eslint-disable-line no-dupe-class-members
@@ -2946,7 +2950,7 @@ export class DockManager {
                 const box = workspaceBoxOriginFixer.call(this, originalFunction, state, ...args);
                 // GNOME 46 changes "spacing" to "_spacing".
                 const spacing = this.spacing ?? this._spacing;
-                const dock = DockManager.getDefault().getDockByMonitor(Main.layoutManager.primaryIndex);
+                const dock = DockManager.getDefault()?.getDockByMonitor(Main.layoutManager.primaryIndex);
                 if (!dock)
                     return box;
                 else
@@ -2962,7 +2966,7 @@ export class DockManager {
                     return originalFunction.call(this, state, ...args);
 
                 const box = workspaceBoxOriginFixer.call(this, originalFunction, state, ...args);
-                const dock = DockManager.getDefault().getDockByMonitor(this._monitorIndex);
+                const dock = DockManager.getDefault()?.getDockByMonitor(this._monitorIndex);
                 if (!dock)
                     return box;
                 if (state === OverviewControls.ControlsState.WINDOW_PICKER &&
@@ -2989,7 +2993,7 @@ export class DockManager {
                 /* eslint-disable no-invalid-this */
                 if (this.constructor.name === 'CtrlAltTabPopup') {
                     const dockManager = DockManager.getDefault();
-                    if (dockManager._inCtrlAltTabSwitcher)
+                    if (!dockManager || dockManager._inCtrlAltTabSwitcher)
                         return;
 
                     dockManager._inCtrlAltTabSwitcher = true;
@@ -3041,7 +3045,7 @@ export class DockManager {
                     this._monitorIndex === Main.layoutManager.primaryIndex)
                     return box;
 
-                const dock = DockManager.getDefault().getDockByMonitor(this._monitorIndex);
+                const dock = DockManager.getDefault()?.getDockByMonitor(this._monitorIndex);
                 if (!dock)
                     return box;
 
