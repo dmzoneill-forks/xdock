@@ -3583,6 +3583,22 @@ export class DockManager {
     _onShowAppsButtonToggled(button) {
         const {checked} = button;
         const {overviewControls} = this;
+        const adj = overviewControls._stateAdjustment;
+
+        // When a touchpad gesture is driving the overview transition (e.g. 3-finger
+        // swipe), the upstream gestureEnd() sets showAppsButton.checked to sync
+        // with the target state and starts its own ease animation. We must not
+        // interfere by calling Main.overview.show()/hide() or starting a
+        // competing state transition — doing so cuts the gesture animation short
+        // and can leave the button state out of sync with the actual overview
+        // state. Let the gesture's own animation handle the transition and just
+        // clean up our _fromDesktop bookkeeping.
+        if (adj?.gestureInProgress || Main.overview.animationInProgress) {
+            if (!checked)
+                this.mainDock.dash.showAppsButton._fromDesktop = false;
+            this.searchController._setSearchActive(false);
+            return;
+        }
 
         if (!Main.overview.visible) {
             this.mainDock.dash.showAppsButton._fromDesktop = true;
