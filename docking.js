@@ -3822,10 +3822,17 @@ export class DockManager {
             });
 
         if (Main.layoutManager._startingUp) {
+            this._prepareStartupAnimation();
+
             // Convince LayoutManager to use the legacy startup animation:
             // Reset overview controls state to HIDDEN, as skipping the startup
             // overview leaves it stuck at WINDOW_PICKER
             if (this._settings.disableOverviewOnStartup) {
+                // GNOME 50+ checks hasOverview before running the async
+                // startup animation. Disable it directly, while retaining
+                // the property injection as a legacy fallback.
+                Main.sessionMode.hasOverview = false;
+
                 this._propertyInjections.addWithLabel(Labels.STARTUP_ANIMATION,
                     Main.sessionMode, 'hasOverview', {
                         get: () => false,
@@ -3860,12 +3867,23 @@ export class DockManager {
                     dummyDash.destroy();
                     if (this._settings.disableOverviewOnStartup) {
                         this._propertyInjections.removeWithLabel(Labels.STARTUP_ANIMATION);
-                        // Avoid invalid state transitions while overview is animating.
-                        const adjustment = this.overviewControls?._stateAdjustment;
-                        if (adjustment && !Main.overview.animationInProgress)
-                            adjustment.value = OverviewControls.ControlsState.HIDDEN;
+
+                        // Force the overview closed if it is still visible.
+                        // In GNOME 50+ the async startup animation may have
+                        // already shown the overview before our hasOverview
+                        // override took effect (race with extension load
+                        // timing).  Calling hide() is safe even if the
+                        // overview is already hidden.
                         if (Main.overview.visible)
                             Main.overview.hide();
+
+                        // Guard: only reset state if overview is not currently
+                        // in a transition (SHOWING/HIDING) to avoid invalid
+                        // state machine transitions (SHOWING -> SHOWING).
+                        const adjustment = this.overviewControls?._stateAdjustment ??
+                            Main.overview._overview?.controls?._stateAdjustment;
+                        if (adjustment && !Main.overview.animationInProgress)
+                            adjustment.value = OverviewControls.ControlsState.HIDDEN;
                     }
                 });
         } else {
