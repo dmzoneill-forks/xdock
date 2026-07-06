@@ -29,6 +29,9 @@ import {Extension} from './dependencies/shell/extensions/extension.js';
 // the shell domain with the default _() and N_()
 const {gettext: __} = Extension;
 
+// On older GLib the DesktopAppInfo class lives in Gio, not GioUnix.
+const DesktopAppInfoBase = GioUnix?.DesktopAppInfo ?? Gio.DesktopAppInfo;
+
 const {signals: Signals} = imports;
 
 const FALLBACK_REMOVABLE_MEDIA_ICON = 'drive-removable-media';
@@ -118,7 +121,7 @@ export const LocationAppInfo = GObject.registerClass({
             GObject.ParamFlags.READWRITE,
             Gio.Cancellable.$gtype),
     },
-}, class LocationAppInfo extends GioUnix.DesktopAppInfo {
+}, class LocationAppInfo extends DesktopAppInfoBase {
     static get GJS_BINARY_PATH() {
         if (!this._gjsBinaryPath)
             this._gjsBinaryPath = GLib.find_program_in_path('gjs');

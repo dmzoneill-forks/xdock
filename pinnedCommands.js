@@ -19,6 +19,9 @@ import {
 
 const {signals: Signals} = imports;
 
+// On older GLib the DesktopAppInfo class lives in Gio, not GioUnix.
+const DesktopAppInfoBase = GioUnix?.DesktopAppInfo ?? Gio.DesktopAppInfo;
+
 const FALLBACK_COMMAND_ICON = 'utilities-terminal-symbolic';
 const DEFAULT_TERMINAL_SCHEMA = 'org.gnome.desktop.default-applications.terminal';
 
@@ -26,7 +29,8 @@ const DEFAULT_TERMINAL_SCHEMA = 'org.gnome.desktop.default-applications.terminal
  * CommandAppInfo — implements enough of Gio.AppInfo for dock usage.
  *
  * Follows the same pattern as LocationAppInfo in locations.js:
- * extends GioUnix.DesktopAppInfo, implements Gio.AppInfo.
+ * extends DesktopAppInfoBase (GioUnix.DesktopAppInfo on newer GLib,
+ * Gio.DesktopAppInfo on older systems), implements Gio.AppInfo.
  */
 export const CommandAppInfo = GObject.registerClass({
     Implements: [Gio.AppInfo],
@@ -68,7 +72,7 @@ export const CommandAppInfo = GObject.registerClass({
             GObject.ParamFlags.READWRITE,
             Gio.Cancellable.$gtype),
     },
-}, class CommandAppInfo extends GioUnix.DesktopAppInfo {
+}, class CommandAppInfo extends DesktopAppInfoBase {
     _init(params) {
         const iconName = params.iconName ?? FALLBACK_COMMAND_ICON;
         super._init({
