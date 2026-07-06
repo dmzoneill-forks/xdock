@@ -695,5 +695,10 @@
         6: Cascade (staggered)
       </description>
     </key>
+    <key name="show-media-controls" type="b">
+      <default>true</default>
+      <summary>Show media transport controls on dock icons</summary>
+      <description>Show play/pause/skip controls when hovering over dock icons of apps currently playing audio.</description>
+    </key>
   </schema>
 </schemalist>

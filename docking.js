@@ -39,6 +39,7 @@ import {
     Intellihide,
     LauncherAPI,
     Locations,
+    MprisMonitor,
     NotificationsMonitor,
     Theming,
     Utils,
@@ -2050,6 +2051,7 @@ export class DockManager {
         this._discreteGpuAvailable = AppDisplay.discreteGpuAvailable;
         this._appSpread = new AppSpread.AppSpread();
         this._notificationsMonitor = new NotificationsMonitor.NotificationsMonitor();
+        this._mprisMonitor = new MprisMonitor.MprisMonitor();
 
         const needsRemoteModel = () =>
             !this._notificationsMonitor.dndMode && this._settings.showIconsEmblems;
@@ -2417,6 +2419,10 @@ export class DockManager {
 
     get notificationsMonitor() {
         return this._notificationsMonitor;
+    }
+
+    get mprisMonitor() {
+        return this._mprisMonitor;
     }
 
     getDockByMonitor(monitorIndex) {
@@ -3200,6 +3206,8 @@ export class DockManager {
             this._fm1Client = null;
         }
         this._notificationsMonitor.destroy();
+        this._mprisMonitor?.destroy();
+        this._mprisMonitor = null;
         this._appSpread.destroy();
         this._trash?.destroy();
         this._trash = null;
