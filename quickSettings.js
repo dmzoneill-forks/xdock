@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-// SPDX-FileCopyrightText: Contributors to Dash 2 X
+// SPDX-FileCopyrightText: Contributors to XDock
 
 import {
     Clutter,
@@ -266,7 +266,7 @@ class QuickSettingsPanel extends St.BoxLayout {
         this._volumeUserChanging = false;
 
         try {
-            this._mixerControl = new Gvc.MixerControl({name: 'Dash2X Quick Settings'});
+            this._mixerControl = new Gvc.MixerControl({name: 'XDock Quick Settings'});
             this._mixerControl.open();
 
             const updateVolume = () => {

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-// SPDX-FileCopyrightText: Contributors to Dash 2 X
+// SPDX-FileCopyrightText: Contributors to XDock
 export * as AppIconIndicators from './appIconIndicators.js';
 export * as AppIcons from './appIcons.js';
 export * as AppIconsDecorator from './appIconsDecorator.js';

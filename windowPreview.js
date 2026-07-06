@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-// SPDX-FileCopyrightText: Contributors to Dash 2 X
+// SPDX-FileCopyrightText: Contributors to XDock
 /*
  * Credits:
  * This file is based on code from the Dash to Panel extension by Jason DeRose

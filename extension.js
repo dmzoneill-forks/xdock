@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-// SPDX-FileCopyrightText: Contributors to Dash 2 X
+// SPDX-FileCopyrightText: Contributors to XDock
 // -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil -*-
 
 import {DockManager} from './docking.js';
@@ -16,8 +16,10 @@ export default class DashToDockExtension extends Extension.Extension {
         try {
             dockManager = new DockManager(this);
         } catch (e) {
-            // Prevent initialization errors from crashing the GNOME session.
-            logError(e, 'Dash-2-X: Failed to initialize DockManager');
+            // Catch initialization errors to prevent the extension from
+            // crashing the entire GNOME Shell session (especially on
+            // Wayland where a crash forces a full session restart).
+            logError(e, 'XDock: Failed to initialize DockManager');
             dockManager = null;
         }
     }
@@ -28,7 +30,7 @@ export default class DashToDockExtension extends Extension.Extension {
         try {
             dockManager?.destroy();
         } catch (e) {
-            logError(e, 'Dash-2-X: Failed to destroy DockManager');
+            logError(e, 'XDock: Failed to destroy DockManager');
         }
         dockManager = null;
     }

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-// SPDX-FileCopyrightText: Contributors to Dash 2 X
+// SPDX-FileCopyrightText: Contributors to XDock
 // -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil -*-
 
 import GLib from 'gi://GLib';
@@ -188,7 +188,7 @@ const DockSettings = GObject.registerClass({
 
         this._extensionPreferences = extensionPreferences;
         this._settings = extensionPreferences.getSettings(
-            'org.gnome.shell.extensions.dash-to-dock');
+            'org.gnome.shell.extensions.xdock');
         this._appSwitcherSettings = new Gio.Settings({schema_id: 'org.gnome.shell.app-switcher'});
         this._rtl = Gtk.Widget.get_default_direction() === Gtk.TextDirection.RTL;
 

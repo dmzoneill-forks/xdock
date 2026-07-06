@@ -1,16 +1,16 @@
-# Dash 2 X
+# XDock
 
-[![shexli](https://github.com/dmzoneill-forks/dash-2-x/actions/workflows/shexli.yml/badge.svg)](https://github.com/dmzoneill-forks/dash-2-x/actions/workflows/shexli.yml)
+[![shexli](https://github.com/dmzoneill-forks/xdock/actions/workflows/shexli.yml/badge.svg)](https://github.com/dmzoneill-forks/xdock/actions/workflows/shexli.yml)
 
 A community-driven dock for the GNOME Shell.
 
 **Forked from [Dash to Dock](https://github.com/micheleg/dash-to-dock) by Michele (micxgx@gmail.com).**
 
-Dash 2 X is a community fork focused on timely updates, inclusive contribution, and user-centric development. We actively review and merge pull requests, welcome new contributors, and prioritize the features and fixes that users care about.
+XDock is a community fork focused on timely updates, inclusive contribution, and user-centric development. We actively review and merge pull requests, welcome new contributors, and prioritize the features and fixes that users care about.
 
 ## Why this fork?
 
-The original Dash to Dock is a great project, but development and PR reviews have slowed significantly. Dash 2 X exists to keep the extension moving forward:
+The original Dash to Dock is a great project, but development and PR reviews have slowed significantly. XDock exists to keep the extension moving forward:
 
 - **Timely updates** — PRs are reviewed and merged promptly, not left open for years
 - **Community driven** — decisions are made in the open with input from users and contributors
@@ -19,11 +19,11 @@ The original Dash to Dock is a great project, but development and PR reviews hav
 
 ## Want to help maintain?
 
-We're actively looking for co-maintainers. If you're interested, [open an issue](https://github.com/dmzoneill-forks/dash-2-x/issues/new?title=Maintainer+Interest&labels=maintainer) and tell us a bit about yourself and what areas you'd like to help with.
+We're actively looking for co-maintainers. If you're interested, [open an issue](https://github.com/dmzoneill-forks/xdock/issues/new?title=Maintainer+Interest&labels=maintainer) and tell us a bit about yourself and what areas you'd like to help with.
 
 ## Features
 
-In addition to all the original Dash to Dock functionality, Dash 2 X includes:
+In addition to all the original Dash to Dock functionality, XDock includes:
 
 - Window preview on hover (Aero Peek style)
 - App icon categories with drag-and-drop grouping
@@ -54,8 +54,8 @@ export SASS=ruby
 ### Building
 
 ```bash
-git clone https://github.com/dmzoneill-forks/dash-2-x.git
-make -C dash-2-x install
+git clone https://github.com/dmzoneill-forks/xdock.git
+make -C xdock install
 ```
 
 A Shell reload is required: <kbd>Alt</kbd>+<kbd>F2</kbd> then type `r` under Xorg, or log out and back in on Wayland. Enable the extension with *GNOME Extensions* app or *dconf*.
@@ -80,8 +80,8 @@ PRs are reviewed promptly. If you're unsure about an approach, open an issue fir
 
 ## Bug Reporting
 
-Report bugs at [https://github.com/dmzoneill-forks/dash-2-x/issues](https://github.com/dmzoneill-forks/dash-2-x/issues).
+Report bugs at [https://github.com/dmzoneill-forks/xdock/issues](https://github.com/dmzoneill-forks/xdock/issues).
 
 ## License
 
-Dash 2 X is distributed under the terms of the GNU General Public License, version 2 or later. See the COPYING file for details.
+XDock is distributed under the terms of the GNU General Public License, version 2 or later. See the COPYING file for details.
