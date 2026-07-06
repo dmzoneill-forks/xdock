@@ -1629,39 +1629,10 @@ export const DockDash = GObject.registerClass({
                 newApps.push(ci.getApp());
         }
 
-        // ── Phase 3: Running non-categorized apps ───────────────────────
-        // Use dock-order to persist user-defined running app positions
-        // (#2475).  Apps not yet in dock-order are appended at the end.
-        const runningCat = []; // categorized -> Phase 5
-
-        if (settings.showRunning) {
-            // Build a map of eligible running apps (non-categorized,
-            // non-favorite) keyed by app ID for quick lookup.
-            const runningById = new Map();
-            for (const app of running) {
-                const appId = app.get_id();
-                if (categorizedAppIds.has(appId))
-                    runningCat.push(app);
-                else if (!showFavorites || !(appId in favorites))
-                    runningById.set(appId, app);
-            }
-
-            // First pass: add running apps that appear in dock-order,
-            // preserving their stored sequence.
-            for (const id of dockOrder) {
-                if (runningById.has(id)) {
-                    newApps.push(runningById.get(id));
-                    runningById.delete(id);
-                }
-            }
-
-            // Second pass: append any remaining running apps not in
-            // dock-order (newly launched since last reorder).
-            for (const app of runningById.values())
-                newApps.push(app);
-        }
-
-        // ── Phase 4: Removables / Trash ───────────────────────────────
+        // Location apps are placed right after favorites/categories so
+        // they maintain a stable position regardless of running app
+        // changes (issue #2443).
+        // ── Phase 3: Removables / Trash ──────────────────────────────
         this._signalsHandler.removeWithLabel(Labels.SHOW_MOUNTS);
         if (dockManager.removables) {
             this._signalsHandler.addWithLabel(Labels.SHOW_MOUNTS,
@@ -1695,6 +1666,32 @@ export const DockDash = GObject.registerClass({
             oldApps = oldApps.filter(app => !app.isTrash || app === trashApp);
         } else {
             oldApps = oldApps.filter(app => !app.isTrash);
+        }
+
+        // ── Phase 4: Running non-categorized apps ───────────────────────
+        // Use dock-order to persist user-defined running app positions
+        // (#2475). Apps not yet in dock-order are appended at the end.
+        const runningCat = []; // categorized -> Phase 5
+
+        if (settings.showRunning) {
+            const runningById = new Map();
+            for (const app of running) {
+                const appId = app.get_id();
+                if (categorizedAppIds.has(appId))
+                    runningCat.push(app);
+                else if (!showFavorites || !(appId in favorites))
+                    runningById.set(appId, app);
+            }
+
+            for (const id of dockOrder) {
+                if (runningById.has(id)) {
+                    newApps.push(runningById.get(id));
+                    runningById.delete(id);
+                }
+            }
+
+            for (const app of runningById.values())
+                newApps.push(app);
         }
 
         // ── Phase 5: Running categorized apps — always at the end ────
@@ -1846,7 +1843,9 @@ export const DockDash = GObject.registerClass({
             this._separatorFavorites = null;
         }
 
-        /* Update separator for locations */
+        /* Update separator for locations — placed between location apps
+         * and running apps. Location apps sit right after favorites so
+         * they keep a stable position (issue #2443). */
 
         // Count location and pinned-command apps among expected items
         const nLocationApps = expectedItems.filter(item =>
@@ -1854,7 +1853,10 @@ export const DockDash = GObject.registerClass({
         const nRunning = expectedItems.filter(item =>
             !item.isFavorite && !this._isLocationApp(item.app) &&
             !this._isPinnedCommandApp(item.app)).length;
-        const posLocations = this._box.get_n_children() - nLocationApps;
+        // Location apps are after favorites, so separator goes after both.
+        // Account for the favorites separator already in the box.
+        const posLocations = nFavorites + nLocationApps +
+            (this._separatorFavorites ? 1 : 0);
         const isRedudantSeparator = nRunning <= 0;
         if (nLocationApps > 0 && nLocationApps < nIcons && !isRedudantSeparator) {
             this._separatorLocations =
