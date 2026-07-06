@@ -174,10 +174,10 @@ export class AppIconsDecorator {
                     i instanceof PopupMenu.PopupMenuBase ? i.actor : i);
                 const itemsVisibility = items.map(i => i.visible);
                 items.forEach(i => (i.visible = false));
-                const menuClosedId = this.connect('menu-closed', () => {
-                    this.disconnect(menuClosedId);
+                this.connectObject('menu-closed', () => {
+                    this.disconnectObject(this);
                     items.forEach((i, idx) => (i.visible = itemsVisibility[idx]));
-                });
+                }, this);
                 originalFunction.call(this, ...args);
                 /* eslint-enable no-invalid-this */
             });
