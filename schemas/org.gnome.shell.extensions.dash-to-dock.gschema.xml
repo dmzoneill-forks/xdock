@@ -800,5 +800,15 @@
       <summary>Active dock profile name</summary>
       <description>Name of the currently active dock profile.</description>
     </key>
+    <key name="secondary-dock-enabled" type="b">
+      <default>false</default>
+      <summary>Enable secondary dock</summary>
+      <description>Show a secondary dock on a different screen edge displaying only running (non-favorite) applications.</description>
+    </key>
+    <key name="secondary-dock-position" enum="org.gnome.shell.extensions.dash-2-x.position">
+      <default>'LEFT'</default>
+      <summary>Secondary dock position</summary>
+      <description>Screen edge for the secondary dock. Must be different from the primary dock position.</description>
+    </key>
   </schema>
 </schemalist>
