@@ -676,6 +676,11 @@
       <summary>Dock icon order</summary>
       <description>Ordered list of app IDs and category IDs defining the persistent dock sequence</description>
     </key>
+    <key name="spring-animations" type="b">
+      <default>false</default>
+      <summary>Enable spring-physics animations</summary>
+      <description>Use spring-based physics for dock show/hide and icon transitions.</description>
+    </key>
     <key name="show-previews-hover" type="b">
       <default>false</default>
       <summary>Show window previews on mouse hover</summary>
