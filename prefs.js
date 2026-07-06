@@ -1257,6 +1257,66 @@ const DockSettings = GObject.registerClass({
             this._builder.get_object('show_overview_on_startup_switch'),
             'active', Gio.SettingsBindFlags.INVERT_BOOLEAN);
 
+        // Features tab — Visual Effects
+        this._settings.bind('icon-magnification',
+            this._builder.get_object('icon_magnification_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('icon-magnification',
+            this._builder.get_object('icon_magnification_factor_scale'),
+            'sensitive', Gio.SettingsBindFlags.GET);
+        this._settings.bind('icon-magnification-factor',
+            this._builder.get_object('icon_magnification_factor_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('spring-animations',
+            this._builder.get_object('spring_animations_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('wiggle-mode-enabled',
+            this._builder.get_object('wiggle_mode_enabled_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('live-window-thumbnails',
+            this._builder.get_object('live_window_thumbnails_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('wallpaper-adaptive-color',
+            this._builder.get_object('wallpaper_adaptive_color_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('wallpaper-adaptive-color',
+            this._builder.get_object('wallpaper_adaptive_intensity_scale'),
+            'sensitive', Gio.SettingsBindFlags.GET);
+        this._settings.bind('wallpaper-adaptive-intensity',
+            this._builder.get_object('wallpaper_adaptive_intensity_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+
+        // Features tab — Productivity
+        this._settings.bind('command-palette-enabled',
+            this._builder.get_object('command_palette_enabled_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('show-workspace-minimap',
+            this._builder.get_object('show_workspace_minimap_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('show-recent-files',
+            this._builder.get_object('show_recent_files_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('show-pinned-commands',
+            this._builder.get_object('show_pinned_commands_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('dock-tiling-enabled',
+            this._builder.get_object('dock_tiling_enabled_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+
+        // Features tab — System Integration
+        this._settings.bind('show-media-controls',
+            this._builder.get_object('show_media_controls_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('show-volume-control',
+            this._builder.get_object('show_volume_control_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('show-screencast-indicator',
+            this._builder.get_object('show_screencast_indicator_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('show-quick-settings',
+            this._builder.get_object('show_quick_settings_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+
         // About Panel
 
         this._builder.get_object('extension_version').set_label(
