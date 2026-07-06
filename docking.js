@@ -2976,9 +2976,34 @@ export class DockManager {
         ], [
             ControlsManagerLayout.prototype,
             '_getAppDisplayBoxForState',
-            function (originalFunction, ...args) {
+            function (originalFunction, state, box, ...args) {
                 /* eslint-disable no-invalid-this */
-                return workspaceBoxOriginFixer.call(this, originalFunction, ...args);
+                const appDisplayBox = originalFunction.call(this, state, box, ...args);
+
+                // The app grid should use the full available width, not the
+                // dock-reduced width.  The box passed to vfunc_allocate has
+                // already been shrunk by maybeAdjustBoxToDock for vertical
+                // auto-hide docks, so the original function computes a
+                // narrower app grid.  Undo that shrinkage here so the
+                // app-grid icons fill the whole screen width.
+                const dockManager = DockManager.getDefault();
+                const dock = dockManager?.mainDock;
+                if (dock && !dock.isHorizontal && !dockManager.settings.dockFixed) {
+                    const [, preferredWidth] = dock.get_preferred_width(
+                        box.get_height());
+
+                    // Restore the full width regardless of dock side.
+                    // For LEFT docks box.x1 was increased, for RIGHT docks
+                    // box.x2 was decreased — either way the width shrank by
+                    // preferredWidth.  The app grid origin should stay at 0.
+                    const fullWidth = appDisplayBox.get_width() + preferredWidth;
+                    appDisplayBox.set_origin(0, appDisplayBox.y1);
+                    appDisplayBox.set_size(fullWidth, appDisplayBox.get_height());
+                } else {
+                    appDisplayBox.set_origin(box.x1, appDisplayBox.y1);
+                }
+
+                return appDisplayBox;
                 /* eslint-enable no-invalid-this */
             },
         ], [
