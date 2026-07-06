@@ -676,6 +676,11 @@
       <summary>Dock icon order</summary>
       <description>Ordered list of app IDs and category IDs defining the persistent dock sequence</description>
     </key>
+    <key name="dock-tiling-enabled" type="b">
+      <default>false</default>
+      <summary>Enable window tiling from dock</summary>
+      <description>Drag dock icons to screen edges to tile application windows.</description>
+    </key>
     <key name="show-previews-hover" type="b">
       <default>false</default>
       <summary>Show window previews on mouse hover</summary>
