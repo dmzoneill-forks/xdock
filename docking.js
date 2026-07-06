@@ -42,6 +42,7 @@ import {
     NotificationsMonitor,
     Theming,
     Utils,
+    VolumeControl,
 } from './imports.js';
 
 import {Extension} from './dependencies/shell/extensions/extension.js';
@@ -2050,6 +2051,7 @@ export class DockManager {
         this._discreteGpuAvailable = AppDisplay.discreteGpuAvailable;
         this._appSpread = new AppSpread.AppSpread();
         this._notificationsMonitor = new NotificationsMonitor.NotificationsMonitor();
+        this._volumeControl = new VolumeControl.VolumeControl();
 
         const needsRemoteModel = () =>
             !this._notificationsMonitor.dndMode && this._settings.showIconsEmblems;
@@ -2162,6 +2164,10 @@ export class DockManager {
 
     get categoryIcons() {
         return this._categoryIcons ?? [];
+    }
+
+    get volumeControl() {
+        return this._volumeControl;
     }
 
     // ── User-Category Management ────────────────────────────────────────────
@@ -3211,6 +3217,8 @@ export class DockManager {
         this._iconTheme = null;
         this._remoteModel?.destroy();
         this._appIconsDecorator?.destroy();
+        this._volumeControl?.destroy();
+        this._volumeControl = null;
         this._settings = null;
         this._appSwitcherSettings = null;
         this._oldDash = null;

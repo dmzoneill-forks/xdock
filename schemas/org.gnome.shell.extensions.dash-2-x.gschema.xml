@@ -695,5 +695,10 @@
         6: Cascade (staggered)
       </description>
     </key>
+    <key name="show-volume-control" type="b">
+      <default>true</default>
+      <summary>Show per-app volume control in context menu</summary>
+      <description>Show a volume slider in the dock icon context menu for apps with active audio streams.</description>
+    </key>
   </schema>
 </schemalist>
