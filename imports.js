@@ -18,6 +18,7 @@ export * as MediaControls from './mediaControls.js';
 export * as MprisMonitor from './mprisMonitor.js';
 export * as NotificationsMonitor from './notificationsMonitor.js';
 export * as ScreencastMonitor from './screencastMonitor.js';
+export * as SpringAnimation from './springAnimation.js';
 export * as Theming from './theming.js';
 export * as Utils from './utils.js';
 export * as WallpaperColorExtractor from './wallpaperColorExtractor.js';

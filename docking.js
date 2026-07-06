@@ -40,6 +40,7 @@ import {
     MprisMonitor,
     NotificationsMonitor,
     ScreencastMonitor,
+    SpringAnimation,
     Theming,
     Utils,
 } from './imports.js';
@@ -613,6 +614,12 @@ const DockedDash = GObject.registerClass({
     }
 
     _onDestroy() {
+        // Clean up any active spring animation
+        if (this._activeSpringAnimation) {
+            this._activeSpringAnimation.destroy();
+            this._activeSpringAnimation = null;
+        }
+
         // The dash, intellihide and themeManager have global signals as well internally
         this.dash.destroy();
         this._intellihide.destroy();
@@ -1121,30 +1128,57 @@ const DockedDash = GObject.registerClass({
         this.dash.iconAnimator.start();
         this._delayedHide = false;
 
-        this._slider.ease_property('slide-x', 1, {
-            duration: time * 1000,
-            delay: delay * 1000,
-            mode: Clutter.AnimationMode.EASE_OUT_QUAD,
-            onComplete: () => {
-                this.dockState = State.SHOWN;
-                // Remove barrier so that mouse pointer is released and can
-                // monitors on other side of dock.
-                // NOTE: Delay needed to keep mouse from moving past dock and
-                // re-hiding dock immediately. This gives users an opportunity
-                // to hover over the dock
-                if (this._removeBarrierTimeoutId > 0) {
-                    GLib.source_remove(this._removeBarrierTimeoutId);
-                    this._removeBarrierTimeoutId = 0;
-                }
+        const onComplete = () => {
+            this.dockState = State.SHOWN;
+            // Remove barrier so that mouse pointer is released and can
+            // monitors on other side of dock.
+            // NOTE: Delay needed to keep mouse from moving past dock and
+            // re-hiding dock immediately. This gives users an opportunity
+            // to hover over the dock
+            if (this._removeBarrierTimeoutId > 0)
+                GLib.source_remove(this._removeBarrierTimeoutId);
 
-                if (!this._delayedHide) {
-                    this._removeBarrierTimeoutId = GLib.timeout_add(
-                        GLib.PRIORITY_DEFAULT, 100, this._removeBarrier.bind(this));
-                } else {
-                    this.hideDock();
-                }
-            },
-        });
+            if (!this._delayedHide) {
+                this._removeBarrierTimeoutId = GLib.timeout_add(
+                    GLib.PRIORITY_DEFAULT, 100, this._removeBarrier.bind(this));
+            } else {
+                this.hideDock();
+            }
+        };
+
+        if (DockManager.settings.springAnimations && time > 0) {
+            this._slider.remove_all_transitions();
+            if (this._activeSpringAnimation) {
+                this._activeSpringAnimation.destroy();
+                this._activeSpringAnimation = null;
+            }
+
+            // Slightly underdamped for ~10% overshoot on show
+            this._activeSpringAnimation = new SpringAnimation.SpringAnimation({
+                stiffness: 200,
+                damping: 18,
+                mass: 1,
+                target: 1.0,
+                initial: this._slider.slideX,
+                onUpdate: value => {
+                    this._slider.slideX = Math.max(0, Math.min(value, 1.15));
+                },
+                onComplete: () => {
+                    this._activeSpringAnimation = null;
+                    // Ensure we land exactly at 1.0
+                    this._slider.slideX = 1.0;
+                    onComplete();
+                },
+            });
+            this._activeSpringAnimation.start();
+        } else {
+            this._slider.ease_property('slide-x', 1, {
+                duration: time * 1000,
+                delay: delay * 1000,
+                mode: Clutter.AnimationMode.EASE_OUT_QUAD,
+                onComplete,
+            });
+        }
     }
 
     _animateOut(time, delay) {
@@ -1153,23 +1187,50 @@ const DockedDash = GObject.registerClass({
 
         this.dockState = State.HIDING;
 
-        this._slider.ease_property('slide-x', 0, {
-            duration: time * 1000,
-            delay: delay * 1000,
-            mode: Clutter.AnimationMode.EASE_OUT_QUAD,
-            onComplete: () => {
-                this.dockState = State.HIDDEN;
+        const onComplete = () => {
+            this.dockState = State.HIDDEN;
+            // Remove queued barrier removal timeout if any
+            if (this._removeBarrierTimeoutId > 0) {
+                GLib.source_remove(this._removeBarrierTimeoutId);
+                this._removeBarrierTimeoutId = 0;
+            }
+            this._updateBarrier();
+            this.dash.iconAnimator.pause();
+        };
 
-                // Remove queued barrier removal timeout if any
-                if (this._removeBarrierTimeoutId > 0) {
-                    GLib.source_remove(this._removeBarrierTimeoutId);
-                    this._removeBarrierTimeoutId = 0;
-                }
+        if (DockManager.settings.springAnimations && time > 0) {
+            this._slider.remove_all_transitions();
+            if (this._activeSpringAnimation) {
+                this._activeSpringAnimation.destroy();
+                this._activeSpringAnimation = null;
+            }
 
-                this._updateBarrier();
-                this.dash.iconAnimator.pause();
-            },
-        });
+            // Critically damped for smooth hide without overshoot
+            this._activeSpringAnimation = new SpringAnimation.SpringAnimation({
+                stiffness: 200,
+                damping: 28,
+                mass: 1,
+                target: 0.0,
+                initial: this._slider.slideX,
+                onUpdate: value => {
+                    this._slider.slideX = Math.max(0, Math.min(value, 1.15));
+                },
+                onComplete: () => {
+                    this._activeSpringAnimation = null;
+                    // Ensure we land exactly at 0.0
+                    this._slider.slideX = 0.0;
+                    onComplete();
+                },
+            });
+            this._activeSpringAnimation.start();
+        } else {
+            this._slider.ease_property('slide-x', 0, {
+                duration: time * 1000,
+                delay: delay * 1000,
+                mode: Clutter.AnimationMode.EASE_OUT_QUAD,
+                onComplete,
+            });
+        }
     }
 
     /**
@@ -1620,6 +1681,10 @@ const DockedDash = GObject.registerClass({
 
     _removeAnimations() {
         this._slider.remove_all_transitions();
+        if (this._activeSpringAnimation) {
+            this._activeSpringAnimation.destroy();
+            this._activeSpringAnimation = null;
+        }
     }
 
     _onDragStart() {
