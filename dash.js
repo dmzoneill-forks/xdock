@@ -412,7 +412,12 @@ export const DockDash = GObject.registerClass({
         if (!isCustom && !inCategoryId) {
             if (app.is_window_backed())
                 return DND.DragMotionResult.NO_DROP;
-            if (!global.settings.is_writable('favorite-apps'))
+            // Only require writable favorite-apps for apps that would be
+            // pinned.  Running (non-favorite) apps can always be reordered
+            // visually via dock-order without touching favorites (#2475).
+            const srcIsFav = app.get_id?.() in
+                AppFavorites.getAppFavorites().getFavoriteMap();
+            if (srcIsFav && !global.settings.is_writable('favorite-apps'))
                 return DND.DragMotionResult.NO_DROP;
         }
 
@@ -420,16 +425,24 @@ export const DockDash = GObject.registerClass({
         const [dashX, dashY] = this.get_transformed_position();
         const cursor = this._isHorizontal ? dashX + x : dashY + y;
 
-        // Build "clean" children: box contents up to (not including) the
-        // separator, with the current placeholder excluded so midpoint
-        // calculations aren't distorted by it.
+        // Build "clean" children with the current placeholder excluded so
+        // midpoint calculations aren't distorted by it.
+        // For favorites / categories / category-panel drops, stop at the
+        // separator so that drops are constrained to the pinned section.
+        // For running (non-favorite) apps, include children after the
+        // separator so they can be reordered among other running apps (#2475).
+        const srcIsDragRunning = !isCustom && !inCategoryId &&
+            !(app.get_id?.() in AppFavorites.getAppFavorites().getFavoriteMap());
+
         const children = this._box.get_children();
         const rawSepIdx = this._separator ? children.indexOf(this._separator) : -1;
-        const limit = rawSepIdx >= 0 ? rawSepIdx : children.length;
+        const limit = rawSepIdx >= 0 && !srcIsDragRunning
+            ? rawSepIdx : children.length;
 
         const clean = [];
         for (let i = 0; i < limit; i++) {
-            if (children[i] !== this._dragPlaceholder)
+            if (children[i] !== this._dragPlaceholder &&
+                children[i] !== this._separator)
                 clean.push(children[i]);
         }
 
@@ -543,7 +556,33 @@ export const DockDash = GObject.registerClass({
             this._dragPlaceholderPos = insertPos;
             if (this._box.contains(this._dragPlaceholder))
                 this._box.remove_child(this._dragPlaceholder);
-            this._box.insert_child_at_index(this._dragPlaceholder, insertPos);
+
+            // insertPos is relative to `clean` (which excludes the
+            // placeholder and, for running-app drags, the separator).
+            // Map it back to an absolute box index so the separator
+            // isn't displaced (#2475).
+            let boxIdx = insertPos;
+            if (srcIsDragRunning && rawSepIdx >= 0) {
+                // After removing the placeholder the separator sits at
+                // its original index (or one less if the placeholder was
+                // before it).  Count how many clean items sit before the
+                // separator to find the split point.
+                const boxChildren = this._box.get_children();
+                const sepBoxIdx = boxChildren.indexOf(this._separator);
+                if (sepBoxIdx >= 0) {
+                    // cleanBefore = number of clean items before the separator
+                    let cleanBefore = 0;
+                    for (let i = 0; i < sepBoxIdx; i++) {
+                        if (boxChildren[i] !== this._dragPlaceholder &&
+                            boxChildren[i] !== this._separator)
+                            cleanBefore++;
+                    }
+                    if (insertPos > cleanBefore)
+                        boxIdx = insertPos + 1; // skip over the separator
+                }
+            }
+
+            this._box.insert_child_at_index(this._dragPlaceholder, boxIdx);
             if (animate)
                 this._dragPlaceholder.show(true);
         }
@@ -560,7 +599,9 @@ export const DockDash = GObject.registerClass({
             return DND.DragMotionResult.MOVE_DROP;
 
         const favorites = AppFavorites.getAppFavorites().getFavorites();
-        return favorites.includes(app) || inCategoryId
+        // Running apps being reordered among themselves should show MOVE,
+        // not COPY (which displays a "+" badge implying pinning) (#2475).
+        return favorites.includes(app) || inCategoryId || srcIsDragRunning
             ? DND.DragMotionResult.MOVE_DROP
             : DND.DragMotionResult.COPY_DROP;
     }
@@ -657,15 +698,25 @@ export const DockDash = GObject.registerClass({
             return false;
 
         // ── Build new dock-order from visual order ────────────────────────
+        // When reordering a running (non-favorite) app, include children
+        // after the separator so the running section is part of the order
+        // (#2475).  For favorites / categories, stop at the separator.
+        const dragAppId = isCustom ? app._categoryData?.id : app.get_id?.();
+        const dragSrcIsFav = !isCustom && !inCategoryId &&
+            dragAppId && dragAppId in AppFavorites.getAppFavorites().getFavoriteMap();
+        const includeRunning = !isCustom && !inCategoryId && !dragSrcIsFav;
+
         const catIdSet = new Set(dockManager.categoryIcons.map(ci => ci.config.id));
         const newDockOrder = [];
         for (const child of children) {
-            if (child === this._separator)
-                break;
+            if (child === this._separator) {
+                if (!includeRunning)
+                    break;
+                continue; // skip the separator actor itself
+            }
             if (child === this._dragPlaceholder) {
-                const itemId = isCustom ? app._categoryData?.id : app.get_id?.();
-                if (itemId)
-                    newDockOrder.push(itemId);
+                if (dragAppId)
+                    newDockOrder.push(dragAppId);
             } else {
                 const childApp = child.child?._delegate?.app;
                 if (!childApp || childApp === app || childApp._d2dIsTransient)
@@ -1318,28 +1369,35 @@ export const DockDash = GObject.registerClass({
         }
 
         // ── Phase 3: Running non-categorized apps ───────────────────────
-        // Preserve order from oldApps, append new ones.
+        // Use dock-order to persist user-defined running app positions
+        // (#2475).  Apps not yet in dock-order are appended at the end.
         const runningCat = []; // categorized -> Phase 5
 
         if (settings.showRunning) {
-            oldApps.forEach(oldApp => {
-                const index = running.indexOf(oldApp);
-                if (index > -1) {
-                    const [app] = running.splice(index, 1);
-                    const appId = app.get_id();
-                    if (categorizedAppIds.has(appId))
-                        runningCat.push(app);
-                    else if (!showFavorites || !(appId in favorites))
-                        newApps.push(app);
-                }
-            });
-            running.forEach(app => {
+            // Build a map of eligible running apps (non-categorized,
+            // non-favorite) keyed by app ID for quick lookup.
+            const runningById = new Map();
+            for (const app of running) {
                 const appId = app.get_id();
                 if (categorizedAppIds.has(appId))
                     runningCat.push(app);
                 else if (!showFavorites || !(appId in favorites))
-                    newApps.push(app);
-            });
+                    runningById.set(appId, app);
+            }
+
+            // First pass: add running apps that appear in dock-order,
+            // preserving their stored sequence.
+            for (const id of dockOrder) {
+                if (runningById.has(id)) {
+                    newApps.push(runningById.get(id));
+                    runningById.delete(id);
+                }
+            }
+
+            // Second pass: append any remaining running apps not in
+            // dock-order (newly launched since last reorder).
+            for (const app of runningById.values())
+                newApps.push(app);
         }
 
         // ── Phase 4: Removables / Trash ───────────────────────────────
