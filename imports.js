@@ -5,6 +5,7 @@ export * as AppIcons from './appIcons.js';
 export * as AppIconsDecorator from './appIconsDecorator.js';
 export * as AppSpread from './appSpread.js';
 export * as BounceAnimation from './bounceAnimation.js';
+export * as CommandPalette from './commandPalette.js';
 export * as DockDash from './dash.js';
 export * as DBusMenuUtils from './dbusmenuUtils.js';
 export * as DesktopIconsIntegration from './desktopIconsIntegration.js';
