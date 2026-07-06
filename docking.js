@@ -33,6 +33,7 @@ import {
 import {
     AppIconsDecorator,
     AppSpread,
+    CommandPalette,
     DockDash,
     DesktopIconsIntegration,
     FileManager1API,
@@ -71,6 +72,7 @@ const scrollAction = Object.freeze({
 });
 
 const Labels = Object.freeze({
+    COMMAND_PALETTE: Symbol('command-palette'),
     INITIALIZE: Symbol('initialize'),
     ISOLATION: Symbol('isolation'),
     LOCATIONS: Symbol('locations'),
@@ -2102,6 +2104,11 @@ export class DockManager {
         // status variable: true when the overview is shown through the dash
         // applications button.
         this._forcedOverview = false;
+
+        // Command palette
+        this._commandPalette = null;
+        this._commandPaletteShortcutBound = false;
+        this._setupCommandPalette();
     }
 
     static getDefault() {
@@ -2533,6 +2540,58 @@ export class DockManager {
             }
         }
     }
+
+    // ── Command Palette ──────────────────────────────────────────────────
+
+    _setupCommandPalette() {
+        this._signalsHandler.add(this._settings, 'changed::command-palette-enabled',
+            () => this._updateCommandPaletteBinding());
+        this._signalsHandler.add(this._settings, 'changed::command-palette-shortcut',
+            () => this._updateCommandPaletteBinding());
+
+        this._updateCommandPaletteBinding();
+    }
+
+    _updateCommandPaletteBinding() {
+        // Remove old binding if any
+        if (this._commandPaletteShortcutBound) {
+            Main.wm.removeKeybinding('command-palette-shortcut');
+            this._commandPaletteShortcutBound = false;
+        }
+
+        if (!this._settings.commandPaletteEnabled)
+            return;
+
+        // Bind the shortcut
+        Main.wm.addKeybinding('command-palette-shortcut', this._settings,
+            Meta.KeyBindingFlags.IGNORE_AUTOREPEAT,
+            Shell.ActionMode.NORMAL | Shell.ActionMode.OVERVIEW,
+            () => this.toggleCommandPalette());
+        this._commandPaletteShortcutBound = true;
+    }
+
+    toggleCommandPalette() {
+        if (!this._commandPalette) {
+            this._commandPalette = new CommandPalette.CommandPalette();
+            Main.uiGroup.add_child(this._commandPalette);
+        }
+
+        this._commandPalette.toggle();
+    }
+
+    _destroyCommandPalette() {
+        if (this._commandPaletteShortcutBound) {
+            Main.wm.removeKeybinding('command-palette-shortcut');
+            this._commandPaletteShortcutBound = false;
+        }
+
+        if (this._commandPalette) {
+            this._commandPalette.destroy();
+            this._commandPalette = null;
+        }
+    }
+
+    // ───────────────────────────────────────────────────────────────────────
 
     _toggle() {
         if (this._toggleLater)
@@ -3186,6 +3245,7 @@ export class DockManager {
 
     destroy() {
         this.emit('destroy');
+        this._destroyCommandPalette();
         if (this._toggleLater) {
             Utils.laterRemove(this._toggleLater);
             delete this._toggleLater;

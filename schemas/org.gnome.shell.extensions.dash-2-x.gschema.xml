@@ -695,5 +695,15 @@
         6: Cascade (staggered)
       </description>
     </key>
+    <key name="command-palette-enabled" type="b">
+      <default>false</default>
+      <summary>Enable dock command palette</summary>
+      <description>Show a fuzzy-search launcher overlay when pressing the configured hotkey.</description>
+    </key>
+    <key name="command-palette-shortcut" type="as">
+      <default><![CDATA[['<Super>space']]]></default>
+      <summary>Command palette keyboard shortcut</summary>
+      <description>Keyboard shortcut to toggle the dock command palette.</description>
+    </key>
   </schema>
 </schemalist>
