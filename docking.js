@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-// SPDX-FileCopyrightText: Contributors to Dash 2 X
+// SPDX-FileCopyrightText: Contributors to XDock
 // -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil -*-
 
 import {
@@ -1274,7 +1274,7 @@ const DockedDash = GObject.registerClass({
                     DockManager.settings.showDelay * 1000,
                     this._dockDwellTimeout.bind(this));
                 GLib.Source.set_name_by_id(this._dockDwellTimeoutId,
-                    '[dash-2-x] this._dockDwellTimeout');
+                    '[xdock] this._dockDwellTimeout');
             }
             this._dockDwelling = true;
         } else {
@@ -2212,7 +2212,7 @@ export class DockManager {
         this._vfuncInjections = new Utils.VFuncInjectionsHandler(this);
         this._propertyInjections = new Utils.PropertyInjectionsHandler(this);
         this._settings = this._extension.getSettings(
-            'org.gnome.shell.extensions.dash-2-x');
+            'org.gnome.shell.extensions.xdock');
         this._appSwitcherSettings = new Gio.Settings({schema_id: 'org.gnome.shell.app-switcher'});
         this._mapSettingsValues();
 

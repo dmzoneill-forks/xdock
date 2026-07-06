@@ -1,12 +1,12 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the Dash 2 X package.
+# This file is distributed under the same license as the XDock package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Dash 2 X\n"
+"Project-Id-Version: XDock\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-06 12:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -187,7 +187,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: appIcons.js:2426
-msgid "Dash 2 X"
+msgid "XDock"
 msgstr ""
 
 #: appIcons.js:2428

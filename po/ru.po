@@ -6,7 +6,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Dash 2 X\n"
+"Project-Id-Version: XDock\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-06 12:23+0100\n"
 "PO-Revision-Date: 2024-08-30 10:34+0300\n"
@@ -193,7 +193,7 @@ msgstr[2] "Закрыть %d окон"
 
 #: appIcons.js:2426
 #, fuzzy
-msgid "Dash 2 X"
+msgid "XDock"
 msgstr "Dash to Dock %s"
 
 #: appIcons.js:2428

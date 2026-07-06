@@ -197,7 +197,7 @@ msgstr[2] ""
 
 #: appIcons.js:2426
 #, fuzzy
-msgid "Dash 2 X"
+msgid "XDock"
 msgstr "%s Dash to Dock"
 
 #: appIcons.js:2428

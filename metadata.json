@@ -5,11 +5,11 @@
     "49",
     "50"
 ],
-"uuid": "dash-2-x@github.com",
-"name": "Dash 2 X",
+"uuid": "xdock@github.com",
+"name": "XDock",
 "description": "A community-driven dock for the GNOME Shell. Moves the dash out of the overview into a dock for easier app launching and window switching. Features hover previews, icon categories, and more. Community fork of Dash to Dock — focused on timely updates and user-centric development.",
 "original-author": "micxgx@gmail.com",
-"url": "https://github.com/dmzoneill-forks/dash-2-x",
-"gettext-domain": "dash2x",
+"url": "https://github.com/dmzoneill-forks/xdock",
+"gettext-domain": "xdock",
 "version": 105
 }

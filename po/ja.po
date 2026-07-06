@@ -8,7 +8,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Dash 2 X\n"
+"Project-Id-Version: XDock\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-06 12:23+0100\n"
 "PO-Revision-Date: 2020-06-15 07:30+0900\n"
@@ -200,7 +200,7 @@ msgstr[0] "%d 個のウィンドウを終了"
 
 #: appIcons.js:2426
 #, fuzzy
-msgid "Dash 2 X"
+msgid "XDock"
 msgstr "Dash to Dock の%s"
 
 #: appIcons.js:2428

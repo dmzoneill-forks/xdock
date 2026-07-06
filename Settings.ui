@@ -3339,7 +3339,7 @@
             <child>
               <object class="GtkLabel" id="extension_name">
                 <property name="can_focus">0</property>
-                <property name="label">&lt;b&gt;Dash 2 X&lt;/b&gt;</property>
+                <property name="label">&lt;b&gt;XDock&lt;/b&gt;</property>
                 <property name="use_markup">1</property>
               </object>
             </child>
@@ -3397,7 +3397,7 @@
                 <property name="receives_default">1</property>
                 <property name="halign">center</property>
 
-                <property name="uri">https://github.com/daoneill/dash-2-x</property>
+                <property name="uri">https://github.com/daoneill/xdock</property>
               </object>
             </child>
             <child>

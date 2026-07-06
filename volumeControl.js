@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-// SPDX-FileCopyrightText: Contributors to Dash 2 X
+// SPDX-FileCopyrightText: Contributors to XDock
 
 import Gvc from 'gi://Gvc';
 
@@ -15,7 +15,7 @@ import {Utils} from './imports.js';
 export class VolumeControl {
     constructor() {
         this._signalsHandler = new Utils.GlobalSignalsHandler();
-        this._mixerControl = new Gvc.MixerControl({name: 'Dash 2 X Volume'});
+        this._mixerControl = new Gvc.MixerControl({name: 'XDock Volume'});
 
         // Cache of stream-id -> Shell.App mappings for quick lookups
         this._streamAppCache = new Map();

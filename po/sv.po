@@ -190,7 +190,7 @@ msgstr[0] "Stäng %d fönster"
 msgstr[1] "Stäng %d fönster"
 
 #: appIcons.js:2426
-msgid "Dash 2 X"
+msgid "XDock"
 msgstr "Dash to Dock"
 
 #: appIcons.js:2428

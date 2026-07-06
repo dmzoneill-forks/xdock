@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-// SPDX-FileCopyrightText: Contributors to Dash 2 X
+// SPDX-FileCopyrightText: Contributors to XDock
 /*
  * The code in this file is distributed under a "1-clause BSD license",
  * which makes it compatible with GPLv2 and GPLv3 too, and others.

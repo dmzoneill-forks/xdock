@@ -189,7 +189,7 @@ msgid_plural "Quit %d Windows"
 msgstr[0] "%d терезеден шығу"
 
 #: appIcons.js:2426
-msgid "Dash 2 X"
+msgid "XDock"
 msgstr "Dash to Dock"
 
 #: appIcons.js:2428

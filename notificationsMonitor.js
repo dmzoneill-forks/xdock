@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-// SPDX-FileCopyrightText: Contributors to Dash 2 X
+// SPDX-FileCopyrightText: Contributors to XDock
 // -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil -*-
 
 import {Gio} from './dependencies/gi.js';

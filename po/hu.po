@@ -5,7 +5,7 @@
 # Balázs Úr <ur.balazs at fsf dot hu>, 2017, 2022, 2023.
 msgid ""
 msgstr ""
-"Project-Id-Version: Dash 2 X\n"
+"Project-Id-Version: XDock\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-06 12:23+0100\n"
 "PO-Revision-Date: 2023-09-25 09:45+0200\n"
@@ -192,7 +192,7 @@ msgstr[1] "%d ablak bezárása"
 
 #: appIcons.js:2426
 #, fuzzy
-msgid "Dash 2 X"
+msgid "XDock"
 msgstr "„Dashből dokk” %s"
 
 #: appIcons.js:2428

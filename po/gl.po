@@ -190,7 +190,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: appIcons.js:2426
-msgid "Dash 2 X"
+msgid "XDock"
 msgstr ""
 
 #: appIcons.js:2428

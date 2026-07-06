@@ -7,7 +7,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Dash 2 X\n"
+"Project-Id-Version: XDock\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-06 12:23+0100\n"
 "PO-Revision-Date: 2024-09-27 07:56+0200\n"
@@ -189,8 +189,8 @@ msgstr[0] "Quitter %d fenêtre"
 msgstr[1] "Quitter %d fenêtres"
 
 #: appIcons.js:2426
-msgid "Dash 2 X"
-msgstr "Dash 2 X"
+msgid "XDock"
+msgstr "XDock"
 
 #: appIcons.js:2428
 msgid "Settings"

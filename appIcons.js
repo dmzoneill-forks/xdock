@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-// SPDX-FileCopyrightText: Contributors to Dash 2 X
+// SPDX-FileCopyrightText: Contributors to XDock
 // -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil -*-
 
 import {
@@ -2423,7 +2423,7 @@ class DockShowAppsIconMenu extends DockAppIconMenu {
     _rebuildMenu() {
         this.removeAll();
 
-        this.addMenuItem(new PopupMenu.PopupSeparatorMenuItem(__('Dash 2 X')));
+        this.addMenuItem(new PopupMenu.PopupSeparatorMenuItem(__('XDock')));
 
         const item = this._appendMenuItem(_('Settings'));
         item.connect('activate', () =>
