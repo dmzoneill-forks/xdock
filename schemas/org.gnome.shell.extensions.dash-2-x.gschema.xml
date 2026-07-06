@@ -747,6 +747,15 @@
       <default>true</default>
       <summary>Show per-app volume control in context menu</summary>
       <description>Show a volume slider in the dock icon context menu for apps with active audio streams.</description>
+    <key name="command-palette-enabled" type="b">
+      <default>false</default>
+      <summary>Enable dock command palette</summary>
+      <description>Show a fuzzy-search launcher overlay when pressing the configured hotkey.</description>
+    </key>
+    <key name="command-palette-shortcut" type="as">
+      <default><![CDATA[['<Super>space']]]></default>
+      <summary>Command palette keyboard shortcut</summary>
+      <description>Keyboard shortcut to toggle the dock command palette.</description>
     </key>
   </schema>
 </schemalist>
