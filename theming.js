@@ -109,6 +109,10 @@ export class ThemeManager {
     }
 
     destroy() {
+        if (this._updateThemeDebounceId) {
+            GLib.source_remove(this._updateThemeDebounceId);
+            this._updateThemeDebounceId = 0;
+        }
         this.emit('destroy');
         this._destroyWallpaperExtractor();
         this._transparency.destroy();
@@ -116,21 +120,24 @@ export class ThemeManager {
     }
 
     _queueUpdateCustomTheme() {
-        if (this._updateLater)
+        if (this._updateThemeDebounceId)
             return;
 
-        this._updateLater = Utils.laterAdd(Meta.LaterType.BEFORE_REDRAW, () => {
-            this._updateLater = 0;
-            this.updateCustomTheme();
-        });
+        this._updateThemeDebounceId = GLib.timeout_add(
+            GLib.PRIORITY_DEFAULT, 100, () => {
+                this._updateThemeDebounceId = 0;
+                if (!this._destroyed)
+                    this.updateCustomTheme();
+                return GLib.SOURCE_REMOVE;
+            });
     }
 
     _dequeueUpdateCustomTheme() {
-        if (!this._updateLater)
+        if (!this._updateThemeDebounceId)
             return;
 
-        Utils.laterRemove(this._updateLater);
-        delete this._updateLater;
+        GLib.source_remove(this._updateThemeDebounceId);
+        this._updateThemeDebounceId = 0;
     }
 
     _onOverviewShowing() {
@@ -293,57 +300,63 @@ export class ThemeManager {
     _adjustTheme() {
         const {settings} = Docking.DockManager;
 
-        // Remove prior style edits
-        this._dash._background.set_style(null);
         this._transparency.disable();
 
-        // If built-in theme is enabled do nothing else
-        if (settings.applyCustomTheme)
+        // If built-in theme is enabled, just clear any leftover inline style
+        if (settings.applyCustomTheme) {
+            this._dash._background.set_style(null);
             return;
+        }
 
-        let newStyle = '';
-        const position = Utils.getPosition(settings);
+        // Compute the full new inline style *before* touching the live actor,
+        // so there is never a frame where the background has no inline style
+        // (which would flash the raw theme default — often white).  (#2485)
 
-        // obtain theme border settings
+        // Read theme-default border properties by temporarily clearing the
+        // inline style, querying the theme node, then immediately restoring it.
+        const prevStyle = this._dash._background.get_style();
+        this._dash._background.set_style(null);
         const themeNode = this._dash._background.get_theme_node();
         const borderColor = themeNode.get_border_color(St.Side.TOP);
         const borderWidth = themeNode.get_border_width(St.Side.TOP);
+        // Restore previous style immediately so no unstyled frame is painted.
+        this._dash._background.set_style(prevStyle);
+
+        const position = Utils.getPosition(settings);
 
         // We're copying border and corner styles to left border and top-left
         // corner, also removing bottom border and bottom-right corner styles
-        let borderMissingStyle = '';
+        let newStyle = '';
 
         if (this._rtl && (position !== St.Side.RIGHT)) {
-            borderMissingStyle = `border-right: ${borderWidth}px solid ${
+            newStyle = `border-right: ${borderWidth}px solid ${
                 borderColor.to_string()};`;
         } else if (!this._rtl && (position !== St.Side.LEFT)) {
-            borderMissingStyle = `border-left: ${borderWidth}px solid ${
+            newStyle = `border-left: ${borderWidth}px solid ${
                 borderColor.to_string()};`;
         }
-
-        newStyle = borderMissingStyle;
 
         // Apply custom border radius if configured
         const {customBorderRadius} = settings;
         if (customBorderRadius >= 0)
             newStyle = `${newStyle}border-radius: ${customBorderRadius}px; `;
 
-        if (newStyle) {
-            // I do call set_style possibly twice so that only the background gets the transition.
-            // The transition-property css rules seems to be unsupported
-            this._dash._background.set_style(newStyle);
-        }
-
         // Customize background
         const fixedTransparency = settings.transparencyMode === TransparencyMode.FIXED;
         const defaultTransparency = settings.transparencyMode === TransparencyMode.DEFAULT;
         if (!defaultTransparency && !fixedTransparency) {
+            // Apply structural style (border, radius) first, then enable
+            // dynamic transparency which will set its own background style.
+            this._dash._background.set_style(newStyle || null);
             this._transparency.enable();
         } else if (!defaultTransparency || settings.customBackgroundColor) {
             newStyle = `${newStyle}background-color:${this._customizedBackground}; ` +
                        `border-color:${this._customizedBorder}; ` +
                        'transition-delay: 0s; transition-duration: 0.250s;';
             this._dash._background.set_style(newStyle);
+        } else {
+            // Default transparency, no custom color — apply structural style only.
+            this._dash._background.set_style(newStyle || null);
         }
     }
 

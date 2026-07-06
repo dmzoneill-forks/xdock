@@ -432,10 +432,10 @@ const DockedDash = GObject.registerClass({
 
         this._themeManager = new Theming.ThemeManager(this);
         this._signalsHandler.add(this._themeManager, 'updated',
-            () => this.dash.resetAppIcons());
+            () => this.dash.resetAppIconsDebounced());
 
         this._signalsHandler.add(DockManager.iconTheme, 'changed',
-            () => this.dash.resetAppIcons());
+            () => this.dash.resetAppIconsDebounced());
 
         this.connect('notify::autohide-enabled', () => {
             if (this.autohideEnabled)
