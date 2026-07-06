@@ -38,8 +38,6 @@ export function startBounceAnimation(icon) {
     let target = icon;
     let originalParent = icon.get_parent();
     let originalParentIndex = -1;
-    let placeholderConnId = 0;
-    let placeholderConnActor = null;
     let hasCompletedOneBounce = false;
     let shouldStop = false;
     const pendingTimers = new Set();
@@ -67,15 +65,14 @@ export function startBounceAnimation(icon) {
 
             // listen to placeholder allocation changes to track dock reflows
             try {
-                placeholderConnActor = placeholder;
-                placeholderConnId = placeholder.connect('allocation-changed', () => {
+                placeholder.connectObject('allocation-changed', () => {
                     try {
                         const [px, py_] = placeholder.get_transformed_position();
                         const [currentX_, currentY] = icon.get_position();
                         // sync icon position to follow placeholder when dock layout changes
                         icon.set_position(Math.round(px), currentY);
                     } catch { /* ignore */ }
-                });
+                }, placeholder);
             } catch { /* ignore */ }
         }
 
@@ -167,12 +164,10 @@ export function startBounceAnimation(icon) {
             pendingTimers.forEach(id => GLib.source_remove(id));
             pendingTimers.clear();
             // disconnect placeholder allocation listener
-            if (placeholderConnActor && placeholderConnId) {
+            if (placeholder) {
                 try {
-                    placeholderConnActor.disconnect(placeholderConnId);
+                    placeholder.disconnectObject(placeholder);
                 } catch { /* ignore */ }
-                placeholderConnActor = null;
-                placeholderConnId = 0;
             }
             // remove placeholder from dock
             if (placeholder) {

@@ -61,6 +61,7 @@ const Labels = Object.freeze({
     MENU_OVERVIEW: Symbol('menu-overview'),
     PREVIEW_OVERVIEW: Symbol('preview-overview'),
     RECENT_FILES_OVERVIEW: Symbol('recent-files-overview'),
+    SHOWAPPS_MENU_OVERVIEW: Symbol('showapps-menu-overview'),
     URGENT_WINDOWS: Symbol('urgent-windows'),
     WIGGLE_MODE: Symbol('wiggle-mode'),
 });
@@ -2206,6 +2207,8 @@ export const DockShowAppsIcon = GObject.registerClass({
     _init(position) {
         super._init();
 
+        this._signalsHandler = new Utils.GlobalSignalsHandler(this);
+
         // Re-use appIcon methods
         const {prototype: appIconPrototype} = AppDisplay.AppIcon;
         this.toggleButton.y_expand = false;
@@ -2322,12 +2325,10 @@ export const DockShowAppsIcon = GObject.registerClass({
                 if (!isPoppedUp)
                     this._onMenuPoppedDown();
             });
-            const id = Main.overview.connect('hiding', () => {
-                this._menu.close();
-            });
-            this._menu.actor.connect('destroy', () => {
-                Main.overview.disconnect(id);
-            });
+            this._signalsHandler.addWithLabel(Labels.SHOWAPPS_MENU_OVERVIEW,
+                Main.overview, 'hiding', () => this._menu.close());
+            this._signalsHandler.add(this._menu.actor, 'destroy', () =>
+                this._signalsHandler.removeWithLabel(Labels.SHOWAPPS_MENU_OVERVIEW));
             this._menuManager.addMenu(this._menu);
         }
 
