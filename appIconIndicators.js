@@ -646,9 +646,18 @@ class RunningIndicatorMetro extends RunningIndicatorDots {
                 const blackenedLength = (1 / 48) * this._width;
                 const darkenedLength = this._source.focused
                     ? (2 / 48) * this._width : (10 / 48) * this._width;
-                const [h, s, l] = this._bodyColor.to_hsl();
-                const blackenedColor = Cogl.Color.init_from_hsl(h, s * 0.3, l * 0.3);
-                const darkenedColor = Cogl.Color.init_from_hsl(h, s * 0.7, l * 0.7);
+                let h, s, l, blackenedColor, darkenedColor;
+                if (this._bodyColor.to_hsl) {
+                    [h, s, l] = this._bodyColor.to_hsl();
+                    blackenedColor = Cogl.Color.init_from_hsl(h, s * 0.3, l * 0.3);
+                    darkenedColor = Cogl.Color.init_from_hsl(h, s * 0.7, l * 0.7);
+                } else {
+                    // Clutter.Color uses to_hls with [hue, luminance, saturation] order
+                    let lum;
+                    [h, lum, s] = this._bodyColor.to_hls();
+                    blackenedColor = Clutter.Color.from_hls(h, lum * 0.3, s * 0.3);
+                    darkenedColor = Clutter.Color.from_hls(h, lum * 0.7, s * 0.7);
+                }
 
 
                 cr.translate(0, yOffset);
