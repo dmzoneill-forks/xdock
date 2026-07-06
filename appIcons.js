@@ -34,6 +34,7 @@ import {
     DBusMenuUtils,
     Docking,
     Locations,
+    MediaControls,
     Theming,
     Utils,
     WindowPreview,
@@ -248,9 +249,101 @@ export const DockAbstractAppIcon = GObject.registerClass({
         this._previewMenu = null;
         this._hoverIsEnabled = false;
         this._originalOpenStateChangeId = null;
+
+        // MPRIS media controls
+        this._mediaControlsOverlay = null;
+        this._mediaPlayingIndicator = null;
+        this._setupMediaControls();
+    }
+
+    _setupMediaControls() {
+        const dockManager = Docking.DockManager.getDefault();
+        const {mprisMonitor} = dockManager;
+        if (!mprisMonitor)
+            return;
+
+        // Create a small green dot indicator for apps with active players
+        this._mediaPlayingIndicator = new St.Bin({
+            style_class: 'media-playing-indicator',
+            x_align: Clutter.ActorAlign.END,
+            y_align: Clutter.ActorAlign.START,
+            x_expand: true,
+            y_expand: true,
+            visible: false,
+        });
+        this._iconContainer.add_child(this._mediaPlayingIndicator);
+
+        // Listen for player changes
+        this._signalsHandler.add(mprisMonitor, 'player-changed',
+            () => this._updateMediaState());
+
+        // Hover signals for media controls overlay
+        this._signalsHandler.add(this, 'enter-event', () => this._onMediaHoverEnter());
+        this._signalsHandler.add(this, 'leave-event', () => this._onMediaHoverLeave());
+
+        this._updateMediaState();
+    }
+
+    _updateMediaState() {
+        const dockManager = Docking.DockManager.getDefault();
+        const mprisMonitor = dockManager?.mprisMonitor;
+        if (!mprisMonitor || !this._mediaPlayingIndicator)
+            return;
+
+        const appId = this.app?.id;
+        const hasPlayer = appId && mprisMonitor.hasPlayer(appId);
+
+        this._mediaPlayingIndicator.visible = hasPlayer;
+
+        // Update overlay if it's currently showing
+        if (this._mediaControlsOverlay?.visible && appId) {
+            const playerInfo = mprisMonitor.getPlayerForApp(appId);
+            this._mediaControlsOverlay.updateState(playerInfo);
+        }
+    }
+
+    _onMediaHoverEnter() {
+        const dockManager = Docking.DockManager.getDefault();
+        const mprisMonitor = dockManager?.mprisMonitor;
+        if (!mprisMonitor?.enabled)
+            return;
+
+        const appId = this.app?.id;
+        if (!appId)
+            return;
+
+        const playerInfo = mprisMonitor.getPlayerForApp(appId);
+        if (!playerInfo)
+            return;
+
+        if (!this._mediaControlsOverlay) {
+            this._mediaControlsOverlay =
+                new MediaControls.MediaControlsOverlay(this);
+        }
+
+        this._mediaControlsOverlay.updateState(playerInfo);
+        this._mediaControlsOverlay.scheduleShow();
+    }
+
+    _onMediaHoverLeave() {
+        if (!this._mediaControlsOverlay)
+            return;
+
+        // Don't hide if the pointer moved to the overlay
+        if (this._mediaControlsOverlay.has_pointer)
+            return;
+
+        this._mediaControlsOverlay.scheduleHide();
     }
 
     _onDestroy() {
+        // Clean up media controls overlay
+        if (this._mediaControlsOverlay) {
+            this._mediaControlsOverlay.forceHide();
+            this._mediaControlsOverlay.destroy();
+            this._mediaControlsOverlay = null;
+        }
+
         // Stop any running bounce animation to ensure clip flags get restored
         try {
             if (this._bounceHandle) {

@@ -533,3 +533,32 @@ $dock_style_modes: null, shrink, extended, extended-shrink;
     height: 12px;
     margin: 4px;
 }
+
+// MPRIS Media Controls
+.media-controls-popup {
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 8px;
+    padding: 6px 10px;
+    spacing: 6px;
+
+    .media-controls-button {
+        icon-size: 16px;
+        padding: 4px;
+        border-radius: 99px;
+        &:hover { background-color: rgba(255, 255, 255, 0.15); }
+        &:active { background-color: rgba(255, 255, 255, 0.25); }
+    }
+
+    .media-controls-title {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 150px;
+    }
+}
+
+.media-playing-indicator {
+    background-color: rgba(30, 180, 60, 0.8);
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+}
