@@ -34,6 +34,7 @@ import {
     AppIconsDecorator,
     AppSpread,
     DockDash,
+    DockProfiles,
     DesktopIconsIntegration,
     FileManager1API,
     Intellihide,
@@ -2050,6 +2051,7 @@ export class DockManager {
         this._discreteGpuAvailable = AppDisplay.discreteGpuAvailable;
         this._appSpread = new AppSpread.AppSpread();
         this._notificationsMonitor = new NotificationsMonitor.NotificationsMonitor();
+        this._dockProfiles = new DockProfiles.DockProfiles(this._settings);
 
         const needsRemoteModel = () =>
             !this._notificationsMonitor.dndMode && this._settings.showIconsEmblems;
@@ -2417,6 +2419,10 @@ export class DockManager {
 
     get notificationsMonitor() {
         return this._notificationsMonitor;
+    }
+
+    get dockProfiles() {
+        return this._dockProfiles;
     }
 
     getDockByMonitor(monitorIndex) {
@@ -3199,6 +3205,8 @@ export class DockManager {
             this._fm1Client.destroy();
             this._fm1Client = null;
         }
+        this._dockProfiles?.destroy();
+        this._dockProfiles = null;
         this._notificationsMonitor.destroy();
         this._appSpread.destroy();
         this._trash?.destroy();
