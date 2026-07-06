@@ -21,3 +21,4 @@ export * as ScreencastMonitor from './screencastMonitor.js';
 export * as Theming from './theming.js';
 export * as Utils from './utils.js';
 export * as WindowPreview from './windowPreview.js';
+export * as WorkspaceMinimap from './workspaceMinimap.js';
