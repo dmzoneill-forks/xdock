@@ -1640,7 +1640,9 @@ const DockedDash = GObject.registerClass({
         if (!this.intellihideEnabled)
             return;
 
-        const {desktopIconsUsableArea} = DockManager.getDefault();
+        const {desktopIconsUsableArea} = DockManager.getDefault() ?? {};
+        if (!desktopIconsUsableArea)
+            return;
         if (this._position === St.Side.BOTTOM)
             desktopIconsUsableArea.setMargins(this.monitorIndex, 0, this._box.height, 0, 0);
         else if (this._position === St.Side.TOP)
@@ -2050,7 +2052,11 @@ const KeyboardShortcuts = class DashToDockKeyboardShortcuts {
                     Shell.ActionMode.NORMAL | Shell.ActionMode.OVERVIEW,
                     () => {
                         const dockManager = DockManager.getDefault();
+                        if (!dockManager)
+                            return;
                         let dock = dockManager.mainDock;
+                        if (!dock)
+                            return;
 
                         if (Main.layoutManager.monitors.length > 1) {
                             const monitorIndex =
@@ -2366,15 +2372,15 @@ export class DockManager {
     }
 
     static get allDocks() {
-        return DockManager.getDefault()._allDocks;
+        return DockManager.getDefault()?._allDocks ?? [];
     }
 
     static get extension() {
-        return DockManager.getDefault().extension;
+        return DockManager.getDefault()?.extension ?? null;
     }
 
     static get settings() {
-        return DockManager.getDefault().settings;
+        return DockManager.getDefault()?.settings ?? null;
     }
 
     static get windowTracker() {
@@ -2390,7 +2396,7 @@ export class DockManager {
     }
 
     static get iconTheme() {
-        return DockManager.getDefault().iconTheme;
+        return DockManager.getDefault()?.iconTheme ?? null;
     }
 
     get iconTheme() {
@@ -3679,12 +3685,12 @@ export class DockManager {
                     return originalFunction.call(this, state, ...args);
 
                 const box = workspaceBoxOriginFixer.call(this, originalFunction, state, ...args);
-                const dock = DockManager.getDefault().getDockByMonitor(Main.layoutManager.primaryIndex);
+                // GNOME 46 changes "spacing" to "_spacing".
+                const spacing = this.spacing ?? this._spacing;
+                const dock = DockManager.getDefault()?.getDockByMonitor(Main.layoutManager.primaryIndex);
                 if (!dock)
                     return box;
 
-                // GNOME 46 changes "spacing" to "_spacing".
-                const spacing = this.spacing ?? this._spacing;
                 const adjustedBox = maybeAdjustBoxSize(state, box, spacing);
 
                 if (state === OverviewControls.ControlsState.WINDOW_PICKER) {
@@ -3704,7 +3710,7 @@ export class DockManager {
                     return originalFunction.call(this, state, ...args);
 
                 const box = workspaceBoxOriginFixer.call(this, originalFunction, state, ...args);
-                const dock = DockManager.getDefault().getDockByMonitor(this._monitorIndex);
+                const dock = DockManager.getDefault()?.getDockByMonitor(this._monitorIndex);
                 if (!dock)
                     return box;
 
@@ -3738,7 +3744,7 @@ export class DockManager {
                 /* eslint-disable no-invalid-this */
                 if (this.constructor.name === 'CtrlAltTabPopup') {
                     const dockManager = DockManager.getDefault();
-                    if (dockManager._inCtrlAltTabSwitcher)
+                    if (!dockManager || dockManager._inCtrlAltTabSwitcher)
                         return;
 
                     dockManager._inCtrlAltTabSwitcher = true;
@@ -3790,7 +3796,7 @@ export class DockManager {
                     this._monitorIndex === Main.layoutManager.primaryIndex)
                     return box;
 
-                const dock = DockManager.getDefault().getDockByMonitor(this._monitorIndex);
+                const dock = DockManager.getDefault()?.getDockByMonitor(this._monitorIndex);
                 if (!dock)
                     return box;
 

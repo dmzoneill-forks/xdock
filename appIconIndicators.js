@@ -66,7 +66,7 @@ export class AppIconIndicator {
             (badgeOverride.enabled === false || badgeOverride.source === 'none');
 
         if (settings.showIconsEmblems &&
-            !Docking.DockManager.getDefault().notificationsMonitor.dndMode &&
+            !Docking.DockManager.getDefault()?.notificationsMonitor?.dndMode &&
             !badgeDisabled) {
             const unityIndicator = new UnityIndicator(source);
             this._indicators.push(unityIndicator);
@@ -839,8 +839,8 @@ export class UnityIndicator extends IndicatorBase {
     constructor(source) {
         super(source);
 
-        const {remoteModel, notificationsMonitor} = Docking.DockManager.getDefault();
-        const remoteEntry = remoteModel.lookupById(this._source.app.id);
+        const {remoteModel, notificationsMonitor} = Docking.DockManager.getDefault() ?? {};
+        const remoteEntry = remoteModel?.lookupById(this._source.app.id);
         this._remoteEntry = remoteEntry;
 
         this._signalsHandler.add([
@@ -969,9 +969,9 @@ export class UnityIndicator extends IndicatorBase {
             return;
         }
 
-        const {notificationsMonitor} = Docking.DockManager.getDefault();
-        const notificationsCount = notificationsMonitor.getAppNotificationsCount(
-            this._source.app.id);
+        const {notificationsMonitor} = Docking.DockManager.getDefault() ?? {};
+        const notificationsCount = notificationsMonitor?.getAppNotificationsCount(
+            this._source.app.id) ?? 0;
 
         if (badgeSource === 'notifications') {
             this.setNotificationCount(notificationsCount);
