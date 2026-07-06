@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dash 2 X\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-30 10:20+0300\n"
+"POT-Creation-Date: 2026-07-06 12:23+0100\n"
 "PO-Revision-Date: 2024-08-30 10:34+0300\n"
 "Last-Translator: \n"
 "Language-Team: Bulgarian\n"
@@ -15,167 +15,246 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 46.1\n"
 
-#: prefs.js:382
+#. Translators: This will be followed by Display Name - Connector.
+#: prefs.js:396
 msgid "Primary monitor: "
 msgstr "Основен монитор: "
 
-#: prefs.js:388
+#. Translators: Followed by monitor index, Display Name - Connector.
+#: prefs.js:402
 msgid "Secondary monitor "
 msgstr "Вторичен монитор "
 
-#: prefs.js:434 Settings.ui.h:32
+#: prefs.js:450
 msgid "Right"
 msgstr "Отдясно"
 
-#: prefs.js:435 Settings.ui.h:29
+#: prefs.js:451
 msgid "Left"
 msgstr "Отляво"
 
-#: prefs.js:490
+#: prefs.js:506
 msgid "Intelligent autohide customization"
 msgstr "Настройки за интелигентно скриване"
 
-#: prefs.js:498 prefs.js:816 prefs.js:875
+#: prefs.js:514 prefs.js:913 prefs.js:972
 msgid "Reset to defaults"
 msgstr "Връщане към настройките по подразбиране"
 
-#: prefs.js:649
+#: prefs.js:692
 msgid "Managed by GNOME Multitasking's Application Switching setting."
-msgstr "Управлява се от настройката за превключване на приложения в „Многозадачност“ на GNOME."
+msgstr ""
+"Управлява се от настройката за превключване на приложения в „Многозадачност“ "
+"на GNOME."
 
-#: prefs.js:808
+#: prefs.js:905
 msgid "Show dock and application numbers"
 msgstr "Показване на номерата на приложенията"
 
-#: prefs.js:867
+#: prefs.js:964
 msgid "Customize middle-click behavior"
 msgstr "Настройка на действието при среден клик"
 
-#: prefs.js:964
+#: prefs.js:1065
 msgid "Customize running indicators"
 msgstr "Настройка на индикаторите за работещи приложения"
 
-#: prefs.js:1079 Settings.ui.h:96
+#: prefs.js:1180
 msgid "Customize opacity"
 msgstr "Настройка на прозрачността"
 
-#: docking.js:1273
+#: prefs.js:1455
+msgid "Save profile"
+msgstr ""
+
+#: prefs.js:1461
+msgid "Cancel"
+msgstr ""
+
+#: prefs.js:1462
+msgid "Save"
+msgstr ""
+
+#: prefs.js:1473
+msgid "Profile name:"
+msgstr ""
+
+#: docking.js:1718
 msgid "Dash"
 msgstr "Панел"
 
-#: docking.js:2514 appIcons.js:1172
+#: docking.js:3539 appIcons.js:1929
 msgid "Unpin"
 msgstr "Откачи"
 
-#: docking.js:2514 appIcons.js:1178
+#: docking.js:3539 appIcons.js:1935
 msgid "Pin to Dock"
 msgstr "Закрепи в дока"
 
-#: appIcons.js:754 appIconsDecorator.js:105
+#: appIcons.js:767
 #, javascript-format
-msgid "%s is currently updating, cannot launch it!"
-msgstr "%s в момента се актуализира и не може да бъде стартирано!"
+msgid "%s is updating, try again later"
+msgstr ""
 
-#: appIcons.js:1082
-#, javascript-format
-msgid "%s is being updated..."
+#: appIcons.js:1679
+msgid "Run"
+msgstr ""
+
+#: appIcons.js:1686
+msgid "Remove from Dock"
+msgstr ""
+
+#: appIcons.js:1808
+#, fuzzy, javascript-format
+msgid "%s is being updated…"
 msgstr "%s се актуализира..."
 
-#: appIcons.js:1093
+#: appIcons.js:1819
 msgid "All Windows"
 msgstr "Всички прозорци"
 
-#: appIcons.js:1105
+#. Translators: This is the heading of a list of open windows
+#: appIcons.js:1831
 msgid "Open Windows"
 msgstr "Отворени прозорци"
 
-#: appIcons.js:1125
+#: appIcons.js:1848 recentFilesMenu.js:326
+msgid "Recent Files"
+msgstr ""
+
+#: appIcons.js:1880
 msgid "New Window"
 msgstr "Нов прозорец"
 
-#: appIcons.js:1144
+#: appIcons.js:1899
 msgid "Launch using Integrated Graphics Card"
 msgstr "Стартирай с интегрираната видеокарта"
 
-#: appIcons.js:1145
+#: appIcons.js:1900
 msgid "Launch using Discrete Graphics Card"
 msgstr "Стартирай с отделната видеокарта"
 
-#: appIcons.js:1189
+#: appIcons.js:1947 appIcons.js:1973
 msgid "App Details"
 msgstr "Информация за приложението"
 
-#: appIcons.js:1226 appIcons.js:1238 Settings.ui.h:14
+#: appIcons.js:1987
+msgid "Show Desktop File"
+msgstr ""
+
+#: appIcons.js:2062 appIcons.js:2148
 msgid "Quit"
 msgstr "Изход"
 
-#: appIcons.js:1241
+#: appIcons.js:2074
+#, fuzzy
+msgid "Badge Settings"
+msgstr "Настройки"
+
+#: appIcons.js:2079
+msgid "Badge: Shown"
+msgstr ""
+
+#: appIcons.js:2079
+msgid "Badge: Hidden"
+msgstr ""
+
+#: appIcons.js:2102
+msgid "Badge Source"
+msgstr ""
+
+#: appIcons.js:2106
+#, fuzzy
+msgid "Auto (default)"
+msgstr "Основен (по подразбиране)"
+
+#: appIcons.js:2107
+msgid "Notifications only"
+msgstr ""
+
+#: appIcons.js:2108
+msgid "App counter only"
+msgstr ""
+
+#: appIcons.js:2109
+msgid "None"
+msgstr ""
+
+#: appIcons.js:2151
 #, javascript-format
 msgid "Quit %d Window"
 msgid_plural "Quit %d Windows"
 msgstr[0] "Затвори %d прозорец"
 msgstr[1] "Затвори %d прозореца"
 
-#: appIcons.js:1489
-#, javascript-format
-msgid "Dash 2 X %s"
+#: appIcons.js:2426
+#, fuzzy
+msgid "Dash 2 X"
 msgstr "Dash to Dock %s"
 
-#: appIcons.js:1489
+#: appIcons.js:2428
 msgid "Settings"
 msgstr "Настройки"
 
-#: locations.js:533
+#: locations.js:547
 msgid "Mount"
 msgstr "Монтиране"
 
-#: locations.js:535
+#: locations.js:549
 msgid "Unmount"
 msgstr "Демонтиране"
 
-#: locations.js:537
+#: locations.js:551
 msgid "Eject"
 msgstr "Изваждане"
 
-#: locations.js:596
+#: locations.js:617
 #, javascript-format
 msgid "Failed to mount “%s”"
 msgstr "Неуспешно монтиране на „%s“"
 
-#: locations.js:599
+#: locations.js:622
 #, javascript-format
 msgid "Failed to unmount “%s”"
 msgstr "Неуспешно демонтиране на „%s“"
 
-#: locations.js:602
+#: locations.js:627
 #, javascript-format
 msgid "Failed to eject “%s”"
 msgstr "Неуспешно изваждане на „%s“"
 
-#: locations.js:614
+#: locations.js:640
 msgid "Mount operation already in progress"
 msgstr "Операцията по монтиране вече е в ход"
 
-#: locations.js:617
+#: locations.js:645
 msgid "Unmount operation already in progress"
 msgstr "Операцията по демонтиране вече е в ход"
 
-#: locations.js:620
+#: locations.js:650
 msgid "Eject operation already in progress"
 msgstr "Операцията по изваждане вече е в ход"
 
-#: locations.js:738
+#: locations.js:775
 msgid "Trash"
 msgstr "Кошче"
 
-#: locations.js:779
+#: locations.js:829
 msgid "Empty Trash"
 msgstr "Изпразни кошчето"
 
-#: locations.js:1049
+#: locations.js:1099
 #, javascript-format
 msgid "Failed to launch “%s”"
 msgstr "Неуспешно стартиране на „%s“"
+
+#: volumeMenuItem.js:63
+msgid "Volume"
+msgstr ""
+
+#, javascript-format
+#~ msgid "%s is currently updating, cannot launch it!"
+#~ msgstr "%s в момента се актуализира и не може да бъде стартирано!"
 
 #~ msgid "Show favorite applications"
 #~ msgstr "Показване на любимите приложения"
@@ -216,9 +295,6 @@ msgstr "Неуспешно стартиране на „%s“"
 
 #~ msgid "Show the dock on following monitor (if attached)"
 #~ msgstr "Показвай дока на следния монитор (ако е свързан)"
-
-#~ msgid "Primary (default)"
-#~ msgstr "Основен (по подразбиране)"
 
 #~ msgid "Max height"
 #~ msgstr "Максимална височина"
@@ -266,8 +342,8 @@ msgstr "Неуспешно стартиране на „%s“"
 #~ msgstr ""
 #~ "Разширението включва персонализирана тема, предназначена за работа с "
 #~ "темата по подразбиране Adwaita: докът е свит за пестене на пространство, "
-#~ "прозрачността на фона е намалена и са добавени индикатори за броя прозорци "
-#~ "на всяко приложение."
+#~ "прозрачността на фона е намалена и са добавени индикатори за броя "
+#~ "прозорци на всяко приложение."
 
 #~ msgid ""
 #~ "Alternatively, for a better integration with custom themes, each "
@@ -278,4 +354,3 @@ msgstr "Неуспешно стартиране на „%s“"
 
 #~ msgid "Shrink the dash size by reducing padding"
 #~ msgstr "Свий размера на дока чрез намаляване на отстоянията"
-

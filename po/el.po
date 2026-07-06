@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dash 2 X\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-04 12:35+0100\n"
+"POT-Creation-Date: 2026-07-06 12:23+0100\n"
 "PO-Revision-Date: 2017-09-29 21:48+0300\n"
 "Last-Translator: Vangelis Skarmoutsos <skarmoutsosv@gmail.com>\n"
 "Language-Team:\n"
@@ -20,461 +20,558 @@ msgstr ""
 "X-Generator: Poedit 2.0.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: prefs.js:113
-msgid "Primary monitor"
+#. Translators: This will be followed by Display Name - Connector.
+#: prefs.js:396
+#, fuzzy
+msgid "Primary monitor: "
 msgstr "Κύρια οθόνη"
 
-#: prefs.js:122 prefs.js:129
+#. Translators: Followed by monitor index, Display Name - Connector.
+#: prefs.js:402
 msgid "Secondary monitor "
 msgstr "Δευτερεύουσα οθόνη "
 
-#: prefs.js:154 Settings.ui.h:29
+#: prefs.js:450
 msgid "Right"
 msgstr "Δεξιά"
 
-#: prefs.js:155 Settings.ui.h:26
+#: prefs.js:451
 msgid "Left"
 msgstr "Αριστερά"
 
-#: prefs.js:205
+#: prefs.js:506
 msgid "Intelligent autohide customization"
 msgstr "Προσαρμογή έξυπνης απόκρυψης"
 
-#: prefs.js:212 prefs.js:393 prefs.js:450
+#: prefs.js:514 prefs.js:913 prefs.js:972
 msgid "Reset to defaults"
 msgstr "Επαναφορά στις προεπιλογές"
 
-#: prefs.js:386
+#: prefs.js:692
+msgid "Managed by GNOME Multitasking's Application Switching setting."
+msgstr ""
+
+#: prefs.js:905
 msgid "Show dock and application numbers"
 msgstr "Προβολή της μπάρας και της αρίθμησης εφαρμογών"
 
-#: prefs.js:443
+#: prefs.js:964
 msgid "Customize middle-click behavior"
 msgstr "Προσαρμογή συμπεριφοράς μεσαίου κλικ"
 
-#: prefs.js:514
+#: prefs.js:1065
 msgid "Customize running indicators"
 msgstr "Προσαρμογή δεικτών τρεχόντων εφαρμογών"
 
-#: appIcons.js:804
-msgid "All Windows"
-msgstr "Όλα τα παράθυρα"
-
-#: Settings.ui.h:1
-msgid "Customize indicator style"
-msgstr "Προσαρμογή του στυλ του δείκτη"
-
-#: Settings.ui.h:2
-msgid "Color"
-msgstr "Χρώμα"
-
-#: Settings.ui.h:3
-msgid "Border color"
-msgstr "Χρώμα περιγράμματος"
-
-#: Settings.ui.h:4
-msgid "Border width"
-msgstr "Πλάτος περιγράμματος"
-
-#: Settings.ui.h:5
-msgid "Number overlay"
-msgstr "Επίστρωση αριθμού"
-
-#: Settings.ui.h:6
-msgid ""
-"Temporarily show the application numbers over the icons, corresponding to "
-"the shortcut."
-msgstr ""
-"Προσωρινή εμφάνιση αριθμών εφαρμογής πάνω από τα εικονίδια, που αντιστοιχούν "
-"στη συντόμευση πληκτρολογίου."
-
-#: Settings.ui.h:7
-msgid "Show the dock if it is hidden"
-msgstr "Προβολή της μπάρας αν είναι κρυμμένη"
-
-#: Settings.ui.h:8
-msgid ""
-"If using autohide, the dock will appear for a short time when triggering the "
-"shortcut."
-msgstr ""
-"Αν χρησιμοποιείται η αυτόματη απόκρυψη, η μπάρα θα εμφανίζεται για λίγο "
-"χρόνο όταν πατιέται η συντόμευση."
-
-#: Settings.ui.h:9
-msgid "Shortcut for the options above"
-msgstr "Συντόμευση για τις παραπάνω επιλογές"
-
-#: Settings.ui.h:10
-msgid "Syntax: <Shift>, <Ctrl>, <Alt>, <Super>"
-msgstr "Σύνταξη: <Shift>, <Ctrl>, <Alt>, <Super>"
-
-#: Settings.ui.h:11
-msgid "Hide timeout (s)"
-msgstr "Καθυστέρηση απόκρυψης"
-
-#: Settings.ui.h:12
-msgid ""
-"When set to minimize, double clicking minimizes all the windows of the "
-"application."
-msgstr ""
-"Όταν είναι ρυθμισμένο στην ελαχιστοποίηση, το διπλό κλικ ελαχιστοποιεί όλα "
-"τα παράθυρα της εφαρμογής."
-
-#: Settings.ui.h:13
-msgid "Shift+Click action"
-msgstr "Λειτουργία του Shift+Click"
-
-#: Settings.ui.h:14
-msgid "Raise window"
-msgstr "Ανύψωση παραθύρου"
-
-#: Settings.ui.h:15
-msgid "Minimize window"
-msgstr "Ελαχιστοποίηση παραθύρου"
-
-#: Settings.ui.h:16
-msgid "Launch new instance"
-msgstr "Εκκίνηση νέου παραθύρου"
-
-#: Settings.ui.h:17
-msgid "Cycle through windows"
-msgstr "Περιήγηση στα ανοικτά παράθυρα"
-
-#: Settings.ui.h:18
-msgid "Quit"
-msgstr "Έξοδος"
-
-#: Settings.ui.h:19
-msgid "Behavior for Middle-Click."
-msgstr "Συμπεριφορά μεσαίου κλικ."
-
-#: Settings.ui.h:20
-msgid "Middle-Click action"
-msgstr "Λειτουργία του μεσαίου κλικ"
-
-#: Settings.ui.h:21
-msgid "Behavior for Shift+Middle-Click."
-msgstr "Συμπεριφορά Shift+Μεσαίο κλικ."
-
-#: Settings.ui.h:22
-msgid "Shift+Middle-Click action"
-msgstr "Λειτουργία του Shift+Μεσαίο κλικ"
-
-#: Settings.ui.h:23
-msgid "Show the dock on"
-msgstr "Εμφάνιση της μπάρας στην"
-
-#: Settings.ui.h:24
-msgid "Show on all monitors"
-msgstr "Εμφάνιση σε όλες τις οθόνες"
-
-#: Settings.ui.h:25
-msgid "Position on screen"
-msgstr "Θέση στην οθόνη"
-
-#: Settings.ui.h:27
-msgid "Bottom"
-msgstr "Κάτω"
-
-#: Settings.ui.h:28
-msgid "Top"
-msgstr "Πάνω"
-
-#: Settings.ui.h:30
-msgid ""
-"Hide the dock when it obstructs a window of the the current application. "
-"More refined settings are available."
-msgstr ""
-"Απόκρυψη της μπάρας όταν εμποδίζει ένα παράθυρο της τρέχουσας εφαρμογής. Πιο "
-"εξειδικευμένες επιλογές είναι επίσης διαθέσιμες."
-
-#: Settings.ui.h:31
-msgid "Intelligent autohide"
-msgstr "Έξυπνη απόκρυψη"
-
-#: Settings.ui.h:32
-msgid "Dock size limit"
-msgstr "Περιορισμός μεγέθους μπάρας"
-
-#: Settings.ui.h:33
-msgid "Panel mode: extend to the screen edge"
-msgstr "Λειτουργιά πάνελ: επέκταση της μπάρας ως τις άκρες της οθόνης"
-
-#: Settings.ui.h:34
-msgid "Icon size limit"
-msgstr "Περιορισμός μεγέθους εικονιδίων"
-
-#: Settings.ui.h:35
-msgid "Fixed icon size: scroll to reveal other icons"
-msgstr ""
-"Σταθερό μέγεθος εικονιδίων: κύλιση για την εμφάνιση περαιτέρω εικονιδίων"
-
-#: Settings.ui.h:36
-msgid "Position and size"
-msgstr "Θέση και μέγεθος"
-
-#: Settings.ui.h:37
-msgid "Show favorite applications"
-msgstr "Εμφάνιση αγαπημένων εφαρμογών"
-
-#: Settings.ui.h:38
-msgid "Show running applications"
-msgstr "Εμφάνιση εκτελούμενων εφαρμογών"
-
-#: Settings.ui.h:39
-msgid "Isolate workspaces"
-msgstr "Απομόνωση χώρων εργασίας"
-
-#: Settings.ui.h:40
-msgid "Show open windows previews"
-msgstr "Εμφάνιση προεπισκόπησης ανοικτών παραθύρων"
-
-#: Settings.ui.h:41
-msgid ""
-"If disabled, these settings are accessible from gnome-tweak-tool or the "
-"extension website."
-msgstr ""
-"Αν είναι απενεργοποιημένο, αυτές οι ρυθμίσεις είναι προσβάσιμες από το "
-"εργαλείο μικρορυθμίσεων του GNOME ή τον ιστοτόπο επεκτάσεων."
-
-#: Settings.ui.h:42
-msgid "Show <i>Applications</i> icon"
-msgstr "Εμφάνιση εικονιδίου <i>Εφαρμογές</i>"
-
-#: Settings.ui.h:43
-msgid "Move the applications button at the beginning of the dock"
-msgstr "Μετακίνηση του πλήκτρου εφαρμογών στην αρχή της μπάρας"
-
-#: Settings.ui.h:44
-msgid "Animate <i>Show Applications</i>"
-msgstr "Ενεργοποίηση γραφικών κατά την <i>Εμφάνιση Εφαρμογών</i>"
-
-#: Settings.ui.h:45
-msgid "Launchers"
-msgstr "Εκκινητές"
-
-#: Settings.ui.h:46
-msgid ""
-"Enable Super+(0-9) as shortcuts to activate apps. It can also be used "
-"together with Shift and Ctrl."
-msgstr ""
-"Ενεργοποίηση του Super+(0-9) ως συντομεύσεις για την ενεργοποίηση εφαρμογών. "
-"Μπορεί επίσης να χρησιμοποιηθεί με το Shift και το Ctrl."
-
-#: Settings.ui.h:47
-msgid "Use keyboard shortcuts to activate apps"
-msgstr "Χρήση συντομεύσεων πληκτρολογίου για την ενεργοποίηση εφαρμογών"
-
-#: Settings.ui.h:48
-msgid "Behaviour when clicking on the icon of a running application."
-msgstr "Συμπεριφορά κατά το κλικ σε εικονίδιο τρέχουσας εφαρμογής."
-
-#: Settings.ui.h:49
-msgid "Click action"
-msgstr "Συμπεριφορά κλικ"
-
-#: Settings.ui.h:50
-msgid "Minimize"
-msgstr "Ελαχιστοποίηση"
-
-#: Settings.ui.h:51
-msgid "Minimize or overview"
-msgstr "Ελαχιστοποίηση ή επισκόπηση"
-
-#: Settings.ui.h:52
-msgid "Behaviour when scrolling on the icon of an application."
-msgstr "Συμπεριφορά κατά την κύλιση σε εικονίδιο τρέχουσας εφαρμογής."
-
-#: Settings.ui.h:53
-msgid "Scroll action"
-msgstr "Συμπεριφορά κύλισης"
-
-#: Settings.ui.h:54
-msgid "Do nothing"
-msgstr "Καμία δράση"
-
-#: Settings.ui.h:55
-msgid "Switch workspace"
-msgstr "Αλλαγή χώρου εργασίας"
-
-#: Settings.ui.h:56
-msgid "Behavior"
-msgstr "Συμπεριφορά"
-
-#: Settings.ui.h:57
-msgid ""
-"Few customizations meant to integrate the dock with the default GNOME theme. "
-"Alternatively, specific options can be enabled below."
-msgstr ""
-"Μερικές προσαρμογές στοχεύουν στο να ενοποιήσουν την μπάρα με το "
-"προκαθορισμένο θέμα του GNOME. Εναλλακτικά, ειδικές επιλογές μπορούν να "
-"ενεργοποιηθούν παρακάτω."
-
-#: Settings.ui.h:58
-msgid "Use built-in theme"
-msgstr "Χρήση ενσωματωμένου θέματος"
-
-#: Settings.ui.h:59
-msgid "Save space reducing padding and border radius."
-msgstr "Εξοικονόμηση χώρου μειώνοντας τα κενά και τα περιθώρια."
-
-#: Settings.ui.h:60
-msgid "Shrink the dash"
-msgstr "Σμίκρυνση της μπάρας"
-
-#: Settings.ui.h:61
-msgid "Show a dot for each windows of the application."
-msgstr "Εμφανίζει μία τελεία για κάθε παράθυρο της εφαρμογής."
-
-#: Settings.ui.h:62
-msgid "Show windows counter indicators"
-msgstr "Εμφάνιση μετρητή παραθύρων"
-
-#: Settings.ui.h:63
-msgid "Set the background color for the dash."
-msgstr "Ορισμός χρώματος φόντου της μπάρας."
-
-#: Settings.ui.h:64
-msgid "Customize the dash color"
-msgstr "Προσαρμογή του χρώματος της μπάρας"
-
-#: Settings.ui.h:65
-msgid "Tune the dash background opacity."
-msgstr "Αλλαγή της αδιαφάνειας του φόντου της μπάρας."
-
-#: Settings.ui.h:66
+#: prefs.js:1180
 msgid "Customize opacity"
 msgstr "Προσαρμογή αδιαφάνειας"
 
-#: Settings.ui.h:67
-msgid "Opacity"
-msgstr "Αδιαφάνεια"
-
-#: Settings.ui.h:68
-msgid "Force straight corner\n"
-msgstr "Εξαναγκασμός ευθείας γωνίας\n"
-
-#: Settings.ui.h:70
-msgid "Appearance"
-msgstr "Εμφάνιση"
-
-#: Settings.ui.h:71
-msgid "version: "
-msgstr "έκδοση: "
-
-#: Settings.ui.h:72
-msgid "Moves the dash out of the overview transforming it in a dock"
+#: prefs.js:1455
+msgid "Save profile"
 msgstr ""
-"Μετακινεί το ταμπλό και εκτός της προεπισκόπησης μετατρέποντάς το σε μπάρα "
-"εφαρμογών"
 
-#: Settings.ui.h:73
-msgid "Created by"
-msgstr "Δημιουργήθηκε από"
-
-#: Settings.ui.h:74
-msgid "Webpage"
-msgstr "Ιστοσελίδα"
-
-#: Settings.ui.h:75
-msgid ""
-"<span size=\"small\">This program comes with ABSOLUTELY NO WARRANTY.\n"
-"See the <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
-"\">GNU General Public License, version 2 or later</a> for details.</span>"
+#: prefs.js:1461
+msgid "Cancel"
 msgstr ""
-"<span size=\"small\">Αυτό πρόγραμμα παρέχεται χωρίς ΑΠΟΛΥΤΩΣ ΚΑΜΙΑ ΕΓΓΥΗΣΗ.\n"
-"Για λεπτομέρειες δείτε την <a href=\"https://www.gnu.org/licenses/old-"
-"licenses/gpl-2.0.html\">Γενική δημόσια άδεια GNU, έκδοση 2 ή νεότερη.</a> </"
-"span>"
 
-#: Settings.ui.h:77
-msgid "About"
-msgstr "Περί"
+#: prefs.js:1462
+msgid "Save"
+msgstr ""
 
-#: Settings.ui.h:78
-msgid "Show the dock by mouse hover on the screen edge."
-msgstr "Εμφάνιση της μπάρας όταν το ποντίκι πηγαίνει στην άκρη της οθόνης."
+#: prefs.js:1473
+msgid "Profile name:"
+msgstr ""
 
-#: Settings.ui.h:79
-msgid "Autohide"
-msgstr "Αυτόματη απόκρυψη"
+#: docking.js:1718
+msgid "Dash"
+msgstr ""
 
-#: Settings.ui.h:80
-msgid "Push to show: require pressure to show the dock"
-msgstr "Πίεση για εμφάνιση: απαιτείται πίεση για την εμφάνιση της μπάρας"
+#: docking.js:3539 appIcons.js:1929
+msgid "Unpin"
+msgstr ""
 
-#: Settings.ui.h:81
-msgid "Enable in fullscreen mode"
-msgstr "Ενεργοποίηση σε κατάσταση πλήρους οθόνης"
+#: docking.js:3539 appIcons.js:1935
+msgid "Pin to Dock"
+msgstr ""
 
-#: Settings.ui.h:82
-msgid "Show the dock when it doesn't obstruct application windows."
-msgstr "Εμφάνιση της μπάρας όταν δεν εμποδίζει τα παράθυρά των εφαρμογών."
+#: appIcons.js:767
+#, javascript-format
+msgid "%s is updating, try again later"
+msgstr ""
 
-#: Settings.ui.h:83
-msgid "Dodge windows"
-msgstr "Αποφυγή παραθύρων"
+#: appIcons.js:1679
+msgid "Run"
+msgstr ""
 
-#: Settings.ui.h:84
-msgid "All windows"
+#: appIcons.js:1686
+msgid "Remove from Dock"
+msgstr ""
+
+#: appIcons.js:1808
+#, javascript-format
+msgid "%s is being updated…"
+msgstr ""
+
+#: appIcons.js:1819
+msgid "All Windows"
 msgstr "Όλα τα παράθυρα"
 
-#: Settings.ui.h:85
-msgid "Only focused application's windows"
-msgstr "Μόνο τα παράθυρα της εστιασμένης εφαρμογής"
+#. Translators: This is the heading of a list of open windows
+#: appIcons.js:1831
+#, fuzzy
+msgid "Open Windows"
+msgstr "Όλα τα παράθυρα"
 
-#: Settings.ui.h:86
-msgid "Only maximized windows"
-msgstr "Μόνο μεγιστοποιημένα παράθυρα"
+#: appIcons.js:1848 recentFilesMenu.js:326
+msgid "Recent Files"
+msgstr ""
 
-#: Settings.ui.h:87
-msgid "Animation duration (s)"
-msgstr "Διάρκεια κίνησης γραφικών (s)"
+#: appIcons.js:1880
+#, fuzzy
+msgid "New Window"
+msgstr "Όλα τα παράθυρα"
 
-#: Settings.ui.h:88
-msgid "0.000"
-msgstr "0.000"
+#: appIcons.js:1899
+msgid "Launch using Integrated Graphics Card"
+msgstr ""
 
-#: Settings.ui.h:89
-msgid "Show timeout (s)"
-msgstr "Χρονικό όριο εμφάνισης"
+#: appIcons.js:1900
+msgid "Launch using Discrete Graphics Card"
+msgstr ""
 
-#: Settings.ui.h:90
-msgid "Pressure threshold"
-msgstr "Ελάχιστη πίεση"
+#: appIcons.js:1947 appIcons.js:1973
+msgid "App Details"
+msgstr ""
 
-#: Settings.ui.h:61
-msgid "Show window previews on mouse hover"
-msgstr "Εμφάνιση προεπισκοπήσεων παραθύρων κατά την αιώρηση του ποντικιού"
+#: appIcons.js:1987
+msgid "Show Desktop File"
+msgstr ""
 
-#: Settings.ui.h:62
-msgid "Preview animation style"
-msgstr "Στυλ κινούμενων σχεδίων προεπισκόπησης"
+#: appIcons.js:2062 appIcons.js:2148
+msgid "Quit"
+msgstr "Έξοδος"
 
-#: Settings.ui.h:63
-msgid "Instant"
-msgstr "Άμεσο"
+#: appIcons.js:2074
+msgid "Badge Settings"
+msgstr ""
 
-#: Settings.ui.h:64
-msgid "Fade"
-msgstr "Ξεθώριασμα"
+#: appIcons.js:2079
+msgid "Badge: Shown"
+msgstr ""
 
-#: Settings.ui.h:65
-msgid "Slide"
-msgstr "Ολίσθηση"
+#: appIcons.js:2079
+msgid "Badge: Hidden"
+msgstr ""
 
-#: Settings.ui.h:66
-msgid "Scale"
-msgstr "Κλίμακα"
+#: appIcons.js:2102
+msgid "Badge Source"
+msgstr ""
 
-#: Settings.ui.h:67
-msgid "Expand"
-msgstr "Επέκταση"
+#: appIcons.js:2106
+#, fuzzy
+msgid "Auto (default)"
+msgstr "Επαναφορά στις προεπιλογές"
 
-#: Settings.ui.h:68
-msgid "Dissolve"
-msgstr "Διάλυση"
+#: appIcons.js:2107
+msgid "Notifications only"
+msgstr ""
 
-#: Settings.ui.h:69
-msgid "Cascade"
-msgstr "Καταρράκτης"
+#: appIcons.js:2108
+msgid "App counter only"
+msgstr ""
+
+#: appIcons.js:2109
+msgid "None"
+msgstr ""
+
+#: appIcons.js:2151
+#, javascript-format
+msgid "Quit %d Window"
+msgid_plural "Quit %d Windows"
+msgstr[0] ""
+msgstr[1] ""
+
+#: appIcons.js:2426
+msgid "Dash 2 X"
+msgstr ""
+
+#: appIcons.js:2428
+msgid "Settings"
+msgstr ""
+
+#: locations.js:547
+msgid "Mount"
+msgstr ""
+
+#: locations.js:549
+msgid "Unmount"
+msgstr ""
+
+#: locations.js:551
+msgid "Eject"
+msgstr ""
+
+#: locations.js:617
+#, javascript-format
+msgid "Failed to mount “%s”"
+msgstr ""
+
+#: locations.js:622
+#, javascript-format
+msgid "Failed to unmount “%s”"
+msgstr ""
+
+#: locations.js:627
+#, javascript-format
+msgid "Failed to eject “%s”"
+msgstr ""
+
+#: locations.js:640
+msgid "Mount operation already in progress"
+msgstr ""
+
+#: locations.js:645
+msgid "Unmount operation already in progress"
+msgstr ""
+
+#: locations.js:650
+msgid "Eject operation already in progress"
+msgstr ""
+
+#: locations.js:775
+msgid "Trash"
+msgstr ""
+
+#: locations.js:829
+msgid "Empty Trash"
+msgstr ""
+
+#: locations.js:1099
+#, javascript-format
+msgid "Failed to launch “%s”"
+msgstr ""
+
+#: volumeMenuItem.js:63
+msgid "Volume"
+msgstr ""
+
+#~ msgid "Customize indicator style"
+#~ msgstr "Προσαρμογή του στυλ του δείκτη"
+
+#~ msgid "Color"
+#~ msgstr "Χρώμα"
+
+#~ msgid "Border color"
+#~ msgstr "Χρώμα περιγράμματος"
+
+#~ msgid "Border width"
+#~ msgstr "Πλάτος περιγράμματος"
+
+#~ msgid "Number overlay"
+#~ msgstr "Επίστρωση αριθμού"
+
+#~ msgid ""
+#~ "Temporarily show the application numbers over the icons, corresponding to "
+#~ "the shortcut."
+#~ msgstr ""
+#~ "Προσωρινή εμφάνιση αριθμών εφαρμογής πάνω από τα εικονίδια, που "
+#~ "αντιστοιχούν στη συντόμευση πληκτρολογίου."
+
+#~ msgid "Show the dock if it is hidden"
+#~ msgstr "Προβολή της μπάρας αν είναι κρυμμένη"
+
+#~ msgid ""
+#~ "If using autohide, the dock will appear for a short time when triggering "
+#~ "the shortcut."
+#~ msgstr ""
+#~ "Αν χρησιμοποιείται η αυτόματη απόκρυψη, η μπάρα θα εμφανίζεται για λίγο "
+#~ "χρόνο όταν πατιέται η συντόμευση."
+
+#~ msgid "Shortcut for the options above"
+#~ msgstr "Συντόμευση για τις παραπάνω επιλογές"
+
+#~ msgid "Syntax: <Shift>, <Ctrl>, <Alt>, <Super>"
+#~ msgstr "Σύνταξη: <Shift>, <Ctrl>, <Alt>, <Super>"
+
+#~ msgid "Hide timeout (s)"
+#~ msgstr "Καθυστέρηση απόκρυψης"
+
+#~ msgid ""
+#~ "When set to minimize, double clicking minimizes all the windows of the "
+#~ "application."
+#~ msgstr ""
+#~ "Όταν είναι ρυθμισμένο στην ελαχιστοποίηση, το διπλό κλικ ελαχιστοποιεί "
+#~ "όλα τα παράθυρα της εφαρμογής."
+
+#~ msgid "Shift+Click action"
+#~ msgstr "Λειτουργία του Shift+Click"
+
+#~ msgid "Raise window"
+#~ msgstr "Ανύψωση παραθύρου"
+
+#~ msgid "Minimize window"
+#~ msgstr "Ελαχιστοποίηση παραθύρου"
+
+#~ msgid "Launch new instance"
+#~ msgstr "Εκκίνηση νέου παραθύρου"
+
+#~ msgid "Cycle through windows"
+#~ msgstr "Περιήγηση στα ανοικτά παράθυρα"
+
+#~ msgid "Behavior for Middle-Click."
+#~ msgstr "Συμπεριφορά μεσαίου κλικ."
+
+#~ msgid "Middle-Click action"
+#~ msgstr "Λειτουργία του μεσαίου κλικ"
+
+#~ msgid "Behavior for Shift+Middle-Click."
+#~ msgstr "Συμπεριφορά Shift+Μεσαίο κλικ."
+
+#~ msgid "Shift+Middle-Click action"
+#~ msgstr "Λειτουργία του Shift+Μεσαίο κλικ"
+
+#~ msgid "Show the dock on"
+#~ msgstr "Εμφάνιση της μπάρας στην"
+
+#~ msgid "Show on all monitors"
+#~ msgstr "Εμφάνιση σε όλες τις οθόνες"
+
+#~ msgid "Position on screen"
+#~ msgstr "Θέση στην οθόνη"
+
+#~ msgid "Bottom"
+#~ msgstr "Κάτω"
+
+#~ msgid "Top"
+#~ msgstr "Πάνω"
+
+#~ msgid ""
+#~ "Hide the dock when it obstructs a window of the the current application. "
+#~ "More refined settings are available."
+#~ msgstr ""
+#~ "Απόκρυψη της μπάρας όταν εμποδίζει ένα παράθυρο της τρέχουσας εφαρμογής. "
+#~ "Πιο εξειδικευμένες επιλογές είναι επίσης διαθέσιμες."
+
+#~ msgid "Intelligent autohide"
+#~ msgstr "Έξυπνη απόκρυψη"
+
+#~ msgid "Dock size limit"
+#~ msgstr "Περιορισμός μεγέθους μπάρας"
+
+#~ msgid "Panel mode: extend to the screen edge"
+#~ msgstr "Λειτουργιά πάνελ: επέκταση της μπάρας ως τις άκρες της οθόνης"
+
+#~ msgid "Icon size limit"
+#~ msgstr "Περιορισμός μεγέθους εικονιδίων"
+
+#~ msgid "Fixed icon size: scroll to reveal other icons"
+#~ msgstr ""
+#~ "Σταθερό μέγεθος εικονιδίων: κύλιση για την εμφάνιση περαιτέρω εικονιδίων"
+
+#~ msgid "Position and size"
+#~ msgstr "Θέση και μέγεθος"
+
+#~ msgid "Show favorite applications"
+#~ msgstr "Εμφάνιση αγαπημένων εφαρμογών"
+
+#~ msgid "Show running applications"
+#~ msgstr "Εμφάνιση εκτελούμενων εφαρμογών"
+
+#~ msgid "Isolate workspaces"
+#~ msgstr "Απομόνωση χώρων εργασίας"
+
+#~ msgid "Show open windows previews"
+#~ msgstr "Εμφάνιση προεπισκόπησης ανοικτών παραθύρων"
+
+#~ msgid ""
+#~ "If disabled, these settings are accessible from gnome-tweak-tool or the "
+#~ "extension website."
+#~ msgstr ""
+#~ "Αν είναι απενεργοποιημένο, αυτές οι ρυθμίσεις είναι προσβάσιμες από το "
+#~ "εργαλείο μικρορυθμίσεων του GNOME ή τον ιστοτόπο επεκτάσεων."
+
+#~ msgid "Show <i>Applications</i> icon"
+#~ msgstr "Εμφάνιση εικονιδίου <i>Εφαρμογές</i>"
+
+#~ msgid "Move the applications button at the beginning of the dock"
+#~ msgstr "Μετακίνηση του πλήκτρου εφαρμογών στην αρχή της μπάρας"
+
+#~ msgid "Animate <i>Show Applications</i>"
+#~ msgstr "Ενεργοποίηση γραφικών κατά την <i>Εμφάνιση Εφαρμογών</i>"
+
+#~ msgid "Launchers"
+#~ msgstr "Εκκινητές"
+
+#~ msgid ""
+#~ "Enable Super+(0-9) as shortcuts to activate apps. It can also be used "
+#~ "together with Shift and Ctrl."
+#~ msgstr ""
+#~ "Ενεργοποίηση του Super+(0-9) ως συντομεύσεις για την ενεργοποίηση "
+#~ "εφαρμογών. Μπορεί επίσης να χρησιμοποιηθεί με το Shift και το Ctrl."
+
+#~ msgid "Use keyboard shortcuts to activate apps"
+#~ msgstr "Χρήση συντομεύσεων πληκτρολογίου για την ενεργοποίηση εφαρμογών"
+
+#~ msgid "Behaviour when clicking on the icon of a running application."
+#~ msgstr "Συμπεριφορά κατά το κλικ σε εικονίδιο τρέχουσας εφαρμογής."
+
+#~ msgid "Click action"
+#~ msgstr "Συμπεριφορά κλικ"
+
+#~ msgid "Minimize"
+#~ msgstr "Ελαχιστοποίηση"
+
+#~ msgid "Minimize or overview"
+#~ msgstr "Ελαχιστοποίηση ή επισκόπηση"
+
+#~ msgid "Behaviour when scrolling on the icon of an application."
+#~ msgstr "Συμπεριφορά κατά την κύλιση σε εικονίδιο τρέχουσας εφαρμογής."
+
+#~ msgid "Scroll action"
+#~ msgstr "Συμπεριφορά κύλισης"
+
+#~ msgid "Do nothing"
+#~ msgstr "Καμία δράση"
+
+#~ msgid "Switch workspace"
+#~ msgstr "Αλλαγή χώρου εργασίας"
+
+#~ msgid "Behavior"
+#~ msgstr "Συμπεριφορά"
+
+#~ msgid ""
+#~ "Few customizations meant to integrate the dock with the default GNOME "
+#~ "theme. Alternatively, specific options can be enabled below."
+#~ msgstr ""
+#~ "Μερικές προσαρμογές στοχεύουν στο να ενοποιήσουν την μπάρα με το "
+#~ "προκαθορισμένο θέμα του GNOME. Εναλλακτικά, ειδικές επιλογές μπορούν να "
+#~ "ενεργοποιηθούν παρακάτω."
+
+#~ msgid "Use built-in theme"
+#~ msgstr "Χρήση ενσωματωμένου θέματος"
+
+#~ msgid "Save space reducing padding and border radius."
+#~ msgstr "Εξοικονόμηση χώρου μειώνοντας τα κενά και τα περιθώρια."
+
+#~ msgid "Shrink the dash"
+#~ msgstr "Σμίκρυνση της μπάρας"
+
+#~ msgid "Show a dot for each windows of the application."
+#~ msgstr "Εμφανίζει μία τελεία για κάθε παράθυρο της εφαρμογής."
+
+#~ msgid "Show windows counter indicators"
+#~ msgstr "Εμφάνιση μετρητή παραθύρων"
+
+#~ msgid "Set the background color for the dash."
+#~ msgstr "Ορισμός χρώματος φόντου της μπάρας."
+
+#~ msgid "Customize the dash color"
+#~ msgstr "Προσαρμογή του χρώματος της μπάρας"
+
+#~ msgid "Tune the dash background opacity."
+#~ msgstr "Αλλαγή της αδιαφάνειας του φόντου της μπάρας."
+
+#~ msgid "Opacity"
+#~ msgstr "Αδιαφάνεια"
+
+#~ msgid "Force straight corner\n"
+#~ msgstr "Εξαναγκασμός ευθείας γωνίας\n"
+
+#~ msgid "Appearance"
+#~ msgstr "Εμφάνιση"
+
+#~ msgid "version: "
+#~ msgstr "έκδοση: "
+
+#~ msgid "Moves the dash out of the overview transforming it in a dock"
+#~ msgstr ""
+#~ "Μετακινεί το ταμπλό και εκτός της προεπισκόπησης μετατρέποντάς το σε "
+#~ "μπάρα εφαρμογών"
+
+#~ msgid "Created by"
+#~ msgstr "Δημιουργήθηκε από"
+
+#~ msgid "Webpage"
+#~ msgstr "Ιστοσελίδα"
+
+#~ msgid ""
+#~ "<span size=\"small\">This program comes with ABSOLUTELY NO WARRANTY.\n"
+#~ "See the <a href=\"https://www.gnu.org/licenses/old-licenses/"
+#~ "gpl-2.0.html\">GNU General Public License, version 2 or later</a> for "
+#~ "details.</span>"
+#~ msgstr ""
+#~ "<span size=\"small\">Αυτό πρόγραμμα παρέχεται χωρίς ΑΠΟΛΥΤΩΣ ΚΑΜΙΑ "
+#~ "ΕΓΓΥΗΣΗ.\n"
+#~ "Για λεπτομέρειες δείτε την <a href=\"https://www.gnu.org/licenses/old-"
+#~ "licenses/gpl-2.0.html\">Γενική δημόσια άδεια GNU, έκδοση 2 ή νεότερη.</a> "
+#~ "</span>"
+
+#~ msgid "About"
+#~ msgstr "Περί"
+
+#~ msgid "Show the dock by mouse hover on the screen edge."
+#~ msgstr "Εμφάνιση της μπάρας όταν το ποντίκι πηγαίνει στην άκρη της οθόνης."
+
+#~ msgid "Autohide"
+#~ msgstr "Αυτόματη απόκρυψη"
+
+#~ msgid "Push to show: require pressure to show the dock"
+#~ msgstr "Πίεση για εμφάνιση: απαιτείται πίεση για την εμφάνιση της μπάρας"
+
+#~ msgid "Enable in fullscreen mode"
+#~ msgstr "Ενεργοποίηση σε κατάσταση πλήρους οθόνης"
+
+#~ msgid "Show the dock when it doesn't obstruct application windows."
+#~ msgstr "Εμφάνιση της μπάρας όταν δεν εμποδίζει τα παράθυρά των εφαρμογών."
+
+#~ msgid "Dodge windows"
+#~ msgstr "Αποφυγή παραθύρων"
+
+#~ msgid "All windows"
+#~ msgstr "Όλα τα παράθυρα"
+
+#~ msgid "Only focused application's windows"
+#~ msgstr "Μόνο τα παράθυρα της εστιασμένης εφαρμογής"
+
+#~ msgid "Only maximized windows"
+#~ msgstr "Μόνο μεγιστοποιημένα παράθυρα"
+
+#~ msgid "Animation duration (s)"
+#~ msgstr "Διάρκεια κίνησης γραφικών (s)"
+
+#~ msgid "0.000"
+#~ msgstr "0.000"
+
+#~ msgid "Show timeout (s)"
+#~ msgstr "Χρονικό όριο εμφάνισης"
+
+#~ msgid "Pressure threshold"
+#~ msgstr "Ελάχιστη πίεση"
+
+#~ msgid "Show window previews on mouse hover"
+#~ msgstr "Εμφάνιση προεπισκοπήσεων παραθύρων κατά την αιώρηση του ποντικιού"
+
+#~ msgid "Preview animation style"
+#~ msgstr "Στυλ κινούμενων σχεδίων προεπισκόπησης"
+
+#~ msgid "Instant"
+#~ msgstr "Άμεσο"
+
+#~ msgid "Fade"
+#~ msgstr "Ξεθώριασμα"
+
+#~ msgid "Slide"
+#~ msgstr "Ολίσθηση"
+
+#~ msgid "Scale"
+#~ msgstr "Κλίμακα"
+
+#~ msgid "Expand"
+#~ msgstr "Επέκταση"
+
+#~ msgid "Dissolve"
+#~ msgstr "Διάλυση"
+
+#~ msgid "Cascade"
+#~ msgstr "Καταρράκτης"
