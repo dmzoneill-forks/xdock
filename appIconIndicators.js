@@ -740,6 +740,54 @@ class RunningIndicatorNone extends RunningIndicatorBase {
 }
 
 /*
+ * A circular arc progress indicator overlaid on the icon.
+ * Draws a background ring and a colored arc proportional to `progress`.
+ */
+const ProgressArcDrawingArea = GObject.registerClass(
+class ProgressArcDrawingArea extends St.DrawingArea {
+    _init(params) {
+        super._init({x_expand: true, y_expand: true, ...params});
+        this._progress = 0;
+    }
+
+    set progress(value) {
+        if (this._progress === value)
+            return;
+        this._progress = value;
+        this.queue_repaint();
+    }
+
+    get progress() {
+        return this._progress;
+    }
+
+    vfunc_repaint() {
+        const cr = this.get_context();
+        const [width, height] = this.get_surface_size();
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const radius = Math.min(width, height) / 2 - 3;
+        const lineWidth = 3;
+
+        cr.setLineWidth(lineWidth);
+
+        // Background circle (dim)
+        cr.setSourceRGBA(1, 1, 1, 0.2);
+        cr.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+        cr.stroke();
+
+        // Progress arc (bright blue)
+        cr.setSourceRGBA(0.3, 0.6, 1, 0.9);
+        const startAngle = -Math.PI / 2; // 12 o'clock
+        const endAngle = startAngle + (2 * Math.PI * this._progress);
+        cr.arc(centerX, centerY, radius, startAngle, endAngle);
+        cr.stroke();
+
+        cr.$dispose();
+    }
+});
+
+/*
  * Unity like notification and progress indicators
  */
 export class UnityIndicator extends IndicatorBase {
@@ -805,6 +853,10 @@ export class UnityIndicator extends IndicatorBase {
             this._source,
             'style-changed',
             () => this._updateIconStyle(),
+        ], [
+            Docking.DockManager.settings,
+            'changed::progress-indicator-style',
+            () => this._onProgressStyleChanged(),
         ]);
 
         this._updateNotificationsCount();
@@ -818,6 +870,7 @@ export class UnityIndicator extends IndicatorBase {
         this._notificationBadgeBin?.destroy();
         this._notificationBadgeBin = null;
         this._hideProgressOverlay();
+        this._hideProgressArc();
         this.setUrgent(false);
         this.setUpdating(false);
         this._remoteEntry = null;
@@ -1117,12 +1170,53 @@ export class UnityIndicator extends IndicatorBase {
         cr.$dispose();
     }
 
+    _isArcStyle() {
+        return Docking.DockManager.settings.progressIndicatorStyle === 'arc';
+    }
+
+    _showProgressArc() {
+        if (this._progressArcArea) {
+            this._progressArcArea.progress = this._progress;
+            return;
+        }
+
+        this._progressArcArea = new ProgressArcDrawingArea();
+        this._progressArcArea.progress = this._progress;
+        this._source._iconContainer.add_child(this._progressArcArea);
+    }
+
+    _hideProgressArc() {
+        this._progressArcArea?.destroy();
+        this._progressArcArea = null;
+    }
+
+    _onProgressStyleChanged() {
+        if (this._progress === undefined || this._progress < 0)
+            return;
+
+        // Switching styles: tear down the old one and show the new one
+        if (this._isArcStyle()) {
+            this._hideProgressOverlay();
+            this._showProgressArc();
+        } else {
+            this._hideProgressArc();
+            this._showProgressOverlay();
+        }
+    }
+
     setProgress(progress) {
         if (progress < 0) {
             this._hideProgressOverlay();
+            this._hideProgressArc();
         } else {
             this._progress = Math.min(progress, 1.0);
-            this._showProgressOverlay();
+            if (this._isArcStyle()) {
+                this._hideProgressOverlay();
+                this._showProgressArc();
+            } else {
+                this._hideProgressArc();
+                this._showProgressOverlay();
+            }
         }
     }
 

@@ -815,6 +815,23 @@ const DockSettings = GObject.registerClass({
             clearNotificationsOnFocusCheck, 'sensitive',
             GObject.BindingFlags.SYNC_CREATE);
 
+        const progressStyleCombo =
+            this._builder.get_object('progress_indicator_style_combo');
+        progressStyleCombo.set_active_id(
+            this._settings.get_string('progress-indicator-style'));
+        progressStyleCombo.connect('changed', () => {
+            this._settings.set_string('progress-indicator-style',
+                progressStyleCombo.get_active_id());
+        });
+        this._settings.connect('changed::progress-indicator-style', () => {
+            progressStyleCombo.set_active_id(
+                this._settings.get_string('progress-indicator-style'));
+        });
+        this._settings.bind('show-icons-emblems',
+            progressStyleCombo,
+            'sensitive',
+            Gio.SettingsBindFlags.GET);
+
         this._settings.bind('show-show-apps-button',
             this._builder.get_object('show_applications_button_switch'),
             'active',
