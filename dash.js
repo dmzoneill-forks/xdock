@@ -1659,6 +1659,10 @@ export const DockDash = GObject.registerClass({
         }
 
         // ── Phase 4: Removables / Trash ───────────────────────────────
+        // ── Phase 3: Removables / Trash ──────────────────────────────
+        // Location apps are placed right after favorites/categories so
+        // they maintain a stable position regardless of running app
+        // changes (issue #2443).
         this._signalsHandler.removeWithLabel(Labels.SHOW_MOUNTS);
         if (dockManager.removables) {
             this._signalsHandler.addWithLabel(Labels.SHOW_MOUNTS,
@@ -1692,6 +1696,31 @@ export const DockDash = GObject.registerClass({
             oldApps = oldApps.filter(app => !app.isTrash || app === trashApp);
         } else {
             oldApps = oldApps.filter(app => !app.isTrash);
+        }
+
+        // ── Phase 4: Running non-categorized apps ───────────────────────
+        // Preserve order from oldApps, append new ones.
+        const runningCat = []; // categorized -> Phase 5
+
+        if (settings.showRunning) {
+            oldApps.forEach(oldApp => {
+                const index = running.indexOf(oldApp);
+                if (index > -1) {
+                    const [app] = running.splice(index, 1);
+                    const appId = app.get_id();
+                    if (categorizedAppIds.has(appId))
+                        runningCat.push(app);
+                    else if (!showFavorites || !(appId in favorites))
+                        newApps.push(app);
+                }
+            });
+            running.forEach(app => {
+                const appId = app.get_id();
+                if (categorizedAppIds.has(appId))
+                    runningCat.push(app);
+                else if (!showFavorites || !(appId in favorites))
+                    newApps.push(app);
+            });
         }
 
         // ── Phase 5: Running categorized apps — always at the end ────
@@ -1843,7 +1872,9 @@ export const DockDash = GObject.registerClass({
             this._separatorFavorites = null;
         }
 
-        /* Update separator for locations */
+        /* Update separator for locations — placed between location apps
+         * and running apps. Location apps sit right after favorites so
+         * they keep a stable position (issue #2443). */
 
         // Count location and pinned-command apps among expected items
         const nLocationApps = expectedItems.filter(item =>
@@ -1852,6 +1883,11 @@ export const DockDash = GObject.registerClass({
             !item.isFavorite && !this._isLocationApp(item.app) &&
             !this._isPinnedCommandApp(item.app)).length;
         const posLocations = this._box.get_n_children() - nLocationApps;
+            !item.isFavorite && !this._isLocationApp(item.app)).length;
+        // Location apps are after favorites, so separator goes after both.
+        // Account for the favorites separator already in the box.
+        const posLocations = nFavorites + nLocationApps +
+            (this._separatorFavorites ? 1 : 0);
         const isRedudantSeparator = nRunning <= 0;
         if (nLocationApps > 0 && nLocationApps < nIcons && !isRedudantSeparator) {
             this._separatorLocations =
