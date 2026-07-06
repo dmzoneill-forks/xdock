@@ -695,5 +695,15 @@
         6: Cascade (staggered)
       </description>
     </key>
+    <key name="wallpaper-adaptive-color" type="b">
+      <default>false</default>
+      <summary>Automatically tint dock color from wallpaper</summary>
+      <description>Extract the dominant color from the desktop wallpaper and use it as the dock background color.</description>
+    </key>
+    <key name="wallpaper-adaptive-intensity" type="d">
+      <default>0.6</default>
+      <summary>Wallpaper color intensity</summary>
+      <description>How strongly the wallpaper color influences the dock background (0.0 to 1.0).</description>
+    </key>
   </schema>
 </schemalist>

@@ -17,4 +17,5 @@ export * as Locations from './locations.js';
 export * as NotificationsMonitor from './notificationsMonitor.js';
 export * as Theming from './theming.js';
 export * as Utils from './utils.js';
+export * as WallpaperColorExtractor from './wallpaperColorExtractor.js';
 export * as WindowPreview from './windowPreview.js';

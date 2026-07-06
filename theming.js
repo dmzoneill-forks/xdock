@@ -16,6 +16,7 @@ import {Main} from './dependencies/shell/ui.js';
 import {
     Docking,
     Utils,
+    WallpaperColorExtractor,
 } from './imports.js';
 
 const {signals: Signals} = imports;
@@ -34,6 +35,7 @@ const TransparencyMode = {
 const Labels = Object.freeze({
     TRANSPARENCY: Symbol('transparency'),
     THEME_CHANGED: Symbol('theme-changed'),
+    WALLPAPER_COLOR: Symbol('wallpaper-color'),
 });
 
 export const PositionStyleClass = Object.freeze([
@@ -93,6 +95,11 @@ export class ThemeManager {
         else
             this._onOverviewHiding();
 
+        // Set up wallpaper-adaptive color if enabled
+        this._wallpaperExtractor = null;
+        this._wallpaperColor = null;
+        this._ensureWallpaperExtractor();
+
         // destroy themeManager when the managed actor is destroyed (e.g. extension unload)
         // in order to disconnect signals
         this._signalsHandler.add(this._actor, 'destroy', () => this.destroy());
@@ -100,6 +107,7 @@ export class ThemeManager {
 
     destroy() {
         this.emit('destroy');
+        this._destroyWallpaperExtractor();
         this._transparency.destroy();
         this._destroyed = true;
     }
@@ -169,26 +177,34 @@ export class ThemeManager {
     _updateDashColor() {
         // Retrieve the color. If needed we will adjust it before passing it to
         // this._transparency.
-        let [backgroundColor] = this._getDefaultColors();
+        const [backgroundColor] = this._getDefaultColors();
 
         if (!backgroundColor)
             return;
 
         const {settings} = Docking.DockManager;
 
-        if (settings.customBackgroundColor) {
+        // Wallpaper-adaptive color takes priority over manual custom color
+        const useWallpaperColor = settings.wallpaperAdaptiveColor && this._wallpaperColor;
+
+        if (useWallpaperColor || settings.customBackgroundColor) {
             // When applying a custom color, we need to check the alpha value,
             // if not the opacity will always be overridden by the color below.
             // Note that if using 'dynamic' transparency modes,
             // the opacity will be set by the opaque/transparent styles anyway.
             let newAlpha = Math.round(backgroundColor.alpha / 2.55) / 100;
 
-            ({backgroundColor} = settings);
-            // backgroundColor is a string like rgb(0,0,0)
+            let colorString;
+            if (useWallpaperColor)
+                colorString = this._wallpaperColor;
+            else
+                ({backgroundColor: colorString} = settings);
+
+            // colorString is a string like rgb(0,0,0) or #rrggbb
             const Color = Clutter.Color ?? Cogl.Color;
-            const [ret, color] = Color.from_string(backgroundColor);
+            const [ret, color] = Color.from_string(colorString);
             if (!ret) {
-                logError(new Error(`${backgroundColor} is not a valid color string`));
+                logError(new Error(`${colorString} is not a valid color string`));
                 return;
             }
 
@@ -197,7 +213,7 @@ export class ThemeManager {
                 this._customizedBackground =
                     `rgba(${color.red}, ${color.green}, ${color.blue}, ${newAlpha})`;
             } else {
-                this._customizedBackground = backgroundColor;
+                this._customizedBackground = colorString;
             }
 
             this._customizedBorder = this._customizedBackground;
@@ -322,13 +338,55 @@ export class ThemeManager {
             'custom-theme-running-dots',
             'extend-height',
             'force-straight-corner',
-            'custom-border-radius'];
+            'custom-border-radius',
+            'wallpaper-adaptive-intensity'];
 
         this._signalsHandler.addWithLabel(Labels.THEME_CHANGED, ...keys.map(key => [
             Docking.DockManager.settings,
             `changed::${key}`,
             () => this.updateCustomTheme(),
         ]));
+
+        // Toggling wallpaper-adaptive-color needs to create/destroy the extractor
+        this._signalsHandler.addWithLabel(Labels.THEME_CHANGED,
+            Docking.DockManager.settings,
+            'changed::wallpaper-adaptive-color',
+            () => {
+                this._ensureWallpaperExtractor();
+                this.updateCustomTheme();
+            });
+    }
+
+    /**
+     * Create or destroy the WallpaperColorExtractor based on the setting.
+     */
+    _ensureWallpaperExtractor() {
+        const {settings} = Docking.DockManager;
+        if (settings.wallpaperAdaptiveColor) {
+            if (!this._wallpaperExtractor) {
+                this._wallpaperExtractor =
+                    new WallpaperColorExtractor.WallpaperColorExtractor();
+                this._signalsHandler.addWithLabel(Labels.WALLPAPER_COLOR,
+                    this._wallpaperExtractor, 'color-changed',
+                    (_extractor, color) => {
+                        this._wallpaperColor = color;
+                        this.updateCustomTheme();
+                    });
+                // Pick up whatever color the extractor already has
+                this._wallpaperColor = this._wallpaperExtractor.color;
+            }
+        } else {
+            this._destroyWallpaperExtractor();
+            this._wallpaperColor = null;
+        }
+    }
+
+    _destroyWallpaperExtractor() {
+        if (this._wallpaperExtractor) {
+            this._signalsHandler.removeWithLabel(Labels.WALLPAPER_COLOR);
+            this._wallpaperExtractor.destroy();
+            this._wallpaperExtractor = null;
+        }
     }
 }
 Signals.addSignalMethods(ThemeManager.prototype);
