@@ -3,4 +3,6 @@ docking.js
 appIcons.js
 appIconsDecorator.js
 locations.js
+recentFilesMenu.js
+volumeMenuItem.js
 Settings.ui

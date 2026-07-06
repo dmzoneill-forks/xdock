@@ -1,0 +1,251 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Dash 2 X package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dash 2 X\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-06 12:23+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#. Translators: This will be followed by Display Name - Connector.
+#: prefs.js:396
+msgid "Primary monitor: "
+msgstr ""
+
+#. Translators: Followed by monitor index, Display Name - Connector.
+#: prefs.js:402
+msgid "Secondary monitor "
+msgstr ""
+
+#: prefs.js:450
+msgid "Right"
+msgstr ""
+
+#: prefs.js:451
+msgid "Left"
+msgstr ""
+
+#: prefs.js:506
+msgid "Intelligent autohide customization"
+msgstr ""
+
+#: prefs.js:514 prefs.js:913 prefs.js:972
+msgid "Reset to defaults"
+msgstr ""
+
+#: prefs.js:692
+msgid "Managed by GNOME Multitasking's Application Switching setting."
+msgstr ""
+
+#: prefs.js:905
+msgid "Show dock and application numbers"
+msgstr ""
+
+#: prefs.js:964
+msgid "Customize middle-click behavior"
+msgstr ""
+
+#: prefs.js:1065
+msgid "Customize running indicators"
+msgstr ""
+
+#: prefs.js:1180
+msgid "Customize opacity"
+msgstr ""
+
+#: prefs.js:1455
+msgid "Save profile"
+msgstr ""
+
+#: prefs.js:1461
+msgid "Cancel"
+msgstr ""
+
+#: prefs.js:1462
+msgid "Save"
+msgstr ""
+
+#: prefs.js:1473
+msgid "Profile name:"
+msgstr ""
+
+#: docking.js:1718
+msgid "Dash"
+msgstr ""
+
+#: docking.js:3539 appIcons.js:1929
+msgid "Unpin"
+msgstr ""
+
+#: docking.js:3539 appIcons.js:1935
+msgid "Pin to Dock"
+msgstr ""
+
+#: appIcons.js:767
+#, javascript-format
+msgid "%s is updating, try again later"
+msgstr ""
+
+#: appIcons.js:1679
+msgid "Run"
+msgstr ""
+
+#: appIcons.js:1686
+msgid "Remove from Dock"
+msgstr ""
+
+#: appIcons.js:1808
+#, javascript-format
+msgid "%s is being updated…"
+msgstr ""
+
+#: appIcons.js:1819
+msgid "All Windows"
+msgstr ""
+
+#. Translators: This is the heading of a list of open windows
+#: appIcons.js:1831
+msgid "Open Windows"
+msgstr ""
+
+#: appIcons.js:1848 recentFilesMenu.js:326
+msgid "Recent Files"
+msgstr ""
+
+#: appIcons.js:1880
+msgid "New Window"
+msgstr ""
+
+#: appIcons.js:1899
+msgid "Launch using Integrated Graphics Card"
+msgstr ""
+
+#: appIcons.js:1900
+msgid "Launch using Discrete Graphics Card"
+msgstr ""
+
+#: appIcons.js:1947 appIcons.js:1973
+msgid "App Details"
+msgstr ""
+
+#: appIcons.js:1987
+msgid "Show Desktop File"
+msgstr ""
+
+#: appIcons.js:2062 appIcons.js:2148
+msgid "Quit"
+msgstr ""
+
+#: appIcons.js:2074
+msgid "Badge Settings"
+msgstr ""
+
+#: appIcons.js:2079
+msgid "Badge: Shown"
+msgstr ""
+
+#: appIcons.js:2079
+msgid "Badge: Hidden"
+msgstr ""
+
+#: appIcons.js:2102
+msgid "Badge Source"
+msgstr ""
+
+#: appIcons.js:2106
+msgid "Auto (default)"
+msgstr ""
+
+#: appIcons.js:2107
+msgid "Notifications only"
+msgstr ""
+
+#: appIcons.js:2108
+msgid "App counter only"
+msgstr ""
+
+#: appIcons.js:2109
+msgid "None"
+msgstr ""
+
+#: appIcons.js:2151
+#, javascript-format
+msgid "Quit %d Window"
+msgid_plural "Quit %d Windows"
+msgstr[0] ""
+msgstr[1] ""
+
+#: appIcons.js:2426
+msgid "Dash 2 X"
+msgstr ""
+
+#: appIcons.js:2428
+msgid "Settings"
+msgstr ""
+
+#: locations.js:547
+msgid "Mount"
+msgstr ""
+
+#: locations.js:549
+msgid "Unmount"
+msgstr ""
+
+#: locations.js:551
+msgid "Eject"
+msgstr ""
+
+#: locations.js:617
+#, javascript-format
+msgid "Failed to mount “%s”"
+msgstr ""
+
+#: locations.js:622
+#, javascript-format
+msgid "Failed to unmount “%s”"
+msgstr ""
+
+#: locations.js:627
+#, javascript-format
+msgid "Failed to eject “%s”"
+msgstr ""
+
+#: locations.js:640
+msgid "Mount operation already in progress"
+msgstr ""
+
+#: locations.js:645
+msgid "Unmount operation already in progress"
+msgstr ""
+
+#: locations.js:650
+msgid "Eject operation already in progress"
+msgstr ""
+
+#: locations.js:775
+msgid "Trash"
+msgstr ""
+
+#: locations.js:829
+msgid "Empty Trash"
+msgstr ""
+
+#: locations.js:1099
+#, javascript-format
+msgid "Failed to launch “%s”"
+msgstr ""
+
+#: volumeMenuItem.js:63
+msgid "Volume"
+msgstr ""

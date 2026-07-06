@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dash 2 X\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-04 12:35+0100\n"
+"POT-Creation-Date: 2026-07-06 12:23+0100\n"
 "PO-Revision-Date: 2017-10-02 11:25+0700\n"
 "Last-Translator: Mahyuddin <yudi.al@gmail.com>\n"
 "Language-Team: Mahyuddin <yudi.al@gmail.com>\n"
@@ -18,426 +18,530 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 1.8.11\n"
 
-#: prefs.js:113
-msgid "Primary monitor"
+#. Translators: This will be followed by Display Name - Connector.
+#: prefs.js:396
+#, fuzzy
+msgid "Primary monitor: "
 msgstr "Monitor primer"
 
-#: prefs.js:122 prefs.js:129
+#. Translators: Followed by monitor index, Display Name - Connector.
+#: prefs.js:402
 msgid "Secondary monitor "
 msgstr "Monitor sekunder"
 
-#: prefs.js:154 Settings.ui.h:29
+#: prefs.js:450
 msgid "Right"
 msgstr "Kanan"
 
-#: prefs.js:155 Settings.ui.h:26
+#: prefs.js:451
 msgid "Left"
 msgstr "Kiri"
 
-#: prefs.js:205
+#: prefs.js:506
 msgid "Intelligent autohide customization"
 msgstr "Kustomisasi autohide yang cerdas"
 
-#: prefs.js:212 prefs.js:393 prefs.js:450
+#: prefs.js:514 prefs.js:913 prefs.js:972
 msgid "Reset to defaults"
 msgstr "Setel ulang ke bawaan"
 
-#: prefs.js:386
+#: prefs.js:692
+msgid "Managed by GNOME Multitasking's Application Switching setting."
+msgstr ""
+
+#: prefs.js:905
 msgid "Show dock and application numbers"
 msgstr "Tampilkan dock dan nomor aplikasi"
 
-#: prefs.js:443
+#: prefs.js:964
 msgid "Customize middle-click behavior"
 msgstr "Sesuaikan perilaku klik menengah"
 
-#: prefs.js:514
+#: prefs.js:1065
 msgid "Customize running indicators"
 msgstr "Sesuaikan indikator yang sedang berjalan"
 
-#: appIcons.js:804
-msgid "All Windows"
-msgstr "Semua Jendela"
-
-#: Settings.ui.h:1
-msgid "Customize indicator style"
-msgstr "Sesuaikan gaya indikator"
-
-#: Settings.ui.h:2
-msgid "Color"
-msgstr "Warna"
-
-#: Settings.ui.h:3
-msgid "Border color"
-msgstr "Warna border"
-
-#: Settings.ui.h:4
-msgid "Border width"
-msgstr "Lebar border"
-
-#: Settings.ui.h:5
-msgid "Number overlay"
-msgstr "Nomor overlay"
-
-#: Settings.ui.h:6
-msgid ""
-"Temporarily show the application numbers over the icons, corresponding to "
-"the shortcut."
-msgstr ""
-"Untuk sementara menunjukkan nomor aplikasi di atas ikon, sesuai dengan "
-"pintasan."
-
-#: Settings.ui.h:7
-msgid "Show the dock if it is hidden"
-msgstr "Tunjukkan dock jika tersembunyi"
-
-#: Settings.ui.h:8
-msgid ""
-"If using autohide, the dock will appear for a short time when triggering the "
-"shortcut."
-msgstr ""
-"Jika menggunakan autohide, dock akan muncul dalam waktu singkat saat memicu "
-"pintasan."
-
-#: Settings.ui.h:9
-msgid "Shortcut for the options above"
-msgstr "Pintasan untuk opsi di atas"
-
-#: Settings.ui.h:10
-msgid "Syntax: <Shift>, <Ctrl>, <Alt>, <Super>"
-msgstr "Sintaks: <Shift>, <Ctrl>, <Alt>, <Super>"
-
-#: Settings.ui.h:11
-msgid "Hide timeout (s)"
-msgstr "Sembunyikan batas waktu (s)"
-
-#: Settings.ui.h:12
-msgid ""
-"When set to minimize, double clicking minimizes all the windows of the "
-"application."
-msgstr ""
-"Bila disetel untuk meminimalkan, klik ganda meminimalkan semua jendela "
-"aplikasi."
-
-#: Settings.ui.h:13
-msgid "Shift+Click action"
-msgstr "Tindakan Shift+Klik"
-
-#: Settings.ui.h:14
-msgid "Raise window"
-msgstr "Menaikkan jendela"
-
-#: Settings.ui.h:15
-msgid "Minimize window"
-msgstr "Minimalkan jendela"
-
-#: Settings.ui.h:16
-msgid "Launch new instance"
-msgstr "Luncurkan contoh baru"
-
-#: Settings.ui.h:17
-msgid "Cycle through windows"
-msgstr "Siklus melalui jendela"
-
-#: Settings.ui.h:18
-msgid "Quit"
-msgstr "Berhenti"
-
-#: Settings.ui.h:19
-msgid "Behavior for Middle-Click."
-msgstr "Perilaku untuk Klik-Tengah."
-
-#: Settings.ui.h:20
-msgid "Middle-Click action"
-msgstr "Tindakan Klik-Tengah"
-
-#: Settings.ui.h:21
-msgid "Behavior for Shift+Middle-Click."
-msgstr "Perilaku untuk Shift+Klik-Tengah."
-
-#: Settings.ui.h:22
-msgid "Shift+Middle-Click action"
-msgstr "Tindakan Shift+Klik-Tengah"
-
-#: Settings.ui.h:23
-msgid "Show the dock on"
-msgstr "Tunjukkan dock pada"
-
-#: Settings.ui.h:24
-msgid "Show on all monitors"
-msgstr "Tunjukkan pada semua monitor"
-
-#: Settings.ui.h:25
-msgid "Position on screen"
-msgstr "Posisi pada layar"
-
-#: Settings.ui.h:27
-msgid "Bottom"
-msgstr "Bawah"
-
-#: Settings.ui.h:28
-msgid "Top"
-msgstr "Atas"
-
-#: Settings.ui.h:30
-msgid ""
-"Hide the dock when it obstructs a window of the current application. More "
-"refined settings are available."
-msgstr ""
-"Sembunyikan dock saat menghalangi jendela aplikasi saat ini. Setelan yang "
-"lebih halus juga tersedia."
-
-#: Settings.ui.h:31
-msgid "Intelligent autohide"
-msgstr "Autohide cerdas"
-
-#: Settings.ui.h:32
-msgid "Dock size limit"
-msgstr "Batas ukuran dock"
-
-#: Settings.ui.h:33
-msgid "Panel mode: extend to the screen edge"
-msgstr "Mode panel: meluas ke tepi layar"
-
-#: Settings.ui.h:34
-msgid "Icon size limit"
-msgstr "Batas ukuran ikon"
-
-#: Settings.ui.h:35
-msgid "Fixed icon size: scroll to reveal other icons"
-msgstr "Ukuran ikon tetap: gulir untuk menampilkan ikon lain"
-
-#: Settings.ui.h:36
-msgid "Position and size"
-msgstr "Posisi dan ukuran"
-
-#: Settings.ui.h:37
-msgid "Show favorite applications"
-msgstr "Tampilkan aplikasi favorit"
-
-#: Settings.ui.h:38
-msgid "Show running applications"
-msgstr "Tampilkan aplikasi yang sedang berjalan"
-
-#: Settings.ui.h:39
-msgid "Isolate workspaces"
-msgstr "Isolasi ruang kerja"
-
-#: Settings.ui.h:40
-msgid "Show open windows previews"
-msgstr "Tampilkan pratinjau windows yang terbuka"
-
-#: Settings.ui.h:41
-msgid ""
-"If disabled, these settings are accessible from gnome-tweak-tool or the "
-"extension website."
-msgstr ""
-"Jika dinonaktifkan, setelan ini dapat diakses dari gnome-tweak-tool atau "
-"situs ekstensi."
-
-#: Settings.ui.h:42
-msgid "Show <i>Applications</i> icon"
-msgstr "Tampilkan ikon <i>Aplikasi</ i>"
-
-#: Settings.ui.h:43
-msgid "Move the applications button at the beginning of the dock"
-msgstr "Pindahkan tombol aplikasi di awal dock"
-
-#: Settings.ui.h:44
-msgid "Animate <i>Show Applications</i>"
-msgstr "Animasi <i>Tampilkan Aplikasi</i>"
-
-#: Settings.ui.h:45
-msgid "Launchers"
-msgstr "Peluncur"
-
-#: Settings.ui.h:46
-msgid ""
-"Enable Super+(0-9) as shortcuts to activate apps. It can also be used "
-"together with Shift and Ctrl."
-msgstr ""
-"Aktifkan Super+(0-9) sebagai cara pintas untuk mengaktifkan aplikasi. Ini "
-"juga bisa digunakan bersamaan dengan Shift dan Ctrl."
-
-#: Settings.ui.h:47
-msgid "Use keyboard shortcuts to activate apps"
-msgstr "Gunakan pintasan papan tik untuk mengaktifkan aplikasi"
-
-#: Settings.ui.h:48
-msgid "Behaviour when clicking on the icon of a running application."
-msgstr "Perilaku saat mengklik ikon aplikasi yang sedang berjalan."
-
-#: Settings.ui.h:49
-msgid "Click action"
-msgstr "Klik tindakan"
-
-#: Settings.ui.h:50
-msgid "Minimize"
-msgstr "Minimalkan"
-
-#: Settings.ui.h:51
-msgid "Minimize or overview"
-msgstr "Minimalkan atau ikhtisar"
-
-#: Settings.ui.h:52
-msgid "Behaviour when scrolling on the icon of an application."
-msgstr "Perilaku saat menggulir pada ikon aplikasi."
-
-#: Settings.ui.h:53
-msgid "Scroll action"
-msgstr "Gulir tindakan"
-
-#: Settings.ui.h:54
-msgid "Do nothing"
-msgstr "Tidak melakukan apapun"
-
-#: Settings.ui.h:55
-msgid "Switch workspace"
-msgstr "Beralih ruang kerja"
-
-#: Settings.ui.h:56
-msgid "Behavior"
-msgstr "Perilaku"
-
-#: Settings.ui.h:57
-msgid ""
-"Few customizations meant to integrate the dock with the default GNOME theme. "
-"Alternatively, specific options can be enabled below."
-msgstr ""
-"Beberapa penyesuaian dimaksudkan untuk mengintegrasikan dock dengan tema "
-"GNOME bawaan. Sebagai alternatif, pilihan spesifik dapat diaktifkan di bawah "
-"ini."
-
-#: Settings.ui.h:58
-msgid "Use built-in theme"
-msgstr "Gunakan tema bawaan"
-
-#: Settings.ui.h:59
-msgid "Save space reducing padding and border radius."
-msgstr "Hemat ruang padding mengurangi dan radius border."
-
-#: Settings.ui.h:60
-msgid "Shrink the dash"
-msgstr "Penyusutan dash"
-
-#: Settings.ui.h:61
-msgid "Show a dot for each windows of the application."
-msgstr "Tampilkan titik untuk setiap jendela aplikasi."
-
-#: Settings.ui.h:62
-msgid "Show windows counter indicators"
-msgstr "Tampilkan indikator counter jendela"
-
-#: Settings.ui.h:63
-msgid "Set the background color for the dash."
-msgstr "Atur warna latar belakang untuk dash."
-
-#: Settings.ui.h:64
-msgid "Customize the dash color"
-msgstr "Sesuaikan warna dash."
-
-#: Settings.ui.h:65
-msgid "Tune the dash background opacity."
-msgstr "Cocokkan  opacity latar belakang."
-
-#: Settings.ui.h:66
+#: prefs.js:1180
 msgid "Customize opacity"
 msgstr "Menyesuaikan opacity"
 
-#: Settings.ui.h:67
-msgid "Opacity"
-msgstr "Opacity"
-
-#: Settings.ui.h:68
-msgid "Force straight corner\n"
-msgstr "Paksa sudut lurus\n"
-
-#: Settings.ui.h:70
-msgid "Appearance"
-msgstr "Penampilan"
-
-#: Settings.ui.h:71
-msgid "version: "
-msgstr "versi: "
-
-#: Settings.ui.h:72
-msgid "Moves the dash out of the overview transforming it in a dock"
-msgstr "Memindahkan dash keluar dari ikhtisar yang mengubahnya di dock"
-
-#: Settings.ui.h:73
-msgid "Created by"
-msgstr "Dibuat oleh"
-
-#: Settings.ui.h:74
-msgid "Webpage"
-msgstr "Halaman web"
-
-#: Settings.ui.h:75
-msgid ""
-"<span size=\"small\">This program comes with ABSOLUTELY NO WARRANTY.\n"
-"See the <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
-"\">GNU General Public License, version 2 or later</a> for details.</span>"
+#: prefs.js:1455
+msgid "Save profile"
 msgstr ""
-"<span size = \"small\">Program ini hadir dengan TIDAK ADA JAMINAN TIDAK "
-"BENAR.\n"
-"Lihat <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html\"> "
-"GNU General Public License, versi 2 atau yang lebih baru </a> untuk "
-"detailnya. </ Span>"
 
-#: Settings.ui.h:77
-msgid "About"
-msgstr "Tentang"
+#: prefs.js:1461
+msgid "Cancel"
+msgstr ""
 
-#: Settings.ui.h:78
-msgid "Show the dock by mouse hover on the screen edge."
-msgstr "Tunjukkan dock dengan mouse hover di tepi layar."
+#: prefs.js:1462
+msgid "Save"
+msgstr ""
 
-#: Settings.ui.h:79
-msgid "Autohide"
-msgstr "Autohide"
+#: prefs.js:1473
+msgid "Profile name:"
+msgstr ""
 
-#: Settings.ui.h:80
-msgid "Push to show: require pressure to show the dock"
-msgstr "Tekan untuk tampilkan: butuh tekanan untuk menunjukkan dock"
+#: docking.js:1718
+msgid "Dash"
+msgstr ""
 
-#: Settings.ui.h:81
-msgid "Enable in fullscreen mode"
-msgstr "Aktifkan dalam mode layar penuh"
+#: docking.js:3539 appIcons.js:1929
+msgid "Unpin"
+msgstr ""
 
-#: Settings.ui.h:82
-msgid "Show the dock when it doesn't obstruct application windows."
-msgstr "Tunjukkan dokk bila tidak menghalangi jendela aplikasi."
+#: docking.js:3539 appIcons.js:1935
+msgid "Pin to Dock"
+msgstr ""
 
-#: Settings.ui.h:83
-msgid "Dodge windows"
-msgstr "Dodge jendela"
+#: appIcons.js:767
+#, javascript-format
+msgid "%s is updating, try again later"
+msgstr ""
 
-#: Settings.ui.h:84
-msgid "All windows"
-msgstr "Semua jendela"
+#: appIcons.js:1679
+msgid "Run"
+msgstr ""
 
-#: Settings.ui.h:85
-msgid "Only focused application's windows"
-msgstr "Hanya fokus aplikasi jendela"
+#: appIcons.js:1686
+msgid "Remove from Dock"
+msgstr ""
 
-#: Settings.ui.h:86
-msgid "Only maximized windows"
-msgstr "Hanya jendela yang maksimal"
+#: appIcons.js:1808
+#, javascript-format
+msgid "%s is being updated…"
+msgstr ""
 
-#: Settings.ui.h:87
-msgid "Animation duration (s)"
-msgstr "Durasi animasi (s)"
+#: appIcons.js:1819
+msgid "All Windows"
+msgstr "Semua Jendela"
 
-#: Settings.ui.h:88
-msgid "0.000"
-msgstr "0.000"
+#. Translators: This is the heading of a list of open windows
+#: appIcons.js:1831
+#, fuzzy
+msgid "Open Windows"
+msgstr "Semua Jendela"
 
-#: Settings.ui.h:89
-msgid "Show timeout (s)"
-msgstr "Tampilkan batas waktu (s)"
+#: appIcons.js:1848 recentFilesMenu.js:326
+msgid "Recent Files"
+msgstr ""
 
-#: Settings.ui.h:90
-msgid "Pressure threshold"
-msgstr "Ambang tekanan"
+#: appIcons.js:1880
+#, fuzzy
+msgid "New Window"
+msgstr "Semua Jendela"
+
+#: appIcons.js:1899
+msgid "Launch using Integrated Graphics Card"
+msgstr ""
+
+#: appIcons.js:1900
+msgid "Launch using Discrete Graphics Card"
+msgstr ""
+
+#: appIcons.js:1947 appIcons.js:1973
+msgid "App Details"
+msgstr ""
+
+#: appIcons.js:1987
+msgid "Show Desktop File"
+msgstr ""
+
+#: appIcons.js:2062 appIcons.js:2148
+msgid "Quit"
+msgstr "Berhenti"
+
+#: appIcons.js:2074
+msgid "Badge Settings"
+msgstr ""
+
+#: appIcons.js:2079
+msgid "Badge: Shown"
+msgstr ""
+
+#: appIcons.js:2079
+msgid "Badge: Hidden"
+msgstr ""
+
+#: appIcons.js:2102
+msgid "Badge Source"
+msgstr ""
+
+#: appIcons.js:2106
+#, fuzzy
+msgid "Auto (default)"
+msgstr "Setel ulang ke bawaan"
+
+#: appIcons.js:2107
+msgid "Notifications only"
+msgstr ""
+
+#: appIcons.js:2108
+msgid "App counter only"
+msgstr ""
+
+#: appIcons.js:2109
+msgid "None"
+msgstr ""
+
+#: appIcons.js:2151
+#, javascript-format
+msgid "Quit %d Window"
+msgid_plural "Quit %d Windows"
+msgstr[0] ""
+
+#: appIcons.js:2426
+msgid "Dash 2 X"
+msgstr ""
+
+#: appIcons.js:2428
+msgid "Settings"
+msgstr ""
+
+#: locations.js:547
+msgid "Mount"
+msgstr ""
+
+#: locations.js:549
+msgid "Unmount"
+msgstr ""
+
+#: locations.js:551
+msgid "Eject"
+msgstr ""
+
+#: locations.js:617
+#, javascript-format
+msgid "Failed to mount “%s”"
+msgstr ""
+
+#: locations.js:622
+#, javascript-format
+msgid "Failed to unmount “%s”"
+msgstr ""
+
+#: locations.js:627
+#, javascript-format
+msgid "Failed to eject “%s”"
+msgstr ""
+
+#: locations.js:640
+msgid "Mount operation already in progress"
+msgstr ""
+
+#: locations.js:645
+msgid "Unmount operation already in progress"
+msgstr ""
+
+#: locations.js:650
+msgid "Eject operation already in progress"
+msgstr ""
+
+#: locations.js:775
+msgid "Trash"
+msgstr ""
+
+#: locations.js:829
+msgid "Empty Trash"
+msgstr ""
+
+#: locations.js:1099
+#, javascript-format
+msgid "Failed to launch “%s”"
+msgstr ""
+
+#: volumeMenuItem.js:63
+msgid "Volume"
+msgstr ""
+
+#~ msgid "Customize indicator style"
+#~ msgstr "Sesuaikan gaya indikator"
+
+#~ msgid "Color"
+#~ msgstr "Warna"
+
+#~ msgid "Border color"
+#~ msgstr "Warna border"
+
+#~ msgid "Border width"
+#~ msgstr "Lebar border"
+
+#~ msgid "Number overlay"
+#~ msgstr "Nomor overlay"
+
+#~ msgid ""
+#~ "Temporarily show the application numbers over the icons, corresponding to "
+#~ "the shortcut."
+#~ msgstr ""
+#~ "Untuk sementara menunjukkan nomor aplikasi di atas ikon, sesuai dengan "
+#~ "pintasan."
+
+#~ msgid "Show the dock if it is hidden"
+#~ msgstr "Tunjukkan dock jika tersembunyi"
+
+#~ msgid ""
+#~ "If using autohide, the dock will appear for a short time when triggering "
+#~ "the shortcut."
+#~ msgstr ""
+#~ "Jika menggunakan autohide, dock akan muncul dalam waktu singkat saat "
+#~ "memicu pintasan."
+
+#~ msgid "Shortcut for the options above"
+#~ msgstr "Pintasan untuk opsi di atas"
+
+#~ msgid "Syntax: <Shift>, <Ctrl>, <Alt>, <Super>"
+#~ msgstr "Sintaks: <Shift>, <Ctrl>, <Alt>, <Super>"
+
+#~ msgid "Hide timeout (s)"
+#~ msgstr "Sembunyikan batas waktu (s)"
+
+#~ msgid ""
+#~ "When set to minimize, double clicking minimizes all the windows of the "
+#~ "application."
+#~ msgstr ""
+#~ "Bila disetel untuk meminimalkan, klik ganda meminimalkan semua jendela "
+#~ "aplikasi."
+
+#~ msgid "Shift+Click action"
+#~ msgstr "Tindakan Shift+Klik"
+
+#~ msgid "Raise window"
+#~ msgstr "Menaikkan jendela"
+
+#~ msgid "Minimize window"
+#~ msgstr "Minimalkan jendela"
+
+#~ msgid "Launch new instance"
+#~ msgstr "Luncurkan contoh baru"
+
+#~ msgid "Cycle through windows"
+#~ msgstr "Siklus melalui jendela"
+
+#~ msgid "Behavior for Middle-Click."
+#~ msgstr "Perilaku untuk Klik-Tengah."
+
+#~ msgid "Middle-Click action"
+#~ msgstr "Tindakan Klik-Tengah"
+
+#~ msgid "Behavior for Shift+Middle-Click."
+#~ msgstr "Perilaku untuk Shift+Klik-Tengah."
+
+#~ msgid "Shift+Middle-Click action"
+#~ msgstr "Tindakan Shift+Klik-Tengah"
+
+#~ msgid "Show the dock on"
+#~ msgstr "Tunjukkan dock pada"
+
+#~ msgid "Show on all monitors"
+#~ msgstr "Tunjukkan pada semua monitor"
+
+#~ msgid "Position on screen"
+#~ msgstr "Posisi pada layar"
+
+#~ msgid "Bottom"
+#~ msgstr "Bawah"
+
+#~ msgid "Top"
+#~ msgstr "Atas"
+
+#~ msgid ""
+#~ "Hide the dock when it obstructs a window of the current application. More "
+#~ "refined settings are available."
+#~ msgstr ""
+#~ "Sembunyikan dock saat menghalangi jendela aplikasi saat ini. Setelan yang "
+#~ "lebih halus juga tersedia."
+
+#~ msgid "Intelligent autohide"
+#~ msgstr "Autohide cerdas"
+
+#~ msgid "Dock size limit"
+#~ msgstr "Batas ukuran dock"
+
+#~ msgid "Panel mode: extend to the screen edge"
+#~ msgstr "Mode panel: meluas ke tepi layar"
+
+#~ msgid "Icon size limit"
+#~ msgstr "Batas ukuran ikon"
+
+#~ msgid "Fixed icon size: scroll to reveal other icons"
+#~ msgstr "Ukuran ikon tetap: gulir untuk menampilkan ikon lain"
+
+#~ msgid "Position and size"
+#~ msgstr "Posisi dan ukuran"
+
+#~ msgid "Show favorite applications"
+#~ msgstr "Tampilkan aplikasi favorit"
+
+#~ msgid "Show running applications"
+#~ msgstr "Tampilkan aplikasi yang sedang berjalan"
+
+#~ msgid "Isolate workspaces"
+#~ msgstr "Isolasi ruang kerja"
+
+#~ msgid "Show open windows previews"
+#~ msgstr "Tampilkan pratinjau windows yang terbuka"
+
+#~ msgid ""
+#~ "If disabled, these settings are accessible from gnome-tweak-tool or the "
+#~ "extension website."
+#~ msgstr ""
+#~ "Jika dinonaktifkan, setelan ini dapat diakses dari gnome-tweak-tool atau "
+#~ "situs ekstensi."
+
+#~ msgid "Show <i>Applications</i> icon"
+#~ msgstr "Tampilkan ikon <i>Aplikasi</ i>"
+
+#~ msgid "Move the applications button at the beginning of the dock"
+#~ msgstr "Pindahkan tombol aplikasi di awal dock"
+
+#~ msgid "Animate <i>Show Applications</i>"
+#~ msgstr "Animasi <i>Tampilkan Aplikasi</i>"
+
+#~ msgid "Launchers"
+#~ msgstr "Peluncur"
+
+#~ msgid ""
+#~ "Enable Super+(0-9) as shortcuts to activate apps. It can also be used "
+#~ "together with Shift and Ctrl."
+#~ msgstr ""
+#~ "Aktifkan Super+(0-9) sebagai cara pintas untuk mengaktifkan aplikasi. Ini "
+#~ "juga bisa digunakan bersamaan dengan Shift dan Ctrl."
+
+#~ msgid "Use keyboard shortcuts to activate apps"
+#~ msgstr "Gunakan pintasan papan tik untuk mengaktifkan aplikasi"
+
+#~ msgid "Behaviour when clicking on the icon of a running application."
+#~ msgstr "Perilaku saat mengklik ikon aplikasi yang sedang berjalan."
+
+#~ msgid "Click action"
+#~ msgstr "Klik tindakan"
+
+#~ msgid "Minimize"
+#~ msgstr "Minimalkan"
+
+#~ msgid "Minimize or overview"
+#~ msgstr "Minimalkan atau ikhtisar"
+
+#~ msgid "Behaviour when scrolling on the icon of an application."
+#~ msgstr "Perilaku saat menggulir pada ikon aplikasi."
+
+#~ msgid "Scroll action"
+#~ msgstr "Gulir tindakan"
+
+#~ msgid "Do nothing"
+#~ msgstr "Tidak melakukan apapun"
+
+#~ msgid "Switch workspace"
+#~ msgstr "Beralih ruang kerja"
+
+#~ msgid "Behavior"
+#~ msgstr "Perilaku"
+
+#~ msgid ""
+#~ "Few customizations meant to integrate the dock with the default GNOME "
+#~ "theme. Alternatively, specific options can be enabled below."
+#~ msgstr ""
+#~ "Beberapa penyesuaian dimaksudkan untuk mengintegrasikan dock dengan tema "
+#~ "GNOME bawaan. Sebagai alternatif, pilihan spesifik dapat diaktifkan di "
+#~ "bawah ini."
+
+#~ msgid "Use built-in theme"
+#~ msgstr "Gunakan tema bawaan"
+
+#~ msgid "Save space reducing padding and border radius."
+#~ msgstr "Hemat ruang padding mengurangi dan radius border."
+
+#~ msgid "Shrink the dash"
+#~ msgstr "Penyusutan dash"
+
+#~ msgid "Show a dot for each windows of the application."
+#~ msgstr "Tampilkan titik untuk setiap jendela aplikasi."
+
+#~ msgid "Show windows counter indicators"
+#~ msgstr "Tampilkan indikator counter jendela"
+
+#~ msgid "Set the background color for the dash."
+#~ msgstr "Atur warna latar belakang untuk dash."
+
+#~ msgid "Customize the dash color"
+#~ msgstr "Sesuaikan warna dash."
+
+#~ msgid "Tune the dash background opacity."
+#~ msgstr "Cocokkan  opacity latar belakang."
+
+#~ msgid "Opacity"
+#~ msgstr "Opacity"
+
+#~ msgid "Force straight corner\n"
+#~ msgstr "Paksa sudut lurus\n"
+
+#~ msgid "Appearance"
+#~ msgstr "Penampilan"
+
+#~ msgid "version: "
+#~ msgstr "versi: "
+
+#~ msgid "Moves the dash out of the overview transforming it in a dock"
+#~ msgstr "Memindahkan dash keluar dari ikhtisar yang mengubahnya di dock"
+
+#~ msgid "Created by"
+#~ msgstr "Dibuat oleh"
+
+#~ msgid "Webpage"
+#~ msgstr "Halaman web"
+
+#~ msgid ""
+#~ "<span size=\"small\">This program comes with ABSOLUTELY NO WARRANTY.\n"
+#~ "See the <a href=\"https://www.gnu.org/licenses/old-licenses/"
+#~ "gpl-2.0.html\">GNU General Public License, version 2 or later</a> for "
+#~ "details.</span>"
+#~ msgstr ""
+#~ "<span size = \"small\">Program ini hadir dengan TIDAK ADA JAMINAN TIDAK "
+#~ "BENAR.\n"
+#~ "Lihat <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html\"> "
+#~ "GNU General Public License, versi 2 atau yang lebih baru </a> untuk "
+#~ "detailnya. </ Span>"
+
+#~ msgid "About"
+#~ msgstr "Tentang"
+
+#~ msgid "Show the dock by mouse hover on the screen edge."
+#~ msgstr "Tunjukkan dock dengan mouse hover di tepi layar."
+
+#~ msgid "Autohide"
+#~ msgstr "Autohide"
+
+#~ msgid "Push to show: require pressure to show the dock"
+#~ msgstr "Tekan untuk tampilkan: butuh tekanan untuk menunjukkan dock"
+
+#~ msgid "Enable in fullscreen mode"
+#~ msgstr "Aktifkan dalam mode layar penuh"
+
+#~ msgid "Show the dock when it doesn't obstruct application windows."
+#~ msgstr "Tunjukkan dokk bila tidak menghalangi jendela aplikasi."
+
+#~ msgid "Dodge windows"
+#~ msgstr "Dodge jendela"
+
+#~ msgid "All windows"
+#~ msgstr "Semua jendela"
+
+#~ msgid "Only focused application's windows"
+#~ msgstr "Hanya fokus aplikasi jendela"
+
+#~ msgid "Only maximized windows"
+#~ msgstr "Hanya jendela yang maksimal"
+
+#~ msgid "Animation duration (s)"
+#~ msgstr "Durasi animasi (s)"
+
+#~ msgid "0.000"
+#~ msgstr "0.000"
+
+#~ msgid "Show timeout (s)"
+#~ msgstr "Tampilkan batas waktu (s)"
+
+#~ msgid "Pressure threshold"
+#~ msgstr "Ambang tekanan"
 
 #~ msgid ""
 #~ "With fixed icon size, only the edge of the dock and the <i>Show "
@@ -449,38 +553,29 @@ msgstr "Ambang tekanan"
 #~ msgid "Switch workspace by scrolling on the dock"
 #~ msgstr "Cambia spazio di lavoro scorrendo sulla dock"
 
-#: Settings.ui.h:61
-msgid "Show window previews on mouse hover"
-msgstr "Tampilkan pratinjau jendela saat kursor melayang"
+#~ msgid "Show window previews on mouse hover"
+#~ msgstr "Tampilkan pratinjau jendela saat kursor melayang"
 
-#: Settings.ui.h:62
-msgid "Preview animation style"
-msgstr "Gaya animasi pratinjau"
+#~ msgid "Preview animation style"
+#~ msgstr "Gaya animasi pratinjau"
 
-#: Settings.ui.h:63
-msgid "Instant"
-msgstr "Seketika"
+#~ msgid "Instant"
+#~ msgstr "Seketika"
 
-#: Settings.ui.h:64
-msgid "Fade"
-msgstr "Memudar"
+#~ msgid "Fade"
+#~ msgstr "Memudar"
 
-#: Settings.ui.h:65
-msgid "Slide"
-msgstr "Geser"
+#~ msgid "Slide"
+#~ msgstr "Geser"
 
-#: Settings.ui.h:66
-msgid "Scale"
-msgstr "Skala"
+#~ msgid "Scale"
+#~ msgstr "Skala"
 
-#: Settings.ui.h:67
-msgid "Expand"
-msgstr "Perluas"
+#~ msgid "Expand"
+#~ msgstr "Perluas"
 
-#: Settings.ui.h:68
-msgid "Dissolve"
-msgstr "Larut"
+#~ msgid "Dissolve"
+#~ msgstr "Larut"
 
-#: Settings.ui.h:69
-msgid "Cascade"
-msgstr "Bertingkat"
+#~ msgid "Cascade"
+#~ msgstr "Bertingkat"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-22 23:54+0100\n"
+"POT-Creation-Date: 2026-07-06 12:23+0100\n"
 "PO-Revision-Date: 2020-03-22 23:54+0100\n"
 "Last-Translator: Ibai Oihanguren Sala <ibai@oihanguren.com>\n"
 "Language-Team: \n"
@@ -15,600 +15,615 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: prefs.js:268
-msgid "Primary monitor"
+#. Translators: This will be followed by Display Name - Connector.
+#: prefs.js:396
+#, fuzzy
+msgid "Primary monitor: "
 msgstr "Monitore nagusia"
 
-#: prefs.js:277 prefs.js:284
+#. Translators: Followed by monitor index, Display Name - Connector.
+#: prefs.js:402
 msgid "Secondary monitor "
 msgstr "Bigarren monitorea "
 
-#: prefs.js:309 Settings.ui.h:29
+#: prefs.js:450
 msgid "Right"
 msgstr "Eskuinean"
 
-#: prefs.js:310 Settings.ui.h:26
+#: prefs.js:451
 msgid "Left"
 msgstr "Ezkerrean"
 
-#: prefs.js:360
+#: prefs.js:506
 msgid "Intelligent autohide customization"
 msgstr "Ezkutatze adimentsuaren pertsonalizazioa"
 
-#: prefs.js:367 prefs.js:560 prefs.js:616
+#: prefs.js:514 prefs.js:913 prefs.js:972
 msgid "Reset to defaults"
 msgstr "Berrezarri balio lehenetsiak"
 
-#: prefs.js:553
+#: prefs.js:692
+msgid "Managed by GNOME Multitasking's Application Switching setting."
+msgstr ""
+
+#: prefs.js:905
 msgid "Show dock and application numbers"
 msgstr "Erakutsi atrakea eta aplikazioen zenbakiak"
 
-#: prefs.js:609
+#: prefs.js:964
 msgid "Customize middle-click behavior"
 msgstr "Pertsonalizatu erdiko klikaren portaera"
 
-#: prefs.js:692
+#: prefs.js:1065
 msgid "Customize running indicators"
 msgstr "Pertsonalizatu martxan egotearen adierazleak"
 
-#: prefs.js:804 Settings.ui.h:75
+#: prefs.js:1180
 msgid "Customize opacity"
 msgstr "Pertsonalizatu opakutasuna"
 
-#: appIcons.js:792
+#: prefs.js:1455
+msgid "Save profile"
+msgstr ""
+
+#: prefs.js:1461
+msgid "Cancel"
+msgstr ""
+
+#: prefs.js:1462
+msgid "Save"
+msgstr ""
+
+#: prefs.js:1473
+msgid "Profile name:"
+msgstr ""
+
+#: docking.js:1718
+#, fuzzy
+msgid "Dash"
+msgstr "Marrak"
+
+#: docking.js:3539 appIcons.js:1929
+msgid "Unpin"
+msgstr ""
+
+#: docking.js:3539 appIcons.js:1935
+#, fuzzy
+msgid "Pin to Dock"
+msgstr "Dash to Dock %s"
+
+#: appIcons.js:767
+#, javascript-format
+msgid "%s is updating, try again later"
+msgstr ""
+
+#: appIcons.js:1679
+msgid "Run"
+msgstr ""
+
+#: appIcons.js:1686
+msgid "Remove from Dock"
+msgstr ""
+
+#: appIcons.js:1808
+#, javascript-format
+msgid "%s is being updated…"
+msgstr ""
+
+#: appIcons.js:1819
 msgid "All Windows"
 msgstr "Leiho guztiak"
 
-#. Translators: %s is "Settings", which is automatically translated. You
-#. can also translate the full message if this fits better your language.
-#: appIcons.js:1119
-#, javascript-format
-msgid "Dash to Dock %s"
-msgstr "Dash to Dock %s"
+#. Translators: This is the heading of a list of open windows
+#: appIcons.js:1831
+#, fuzzy
+msgid "Open Windows"
+msgstr "Leiho guztiak"
 
-#: appIcons.js:1560
+#: appIcons.js:1848 recentFilesMenu.js:326
+msgid "Recent Files"
+msgstr ""
+
+#: appIcons.js:1880
+#, fuzzy
+msgid "New Window"
+msgstr "Leiho guztiak"
+
+#: appIcons.js:1899
+msgid "Launch using Integrated Graphics Card"
+msgstr ""
+
+#: appIcons.js:1900
+msgid "Launch using Discrete Graphics Card"
+msgstr ""
+
+#: appIcons.js:1947 appIcons.js:1973
+msgid "App Details"
+msgstr ""
+
+#: appIcons.js:1987
+msgid "Show Desktop File"
+msgstr ""
+
+#: appIcons.js:2062 appIcons.js:2148
+msgid "Quit"
+msgstr "Irten"
+
+#: appIcons.js:2074
+#, fuzzy
+msgid "Badge Settings"
+msgstr "Ezarpenak"
+
+#: appIcons.js:2079
+msgid "Badge: Shown"
+msgstr ""
+
+#: appIcons.js:2079
+msgid "Badge: Hidden"
+msgstr ""
+
+#: appIcons.js:2102
+msgid "Badge Source"
+msgstr ""
+
+#: appIcons.js:2106
+#, fuzzy
+msgid "Auto (default)"
+msgstr "Berrezarri balio lehenetsiak"
+
+#: appIcons.js:2107
+msgid "Notifications only"
+msgstr ""
+
+#: appIcons.js:2108
+msgid "App counter only"
+msgstr ""
+
+#: appIcons.js:2109
+msgid "None"
+msgstr ""
+
+#: appIcons.js:2151
+#, javascript-format
+msgid "Quit %d Window"
+msgid_plural "Quit %d Windows"
+msgstr[0] ""
+msgstr[1] ""
+
+#: appIcons.js:2426
 msgid "Dash 2 X"
 msgstr "Dash to Dock"
 
-#: appIcons.js:1562
+#: appIcons.js:2428
 msgid "Settings"
 msgstr "Ezarpenak"
 
-#: locations.js:540
+#: locations.js:547
 msgid "Mount"
 msgstr "Muntatu"
 
-#: locations.js:542
+#: locations.js:549
 msgid "Unmount"
 msgstr "Desmuntatu"
 
-#: locations.js:544
+#: locations.js:551
 msgid "Eject"
 msgstr "Egotzi"
 
-#: locations.js:604
+#: locations.js:617
 #, javascript-format
 msgid "Failed to mount “%s”"
 msgstr "Ezin izan da “%s” muntatu"
 
-#: locations.js:609
+#: locations.js:622
 #, javascript-format
 msgid "Failed to unmount “%s”"
 msgstr "Ezin izan da “%s” desmuntatu"
 
-#: locations.js:614
+#: locations.js:627
 #, javascript-format
 msgid "Failed to eject “%s”"
 msgstr "Ezin izan da “%s” egotzi"
 
-#: locations.js:627
+#: locations.js:640
 msgid "Mount operation already in progress"
 msgstr "Dagoeneko martxan dago muntatze eragiketa"
 
-#: locations.js:632
+#: locations.js:645
 msgid "Unmount operation already in progress"
 msgstr "Dagoeneko martxan dago desmuntatze eragiketa"
 
-#: locations.js:637
+#: locations.js:650
 msgid "Eject operation already in progress"
 msgstr "Dagoeneko martxan dago egozte eragiketa"
 
-#: locations.js:763
+#: locations.js:775
 msgid "Trash"
 msgstr "Zakarrontzia"
 
-#: locations.js:74
+#: locations.js:829
 msgid "Empty Trash"
 msgstr "Hustu zakarrontzia"
 
-#: Settings.ui.h:1
-msgid ""
-"When set to minimize, double clicking minimizes all the windows of the "
-"application."
+#: locations.js:1099
+#, fuzzy, javascript-format
+msgid "Failed to launch “%s”"
+msgstr "Ezin izan da “%s” muntatu"
+
+#: volumeMenuItem.js:63
+msgid "Volume"
 msgstr ""
-"Minimizatzea hautatuz gero, klik bikoitzak aplikazioaren leiho guztiak "
-"minimizatzen ditu."
-
-#: Settings.ui.h:2
-msgid "Shift+Click action"
-msgstr "Maius+Klik ekintza"
-
-#: Settings.ui.h:3
-msgid "Raise window"
-msgstr "Goratu leihoa"
-
-#: Settings.ui.h:4
-msgid "Minimize window"
-msgstr "Minimizatu leihoa"
-
-#: Settings.ui.h:5
-msgid "Launch new instance"
-msgstr "Abiarazi instantzia berria"
-
-#: Settings.ui.h:6
-msgid "Cycle through windows"
-msgstr "Txandakatu leihoak"
-
-#: Settings.ui.h:7
-msgid "Minimize or overview"
-msgstr "Minimizatu edo ikuspegi orokorra"
-
-#: Settings.ui.h:8
-msgid "Show window previews"
-msgstr "Erakutsi leihoen aurrebistak"
-
-#: Settings.ui.h:9
-msgid "Minimize or show previews"
-msgstr "Minimizatu edo erakutsi aurrebistak"
-
-#: Settings.ui.h:10
-msgid "Focus or show previews"
-msgstr "Fokuratu edo erakutsi aurrebistak"
-
-#: Settings.ui.h:11
-msgid "Quit"
-msgstr "Irten"
-
-#: Settings.ui.h:12
-msgid "Behavior for Middle-Click."
-msgstr "Erdiko klikaren portaera"
-
-#: Settings.ui.h:13
-msgid "Middle-Click action"
-msgstr "Erdiko klikaren ekintza"
-
-#: Settings.ui.h:14
-msgid "Behavior for Shift+Middle-Click."
-msgstr "Maius+Erdiko klikaren portaera"
-
-#: Settings.ui.h:15
-msgid "Shift+Middle-Click action"
-msgstr "Maius+Erdiko klikaren ekintza"
-
-#: Settings.ui.h:16
-msgid "Enable Unity7 like glossy backlit items"
-msgstr "Gaitu Unity7 erako  atzeko argidun elementu distiratsuak"
-
-#: Settings.ui.h:17
-msgid "Apply glossy effect."
-msgstr "Aplikatu efektu distiratsua."
-
-#: Settings.ui.h:18
-msgid "Use dominant color"
-msgstr "Erabili kolore nagusia"
-
-#: Settings.ui.h:19
-msgid "Customize indicator style"
-msgstr "Pertsonalizatu adierazleen estiloa"
-
-#: Settings.ui.h:20
-msgid "Color"
-msgstr "Kolorea"
-
-#: Settings.ui.h:21
-msgid "Border color"
-msgstr "Ertzaren kolorea"
-
-#: Settings.ui.h:22
-msgid "Border width"
-msgstr "Ertzaren zabalera"
-
-#: Settings.ui.h:23
-msgid "Show the dock on"
-msgstr "Erakutsi atrakea hemen"
-
-#: Settings.ui.h:24
-msgid "Show on all monitors"
-msgstr "Erakutsi monitore guztietan"
-
-#: Settings.ui.h:25
-msgid "Position on screen"
-msgstr "Pantailako posizioa"
-
-#: Settings.ui.h:27
-msgid "Bottom"
-msgstr "Behean"
-
-#: Settings.ui.h:28
-msgid "Top"
-msgstr "Goian"
-
-#: Settings.ui.h:30
-msgid ""
-"Hide the dock when it obstructs a window of the current application. More "
-"refined settings are available."
-msgstr ""
-"Ezkutatu atrakea uneko aplikazioaren leiho bat eragozten duenean. Ezarpen "
-"zehatzagoak erabilgarri daude."
-
-#: Settings.ui.h:31
-msgid "Intelligent autohide"
-msgstr "Ezkutatze adimentsua"
-
-#: Settings.ui.h:32
-msgid "Dock size limit"
-msgstr "Atrakearen tamaina-muga"
-
-#: Settings.ui.h:33
-msgid "Panel mode: extend to the screen edge"
-msgstr "Panel modua: hedatu pantailaren ertzetara"
-
-#: Settings.ui.h:34
-msgid "Icon size limit"
-msgstr "Ikonoen tamaina-muga"
-
-#: Settings.ui.h:35
-msgid "Fixed icon size: scroll to reveal other icons"
-msgstr "Ikono-tamaina finkoa: korritu beste ikonoak erakusteko"
-
-#: Settings.ui.h:36
-msgid "Position and size"
-msgstr "Posizioa eta tamaina"
-
-#: Settings.ui.h:37
-msgid "Show favorite applications"
-msgstr "Erakutsi gogoko aplikazioak"
-
-#: Settings.ui.h:38
-msgid "Show running applications"
-msgstr "Erakutsi martxan dauden aplikazioak"
-
-#: Settings.ui.h:39
-msgid "Isolate workspaces"
-msgstr "Isolatu laneako areak"
-
-#: Settings.ui.h:40
-msgid "Isolate monitors"
-msgstr "Isolatu monitoreak"
-
-#: Settings.ui.h:41
-msgid "Show open windows previews"
-msgstr "Erakutsi irekitako leihoen aurrebistak"
-
-#: Settings.ui.h:42
-msgid ""
-"If disabled, these settings are accessible from gnome-tweak-tool or the "
-"extension website."
-msgstr ""
-"Desgaituz gero, ezarpen hauek gnome-tweak-tool aplikazioan edo hedapenen "
-"webgunean daude erabilgarri."
-
-#: Settings.ui.h:43
-msgid "Show <i>Applications</i> icon"
-msgstr "Erakutsi <i>Aplikazioak</i> ikonoa"
-
-#: Settings.ui.h:44
-msgid "Move the applications button at the beginning of the dock"
-msgstr "Eraman aplikazioen botoia atrakearen hasierara"
-
-#: Settings.ui.h:45
-msgid "Animate <i>Show Applications</i>"
-msgstr "Animatu <i>Erakutsi aplikazioak</i> ekintza"
-
-#: Settings.ui.h:46
-msgid "Show trash can"
-msgstr "Erakutsi zakarrontzia"
-
-#: Settings.ui.h:47
-msgid "Show mounted volumes and devices"
-msgstr "Erakutsi muntatutako bolumen eta gailuak"
-
-#: Settings.ui.h:48
-msgid "Launchers"
-msgstr "Abiarazleak"
-
-#: Settings.ui.h:49
-msgid ""
-"Enable Super+(0-9) as shortcuts to activate apps. It can also be used "
-"together with Shift and Ctrl."
-msgstr ""
-"Gaitu Super+(0-9) aplikazioak aktibatzeko laster-tekla gisa. Maius eta Ktrl "
-"teklekin batera ere erabil daiteke."
-
-#: Settings.ui.h:50
-msgid "Use keyboard shortcuts to activate apps"
-msgstr "Erabili laster-teklak aplikazioak aktibatzeko"
-
-#: Settings.ui.h:51
-msgid "Behaviour when clicking on the icon of a running application."
-msgstr "Martxan dagoen aplikazio baten ikonoak klik egitean duen portaera."
-
-#: Settings.ui.h:52
-msgid "Click action"
-msgstr "Klik ekintza"
-
-#: Settings.ui.h:53
-msgid "Minimize"
-msgstr "Minimizatu"
-
-#: Settings.ui.h:54
-msgid "Behaviour when scrolling on the icon of an application."
-msgstr "Aplikazio baten ikonoaren gainean sagua korritzean duen portaera."
-
-#: Settings.ui.h:55
-msgid "Scroll action"
-msgstr "Korritze-ekintza"
-
-#: Settings.ui.h:56
-msgid "Do nothing"
-msgstr "Ez egin ezer"
-
-#: Settings.ui.h:57
-msgid "Switch workspace"
-msgstr "Aldatu laneko areaz"
-
-#: Settings.ui.h:58
-msgid "Behavior"
-msgstr "Portaera"
-
-#: Settings.ui.h:59
-msgid ""
-"Few customizations meant to integrate the dock with the default GNOME theme. "
-"Alternatively, specific options can be enabled below."
-msgstr ""
-"Atrakea GNOMEren gai lehenetsiarekin integratzeko ezarritako pertsonalizazio "
-"txikiak. Honen ordez aukera zehatzak gaitu daitezke jarraian."
-
-#: Settings.ui.h:60
-msgid "Use built-in theme"
-msgstr "Erabili integrazio gaia"
-
-#: Settings.ui.h:61
-msgid "Save space reducing padding and border radius."
-msgstr "Hartu leku gutxiago betegarria eta ertzen erradioa txikituz."
-
-#: Settings.ui.h:62
-msgid "Shrink the dash"
-msgstr "Txikiagotu abiarazle-panela"
-
-#: Settings.ui.h:63
-msgid "Customize windows counter indicators"
-msgstr "Pertsonalizatu leiho kopuruen adierazleak"
-
-#: Settings.ui.h:64
-msgid "Default"
-msgstr "Lehenetsia"
-
-#: Settings.ui.h:65
-msgid "Dots"
-msgstr "Puntuak"
-
-#: Settings.ui.h:66
-msgid "Squares"
-msgstr "Laukiak"
-
-#: Settings.ui.h:67
-msgid "Dashes"
-msgstr "Marrak"
-
-#: Settings.ui.h:68
-msgid "Segmented"
-msgstr "Zatikatua"
-
-#: Settings.ui.h:69
-msgid "Solid"
-msgstr "Solidoa"
-
-#: Settings.ui.h:70
-msgid "Ciliora"
-msgstr "Ciliora"
-
-#: Settings.ui.h:71
-msgid "Metro"
-msgstr "Metro"
-
-#: Settings.ui.h:72
-msgid "Set the background color for the dash."
-msgstr "Ezarri abiarazle-panelaren atzeko planoko kolorea"
-
-#: Settings.ui.h:73
-msgid "Customize the dash color"
-msgstr "Personalizatu abiarazle-panelaren kolorea"
-
-#: Settings.ui.h:74
-msgid "Tune the dash background opacity."
-msgstr "Doitu abiarazle-panelaren atzeko planoaren opakutasuna."
-
-#: Settings.ui.h:76
-msgid "Fixed"
-msgstr "Finkoa"
-
-#: Settings.ui.h:77
-msgid "Dynamic"
-msgstr "Dinamikoa"
-
-#: Settings.ui.h:78
-msgid "Opacity"
-msgstr "Opakutasuna"
-
-#: Settings.ui.h:79
-msgid "Force straight corner\n"
-msgstr "Behartu erpin zuzena\n"
-
-#: Settings.ui.h:80
-msgid "Appearance"
-msgstr "Itxura"
-
-#: Settings.ui.h:81
-msgid "version: "
-msgstr "bertsioa: "
-
-#: Settings.ui.h:82
-msgid "Moves the dash out of the overview transforming it in a dock"
-msgstr "Abiarazle-panela ikuspegi orokorretik ateratzen du, atrake bihurtuz"
-
-#: Settings.ui.h:83
-msgid "Created by"
-msgstr "Sortzaileak"
-
-#: Settings.ui.h:84
-msgid "Webpage"
-msgstr "Webgunea"
-
-#: Settings.ui.h:85
-msgid ""
-"<span size=\"small\">This program comes with ABSOLUTELY NO WARRANTY.\n"
-"See the <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-"
-"2.0.html\">GNU General Public License, version 2 or later</a> for "
-"details.</span>"
-msgstr ""
-"<span size=\"small\">Programa honek ez du inolako bermerik.\n"
-"Xehetasun gehiagorako, ikusi <a href=\"https://www.gnu.org/licenses/old-"
-"licenses/gpl-2.0.html\">GNUren Lizentzia Publiko Orokorra, 2. bertsioa edo "
-"berriagoa</a></span>"
-
-#: Settings.ui.h:87
-msgid "About"
-msgstr "Honi buruz"
-
-#: Settings.ui.h:88
-msgid "Customize minimum and maximum opacity values"
-msgstr "Pertsonalizatu opakutasun minimo eta maximoa"
-
-#: Settings.ui.h:89
-msgid "Minimum opacity"
-msgstr "Opakutasun minimoa"
-
-#: Settings.ui.h:90
-msgid "Maximum opacity"
-msgstr "Opakutasun maximoa"
-
-#: Settings.ui.h:91
-msgid "Number overlay"
-msgstr "Gainjarritako zenbakiak"
-
-#: Settings.ui.h:92
-msgid ""
-"Temporarily show the application numbers over the icons, corresponding to "
-"the shortcut."
-msgstr ""
-"Erakutsi une batez laster-teklei dagozkien aplikazio-zenbakiak ikonoen "
-"gainean."
-
-#: Settings.ui.h:93
-msgid "Show the dock if it is hidden"
-msgstr "Erakutsi atrakea ezkutatua badago"
-
-#: Settings.ui.h:94
-msgid ""
-"If using autohide, the dock will appear for a short time when triggering the "
-"shortcut."
-msgstr ""
-"Ezkutatze automatikoa erabiltzean, laster-tekla sakatuz atrakea une baterako "
-"azalduko da."
-
-#: Settings.ui.h:95
-msgid "Shortcut for the options above"
-msgstr "Goiko aukeretarako laster-teklak"
-
-#: Settings.ui.h:96
-msgid "Syntax: <Shift>, <Ctrl>, <Alt>, <Super>"
-msgstr "Sintaxia: <Shift>, <Ctrl>, <Alt>, <Super>"
-
-#: Settings.ui.h:97
-msgid "Hide timeout (s)"
-msgstr "Ezkutatzeko denbora-muga (s)"
-
-#: Settings.ui.h:98
-msgid "Show the dock by mouse hover on the screen edge."
-msgstr "Erakutsi atrakea sagua pantailaren ertzera eramatean."
-
-#: Settings.ui.h:99
-msgid "Autohide"
-msgstr "Ezkutatze automatikoa"
-
-#: Settings.ui.h:100
-msgid "Push to show: require pressure to show the dock"
-msgstr "Bultzatu erakusteko: presio pixka bat egin behar da atrakea erakusteko"
-
-#: Settings.ui.h:101
-msgid "Enable in fullscreen mode"
-msgstr "Gaitu pantaila osoko moduan"
-
-#: Settings.ui.h:102
-msgid "Show the dock when it doesn't obstruct application windows."
-msgstr "Erakutsi atrakea aplikazioaren leihoak eragozten ez dituenean."
-
-#: Settings.ui.h:103
-msgid "Dodge windows"
-msgstr "Saihestu leihoak"
-
-#: Settings.ui.h:104
-msgid "All windows"
-msgstr "Leiho guztiak"
-
-#: Settings.ui.h:105
-msgid "Only focused application's windows"
-msgstr "Fokuratutako aplikazioen leihoetan soilik"
-
-#: Settings.ui.h:106
-msgid "Only maximized windows"
-msgstr "Maximizatutako leihoetan soilik"
-
-#: Settings.ui.h:107
-msgid "Animation duration (s)"
-msgstr "Animazioaren iraupena (s)"
-
-#: Settings.ui.h:108
-msgid "Show timeout (s)"
-msgstr "Erakusteko denbora-muga (s)"
-
-#: Settings.ui.h:109
-msgid "Pressure threshold"
-msgstr "Presio-atalasea"
-
-#: Settings.ui.h:61
-msgid "Show window previews on mouse hover"
-msgstr "Erakutsi leiho-aurrebistak saguaren gainean"
-
-#: Settings.ui.h:62
-msgid "Preview animation style"
-msgstr "Aurrebistaren animazio-estiloa"
-
-#: Settings.ui.h:63
-msgid "Instant"
-msgstr "Berehala"
-
-#: Settings.ui.h:64
-msgid "Fade"
-msgstr "Iraungitzea"
-
-#: Settings.ui.h:65
-msgid "Slide"
-msgstr "Irristatu"
-
-#: Settings.ui.h:66
-msgid "Scale"
-msgstr "Eskala"
-
-#: Settings.ui.h:67
-msgid "Expand"
-msgstr "Zabaldu"
-
-#: Settings.ui.h:68
-msgid "Dissolve"
-msgstr "Disolbatu"
-
-#: Settings.ui.h:69
-msgid "Cascade"
-msgstr "Kaskada"
+
+#~ msgid ""
+#~ "When set to minimize, double clicking minimizes all the windows of the "
+#~ "application."
+#~ msgstr ""
+#~ "Minimizatzea hautatuz gero, klik bikoitzak aplikazioaren leiho guztiak "
+#~ "minimizatzen ditu."
+
+#~ msgid "Shift+Click action"
+#~ msgstr "Maius+Klik ekintza"
+
+#~ msgid "Raise window"
+#~ msgstr "Goratu leihoa"
+
+#~ msgid "Minimize window"
+#~ msgstr "Minimizatu leihoa"
+
+#~ msgid "Launch new instance"
+#~ msgstr "Abiarazi instantzia berria"
+
+#~ msgid "Cycle through windows"
+#~ msgstr "Txandakatu leihoak"
+
+#~ msgid "Minimize or overview"
+#~ msgstr "Minimizatu edo ikuspegi orokorra"
+
+#~ msgid "Show window previews"
+#~ msgstr "Erakutsi leihoen aurrebistak"
+
+#~ msgid "Minimize or show previews"
+#~ msgstr "Minimizatu edo erakutsi aurrebistak"
+
+#~ msgid "Focus or show previews"
+#~ msgstr "Fokuratu edo erakutsi aurrebistak"
+
+#~ msgid "Behavior for Middle-Click."
+#~ msgstr "Erdiko klikaren portaera"
+
+#~ msgid "Middle-Click action"
+#~ msgstr "Erdiko klikaren ekintza"
+
+#~ msgid "Behavior for Shift+Middle-Click."
+#~ msgstr "Maius+Erdiko klikaren portaera"
+
+#~ msgid "Shift+Middle-Click action"
+#~ msgstr "Maius+Erdiko klikaren ekintza"
+
+#~ msgid "Enable Unity7 like glossy backlit items"
+#~ msgstr "Gaitu Unity7 erako  atzeko argidun elementu distiratsuak"
+
+#~ msgid "Apply glossy effect."
+#~ msgstr "Aplikatu efektu distiratsua."
+
+#~ msgid "Use dominant color"
+#~ msgstr "Erabili kolore nagusia"
+
+#~ msgid "Customize indicator style"
+#~ msgstr "Pertsonalizatu adierazleen estiloa"
+
+#~ msgid "Color"
+#~ msgstr "Kolorea"
+
+#~ msgid "Border color"
+#~ msgstr "Ertzaren kolorea"
+
+#~ msgid "Border width"
+#~ msgstr "Ertzaren zabalera"
+
+#~ msgid "Show the dock on"
+#~ msgstr "Erakutsi atrakea hemen"
+
+#~ msgid "Show on all monitors"
+#~ msgstr "Erakutsi monitore guztietan"
+
+#~ msgid "Position on screen"
+#~ msgstr "Pantailako posizioa"
+
+#~ msgid "Bottom"
+#~ msgstr "Behean"
+
+#~ msgid "Top"
+#~ msgstr "Goian"
+
+#~ msgid ""
+#~ "Hide the dock when it obstructs a window of the current application. More "
+#~ "refined settings are available."
+#~ msgstr ""
+#~ "Ezkutatu atrakea uneko aplikazioaren leiho bat eragozten duenean. Ezarpen "
+#~ "zehatzagoak erabilgarri daude."
+
+#~ msgid "Intelligent autohide"
+#~ msgstr "Ezkutatze adimentsua"
+
+#~ msgid "Dock size limit"
+#~ msgstr "Atrakearen tamaina-muga"
+
+#~ msgid "Panel mode: extend to the screen edge"
+#~ msgstr "Panel modua: hedatu pantailaren ertzetara"
+
+#~ msgid "Icon size limit"
+#~ msgstr "Ikonoen tamaina-muga"
+
+#~ msgid "Fixed icon size: scroll to reveal other icons"
+#~ msgstr "Ikono-tamaina finkoa: korritu beste ikonoak erakusteko"
+
+#~ msgid "Position and size"
+#~ msgstr "Posizioa eta tamaina"
+
+#~ msgid "Show favorite applications"
+#~ msgstr "Erakutsi gogoko aplikazioak"
+
+#~ msgid "Show running applications"
+#~ msgstr "Erakutsi martxan dauden aplikazioak"
+
+#~ msgid "Isolate workspaces"
+#~ msgstr "Isolatu laneako areak"
+
+#~ msgid "Isolate monitors"
+#~ msgstr "Isolatu monitoreak"
+
+#~ msgid "Show open windows previews"
+#~ msgstr "Erakutsi irekitako leihoen aurrebistak"
+
+#~ msgid ""
+#~ "If disabled, these settings are accessible from gnome-tweak-tool or the "
+#~ "extension website."
+#~ msgstr ""
+#~ "Desgaituz gero, ezarpen hauek gnome-tweak-tool aplikazioan edo hedapenen "
+#~ "webgunean daude erabilgarri."
+
+#~ msgid "Show <i>Applications</i> icon"
+#~ msgstr "Erakutsi <i>Aplikazioak</i> ikonoa"
+
+#~ msgid "Move the applications button at the beginning of the dock"
+#~ msgstr "Eraman aplikazioen botoia atrakearen hasierara"
+
+#~ msgid "Animate <i>Show Applications</i>"
+#~ msgstr "Animatu <i>Erakutsi aplikazioak</i> ekintza"
+
+#~ msgid "Show trash can"
+#~ msgstr "Erakutsi zakarrontzia"
+
+#~ msgid "Show mounted volumes and devices"
+#~ msgstr "Erakutsi muntatutako bolumen eta gailuak"
+
+#~ msgid "Launchers"
+#~ msgstr "Abiarazleak"
+
+#~ msgid ""
+#~ "Enable Super+(0-9) as shortcuts to activate apps. It can also be used "
+#~ "together with Shift and Ctrl."
+#~ msgstr ""
+#~ "Gaitu Super+(0-9) aplikazioak aktibatzeko laster-tekla gisa. Maius eta "
+#~ "Ktrl teklekin batera ere erabil daiteke."
+
+#~ msgid "Use keyboard shortcuts to activate apps"
+#~ msgstr "Erabili laster-teklak aplikazioak aktibatzeko"
+
+#~ msgid "Behaviour when clicking on the icon of a running application."
+#~ msgstr "Martxan dagoen aplikazio baten ikonoak klik egitean duen portaera."
+
+#~ msgid "Click action"
+#~ msgstr "Klik ekintza"
+
+#~ msgid "Minimize"
+#~ msgstr "Minimizatu"
+
+#~ msgid "Behaviour when scrolling on the icon of an application."
+#~ msgstr "Aplikazio baten ikonoaren gainean sagua korritzean duen portaera."
+
+#~ msgid "Scroll action"
+#~ msgstr "Korritze-ekintza"
+
+#~ msgid "Do nothing"
+#~ msgstr "Ez egin ezer"
+
+#~ msgid "Switch workspace"
+#~ msgstr "Aldatu laneko areaz"
+
+#~ msgid "Behavior"
+#~ msgstr "Portaera"
+
+#~ msgid ""
+#~ "Few customizations meant to integrate the dock with the default GNOME "
+#~ "theme. Alternatively, specific options can be enabled below."
+#~ msgstr ""
+#~ "Atrakea GNOMEren gai lehenetsiarekin integratzeko ezarritako "
+#~ "pertsonalizazio txikiak. Honen ordez aukera zehatzak gaitu daitezke "
+#~ "jarraian."
+
+#~ msgid "Use built-in theme"
+#~ msgstr "Erabili integrazio gaia"
+
+#~ msgid "Save space reducing padding and border radius."
+#~ msgstr "Hartu leku gutxiago betegarria eta ertzen erradioa txikituz."
+
+#~ msgid "Shrink the dash"
+#~ msgstr "Txikiagotu abiarazle-panela"
+
+#~ msgid "Customize windows counter indicators"
+#~ msgstr "Pertsonalizatu leiho kopuruen adierazleak"
+
+#~ msgid "Default"
+#~ msgstr "Lehenetsia"
+
+#~ msgid "Dots"
+#~ msgstr "Puntuak"
+
+#~ msgid "Squares"
+#~ msgstr "Laukiak"
+
+#~ msgid "Segmented"
+#~ msgstr "Zatikatua"
+
+#~ msgid "Solid"
+#~ msgstr "Solidoa"
+
+#~ msgid "Ciliora"
+#~ msgstr "Ciliora"
+
+#~ msgid "Metro"
+#~ msgstr "Metro"
+
+#~ msgid "Set the background color for the dash."
+#~ msgstr "Ezarri abiarazle-panelaren atzeko planoko kolorea"
+
+#~ msgid "Customize the dash color"
+#~ msgstr "Personalizatu abiarazle-panelaren kolorea"
+
+#~ msgid "Tune the dash background opacity."
+#~ msgstr "Doitu abiarazle-panelaren atzeko planoaren opakutasuna."
+
+#~ msgid "Fixed"
+#~ msgstr "Finkoa"
+
+#~ msgid "Dynamic"
+#~ msgstr "Dinamikoa"
+
+#~ msgid "Opacity"
+#~ msgstr "Opakutasuna"
+
+#~ msgid "Force straight corner\n"
+#~ msgstr "Behartu erpin zuzena\n"
+
+#~ msgid "Appearance"
+#~ msgstr "Itxura"
+
+#~ msgid "version: "
+#~ msgstr "bertsioa: "
+
+#~ msgid "Moves the dash out of the overview transforming it in a dock"
+#~ msgstr "Abiarazle-panela ikuspegi orokorretik ateratzen du, atrake bihurtuz"
+
+#~ msgid "Created by"
+#~ msgstr "Sortzaileak"
+
+#~ msgid "Webpage"
+#~ msgstr "Webgunea"
+
+#~ msgid ""
+#~ "<span size=\"small\">This program comes with ABSOLUTELY NO WARRANTY.\n"
+#~ "See the <a href=\"https://www.gnu.org/licenses/old-licenses/"
+#~ "gpl-2.0.html\">GNU General Public License, version 2 or later</a> for "
+#~ "details.</span>"
+#~ msgstr ""
+#~ "<span size=\"small\">Programa honek ez du inolako bermerik.\n"
+#~ "Xehetasun gehiagorako, ikusi <a href=\"https://www.gnu.org/licenses/old-"
+#~ "licenses/gpl-2.0.html\">GNUren Lizentzia Publiko Orokorra, 2. bertsioa "
+#~ "edo berriagoa</a></span>"
+
+#~ msgid "About"
+#~ msgstr "Honi buruz"
+
+#~ msgid "Customize minimum and maximum opacity values"
+#~ msgstr "Pertsonalizatu opakutasun minimo eta maximoa"
+
+#~ msgid "Minimum opacity"
+#~ msgstr "Opakutasun minimoa"
+
+#~ msgid "Maximum opacity"
+#~ msgstr "Opakutasun maximoa"
+
+#~ msgid "Number overlay"
+#~ msgstr "Gainjarritako zenbakiak"
+
+#~ msgid ""
+#~ "Temporarily show the application numbers over the icons, corresponding to "
+#~ "the shortcut."
+#~ msgstr ""
+#~ "Erakutsi une batez laster-teklei dagozkien aplikazio-zenbakiak ikonoen "
+#~ "gainean."
+
+#~ msgid "Show the dock if it is hidden"
+#~ msgstr "Erakutsi atrakea ezkutatua badago"
+
+#~ msgid ""
+#~ "If using autohide, the dock will appear for a short time when triggering "
+#~ "the shortcut."
+#~ msgstr ""
+#~ "Ezkutatze automatikoa erabiltzean, laster-tekla sakatuz atrakea une "
+#~ "baterako azalduko da."
+
+#~ msgid "Shortcut for the options above"
+#~ msgstr "Goiko aukeretarako laster-teklak"
+
+#~ msgid "Syntax: <Shift>, <Ctrl>, <Alt>, <Super>"
+#~ msgstr "Sintaxia: <Shift>, <Ctrl>, <Alt>, <Super>"
+
+#~ msgid "Hide timeout (s)"
+#~ msgstr "Ezkutatzeko denbora-muga (s)"
+
+#~ msgid "Show the dock by mouse hover on the screen edge."
+#~ msgstr "Erakutsi atrakea sagua pantailaren ertzera eramatean."
+
+#~ msgid "Autohide"
+#~ msgstr "Ezkutatze automatikoa"
+
+#~ msgid "Push to show: require pressure to show the dock"
+#~ msgstr ""
+#~ "Bultzatu erakusteko: presio pixka bat egin behar da atrakea erakusteko"
+
+#~ msgid "Enable in fullscreen mode"
+#~ msgstr "Gaitu pantaila osoko moduan"
+
+#~ msgid "Show the dock when it doesn't obstruct application windows."
+#~ msgstr "Erakutsi atrakea aplikazioaren leihoak eragozten ez dituenean."
+
+#~ msgid "Dodge windows"
+#~ msgstr "Saihestu leihoak"
+
+#~ msgid "All windows"
+#~ msgstr "Leiho guztiak"
+
+#~ msgid "Only focused application's windows"
+#~ msgstr "Fokuratutako aplikazioen leihoetan soilik"
+
+#~ msgid "Only maximized windows"
+#~ msgstr "Maximizatutako leihoetan soilik"
+
+#~ msgid "Animation duration (s)"
+#~ msgstr "Animazioaren iraupena (s)"
+
+#~ msgid "Show timeout (s)"
+#~ msgstr "Erakusteko denbora-muga (s)"
+
+#~ msgid "Pressure threshold"
+#~ msgstr "Presio-atalasea"
+
+#~ msgid "Show window previews on mouse hover"
+#~ msgstr "Erakutsi leiho-aurrebistak saguaren gainean"
+
+#~ msgid "Preview animation style"
+#~ msgstr "Aurrebistaren animazio-estiloa"
+
+#~ msgid "Instant"
+#~ msgstr "Berehala"
+
+#~ msgid "Fade"
+#~ msgstr "Iraungitzea"
+
+#~ msgid "Slide"
+#~ msgstr "Irristatu"
+
+#~ msgid "Scale"
+#~ msgstr "Eskala"
+
+#~ msgid "Expand"
+#~ msgstr "Zabaldu"
+
+#~ msgid "Dissolve"
+#~ msgstr "Disolbatu"
+
+#~ msgid "Cascade"
+#~ msgstr "Kaskada"
