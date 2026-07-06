@@ -695,5 +695,10 @@
         6: Cascade (staggered)
       </description>
     </key>
+    <key name="show-screencast-indicator" type="b">
+      <default>true</default>
+      <summary>Show screen recording indicator</summary>
+      <description>Show a visual indicator on the dock when screen recording or screen sharing is active.</description>
+    </key>
   </schema>
 </schemalist>

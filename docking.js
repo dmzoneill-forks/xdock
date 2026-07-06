@@ -40,6 +40,7 @@ import {
     LauncherAPI,
     Locations,
     NotificationsMonitor,
+    ScreencastMonitor,
     Theming,
     Utils,
 } from './imports.js';
@@ -456,6 +457,24 @@ const DockedDash = GObject.registerClass({
         this._slider.set_child(this._box);
         this._box.add_child(this.dash);
 
+        // Screencast indicator: a small red dot shown when recording is active
+        this._screencastIndicator = new St.Bin({
+            style_class: 'screencast-indicator',
+            visible: false,
+            x_align: Clutter.ActorAlign.END,
+            y_align: Clutter.ActorAlign.START,
+            x_expand: false,
+            y_expand: false,
+        });
+        this._box.add_child(this._screencastIndicator);
+
+        const screencastMonitor = DockManager.getDefault()?.screencastMonitor;
+        if (screencastMonitor) {
+            this._signalsHandler.add(screencastMonitor, 'state-changed',
+                () => this._updateScreencastIndicator());
+            this._updateScreencastIndicator();
+        }
+
         // Delay operations that require the shell to be fully loaded and with
         // user theme applied.
         if (Main.layoutManager._startingUp) {
@@ -570,6 +589,8 @@ const DockedDash = GObject.registerClass({
         this._intellihide.destroy();
         this._themeManager.destroy();
         this._workspaceSwitcherPopup?.destroy();
+        this._stopScreencastPulse();
+        this._screencastIndicator = null;
         delete this._staticBox;
 
         if (this._marginLater) {
@@ -1548,6 +1569,67 @@ const DockedDash = GObject.registerClass({
         this._animateIn(DockManager.settings.animationTime, 0);
     }
 
+    _updateScreencastIndicator() {
+        const screencastMonitor = DockManager.getDefault()?.screencastMonitor;
+        if (!screencastMonitor || !this._screencastIndicator)
+            return;
+
+        const shouldShow = screencastMonitor.isRecording;
+
+        if (shouldShow && !this._screencastIndicator.visible) {
+            this._screencastIndicator.visible = true;
+            this._screencastIndicator.ease({
+                opacity: 255,
+                duration: 300,
+                mode: Clutter.AnimationMode.EASE_OUT_QUAD,
+            });
+            // Pulse animation: continuously fade in/out
+            this._startScreencastPulse();
+        } else if (!shouldShow && this._screencastIndicator.visible) {
+            this._stopScreencastPulse();
+            this._screencastIndicator.ease({
+                opacity: 0,
+                duration: 300,
+                mode: Clutter.AnimationMode.EASE_OUT_QUAD,
+                onComplete: () => {
+                    this._screencastIndicator.visible = false;
+                },
+            });
+        }
+    }
+
+    _startScreencastPulse() {
+        this._stopScreencastPulse();
+
+        const pulse = () => {
+            if (!this._screencastIndicator?.visible)
+                return;
+
+            this._screencastIndicator.ease({
+                opacity: 80,
+                duration: 1000,
+                mode: Clutter.AnimationMode.EASE_IN_OUT_SINE,
+                onComplete: () => {
+                    if (!this._screencastIndicator?.visible)
+                        return;
+
+                    this._screencastIndicator.ease({
+                        opacity: 255,
+                        duration: 1000,
+                        mode: Clutter.AnimationMode.EASE_IN_OUT_SINE,
+                        onComplete: pulse,
+                    });
+                },
+            });
+        };
+
+        pulse();
+    }
+
+    _stopScreencastPulse() {
+        this._screencastIndicator?.remove_all_transitions();
+    }
+
     // Optional features to be enabled only for the main Dock
     _enableExtraFeatures() {
         // Restore dash accessibility
@@ -2050,6 +2132,7 @@ export class DockManager {
         this._discreteGpuAvailable = AppDisplay.discreteGpuAvailable;
         this._appSpread = new AppSpread.AppSpread();
         this._notificationsMonitor = new NotificationsMonitor.NotificationsMonitor();
+        this._screencastMonitor = new ScreencastMonitor.ScreencastMonitor();
 
         const needsRemoteModel = () =>
             !this._notificationsMonitor.dndMode && this._settings.showIconsEmblems;
@@ -2417,6 +2500,10 @@ export class DockManager {
 
     get notificationsMonitor() {
         return this._notificationsMonitor;
+    }
+
+    get screencastMonitor() {
+        return this._screencastMonitor;
     }
 
     getDockByMonitor(monitorIndex) {
@@ -3200,6 +3287,7 @@ export class DockManager {
             this._fm1Client = null;
         }
         this._notificationsMonitor.destroy();
+        this._screencastMonitor.destroy();
         this._appSpread.destroy();
         this._trash?.destroy();
         this._trash = null;
