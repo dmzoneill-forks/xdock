@@ -32,6 +32,7 @@ import {
     BounceAnimation,
     DBusMenuUtils,
     Docking,
+    LiveThumbnails,
     Locations,
     MediaControls,
     PinnedCommands,
@@ -245,6 +246,22 @@ export const DockAbstractAppIcon = GObject.registerClass({
         this._updateState();
         this._numberOverlay();
 
+        // Live window thumbnails: replace static icon with a live clone
+        // of the most-recent window when enabled.
+        this._liveThumbnailManager = new LiveThumbnails.LiveThumbnailManager(this);
+        if (Docking.DockManager.settings.liveWindowThumbnails)
+            this._liveThumbnailManager.enable();
+
+        this._signalsHandler.add(
+            Docking.DockManager.settings,
+            'changed::live-window-thumbnails', () => {
+                if (Docking.DockManager.settings.liveWindowThumbnails)
+                    this._liveThumbnailManager.enable();
+                else
+                    this._liveThumbnailManager.disable();
+            }
+        );
+
         this._previewMenuManager = null;
         this._previewMenu = null;
 
@@ -389,6 +406,12 @@ export const DockAbstractAppIcon = GObject.registerClass({
         this._cancelWiggleLongPress();
         this._removeWiggleBadge();
         this._stopJiggle();
+
+        // Clean up live thumbnail manager
+        if (this._liveThumbnailManager) {
+            this._liveThumbnailManager.destroy();
+            this._liveThumbnailManager = null;
+        }
 
         super._onDestroy();
 
