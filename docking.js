@@ -2667,6 +2667,8 @@ export class DockManager {
 
     get mprisMonitor() {
         return this._mprisMonitor;
+    }
+
     get dockProfiles() {
         return this._dockProfiles;
     }
@@ -3189,23 +3191,19 @@ export class DockManager {
         // const { ControlsManagerLayout } = OverviewControls;
         const ControlsManagerLayout = this.overviewControls.layout_manager.constructor;
 
-        const maybeAdjustBoxSize = (state, box, spacing) => {
-            // ensure that an undefined value will be converted into a valid one
-            spacing = spacing ?? 0;
-
+        const maybeAdjustBoxSize = (state, box, _spacing) => {
             if (state === OverviewControls.ControlsState.WINDOW_PICKER) {
-                const searchBox = this.overviewControls._searchEntry.get_allocation_box();
-                const {shouldShow: wsThumbnails} = this.overviewControls._thumbnailsBox;
-
-                if (!wsThumbnails) {
-                    box.y1 += spacing;
-                    box.y2 -= spacing;
-                }
-
-                box.y2 -= searchBox.get_height() + 2 * spacing;
-
                 // Account for horizontal dock height so that window preview
                 // tooltips in the overview are not cropped by the dock (#2530).
+                //
+                // The search entry height and spacing are already subtracted
+                // by the original _computeWorkspacesBoxForState, so we must
+                // NOT subtract them again here.  The previous code subtracted
+                // searchBox.get_height() + 2*spacing (plus extra spacing
+                // adjustments when thumbnails were hidden), which double-
+                // counted the search entry and shrank the workspace area
+                // enough to hide the empty "new workspace" that GNOME shows
+                // at the end when dynamic workspaces are enabled (#40).
                 if (this.mainDock.isHorizontal && !this.settings.dockFixed) {
                     const [, preferredHeight] = this.mainDock.get_preferred_height(
                         box.get_width());
