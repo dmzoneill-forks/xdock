@@ -786,6 +786,10 @@
       <default>false</default>
       <summary>Show live window thumbnails as dock icons</summary>
       <description>Replace static app icons with live miniature previews of running app windows. The thumbnail updates in real time and reverts to the static icon when the app is not running.</description>
+    <key name="badge-overrides" type="s">
+      <default>''</default>
+      <summary>Per-app badge overrides</summary>
+      <description>JSON object mapping app IDs to badge configuration. Each entry: {"appId": {"enabled": true/false, "source": "auto"|"notifications"|"app-counter"|"none"}}.</description>
     </key>
   </schema>
 </schemalist>

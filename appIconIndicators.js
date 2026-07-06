@@ -55,8 +55,16 @@ export class AppIconIndicator {
         else
             ({runningIndicatorStyle} = settings);
 
+        // Check per-app badge override — if enabled is explicitly false
+        // or source is 'none', skip creating the unity indicator entirely
+        const appId = source.app?.id;
+        const badgeOverride = appId ? getBadgeOverride(appId) : null;
+        const badgeDisabled = badgeOverride &&
+            (badgeOverride.enabled === false || badgeOverride.source === 'none');
+
         if (settings.showIconsEmblems &&
-            !Docking.DockManager.getDefault().notificationsMonitor.dndMode) {
+            !Docking.DockManager.getDefault().notificationsMonitor.dndMode &&
+            !badgeDisabled) {
             const unityIndicator = new UnityIndicator(source);
             this._indicators.push(unityIndicator);
         }
@@ -936,11 +944,23 @@ export class UnityIndicator extends IndicatorBase {
     }
 
     _updateNotificationsCount() {
+        const appId = this._source.app?.id;
+        const badgeOverride = appId ? getBadgeOverride(appId) : null;
+
+        // If badge is explicitly disabled via per-app override, show nothing
+        if (badgeOverride &&
+            (badgeOverride.enabled === false || badgeOverride.source === 'none')) {
+            this.setNotificationCount(0);
+            return;
+        }
+
+        const badgeSource = badgeOverride?.source ?? 'auto';
+
         const remoteCount = this._remoteEntry['count-visible']
             ? this._remoteEntry.count ?? 0 : 0;
 
-        if (remoteCount > 0 &&
-            Docking.DockManager.settings.applicationCounterOverridesNotifications) {
+        // Per-app source override
+        if (badgeSource === 'app-counter') {
             this.setNotificationCount(remoteCount);
             return;
         }
@@ -948,6 +968,18 @@ export class UnityIndicator extends IndicatorBase {
         const {notificationsMonitor} = Docking.DockManager.getDefault();
         const notificationsCount = notificationsMonitor.getAppNotificationsCount(
             this._source.app.id);
+
+        if (badgeSource === 'notifications') {
+            this.setNotificationCount(notificationsCount);
+            return;
+        }
+
+        // Default 'auto' behavior — same as original logic
+        if (remoteCount > 0 &&
+            Docking.DockManager.settings.applicationCounterOverridesNotifications) {
+            this.setNotificationCount(remoteCount);
+            return;
+        }
 
         this.setNotificationCount(remoteCount + notificationsCount);
     }
@@ -1245,6 +1277,56 @@ export class UnityIndicator extends IndicatorBase {
     }
 }
 
+
+/**
+ * Get the badge override configuration for a specific app.
+ *
+ * @param {string} appId - The application ID
+ * @returns {object|null} - The override config or null if none set
+ */
+export function getBadgeOverride(appId) {
+    const {settings} = Docking.DockManager;
+    const overridesStr = settings.get_string('badge-overrides');
+    if (!overridesStr)
+        return null;
+
+    try {
+        const overrides = JSON.parse(overridesStr);
+        return overrides[appId] ?? null;
+    } catch {
+        return null;
+    }
+}
+
+/**
+ * Set the badge override configuration for a specific app.
+ *
+ * @param {string} appId - The application ID
+ * @param {object} config - The override config ({enabled, source})
+ */
+export function setBadgeOverride(appId, config) {
+    const {settings} = Docking.DockManager;
+    const overridesStr = settings.get_string('badge-overrides');
+    let overrides = {};
+
+    if (overridesStr) {
+        try {
+            overrides = JSON.parse(overridesStr);
+        } catch {
+            overrides = {};
+        }
+    }
+
+    // If config matches defaults, remove the entry
+    if (config.enabled !== false && (!config.source || config.source === 'auto'))
+        delete overrides[appId];
+    else
+        overrides[appId] = config;
+
+    const newStr = Object.keys(overrides).length > 0
+        ? JSON.stringify(overrides) : '';
+    settings.set_string('badge-overrides', newStr);
+}
 
 // Global icon cache. Used for Unity7 styling.
 const iconCacheMap = new Map();

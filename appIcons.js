@@ -234,6 +234,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
             'show-icons-emblems',
             'show-icons-notifications-counter',
             'application-counter-overrides-notifications',
+            'badge-overrides',
         ].forEach(key => {
             this._signalsHandler.add(
                 Docking.DockManager.settings,
@@ -2016,6 +2017,12 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
                     Main.overview.hide();
                 });
             }
+
+            // Badge Settings submenu — per-app badge overrides
+            if (Docking.DockManager.settings.showIconsEmblems) {
+                this._appendSeparator();
+                this._appendBadgeSettingsSubmenu(app);
+            }
         }
 
         // dynamic menu
@@ -2056,6 +2063,80 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
         this._quitMenuItem.connect('activate', () => this.sourceActor.closeAllWindows());
 
         this.update();
+    }
+
+    _appendBadgeSettingsSubmenu(app) {
+        const appId = app.get_id();
+        const override = AppIconIndicators.getBadgeOverride(appId) ?? {};
+        const isEnabled = override.enabled !== false && override.source !== 'none';
+        const currentSource = override.source ?? 'auto';
+
+        const badgeSubMenu = new PopupMenu.PopupSubMenuMenuItem(__('Badge Settings'), false);
+        this.addMenuItem(badgeSubMenu);
+
+        // "Show badge" toggle
+        const showBadgeItem = new PopupMenu.PopupMenuItem(
+            isEnabled ? __('Badge: Shown') : __('Badge: Hidden'));
+        const toggleIcon = isEnabled ? 'object-select-symbolic' : '';
+        if (toggleIcon) {
+            showBadgeItem.setOrnament(PopupMenu.Ornament.CHECK);
+        } else {
+            showBadgeItem.setOrnament(PopupMenu.Ornament.NONE);
+        }
+        showBadgeItem.connect('activate', () => {
+            const newEnabled = !isEnabled;
+            const newConfig = {...override, enabled: newEnabled};
+            if (newEnabled) {
+                delete newConfig.enabled;
+                if (newConfig.source === 'none')
+                    newConfig.source = 'auto';
+            }
+            AppIconIndicators.setBadgeOverride(appId, newConfig);
+            this._rebuildIndicatorForApp();
+        });
+        badgeSubMenu.menu.addMenuItem(showBadgeItem);
+
+        badgeSubMenu.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+
+        // Badge source options
+        const sourceLabel = new PopupMenu.PopupSeparatorMenuItem(__('Badge Source'));
+        badgeSubMenu.menu.addMenuItem(sourceLabel);
+
+        const sources = [
+            {id: 'auto', label: __('Auto (default)')},
+            {id: 'notifications', label: __('Notifications only')},
+            {id: 'app-counter', label: __('App counter only')},
+            {id: 'none', label: __('None')},
+        ];
+
+        for (const {id, label} of sources) {
+            const item = new PopupMenu.PopupMenuItem(label);
+            if (currentSource === id)
+                item.setOrnament(PopupMenu.Ornament.DOT);
+            else
+                item.setOrnament(PopupMenu.Ornament.NONE);
+
+            item.connect('activate', () => {
+                const newConfig = {...override, source: id};
+                if (id === 'none')
+                    newConfig.enabled = false;
+                else
+                    delete newConfig.enabled;
+
+                AppIconIndicators.setBadgeOverride(appId, newConfig);
+                this._rebuildIndicatorForApp();
+            });
+            badgeSubMenu.menu.addMenuItem(item);
+        }
+    }
+
+    _rebuildIndicatorForApp() {
+        // Rebuild the indicator on the source actor to pick up new overrides
+        if (this.sourceActor?._indicator) {
+            this.sourceActor._indicator.destroy();
+            this.sourceActor._indicator =
+                new AppIconIndicators.AppIconIndicator(this.sourceActor);
+        }
     }
 
     // update menu content when application windows change. This is desirable as actions
