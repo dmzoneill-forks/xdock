@@ -34,6 +34,7 @@ import {
     DBusMenuUtils,
     Docking,
     Locations,
+    RecentFilesMenu,
     Theming,
     Utils,
     WindowPreview,
@@ -55,6 +56,7 @@ const Labels = Object.freeze({
     ISOLATE_WORKSPACES: Symbol('isolate-workspaces'),
     MENU_OVERVIEW: Symbol('menu-overview'),
     PREVIEW_OVERVIEW: Symbol('preview-overview'),
+    RECENT_FILES_OVERVIEW: Symbol('recent-files-overview'),
     URGENT_WINDOWS: Symbol('urgent-windows'),
 });
 
@@ -248,6 +250,9 @@ export const DockAbstractAppIcon = GObject.registerClass({
         this._previewMenu = null;
         this._hoverIsEnabled = false;
         this._originalOpenStateChangeId = null;
+
+        this._recentFilesMenuManager = null;
+        this._recentFilesMenuInstance = null;
     }
 
     _onDestroy() {
@@ -519,6 +524,13 @@ export const DockAbstractAppIcon = GObject.registerClass({
             this._previewMenu.cancelOpen();
             if (this._previewMenu.isOpen)
                 this._previewMenu.close(~0);
+        }
+
+        // Close hover-opened recent files menu when opening right-click menu
+        if (this._recentFilesMenuInstance) {
+            this._recentFilesMenuInstance.cancelOpen();
+            if (this._recentFilesMenuInstance.isOpen)
+                this._recentFilesMenuInstance.close(~0);
         }
 
         if (!this._menu) {
@@ -840,6 +852,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
     shouldShowTooltip() {
         return super.shouldShowTooltip() && !this._previewMenu?.isOpen &&
+            !this._recentFilesMenuInstance?.isOpen &&
             !Docking.DockManager.settings.hideTooltip;
     }
 
@@ -869,6 +882,41 @@ export const DockAbstractAppIcon = GObject.registerClass({
             this._previewMenu.fromHover = false;
             this._previewMenu.popup();
             this._previewMenu.actor.navigate_focus(null, St.DirectionType.TAB_FORWARD, false);
+        }
+
+        return false;
+    }
+
+    _recentFiles() {
+        if (!this._recentFilesMenuInstance) {
+            this._recentFilesMenuManager = new PopupMenu.PopupMenuManager(this);
+
+            this._recentFilesMenuInstance =
+                new RecentFilesMenu.RecentFilesMenu(this);
+
+            this._recentFilesMenuManager.addMenu(this._recentFilesMenuInstance);
+
+            this._recentFilesMenuInstance.connect('open-state-changed',
+                (menu, isPoppedUp) => {
+                    if (!isPoppedUp)
+                        this._onMenuPoppedDown();
+                });
+            this._signalsHandler.addWithLabel(Labels.RECENT_FILES_OVERVIEW,
+                Main.overview, 'hiding',
+                () => this._recentFilesMenuInstance.close());
+            this._signalsHandler.add(
+                this._recentFilesMenuInstance.actor, 'destroy', () =>
+                    this._signalsHandler.removeWithLabel(
+                        Labels.RECENT_FILES_OVERVIEW));
+        }
+
+        this.emit('menu-state-changed', !this._recentFilesMenuInstance.isOpen);
+
+        if (this._recentFilesMenuInstance.isOpen) {
+            this._recentFilesMenuInstance.close();
+        } else {
+            this._recentFilesMenuInstance.fromHover = false;
+            this._recentFilesMenuInstance.popup();
         }
 
         return false;
@@ -1331,6 +1379,12 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
         return item;
     }
 
+    _appendMenuItemTo(menu, labelText, params) {
+        const item = new PopupMenu.PopupMenuItem(labelText, params);
+        menu.addMenuItem(item);
+        return item;
+    }
+
     popup(_activatingButton) {
         this._rebuildMenu();
         this.open(BoxPointer.PopupAnimation.FULL);
@@ -1340,6 +1394,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
         super.removeAll();
 
         delete this._allWindowsMenuItem;
+        delete this._recentFilesMenuItem;
         delete this._quitMenuItem;
     }
 
@@ -1380,6 +1435,35 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
                     this.emit('activate-window', window);
                 });
             });
+        }
+
+        // Recent Files submenu
+        if (Docking.DockManager.settings.showRecentFiles && !app.is_window_backed()) {
+            const recentFiles = RecentFilesMenu.getRecentFilesForApp(app);
+            if (recentFiles.length > 0) {
+                this._recentFilesMenuItem = new PopupMenu.PopupSubMenuMenuItem(
+                    __('Recent Files'), false);
+                this.addMenuItem(this._recentFilesMenuItem);
+
+                for (const entry of recentFiles) {
+                    const fileItem = this._appendMenuItemTo(
+                        this._recentFilesMenuItem.menu, entry.name);
+                    fileItem.connect('activate', () => {
+                        try {
+                            const appInfo = app.get_app_info();
+                            if (appInfo) {
+                                const file = Gio.File.new_for_uri(entry.href);
+                                appInfo.launch([file], null);
+                            } else {
+                                Gio.AppInfo.launch_default_for_uri(entry.href, null);
+                            }
+                        } catch (e) {
+                            logError(e, `Failed to open: ${entry.href}`);
+                        }
+                        this.close();
+                    });
+                }
+            }
         }
 
         if (!app.is_window_backed()) {
