@@ -3294,8 +3294,7 @@ export class DockManager {
                 workAreaBox.set_origin(startX, startY);
                 workAreaBox.set_size(workArea.width, workArea.height);
 
-                // GNOME 46 changes "spacing" to "_spacing".
-                const spacing = this.spacing ?? this._spacing;
+                const spacing = this._spacing;
 
                 maybeAdjustBoxToDock(undefined, workAreaBox, spacing);
                 const oldStartY = workAreaBox.y1;
@@ -3354,8 +3353,7 @@ export class DockManager {
                     return originalFunction.call(this, state, ...args);
 
                 const box = workspaceBoxOriginFixer.call(this, originalFunction, state, ...args);
-                // GNOME 46 changes "spacing" to "_spacing".
-                const spacing = this.spacing ?? this._spacing;
+                const spacing = this._spacing;
                 const dock = DockManager.getDefault()?.getDockByMonitor(Main.layoutManager.primaryIndex);
                 if (!dock)
                     return box;

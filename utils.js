@@ -710,7 +710,7 @@ class CancellableChild extends Gio.Cancellable {
  *
  */
 export function getMonitorManager() {
-    return global.backend.get_monitor_manager?.() ?? Meta.MonitorManager.get();
+    return global.backend.get_monitor_manager();
 }
 
 /**
@@ -718,36 +718,22 @@ export function getMonitorManager() {
  * @param callback
  */
 export function laterAdd(laterType, callback) {
-    return global.compositor?.get_laters?.().add(laterType, callback) ??
-        Meta.later_add(laterType, callback);
+    return global.compositor.get_laters().add(laterType, callback);
 }
 
 /**
  * @param id
  */
 export function laterRemove(id) {
-    if (global.compositor?.get_laters)
-        global.compositor?.get_laters().remove(id);
-    else
-        Meta.later_remove(id);
+    global.compositor.get_laters().remove(id);
 }
 
 /**
- * Up to Gnome Shell 45, the Cairo Context object didn't export the
- * `setSourceColor()` method, so Clutter included a function call for
- * that, written in C. In Gnome Shell 46, the method was finally exported,
- * so that function was removed.
- *
- * This function is, thus, required for Gnome Shell 45 compatibility.
- *
  * @param {*} cr A cairo context
  * @param {*} sourceColor The new color for source
  */
 export function cairoSetSourceColor(cr, sourceColor) {
-    if (Clutter.cairo_set_source_color)
-        Clutter.cairo_set_source_color(cr, sourceColor);
-    else
-        cr.setSourceColor(sourceColor);
+    cr.setSourceColor(sourceColor);
 }
 
 /**

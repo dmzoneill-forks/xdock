@@ -235,7 +235,7 @@ export class ThemeManager {
                 ({backgroundColor: colorString} = settings);
 
             // colorString is a string like rgb(0,0,0) or #rrggbb
-            const Color = Clutter.Color ?? Cogl.Color;
+            const Color = Cogl.Color;
             const [ret, color] = Color.from_string(colorString);
             if (!ret) {
                 logError(new Error(`${colorString} is not a valid color string`));
