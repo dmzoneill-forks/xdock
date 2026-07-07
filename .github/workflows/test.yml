@@ -112,9 +112,14 @@ jobs:
           do_in_pod gsettings set org.gnome.shell welcome-dialog-last-shown-version "999" || true
 
           echo "Starting GNOME Shell..."
-          do_in_pod systemctl --user start "gnome-xsession@:99" 2>/dev/null \
-            || do_in_pod systemctl --user start "gnome-wayland-nested@:99" 2>/dev/null \
-            || echo "Warning: could not start GNOME session via systemd"
+          # Try X11 session first (Fedora 41), then headless Wayland (42+)
+          if do_in_pod systemctl --user start "gnome-xsession@:99" 2>/dev/null; then
+            echo "  X11 session started"
+          elif do_in_pod start-gnome-headless.sh 1920x1080 2>/dev/null; then
+            echo "  Headless Wayland session started"
+          else
+            echo "  Warning: could not start GNOME session"
+          fi
           sleep 10
 
           echo "Enabling extension..."
@@ -139,15 +144,11 @@ jobs:
               || true)
 
           echo "Taking screenshot..."
-          # Method 1: GNOME Shell D-Bus Screenshot API (works on both X11 and Wayland)
-          do_in_pod dbus-send --session --type=method_call \
-            --dest=org.gnome.Shell.Screenshot \
-            /org/gnome/Shell/Screenshot \
-            org.gnome.Shell.Screenshot.Screenshot \
-            boolean:false boolean:true string:/tmp/screenshot.png 2>/dev/null || true
+          # Method 1: D-Bus Screenshot API (headless Wayland)
+          do_in_pod take-screenshot.sh /tmp/screenshot.png 2>/dev/null || true
           podman cp "${POD}:/tmp/screenshot.png" screenshot.png 2>/dev/null || true
 
-          # Method 2: Xvfb framebuffer (X11 only, Schneegans images)
+          # Method 2: Xvfb framebuffer (X11 sessions)
           if [ ! -f screenshot.png ] || [ "$(stat -c%s screenshot.png 2>/dev/null || echo 0)" -lt 1000 ]; then
             podman cp "${POD}:/opt/Xvfb_screen0" - 2>/dev/null | tar xf - 2>/dev/null || true
             if [ -f Xvfb_screen0 ] && [ "$(stat -c%s Xvfb_screen0 2>/dev/null || echo 0)" -gt 10000 ]; then
@@ -155,7 +156,11 @@ jobs:
             fi
           fi
 
-          echo "Screenshot: $(stat -c%s screenshot.png 2>/dev/null || echo 'none') bytes"
+          SIZE=$(stat -c%s screenshot.png 2>/dev/null || echo 0)
+          echo "Screenshot: ${SIZE} bytes"
+          if [ "$SIZE" -lt 1000 ]; then
+            echo "Warning: screenshot may be blank"
+          fi
 
           podman stop "${POD}" >/dev/null 2>&1 || true
 
