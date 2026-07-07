@@ -95,7 +95,9 @@ jobs:
           do_in_pod gsettings set org.gnome.shell welcome-dialog-last-shown-version "999" || true
 
           echo "Starting GNOME Shell..."
-          do_in_pod systemctl --user start "gnome-xsession@:99" || true
+          do_in_pod systemctl --user start "gnome-xsession@:99" 2>/dev/null \
+            || do_in_pod systemctl --user start "gnome-wayland-nested@:99" 2>/dev/null \
+            || echo "Warning: could not start GNOME session via systemd"
           sleep 10
 
           echo "Enabling extension..."

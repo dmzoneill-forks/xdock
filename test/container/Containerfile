@@ -7,10 +7,14 @@
 ARG fedora_version=44
 FROM registry.fedoraproject.org/fedora:${fedora_version}
 
+# Install packages — gnome-session-xsession may not exist on newer Fedora
 RUN dnf update -y && \
     dnf --nodocs install -y \
-        gnome-session-xsession gnome-extensions-app xorg-x11-xinit \
-        xorg-x11-server-Xvfb gnome-terminal xdotool xautomation sudo && \
+        gnome-session gnome-extensions-app \
+        xorg-x11-server-Xvfb xdotool sudo && \
+    dnf --nodocs install -y gnome-session-xsession xorg-x11-xinit 2>/dev/null || true && \
+    dnf --nodocs install -y gnome-session-wayland-session 2>/dev/null || true && \
+    dnf --nodocs install -y gnome-terminal xautomation 2>/dev/null || true && \
     dnf clean all -y && \
     rm -rf /var/cache/dnf
 
