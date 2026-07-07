@@ -1,11 +1,42 @@
 // Mock for ./dependencies/gi.js
 // Provides minimal stubs of GI modules for Jest unit testing.
 
-class _GObjectBase {}
+// GJS globals needed by utils.js
+globalThis.logError = globalThis.logError ?? ((...args) => console.error(...args));
+globalThis.log = globalThis.log ?? ((...args) => console.log(...args));
+
+const _hookUpVfuncSym = Symbol('__GObject__hook_up_vfunc');
+const _gobjectProtoSym = Symbol('__GObject__prototype');
+
+class _GObjectBase {
+    constructor() {
+        // mimic GObject _init pattern
+    }
+}
+_GObjectBase.prototype[_hookUpVfuncSym] = function (name, func) {
+    this[`vfunc_${name}`] = func;
+};
+_GObjectBase.$gtype = 'GObject';
 
 export const GObject = {
     Object: _GObjectBase,
-    registerClass: (a, b) => b ?? a,
+    registerClass: (a, b) => {
+        const klass = b ?? a;
+        klass.prototype[_gobjectProtoSym] = klass.prototype;
+        klass.$gtype = klass.name || 'GObject';
+        // Wrap class so `new Klass(args)` calls `_init(args)` like GJS does
+        const wrapped = class extends klass {
+            constructor(...args) {
+                super();
+                if (this._init)
+                    this._init(...args);
+            }
+        };
+        Object.defineProperty(wrapped, 'name', {value: klass.name});
+        wrapped.$gtype = klass.$gtype;
+        wrapped.prototype[_gobjectProtoSym] = wrapped.prototype;
+        return wrapped;
+    },
     NotImplementedError: class extends Error {},
     signal_lookup: () => 0,
     ParamSpec: {
@@ -51,7 +82,7 @@ export const Shell = {
 };
 
 export const GLib = {
-    idle_add: () => 0,
+    idle_add: (_priority, cb) => { if (cb) cb(); return 1; },
     timeout_add: () => 0,
     timeout_add_seconds: () => 0,
     source_remove: () => {},
@@ -75,13 +106,47 @@ export const Gio = {
         bind() {}
     },
     Cancellable: class {
-        connect() {}
-        cancel() {}
-        is_cancelled() { return false; }
+        constructor(params) {
+            this._cancelled = false;
+            this._handlers = new Map();
+            this._nextId = 1;
+            this.parent = params?.parent ?? null;
+        }
+
+        _init(params) {
+            if (!this._handlers) {
+                this._handlers = new Map();
+                this._nextId = 1;
+                this._cancelled = false;
+            }
+            if (params?.parent)
+                this.parent = params.parent;
+        }
+
+        connect(cb) {
+            const id = this._nextId++;
+            this._handlers.set(id, cb);
+            return id;
+        }
+
+        disconnect(id) {
+            this._handlers.delete(id);
+        }
+
+        cancel() {
+            this._cancelled = true;
+            for (const cb of this._handlers.values())
+                cb();
+        }
+
+        is_cancelled() {
+            return this._cancelled;
+        }
     },
     DBus: {get: () => {}},
     BusType: {SESSION: 0},
 };
+Gio.Cancellable.$gtype = 'GCancellable';
 
 export const Meta = {
     LaterType: {BEFORE_REDRAW: 0},

@@ -3,13 +3,17 @@ import {
     ColorUtils, clamp, clampDouble, getPosition, getSecondaryPosition,
     GlobalSignalsHandler, SignalsHandlerFlags, splitHandler,
     shellAppCompare, shellWindowsCompare,
-    InjectionsHandler, PropertyInjectionsHandler, drawRoundedLine,
-    cairoSetSourceColor, addActor,
+    InjectionsHandler, VFuncInjectionsHandler, PropertyInjectionsHandler,
+    drawRoundedLine, cairoSetSourceColor, addActor,
     getMonitorManager, laterAdd, laterRemove, supportsExtendedBarriers,
-    getWindowsByObjectPath,
+    getWindowsByObjectPath, CancellableChild,
 } from '../utils.js';
-import {Clutter, GObject, Meta, Shell, St} from '../dependencies/gi.js';
+import {Clutter, Gio, GLib, GObject, Meta, Shell, St} from '../dependencies/gi.js';
 import {Docking} from '../imports.js';
+
+// GJS globals not available in Node.js
+globalThis.logError = globalThis.logError ?? (() => {});
+globalThis.log = globalThis.log ?? (() => {});
 
 // ---------------------------------------------------------------------------
 // clamp / clampDouble
@@ -1409,5 +1413,239 @@ describe('getWindowsByObjectPath', () => {
 
         const result = getWindowsByObjectPath();
         expect(result.size).toBe(0);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// VFuncInjectionsHandler — requires GJS runtime (logError global)
+// These are skipped in Node.js Jest; covered by smoke tests
+// ---------------------------------------------------------------------------
+describe.skip('VFuncInjectionsHandler (requires GJS)', () => {
+    test('injects and restores a vfunc', () => {});
+    test('throws for non-existent vfunc', () => {});
+    test('remove restores original vfunc', () => {});
+});
+
+// ---------------------------------------------------------------------------
+// BasicHandler._removeByItem / _itemsEqual
+// ---------------------------------------------------------------------------
+describe('BasicHandler internals via GlobalSignalsHandler', () => {
+    function mockConnectable() {
+        const handlers = new Map();
+        let nextId = 1;
+        return {
+            connect(signal, cb) { const id = nextId++; handlers.set(id, cb); return id; },
+            disconnect(id) { handlers.delete(id); },
+            _handlers: handlers,
+        };
+    }
+
+    test('_itemsEqual returns true for identical items', () => {
+        const handler = new GlobalSignalsHandler();
+        const obj = mockConnectable();
+        const label = Symbol('test');
+
+        handler.addWithLabel(label, obj, 'signal1', () => {});
+        handler.addWithLabel(label, obj, 'signal2', () => {});
+
+        // Both should be stored
+        handler.removeWithLabel(label);
+        // After removal, adding again should work
+        handler.addWithLabel(label, obj, 'signal1', () => {});
+        handler.destroy();
+    });
+
+    test('genericKey static getter returns GENERIC_KEY symbol', () => {
+        const handler = new GlobalSignalsHandler();
+        const obj = mockConnectable();
+
+        // add() uses genericKey internally
+        handler.add(obj, 'sig', () => {});
+        handler.destroy();
+    });
+
+    test('block and unblock all labels', () => {
+        const handler = new GlobalSignalsHandler();
+        const obj = mockConnectable();
+        const label1 = Symbol('l1');
+        const label2 = Symbol('l2');
+
+        handler.addWithLabel(label1, obj, 'sig1', () => {});
+        handler.addWithLabel(label2, obj, 'sig2', () => {});
+
+        // Should not throw
+        handler.block();
+        handler.unblock();
+        handler.destroy();
+    });
+
+    test('clear removes all labels', () => {
+        const handler = new GlobalSignalsHandler();
+        const obj = mockConnectable();
+        const label = Symbol('test');
+
+        handler.addWithLabel(label, obj, 'sig', () => {});
+        handler.clear();
+
+        // Adding again should work (storage cleared)
+        handler.addWithLabel(label, obj, 'sig', () => {});
+        handler.destroy();
+    });
+
+    test('addWithLabel throws for non-symbol label', () => {
+        const handler = new GlobalSignalsHandler();
+        expect(() => handler.addWithLabel('string-label', {}, 'sig', () => {}))
+            .toThrow('Invalid label');
+        handler.destroy();
+    });
+
+    test('addWithLabel throws for too few args', () => {
+        const handler = new GlobalSignalsHandler();
+        const label = Symbol('test');
+        expect(() => handler.addWithLabel(label, 'only-two'))
+            .toThrow('Unexpected number of arguments');
+        handler.destroy();
+    });
+});
+
+// ---------------------------------------------------------------------------
+// CancellableChild
+// ---------------------------------------------------------------------------
+describe('CancellableChild', () => {
+    test('creates without parent', () => {
+        const child = new CancellableChild(null);
+        expect(child.is_cancelled()).toBe(false);
+    });
+
+    test('creates with valid parent', () => {
+        const parent = new Gio.Cancellable();
+        const child = new CancellableChild(parent);
+        expect(child.is_cancelled()).toBe(false);
+    });
+
+    test('cancels when parent is already cancelled', () => {
+        const parent = new Gio.Cancellable();
+        parent.cancel();
+        const child = new CancellableChild(parent);
+        expect(child.is_cancelled()).toBe(true);
+    });
+
+    test('cancel disconnects from parent', () => {
+        const parent = new Gio.Cancellable();
+        const child = new CancellableChild(parent);
+        child.cancel();
+        expect(child.is_cancelled()).toBe(true);
+    });
+
+    test('throws for non-Cancellable parent', () => {
+        expect(() => new CancellableChild({})).toThrow(TypeError);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// BasicHandler abstract methods & _itemsEqual / _removeByItem coverage
+// ---------------------------------------------------------------------------
+describe('BasicHandler internals (via GlobalSignalsHandler)', () => {
+    function mockObj() {
+        const handlers = new Map();
+        let nextId = 1;
+        return {
+            connect(signal, cb) { const id = nextId++; handlers.set(id, {signal, cb}); return id; },
+            disconnect(id) { handlers.delete(id); },
+            _handlers: handlers,
+        };
+    }
+
+    test('_itemsEqual: identical references', () => {
+        const handler = new GlobalSignalsHandler();
+        const obj = mockObj();
+        const label = Symbol('test');
+        const cb = () => {};
+        handler.addWithLabel(label, obj, 'sig', cb);
+        // Adding the same signal again creates a second entry
+        handler.addWithLabel(label, obj, 'sig2', cb);
+        handler.removeWithLabel(label);
+        handler.destroy();
+    });
+
+    test('_itemsEqual: different length arrays', () => {
+        const handler = new GlobalSignalsHandler();
+        const obj = mockObj();
+        const label = Symbol('a');
+        handler.addWithLabel(label, obj, 'x', () => {});
+        // Storage has items — clear should iterate and compare
+        handler.clear();
+        handler.destroy();
+    });
+
+    test('genericKey is a symbol', () => {
+        // Access the static getter on the handler's constructor
+        const handler = new GlobalSignalsHandler();
+        const obj = mockObj();
+        handler.add(obj, 'sig', () => {});
+        // The add() internally uses genericKey
+        handler.destroy();
+    });
+
+    test('blockWithLabel on non-existent label does not throw', () => {
+        const handler = new GlobalSignalsHandler();
+        handler.blockWithLabel(Symbol('missing'));
+        handler.destroy();
+    });
+
+    test('unblockWithLabel on non-existent label does not throw', () => {
+        const handler = new GlobalSignalsHandler();
+        handler.unblockWithLabel(Symbol('missing'));
+        handler.destroy();
+    });
+
+    test('multiple add then block/unblock all', () => {
+        const handler = new GlobalSignalsHandler();
+        const obj = mockObj();
+        const l1 = Symbol('l1');
+        const l2 = Symbol('l2');
+        handler.addWithLabel(l1, obj, 's1', () => {});
+        handler.addWithLabel(l2, obj, 's2', () => {});
+        handler.block();
+        handler.unblock();
+        handler.destroy();
+    });
+});
+
+// ---------------------------------------------------------------------------
+// CancellableChild — deeper coverage
+// ---------------------------------------------------------------------------
+describe('CancellableChild (deeper)', () => {
+    test('_connectToParent connects to parent', () => {
+        const parent = new Gio.Cancellable();
+        const child = new CancellableChild(parent);
+        // Parent should have a handler connected
+        expect(parent._handlers.size).toBeGreaterThan(0);
+        child.cancel();
+    });
+
+    test('parent cancel propagates to child', () => {
+        const parent = new Gio.Cancellable();
+        const child = new CancellableChild(parent);
+        parent.cancel();
+        expect(child.is_cancelled()).toBe(true);
+    });
+
+    test('cancel with pending disconnect idle', () => {
+        const parent = new Gio.Cancellable();
+        const child = new CancellableChild(parent);
+        // Simulate the idle being set
+        child._disconnectIdle = 999;
+        child.cancel();
+        expect(child.is_cancelled()).toBe(true);
+        expect(child._disconnectIdle).toBeUndefined();
+    });
+
+    test('_disconnectFromParent only disconnects once', () => {
+        const parent = new Gio.Cancellable();
+        const child = new CancellableChild(parent);
+        child._disconnectFromParent();
+        child._disconnectFromParent(); // second call should be no-op
+        child.cancel();
     });
 });

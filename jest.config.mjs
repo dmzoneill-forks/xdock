@@ -11,5 +11,7 @@ export default {
         '^resource:///.*$': '<rootDir>/test/__mocks__/shell-ui.js',
         '^gi://.*$': '<rootDir>/test/__mocks__/gi.js',
     },
+    setupFiles: ['<rootDir>/test/setup.js'],
+    globalSetup: '<rootDir>/test/globalSetup.js',
     testMatch: ['<rootDir>/test/**/*.test.js'],
 };
