@@ -26,14 +26,16 @@ jobs:
         run: npm test
 
   smoke-test:
-    name: Smoke Test (GNOME ${{ matrix.version }})
+    name: Smoke Test (${{ matrix.name }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        version:
-          - '41'
-          - 'rawhide'
+        include:
+          - version: '41'
+            name: 'Fedora 41 / GNOME 47'
+          - version: 'rawhide'
+            name: 'Fedora Rawhide / Latest GNOME'
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v4
@@ -92,6 +94,10 @@ jobs:
           do_in_pod gnome-extensions enable "$UUID" || true
           sleep 3
 
+          echo "Closing overview..."
+          do_in_pod xdotool key super || true
+          sleep 2
+
           echo "Checking extension state..."
           do_in_pod gnome-extensions info "$UUID" || true
 
@@ -120,6 +126,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: screenshot-gnome-${{ matrix.version }}
+          name: screenshot-${{ matrix.version }}
           path: screenshot.png
           if-no-files-found: ignore
