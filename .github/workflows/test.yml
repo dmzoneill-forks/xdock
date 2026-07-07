@@ -106,7 +106,7 @@ jobs:
 
           echo "Closing overview..."
           do_in_pod xdotool key super || true
-          sleep 2
+          sleep 5
 
           echo "Checking extension state..."
           do_in_pod gnome-extensions info "$UUID" || true
@@ -122,20 +122,22 @@ jobs:
               || true)
 
           echo "Taking screenshot..."
-          # Xvfb writes framebuffer as XWD to /opt/Xvfb_screen0
-          # podman cp streams it as tar, extract then convert
-          podman cp "${POD}:/opt/Xvfb_screen0" - 2>/dev/null \
-            | tar xf - 2>/dev/null || true
-          if [ -f Xvfb_screen0 ] && [ "$(stat -c%s Xvfb_screen0 2>/dev/null)" -gt 1000 ]; then
-            convert xwd:Xvfb_screen0 screenshot.png 2>/dev/null || true
-            echo "Screenshot captured ($(stat -c%s screenshot.png) bytes)"
+          # Capture Xvfb framebuffer via xwd inside the container
+          do_in_pod xwd -root -out /tmp/screenshot.xwd 2>/dev/null || true
+          podman cp "${POD}:/tmp/screenshot.xwd" screenshot.xwd 2>/dev/null || true
+
+          if [ -f screenshot.xwd ] && [ "$(stat -c%s screenshot.xwd)" -gt 1000 ]; then
+            convert xwd:screenshot.xwd screenshot.png 2>/dev/null || true
           else
-            echo "No usable framebuffer found"
-            # Create a placeholder so the artifact upload doesn't fail
-            convert -size 400x100 xc:black -fill white -gravity center \
-              -annotate 0 "No screenshot available\n(Wayland-only or Xvfb not ready)" \
-              screenshot.png 2>/dev/null || true
+            # Fallback: try the fbdir dump
+            podman cp "${POD}:/opt/Xvfb_screen0" - 2>/dev/null \
+              | tar xf - 2>/dev/null || true
+            if [ -f Xvfb_screen0 ] && [ "$(stat -c%s Xvfb_screen0)" -gt 1000 ]; then
+              convert xwd:Xvfb_screen0 screenshot.png 2>/dev/null || true
+            fi
           fi
+
+          echo "Screenshot: $(stat -c%s screenshot.png 2>/dev/null || echo 'missing') bytes"
 
           podman stop "${POD}" >/dev/null 2>&1 || true
 
