@@ -13,11 +13,9 @@ import {
     Main,
 } from './dependencies/shell/ui.js';
 
-import {
-    Utils,
-} from './imports.js';
+import * as Slider from 'resource:///org/gnome/shell/ui/slider.js';
 
-const {Gvc} = imports.gi;
+import Gvc from 'gi://Gvc';
 
 const BRIGHTNESS_BUS_NAME = 'org.gnome.SettingsDaemon.Power';
 const BRIGHTNESS_OBJECT_PATH = '/org/gnome/SettingsDaemon/Power';
@@ -138,7 +136,7 @@ const SliderRow = GObject.registerClass({
         });
         this.add_child(this._icon);
 
-        this._slider = new St.Slider(initialValue);
+        this._slider = new Slider.Slider(initialValue);
         this._slider.add_style_class_name('quick-settings-slider');
         this._slider.x_expand = true;
         this._slider.y_align = Clutter.ActorAlign.CENTER;
@@ -173,8 +171,10 @@ class QuickSettingsPanel extends St.BoxLayout {
         });
 
         this._sourceActor = sourceActor;
-        this._signalsHandler = new Utils.GlobalSignalsHandler(this);
+        this._trackedSignals = [];
         this._isOpen = false;
+
+        this.connect('destroy', () => this._disconnectAll());
 
         // --- Dark Mode ---
         this._interfaceSettings = new Gio.Settings({
@@ -191,7 +191,7 @@ class QuickSettingsPanel extends St.BoxLayout {
             this._interfaceSettings.set_string('color-scheme', scheme);
         });
 
-        this._signalsHandler.add(this._interfaceSettings, 'changed::color-scheme', () => {
+        this._connectTracked(this._interfaceSettings, 'changed::color-scheme', () => {
             const active = this._interfaceSettings.get_string('color-scheme') === 'prefer-dark';
             if (this._darkModeRow.toggle.checked !== active)
                 this._darkModeRow.toggle.checked = active;
@@ -212,7 +212,7 @@ class QuickSettingsPanel extends St.BoxLayout {
                 this._nightLightRow.toggle.active);
         });
 
-        this._signalsHandler.add(this._colorSettings, 'changed::night-light-enabled', () => {
+        this._connectTracked(this._colorSettings, 'changed::night-light-enabled', () => {
             const active = this._colorSettings.get_boolean('night-light-enabled');
             if (this._nightLightRow.toggle.checked !== active)
                 this._nightLightRow.toggle.checked = active;
@@ -234,7 +234,7 @@ class QuickSettingsPanel extends St.BoxLayout {
                 !this._dndRow.toggle.active);
         });
 
-        this._signalsHandler.add(this._notifSettings, 'changed::show-banners', () => {
+        this._connectTracked(this._notifSettings, 'changed::show-banners', () => {
             const active = !this._notifSettings.get_boolean('show-banners');
             if (this._dndRow.toggle.checked !== active)
                 this._dndRow.toggle.checked = active;
@@ -342,7 +342,7 @@ class QuickSettingsPanel extends St.BoxLayout {
                 }
             );
 
-            this._signalsHandler.add(this._brightnessProxy, 'g-properties-changed', () => {
+            this._connectTracked(this._brightnessProxy, 'g-properties-changed', () => {
                 if (!this._brightnessUserChanging)
                     this._updateBrightness();
             });
@@ -469,7 +469,7 @@ class QuickSettingsPanel extends St.BoxLayout {
         if (!this._sourceActor)
             return;
 
-        const position = Utils.getPosition();
+        const position = this._position ?? St.Side.BOTTOM;
         const [srcX, srcY] = this._sourceActor.get_transformed_position();
         const [srcW, srcH] = this._sourceActor.get_transformed_size();
         const monitor = Main.layoutManager.primaryMonitor;
@@ -501,6 +501,26 @@ class QuickSettingsPanel extends St.BoxLayout {
                     monitor.y + monitor.height - this.height));
             break;
         }
+    }
+
+    setDockPosition(position) {
+        this._position = position;
+    }
+
+    _connectTracked(obj, signal, callback) {
+        const id = obj.connect(signal, callback);
+        this._trackedSignals.push({obj, id});
+    }
+
+    _disconnectAll() {
+        for (const {obj, id} of this._trackedSignals) {
+            try {
+                obj.disconnect(id);
+            } catch (e) {
+                // already disconnected
+            }
+        }
+        this._trackedSignals = [];
     }
 });
 

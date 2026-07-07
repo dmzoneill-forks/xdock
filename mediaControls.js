@@ -6,6 +6,7 @@ import {
     Clutter,
     GLib,
     GObject,
+    Pango,
     St,
 } from './dependencies/gi.js';
 
@@ -90,7 +91,7 @@ class MediaControlsOverlay extends St.BoxLayout {
             text: '',
             y_align: Clutter.ActorAlign.CENTER,
         });
-        this._titleLabel.clutter_text.ellipsize = imports.gi.Pango.EllipsizeMode.END;
+        this._titleLabel.clutter_text.ellipsize = Pango.EllipsizeMode.END;
 
         this.add_child(this._prevButton);
         this.add_child(this._playPauseButton);

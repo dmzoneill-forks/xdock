@@ -27,11 +27,14 @@ import {
 import {
     AppIcons,
     Docking,
-    QuickSettings,
     Theming,
     Utils,
-    WorkspaceMinimap,
 } from './imports.js';
+
+let QuickSettings = null;
+let WorkspaceMinimap = null;
+import('./workspaceMinimap.js').then(m => { WorkspaceMinimap = m; })
+    .catch(e => logError(e, 'XDock: Failed to load WorkspaceMinimap'));
 
 // module "Dash" did not export DASH_ANIMATION_TIME in old versions
 // so we just define it like it is defined in Dash;
@@ -259,17 +262,23 @@ export const DockDash = GObject.registerClass({
         this._workspaceMinimap = null;
         this._workspaceMinimapContainer = null;
         this._updateWorkspaceMinimap();
-
-        // Quick Settings button
-        this._quickSettingsButton = new QuickSettings.QuickSettingsButton();
-        this._quickSettingsButton.visible = Docking.DockManager.settings.showQuickSettings;
+        // Quick Settings button — lazy-loaded to avoid circular import deadlock
+        this._quickSettingsButton = null;
+        import('./quickSettings.js').then(QS => {
+            QuickSettings = QS;
+            this._quickSettingsButton = new QuickSettings.QuickSettingsButton();
+            this._quickSettingsButton._panel?.setDockPosition(Utils.getPosition());
+            this._quickSettingsButton.visible = Docking.DockManager.settings.showQuickSettings;
+            this._updateQuickSettingsButton();
+        }).catch(e => logError(e, 'XDock: Failed to load QuickSettings'));
         this._signalsHandler.add(Docking.DockManager.settings,
             'changed::show-quick-settings', () => {
-                this._quickSettingsButton.visible =
-                    Docking.DockManager.settings.showQuickSettings;
-                this._updateQuickSettingsButton();
+                if (this._quickSettingsButton) {
+                    this._quickSettingsButton.visible =
+                        Docking.DockManager.settings.showQuickSettings;
+                    this._updateQuickSettingsButton();
+                }
             });
-        this._updateQuickSettingsButton();
 
         this._background = new St.Widget({
             style_class: 'dash-background',

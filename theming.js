@@ -16,8 +16,11 @@ import {Main} from './dependencies/shell/ui.js';
 import {
     Docking,
     Utils,
-    WallpaperColorExtractor,
 } from './imports.js';
+
+let WallpaperColorExtractor;
+import('./wallpaperColorExtractor.js').then(m => { WallpaperColorExtractor = m; })
+    .catch(e => logError(e, 'XDock: Failed to load WallpaperColorExtractor'));
 
 const {signals: Signals} = imports;
 
