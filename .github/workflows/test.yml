@@ -94,8 +94,9 @@ jobs:
           do_in_pod dconf write /org/gnome/shell/enabled-extensions "['${UUID}']" || true
 
           echo "Starting GNOME Shell (headless Wayland)..."
-          do_in_pod start-gnome-headless.sh 1920x1080 || true
-          sleep 15
+          timeout 30 podman exec --user gnomeshell --workdir /home/gnomeshell \
+            "${POD}" set-env.sh start-gnome-headless.sh 1920x1080 2>/dev/null || true
+          sleep 10
 
           echo "Enabling extension (hot-reload)..."
           do_in_pod gnome-extensions enable "$UUID" || true
