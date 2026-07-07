@@ -573,7 +573,6 @@ export const DockDash = GObject.registerClass({
         if (this._redisplayDebounceId) {
             // Already scheduled — the pending call will pick up the latest state.
             return;
-        }
 
         this._redisplayDebounceId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT, 100, () => {
