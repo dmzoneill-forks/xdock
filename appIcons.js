@@ -41,17 +41,23 @@ import {
 import {Extension} from './dependencies/shell/extensions/extension.js';
 
 let LiveThumbnails, MediaControls, PinnedCommands, RecentFilesMenu;
-Promise.all([
-    import('./liveThumbnails.js'),
-    import('./mediaControls.js'),
-    import('./pinnedCommands.js'),
-    import('./recentFilesMenu.js'),
-]).then(([lt, mc, pc, rf]) => {
-    LiveThumbnails = lt;
-    MediaControls = mc;
-    PinnedCommands = pc;
-    RecentFilesMenu = rf;
-}).catch(e => logError(e, 'XDock: Failed to load deferred appIcons modules'));
+let _appIconsDeferredLoaded = false;
+function _ensureAppIconsDeferred() {
+    if (_appIconsDeferredLoaded)
+        return;
+    _appIconsDeferredLoaded = true;
+    Promise.all([
+        import('./liveThumbnails.js'),
+        import('./mediaControls.js'),
+        import('./pinnedCommands.js'),
+        import('./recentFilesMenu.js'),
+    ]).then(([lt, mc, pc, rf]) => {
+        LiveThumbnails = lt;
+        MediaControls = mc;
+        PinnedCommands = pc;
+        RecentFilesMenu = rf;
+    }).catch(e => logError(e, 'XDock: Failed to load deferred appIcons modules'));
+}
 
 // Use __ () and N__() for the extension gettext domain, and reuse
 // the shell domain with the default _() and N_()
@@ -144,6 +150,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
     // settings are required inside.
     _init(app, monitorIndex, iconAnimator) {
         super._init(app);
+        _ensureAppIconsDeferred();
 
         // a prefix is required to avoid conflicting with the parent class variable
         this.monitorIndex = monitorIndex;
