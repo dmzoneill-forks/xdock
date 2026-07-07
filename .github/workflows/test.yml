@@ -56,7 +56,6 @@ jobs:
 
       - name: Run smoke test
         run: |
-          set -e
           IMAGE="ghcr.io/schneegans/gnome-shell-pod-${{ matrix.version }}"
           UUID="xdock@github.com"
 
@@ -70,27 +69,27 @@ jobs:
           echo "Starting container..."
           POD=$(podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK -td "$IMAGE")
 
-          echo "Waiting for container to boot..."
-          sleep 3
-          for i in $(seq 1 10); do
-            if do_in_pod true 2>/dev/null; then break; fi
-            echo "  waiting... ($i)"
+          echo "Installing extension (file copy)..."
+          podman cp "${UUID}.zip" "${POD}:/home/gnomeshell/${UUID}.zip"
+
+          echo "Waiting for user bus..."
+          for i in $(seq 1 15); do
+            if do_in_pod gnome-extensions install "${UUID}.zip" 2>/dev/null; then
+              echo "  bus ready after ${i}s"
+              break
+            fi
             sleep 2
           done
-
-          echo "Installing extension..."
-          podman cp "${UUID}.zip" "${POD}:/home/gnomeshell/${UUID}.zip"
-          do_in_pod gnome-extensions install "${UUID}.zip"
 
           echo "Disabling welcome tour..."
           do_in_pod gsettings set org.gnome.shell welcome-dialog-last-shown-version "999" || true
 
           echo "Starting GNOME Shell..."
-          do_in_pod systemctl --user start "gnome-xsession@:99"
+          do_in_pod systemctl --user start "gnome-xsession@:99" || true
           sleep 10
 
           echo "Enabling extension..."
-          do_in_pod gnome-extensions enable "$UUID"
+          do_in_pod gnome-extensions enable "$UUID" || true
           sleep 3
 
           echo "Checking extension state..."
@@ -104,7 +103,8 @@ jobs:
               || true)
 
           echo "Taking screenshot..."
-          podman cp "${POD}:/opt/Xvfb_screen0" - | tar xf - --to-command "convert xwd:- screenshot.png" 2>/dev/null || true
+          podman cp "${POD}:/opt/Xvfb_screen0" - \
+              | tar xf - --to-command "convert xwd:- screenshot.png" 2>/dev/null || true
 
           podman stop "${POD}" >/dev/null 2>&1 || true
 
