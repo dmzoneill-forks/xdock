@@ -96,52 +96,34 @@ jobs:
           echo "Starting container ($IMG)..."
           POD=$(podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK -td "$IMG")
 
+          echo "Waiting for user bus..."
+          do_in_pod wait-user-bus.sh
+          echo "Bus ready"
+
           echo "Installing extension..."
           podman cp "${UUID}.zip" "${POD}:/home/gnomeshell/${UUID}.zip"
-
-          echo "Waiting for user bus..."
-          for i in $(seq 1 30); do
-            if do_in_pod gnome-extensions install "${UUID}.zip" 2>/dev/null; then
-              echo "  bus ready after $((i * 2))s"
-              break
-            fi
-            sleep 2
-          done
+          do_in_pod gnome-extensions install "${UUID}.zip"
 
           echo "Configuring GNOME Shell..."
           do_in_pod gsettings set org.gnome.shell welcome-dialog-last-shown-version "999" || true
           do_in_pod gsettings set org.gnome.shell enabled-extensions "['${UUID}']" || true
 
           echo "Starting GNOME Shell..."
-          # Try X11 session first (Fedora 41), then headless Wayland (42+)
           if do_in_pod systemctl --user start "gnome-xsession@:99" 2>/dev/null; then
             echo "  X11 session started"
-            sleep 10
           else
-            echo "  X11 unavailable, trying headless Wayland..."
+            echo "  X11 unavailable, starting headless Wayland..."
             do_in_pod start-gnome-headless.sh 1920x1080 || true
-            sleep 15
-            # Source the headless D-Bus address for subsequent commands
-            HEADLESS_ENV=$(podman exec "${POD}" cat /tmp/gnome-headless-env 2>/dev/null || true)
-            if [ -n "$HEADLESS_ENV" ]; then
-              HEADLESS_DBUS=$(echo "$HEADLESS_ENV" | grep HEADLESS_DBUS | cut -d= -f2-)
-              echo "  Headless D-Bus: $HEADLESS_DBUS"
-              # Override do_in_pod to use the headless D-Bus
-              do_in_pod() {
-                podman exec --user gnomeshell --workdir /home/gnomeshell \
-                  -e "DBUS_SESSION_BUS_ADDRESS=${HEADLESS_DBUS}" \
-                  "${POD}" "$@"
-              }
-            fi
           fi
+          sleep 10
 
-          echo "Enabling extension..."
+          echo "Enabling extension (hot-reload)..."
           do_in_pod gnome-extensions enable "$UUID" || true
           sleep 5
 
-          echo "Closing overview..."
-          do_in_pod xdotool key super || true
-          sleep 3
+          echo "Opening preferences..."
+          do_in_pod gnome-extensions prefs "$UUID" &
+          sleep 5
 
           echo "GNOME Shell version:"
           do_in_pod gnome-shell --version || true
@@ -157,23 +139,17 @@ jobs:
               || true)
 
           echo "Taking screenshot..."
-          # Method 1: D-Bus Screenshot API (headless Wayland)
-          do_in_pod take-screenshot.sh /tmp/screenshot.png 2>/dev/null || true
-          podman cp "${POD}:/tmp/screenshot.png" screenshot.png 2>/dev/null || true
+          # X11: capture Xvfb framebuffer
+          podman cp "${POD}:/opt/Xvfb_screen0" - 2>/dev/null \
+            | tar xf - --to-command "convert xwd:- screenshot.png" 2>/dev/null || true
 
-          # Method 2: Xvfb framebuffer (X11 sessions)
-          if [ ! -f screenshot.png ] || [ "$(stat -c%s screenshot.png 2>/dev/null || echo 0)" -lt 1000 ]; then
-            podman cp "${POD}:/opt/Xvfb_screen0" - 2>/dev/null | tar xf - 2>/dev/null || true
-            if [ -f Xvfb_screen0 ] && [ "$(stat -c%s Xvfb_screen0 2>/dev/null || echo 0)" -gt 10000 ]; then
-              convert xwd:Xvfb_screen0 screenshot.png 2>/dev/null || true
-            fi
+          # Wayland fallback: D-Bus Screenshot API
+          if [ ! -f screenshot.png ] || [ "$(stat -c%s screenshot.png 2>/dev/null || echo 0)" -lt 5000 ]; then
+            do_in_pod take-screenshot.sh /tmp/screenshot.png 2>/dev/null || true
+            podman cp "${POD}:/tmp/screenshot.png" screenshot.png 2>/dev/null || true
           fi
 
-          SIZE=$(stat -c%s screenshot.png 2>/dev/null || echo 0)
-          echo "Screenshot: ${SIZE} bytes"
-          if [ "$SIZE" -lt 1000 ]; then
-            echo "Warning: screenshot may be blank"
-          fi
+          echo "Screenshot: $(stat -c%s screenshot.png 2>/dev/null || echo 'none') bytes"
 
           podman stop "${POD}" >/dev/null 2>&1 || true
 
