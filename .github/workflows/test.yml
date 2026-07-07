@@ -122,8 +122,12 @@ jobs:
               || true)
 
           echo "Taking screenshot..."
-          podman cp "${POD}:/opt/Xvfb_screen0" - \
-              | tar xf - --to-command "convert xwd:- screenshot.png" 2>/dev/null || true
+          podman cp "${POD}:/opt/Xvfb_screen0" ./Xvfb_screen0 2>/dev/null || true
+          if [ -f Xvfb_screen0 ] && [ -s Xvfb_screen0 ]; then
+            convert xwd:Xvfb_screen0 screenshot.png 2>/dev/null || true
+          else
+            echo "No framebuffer found (Wayland-only session?)"
+          fi
 
           podman stop "${POD}" >/dev/null 2>&1 || true
 
