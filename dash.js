@@ -573,6 +573,7 @@ export const DockDash = GObject.registerClass({
         if (this._redisplayDebounceId) {
             // Already scheduled — the pending call will pick up the latest state.
             return;
+        }
 
         this._redisplayDebounceId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT, 100, () => {
@@ -1779,7 +1780,7 @@ export const DockDash = GObject.registerClass({
                    actor.child._delegate.app;
         });
         const oldItems = children.map(actor => actor.child._delegate);
-        let oldApps = [];
+        const oldApps = [];
         oldItems.forEach(({app}) => {
             if (!oldApps.includes(app))
                 oldApps.push(app);

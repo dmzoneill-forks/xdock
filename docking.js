@@ -49,8 +49,8 @@ let CommandPalette, DockProfiles, DockTiling, MprisMonitor,
     ScreencastMonitor, SpringAnimation, PinnedCommands, VolumeControl;
 
 async function _loadDeferredModules() {
-    ([CommandPalette, DockProfiles, DockTiling, MprisMonitor,
-      ScreencastMonitor, SpringAnimation, PinnedCommands, VolumeControl] =
+    [CommandPalette, DockProfiles, DockTiling, MprisMonitor,
+        ScreencastMonitor, SpringAnimation, PinnedCommands, VolumeControl] =
         await Promise.all([
             import('./commandPalette.js'),
             import('./dockProfiles.js'),
@@ -60,7 +60,7 @@ async function _loadDeferredModules() {
             import('./springAnimation.js'),
             import('./pinnedCommands.js'),
             import('./volumeControl.js'),
-        ]));
+        ]);
 }
 // Use __ () and N__() for the extension gettext domain, and reuse
 // the shell domain with the default _() and N_()
@@ -2288,8 +2288,8 @@ export class DockManager {
             throw new Error('DashToDock has been already initialized');
         DockManager._singleton = this;
         this._extension = extension;
-        this._deferredModulesLoaded = _loadDeferredModules().then(() =>
-            logError(e, '[XDOCK] FATAL: Failed to load deferred modules'));
+        this._deferredModulesLoaded = _loadDeferredModules().catch(e =>
+            logError(e, 'XDock: Failed to load deferred modules'));
         this._signalsHandler = new Utils.GlobalSignalsHandler(this);
         this._methodInjections = new Utils.InjectionsHandler(this);
         this._vfuncInjections = new Utils.VFuncInjectionsHandler(this);
