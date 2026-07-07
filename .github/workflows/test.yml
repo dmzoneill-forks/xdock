@@ -70,6 +70,14 @@ jobs:
           echo "Starting container..."
           POD=$(podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK -td "$IMAGE")
 
+          echo "Waiting for container to boot..."
+          sleep 3
+          for i in $(seq 1 10); do
+            if do_in_pod true 2>/dev/null; then break; fi
+            echo "  waiting... ($i)"
+            sleep 2
+          done
+
           echo "Installing extension..."
           podman cp "${UUID}.zip" "${POD}:/home/gnomeshell/${UUID}.zip"
           do_in_pod gnome-extensions install "${UUID}.zip"
