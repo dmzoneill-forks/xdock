@@ -11,3 +11,4 @@ dash-2-x@github.com.zip
 venv/
 node_modules/
 .claude/worktrees/
+coverage/
