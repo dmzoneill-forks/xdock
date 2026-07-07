@@ -33,13 +33,13 @@ import {
 let QuickSettings = null;
 let WorkspaceMinimap = null;
 
-const DASH_ANIMATION_TIME = Dash.DASH_ANIMATION_TIME;
+const {DASH_ANIMATION_TIME} = Dash;
 const DASH_VISIBILITY_TIMEOUT = 3;
 
 const Labels = Object.freeze({
     DASH_LEAVE: Symbol('dash-leave'),
     SHOW_MOUNTS: Symbol('show-mounts'),
-MAGNIFICATION: Symbol('magnification'),
+    MAGNIFICATION: Symbol('magnification'),
 });
 
 // DragPlaceholderItem is not exported by GNOME Shell — define an equivalent locally.
