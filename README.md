@@ -68,13 +68,87 @@ If `msgfmt` is not available:
 # Ubuntu: sudo apt install gettext
 ```
 
+## Development
+
+### Nested test session (Mutter Development Kit)
+
+You can test XDock in a nested GNOME Shell session without logging out. This runs a full GNOME Shell inside a window on your current desktop.
+
+**Prerequisites:**
+
+```bash
+# Fedora 44+ / GNOME 50+
+sudo dnf install mutter-devkit
+```
+
+**Launch a test session:**
+
+```bash
+# Remove the disable-extensions lockfile (created by the main GNOME session)
+rm -f /run/user/$(id -u)/gnome-shell-disable-extensions
+
+# Launch nested GNOME Shell with XDock enabled
+dbus-run-session -- bash -c '
+  rm -f /run/user/$(id -u)/gnome-shell-disable-extensions
+  gsettings set org.gnome.shell enabled-extensions "[\"xdock@github.com\"]"
+  exec gnome-shell --wayland --no-x11 --devkit
+'
+```
+
+The `gnome-shell-disable-extensions` file is recreated by the main GNOME session periodically. If the nested session doesn't load extensions, delete it again and restart.
+
+**Development symlink:**
+
+For development, symlink the source directory instead of copying files:
+
+```bash
+ln -sf $(pwd) ~/.local/share/gnome-shell/extensions/xdock@github.com
+```
+
+Changes to JS files take effect on the next nested session launch — no build step needed. Changes to `Settings.ui` or schemas require recompiling:
+
+```bash
+glib-compile-schemas schemas/
+```
+
+**Notes:**
+
+- The nested session runs at higher CPU than normal — this is expected for the devkit compositor
+- If you see "Not Responding", click **Wait** — the session needs a few seconds to initialize
+- The session uses a virtual monitor added after startup, so extensions that depend on monitors will initialize via the `monitors-changed` signal
+- For GNOME Shell versions before 49, use `--nested` instead of `--devkit`
+
+### Viewing logs
+
+```bash
+# Watch extension logs in real time
+journalctl -f -o cat /usr/bin/gnome-shell | grep -i xdock
+
+# Or filter the test session's stderr output
+dbus-run-session -- bash -c '...' 2>&1 | grep -E 'xdock|error|Error'
+```
+
+### Validating UI files
+
+```bash
+# Check XML validity
+xmllint --noout Settings.ui
+
+# Preview a UI file
+gtk4-builder-tool preview Settings.ui
+
+# Compile and validate schemas
+glib-compile-schemas --strict schemas/
+```
+
 ## Contributing
 
 We welcome contributions of all kinds — bug fixes, new features, translations, documentation, and testing.
 
 1. Fork the repo and create a feature branch
 2. Make your changes
-3. Submit a pull request
+3. Test in a [nested session](#nested-test-session-mutter-development-kit)
+4. Submit a pull request
 
 PRs are reviewed promptly. If you're unsure about an approach, open an issue first to discuss.
 

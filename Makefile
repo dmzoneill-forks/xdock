@@ -61,6 +61,22 @@ endif
 
 all: extension
 
+# Development: symlink + nested test session
+dev: ./schemas/gschemas.compiled
+	@ln -sfn $(CURDIR) $(HOME)/.local/share/gnome-shell/extensions/$(UUID)
+	@echo "Symlinked $(UUID) → $(CURDIR)"
+	@rm -f /run/user/$$(id -u)/gnome-shell-disable-extensions
+	dbus-run-session -- bash -c '\
+		rm -f /run/user/$$(id -u)/gnome-shell-disable-extensions; \
+		gsettings set org.gnome.shell enabled-extensions "[\"$(UUID)\"]"; \
+		exec gnome-shell --wayland --no-x11 --devkit'
+
+dev-no-ext: ./schemas/gschemas.compiled
+	@echo "Launching devkit without extensions (baseline test)"
+	dbus-run-session -- bash -c '\
+		gsettings set org.gnome.shell enabled-extensions "[]"; \
+		exec gnome-shell --wayland --no-x11 --devkit'
+
 clean:
 	rm -f ./schemas/gschemas.compiled
 	rm -f stylesheet.css
