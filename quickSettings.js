@@ -516,7 +516,7 @@ class QuickSettingsPanel extends St.BoxLayout {
         for (const {obj, id} of this._trackedSignals) {
             try {
                 obj.disconnect(id);
-            } catch (e) {
+            } catch {
                 // already disconnected
             }
         }
