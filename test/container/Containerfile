@@ -11,7 +11,7 @@ FROM registry.fedoraproject.org/fedora:${fedora_version}
 RUN dnf update -y && \
     dnf --nodocs install -y \
         gnome-session gnome-extensions-app \
-        xorg-x11-server-Xvfb xdotool sudo && \
+        xorg-x11-server-Xvfb xdotool xorg-x11-utils sudo && \
     dnf --nodocs install -y gnome-session-xsession xorg-x11-xinit 2>/dev/null || true && \
     dnf --nodocs install -y gnome-session-wayland-session 2>/dev/null || true && \
     dnf --nodocs install -y gnome-terminal xautomation 2>/dev/null || true && \
