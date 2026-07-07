@@ -32,22 +32,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - fedora: '41'
-            name: 'Fedora 41 / GNOME 47'
-            image: 'ghcr.io/schneegans/gnome-shell-pod-41'
-            custom: false
-          - fedora: '42'
-            name: 'Fedora 42 / GNOME 48'
-            image: ''
-            custom: true
           - fedora: '43'
             name: 'Fedora 43 / GNOME 49'
-            image: ''
-            custom: true
           - fedora: '44'
             name: 'Fedora 44 / GNOME 50'
-            image: ''
-            custom: true
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v4
@@ -57,17 +45,12 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq gettext imagemagick
 
-      - name: Build test container (custom)
-        if: matrix.custom
+      - name: Build test container
         run: |
           podman build \
             --build-arg=fedora_version=${{ matrix.fedora }} \
             -t xdock-test:f${{ matrix.fedora }} \
             test/container/
-
-      - name: Pull test container (Schneegans)
-        if: ${{ !matrix.custom }}
-        run: podman pull ${{ matrix.image }}
 
       - name: Build extension zip
         run: |
@@ -83,11 +66,7 @@ jobs:
       - name: Run smoke test
         run: |
           UUID="xdock@github.com"
-          if [ "${{ matrix.custom }}" = "true" ]; then
-            IMG="xdock-test:f${{ matrix.fedora }}"
-          else
-            IMG="${{ matrix.image }}"
-          fi
+          IMG="xdock-test:f${{ matrix.fedora }}"
 
           do_in_pod() {
             podman exec --user gnomeshell --workdir /home/gnomeshell "${POD}" set-env.sh "$@"
@@ -114,14 +93,9 @@ jobs:
           do_in_pod gsettings set org.gnome.shell welcome-dialog-last-shown-version "999" || true
           do_in_pod dconf write /org/gnome/shell/enabled-extensions "['${UUID}']" || true
 
-          echo "Starting GNOME Shell..."
-          if do_in_pod systemctl --user start "gnome-xsession@:99" 2>/dev/null; then
-            echo "  X11 session started"
-          else
-            echo "  X11 unavailable, starting headless Wayland..."
-            do_in_pod start-gnome-headless.sh 1920x1080 || true
-          fi
-          sleep 10
+          echo "Starting GNOME Shell (headless Wayland)..."
+          do_in_pod start-gnome-headless.sh 1920x1080 || true
+          sleep 15
 
           echo "Enabling extension (hot-reload)..."
           do_in_pod gnome-extensions enable "$UUID" || true
@@ -155,16 +129,8 @@ jobs:
               || true)
 
           echo "Taking screenshot..."
-          # X11: capture Xvfb framebuffer
-          podman cp "${POD}:/opt/Xvfb_screen0" - 2>/dev/null \
-            | tar xf - --to-command "convert xwd:- screenshot.png" 2>/dev/null || true
-
-          # Wayland fallback: D-Bus Screenshot API
-          if [ ! -f screenshot.png ] || [ "$(stat -c%s screenshot.png 2>/dev/null || echo 0)" -lt 5000 ]; then
-            do_in_pod take-screenshot.sh /tmp/screenshot.png 2>/dev/null || true
-            podman cp "${POD}:/tmp/screenshot.png" screenshot.png 2>/dev/null || true
-          fi
-
+          do_in_pod take-screenshot.sh /tmp/screenshot.png 2>/dev/null || true
+          podman cp "${POD}:/tmp/screenshot.png" screenshot.png 2>/dev/null || true
           echo "Screenshot: $(stat -c%s screenshot.png 2>/dev/null || echo 'none') bytes"
 
           podman stop "${POD}" >/dev/null 2>&1 || true

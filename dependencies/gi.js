@@ -11,13 +11,5 @@ export {default as Pango} from 'gi://Pango';
 export {default as Shell} from 'gi://Shell';
 export {default as St} from 'gi://St';
 
-// GioUnix was split out of Gio in newer GLib versions.  On older systems
-// (e.g. Fedora 39 / GNOME 45) the namespace does not exist yet.
-let _GioUnix;
-try {
-    _GioUnix = (await import('gi://GioUnix')).default;
-} catch {
-    _GioUnix = null;
-}
-export const GioUnix = _GioUnix;
+export {default as GioUnix} from 'gi://GioUnix';
 

@@ -427,9 +427,9 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
         let adjustment, delta;
 
         if (this.isHorizontal)
-            adjustment = this.actor.get_hscroll_bar().get_adjustment();
+            adjustment = this.actor.hadjustment;
         else
-            adjustment = this.actor.get_vscroll_bar().get_adjustment();
+            adjustment = this.actor.vadjustment;
 
         const increment = adjustment.step_increment;
 
@@ -605,8 +605,8 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
             return;
 
         const adjustment = this.isHorizontal
-            ? this.actor.get_hscroll_bar().get_adjustment()
-            : this.actor.get_vscroll_bar().get_adjustment();
+            ? this.actor.hadjustment
+            : this.actor.vadjustment;
 
         const [value, , upper, , , pageSize] = adjustment.get_values();
 

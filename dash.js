@@ -20,7 +20,6 @@ import {
 } from './dependencies/shell/ui.js';
 
 import {
-    Config,
     Util,
 } from './dependencies/shell/misc.js';
 
@@ -34,17 +33,13 @@ import {
 let QuickSettings = null;
 let WorkspaceMinimap = null;
 
-// module "Dash" did not export DASH_ANIMATION_TIME in old versions
-// so we just define it like it is defined in Dash;
-// taken from https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/dash.js
-const DASH_ANIMATION_TIME = Dash.DASH_ANIMATION_TIME ?? 200;
+const DASH_ANIMATION_TIME = Dash.DASH_ANIMATION_TIME;
 const DASH_VISIBILITY_TIMEOUT = 3;
 
 const Labels = Object.freeze({
     DASH_LEAVE: Symbol('dash-leave'),
     SHOW_MOUNTS: Symbol('show-mounts'),
-    FIRST_LAST_CHILD_WORKAROUND: Symbol('first-last-child-workaround'),
-    MAGNIFICATION: Symbol('magnification'),
+MAGNIFICATION: Symbol('magnification'),
 });
 
 // DragPlaceholderItem is not exported by GNOME Shell — define an equivalent locally.
@@ -1123,15 +1118,10 @@ export const DockDash = GObject.registerClass({
 
         let adjustment, delta = 0;
 
-        if (this._isHorizontal) {
-            adjustment = this._scrollView.get_hadjustment
-                ? this._scrollView.get_hadjustment()
-                : this._scrollView.get_hscroll_bar().get_adjustment();
-        } else {
-            adjustment = this._scrollView.get_vadjustment
-                ? this._scrollView.get_vadjustment()
-                : this._scrollView.get_vscroll_bar().get_adjustment();
-        }
+        if (this._isHorizontal)
+            adjustment = this._scrollView.get_hadjustment();
+        else
+            adjustment = this._scrollView.get_vadjustment();
 
         const increment = adjustment.step_increment;
         const [dx, dy] = event.get_scroll_delta();
@@ -2405,16 +2395,8 @@ export const DockDash = GObject.registerClass({
             return;
 
         const {settings} = Docking.DockManager;
-        const notifiedProperties = [];
         const showAppsContainer = settings.showAppsAlwaysInTheEdge || !settings.dockExtended
             ? this._dashContainer : this._boxContainer;
-        const needsFirstLastChildWorkaround = Config.PACKAGE_VERSION.split('.')[0] < 49;
-
-        if (needsFirstLastChildWorkaround) {
-            this._signalsHandler.addWithLabel(Labels.FIRST_LAST_CHILD_WORKAROUND,
-                showAppsContainer, 'notify',
-                (_obj, pspec) => notifiedProperties.push(pspec.name));
-        }
 
         if (this._showAppsIcon.get_parent() !== showAppsContainer) {
             this._showAppsIcon.get_parent()?.remove_child(this._showAppsIcon);
@@ -2427,19 +2409,6 @@ export const DockDash = GObject.registerClass({
             showAppsContainer.set_child_below_sibling(this._showAppsIcon, null);
         } else {
             showAppsContainer.set_child_above_sibling(this._showAppsIcon, null);
-        }
-
-        if (needsFirstLastChildWorkaround) {
-            this._signalsHandler.removeWithLabel(Labels.FIRST_LAST_CHILD_WORKAROUND);
-
-            // This is indeed ugly, but we need to ensure that the last and first
-            // visible widgets are re-computed by St, that is buggy because of a
-            // mutter issue that is being fixed:
-            // https://gitlab.gnome.org/GNOME/mutter/-/merge_requests/2047
-            if (!notifiedProperties.includes('first-child'))
-                showAppsContainer.notify('first-child');
-            if (!notifiedProperties.includes('last-child'))
-                showAppsContainer.notify('last-child');
         }
     }
 
@@ -2484,11 +2453,8 @@ export const DockDash = GObject.registerClass({
  * @param actor
  */
 function ensureActorVisibleInScrollView(scrollView, actor) {
-    // access to scrollView.[hv]scroll was deprecated in gnome 46
-    // instead, adjustment can be accessed directly
-    // keep old way for backwards compatibility (gnome <= 45)
-    const vAdjustment = scrollView.vadjustment ?? scrollView.vscroll.adjustment;
-    const hAdjustment = scrollView.hadjustment ?? scrollView.hscroll.adjustment;
+    const vAdjustment = scrollView.vadjustment;
+    const hAdjustment = scrollView.hadjustment;
     const {value: vValue0, pageSize: vPageSize, upper: vUpper} = vAdjustment;
     const {value: hValue0, pageSize: hPageSize, upper: hUpper} = hAdjustment;
     let [hValue, vValue] = [hValue0, vValue0];

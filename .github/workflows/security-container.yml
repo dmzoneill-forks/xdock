@@ -20,8 +20,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - fedora: '41'
-            name: 'Fedora 41'
+          - fedora: '43'
+            name: 'Fedora 43'
           - fedora: '44'
             name: 'Fedora 44'
     steps:

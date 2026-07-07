@@ -19,8 +19,7 @@ import {
 
 const {signals: Signals} = imports;
 
-// On older GLib the DesktopAppInfo class lives in Gio, not GioUnix.
-const DesktopAppInfoBase = GioUnix?.DesktopAppInfo ?? Gio.DesktopAppInfo;
+const DesktopAppInfoBase = GioUnix.DesktopAppInfo;
 
 const FALLBACK_COMMAND_ICON = 'utilities-terminal-symbolic';
 const DEFAULT_TERMINAL_SCHEMA = 'org.gnome.desktop.default-applications.terminal';
