@@ -101,8 +101,7 @@ const scrollAction = Object.freeze({
     SWITCH_WORKSPACE: 2,
 });
 
-// module "Dash" did not export DASH_ITEM_LABEL_SHOW_TIME, so let's define it.
-const DASH_ITEM_LABEL_SHOW_TIME = Dash.DASH_ITEM_LABEL_SHOW_TIME ?? 150;
+const DASH_ITEM_LABEL_SHOW_TIME = Dash.DASH_ITEM_LABEL_SHOW_TIME;
 
 let recentlyClickedAppLoopId = 0;
 let recentlyClickedApp = null;
@@ -252,15 +251,23 @@ export const DockAbstractAppIcon = GObject.registerClass({
             this._signalsHandler.add(
                 Docking.DockManager.settings,
                 `changed::${key}`, () => {
-                    this._indicator.destroy();
-                    this._indicator = new AppIconIndicators.AppIconIndicator(this);
+                    try {
+                        this._indicator.destroy();
+                        this._indicator = new AppIconIndicators.AppIconIndicator(this);
+                    } catch (e) {
+                        logError(e, 'XDock: Failed to recreate indicator');
+                    }
                 }
             );
         });
 
         this._signalsHandler.add(notificationsMonitor, 'state-changed', () => {
-            this._indicator.destroy();
-            this._indicator = new AppIconIndicators.AppIconIndicator(this);
+            try {
+                this._indicator.destroy();
+                this._indicator = new AppIconIndicators.AppIconIndicator(this);
+            } catch (e) {
+                logError(e, 'XDock: Failed to recreate indicator');
+            }
         });
 
         this._updateState();
@@ -270,16 +277,25 @@ export const DockAbstractAppIcon = GObject.registerClass({
         // of the most-recent window when enabled.
         this._liveThumbnailManager = LiveThumbnails
             ? new LiveThumbnails.LiveThumbnailManager(this) : null;
-        if (this._liveThumbnailManager && Docking.DockManager.settings.liveWindowThumbnails)
-            this._liveThumbnailManager.enable();
+        if (this._liveThumbnailManager && Docking.DockManager.settings.liveWindowThumbnails) {
+            try {
+                this._liveThumbnailManager.enable();
+            } catch (e) {
+                logError(e, 'XDock: Failed to enable live thumbnails');
+            }
+        }
 
         this._signalsHandler.add(
             Docking.DockManager.settings,
             'changed::live-window-thumbnails', () => {
-                if (Docking.DockManager.settings.liveWindowThumbnails)
-                    this._liveThumbnailManager.enable();
-                else
-                    this._liveThumbnailManager.disable();
+                try {
+                    if (Docking.DockManager.settings.liveWindowThumbnails)
+                        this._liveThumbnailManager.enable();
+                    else
+                        this._liveThumbnailManager.disable();
+                } catch (e) {
+                    logError(e, 'XDock: Failed to toggle live thumbnails');
+                }
             }
         );
 
@@ -304,7 +320,27 @@ export const DockAbstractAppIcon = GObject.registerClass({
         // MPRIS media controls
         this._mediaControlsOverlay = null;
         this._mediaPlayingIndicator = null;
-        this._setupMediaControls();
+        try {
+            this._setupMediaControls();
+        } catch (e) {
+            logError(e, 'XDock: Failed to setup media controls');
+        }
+
+        // Wiggle mode state
+        this._wiggleLongPressTimeoutId = 0;
+        this._wiggleRemoveBadge = null;
+        this._wiggleJiggling = false;
+        this._wigglePhaseOffset = Math.random() * 2 * Math.PI;
+
+        // Listen for wiggle mode changes from DockManager
+        const dockManager2 = Docking.DockManager.getDefault();
+        if (dockManager2) {
+            this._signalsHandler.addWithLabel(Labels.WIGGLE_MODE,
+                dockManager2, 'wiggle-mode-changed',
+                (_dm, active) => this._onWiggleModeChanged(active));
+            if (dockManager2.wiggleMode)
+                this._onWiggleModeChanged(true);
+        }
     }
 
     _setupMediaControls() {
