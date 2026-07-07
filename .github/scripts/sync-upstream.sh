@@ -2,7 +2,7 @@
 set -euo pipefail
 
 UPSTREAM_REPO="micheleg/dash-to-dock"
-FORK_REPO="dmzoneill-forks/dash-2-x"
+FORK_REPO="dmzoneill-forks/xdock"
 STATE_FILE=".github/upstream-sync-state.json"
 UPSTREAM_REMOTE="upstream"
 
@@ -96,8 +96,8 @@ sync_prs() {
 
             if [ -f "/tmp/upstream-pr-${number}.patch" ]; then
                 local fixed_patch="/tmp/upstream-pr-${number}-fixed.patch"
-                sed 's|schemas/org.gnome.shell.extensions.dash-to-dock.gschema.xml|schemas/org.gnome.shell.extensions.dash-2-x.gschema.xml|g;
-                     s|org\.gnome\.shell\.extensions\.dash-to-dock|org.gnome.shell.extensions.dash-2-x|g' \
+                sed 's|schemas/org.gnome.shell.extensions.dash-to-dock.gschema.xml|schemas/org.gnome.shell.extensions.xdock.gschema.xml|g;
+                     s|org\.gnome\.shell\.extensions\.dash-to-dock|org.gnome.shell.extensions.xdock|g' \
                     "/tmp/upstream-pr-${number}.patch" > "$fixed_patch"
 
                 if git apply --check "$fixed_patch" 2>/dev/null; then
@@ -139,7 +139,7 @@ EOF
 **Mergeable:** ${mergeable}
 **Auto-apply:** ${apply_status}
 
-Review this upstream PR for inclusion in Dash 2 X.
+Review this upstream PR for inclusion in XDock.
 EOF
 )" || echo "  Failed to create tracking issue for PR #$number"
     done

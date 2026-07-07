@@ -7,7 +7,7 @@ po/dashtodock.pot
 stylesheet.css
 Settings.ui.h
 _build
-dash-2-x@github.com.zip
+xdock@github.com.zip
 venv/
 node_modules/
 .claude/worktrees/
