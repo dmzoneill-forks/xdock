@@ -366,6 +366,8 @@ export const DockDash = GObject.registerClass({
             Docking.DockManager.settings,
             'changed::workspace-minimap-position',
             this._updateWorkspaceMinimap.bind(this),
+        ], [
+            Docking.DockManager.settings,
             'changed::icon-magnification',
             this._toggleMagnification.bind(this),
         ], [

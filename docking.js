@@ -3677,7 +3677,8 @@ export class DockManager {
         this._dockProfiles?.destroy();
         this._dockProfiles = null;
         this._notificationsMonitor.destroy();
-        this._screencastMonitor.destroy();
+        this._screencastMonitor?.destroy();
+        this._screencastMonitor = null;
         this._mprisMonitor?.destroy();
         this._mprisMonitor = null;
         this._appSpread.destroy();

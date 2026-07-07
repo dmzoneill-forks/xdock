@@ -43,14 +43,7 @@ export const VolumeMenuItem = GObject.registerClass({
 
         this._stream = stream;
         this._volumeControl = volumeControl;
-        this._trackedSignals = [];
         this._dragging = false;
-        this.connect('destroy', () => {
-            for (const {obj, id} of this._trackedSignals) {
-                try { obj.disconnect(id); } catch (e) { /* already disconnected */ }
-            }
-            this._trackedSignals = [];
-        });
 
         // Build the layout
         const box = new St.BoxLayout({

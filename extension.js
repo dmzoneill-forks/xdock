@@ -13,9 +13,6 @@ export default class DashToDockExtension extends Extension.Extension {
         try {
             dockManager = new DockManager(this);
         } catch (e) {
-            // Catch initialization errors to prevent the extension from
-            // crashing the entire GNOME Shell session (especially on
-            // Wayland where a crash forces a full session restart).
             logError(e, 'XDock: Failed to initialize DockManager');
             dockManager = null;
         }

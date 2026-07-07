@@ -50,7 +50,8 @@ export async function haveDBusMenu() {
     }
 }
 
-const DBusMenu = await haveDBusMenu();
+let DBusMenu = null;
+haveDBusMenu().then(m => { DBusMenu = m; });
 
 /**
  * @param dbusmenuItem
