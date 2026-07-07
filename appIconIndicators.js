@@ -378,7 +378,7 @@ class RunningIndicatorDots extends RunningIndicatorBase {
         const {settings} = Docking.DockManager;
         if (!settings.applyCustomTheme) {
             // Adjust for the backlit case
-            const Color = Cogl.Color;
+            const {Color} = Cogl;
 
             if (settings.unityBacklitItems) {
                 // Use dominant color for dots too if the backlit is enables

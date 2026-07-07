@@ -3,7 +3,6 @@
 // -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil -*-
 
 import {
-    Clutter,
     Cogl,
     GLib,
     GObject,
@@ -235,7 +234,7 @@ export class ThemeManager {
                 ({backgroundColor: colorString} = settings);
 
             // colorString is a string like rgb(0,0,0) or #rrggbb
-            const Color = Cogl.Color;
+            const {Color} = Cogl;
             const [ret, color] = Color.from_string(colorString);
             if (!ret) {
                 logError(new Error(`${colorString} is not a valid color string`));

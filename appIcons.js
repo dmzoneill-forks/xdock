@@ -105,7 +105,7 @@ const scrollAction = Object.freeze({
     SWITCH_WORKSPACE: 2,
 });
 
-const DASH_ITEM_LABEL_SHOW_TIME = Dash.DASH_ITEM_LABEL_SHOW_TIME;
+const {DASH_ITEM_LABEL_SHOW_TIME} = Dash;
 
 let recentlyClickedAppLoopId = 0;
 let recentlyClickedApp = null;
@@ -2370,23 +2370,26 @@ export const DockShowAppsIcon = GObject.registerClass({
     }
 
     vfunc_leave_event(...args) {
-        if (AppDisplay.AppIcon.prototype.vfunc_leave_event)
+        if (AppDisplay.AppIcon.prototype.vfunc_leave_event) {
             return AppDisplay.AppIcon.prototype.vfunc_leave_event.call(
                 this.toggleButton, ...args);
+        }
         return Clutter.EVENT_PROPAGATE;
     }
 
     vfunc_button_press_event(...args) {
-        if (AppDisplay.AppIcon.prototype.vfunc_button_press_event)
+        if (AppDisplay.AppIcon.prototype.vfunc_button_press_event) {
             return AppDisplay.AppIcon.prototype.vfunc_button_press_event.call(
                 this.toggleButton, ...args);
+        }
         return Clutter.EVENT_PROPAGATE;
     }
 
     vfunc_touch_event(...args) {
-        if (AppDisplay.AppIcon.prototype.vfunc_touch_event)
+        if (AppDisplay.AppIcon.prototype.vfunc_touch_event) {
             return AppDisplay.AppIcon.prototype.vfunc_touch_event.call(
                 this.toggleButton, ...args);
+        }
         return Clutter.EVENT_PROPAGATE;
     }
 
