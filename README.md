@@ -1,5 +1,6 @@
 # XDock
 
+[![Test](https://github.com/dmzoneill-forks/xdock/actions/workflows/test.yml/badge.svg)](https://github.com/dmzoneill-forks/xdock/actions/workflows/test.yml)
 [![shexli](https://github.com/dmzoneill-forks/xdock/actions/workflows/shexli.yml/badge.svg)](https://github.com/dmzoneill-forks/xdock/actions/workflows/shexli.yml)
 
 A community-driven dock for the GNOME Shell.
@@ -128,6 +129,57 @@ journalctl -f -o cat /usr/bin/gnome-shell | grep -i xdock
 dbus-run-session -- bash -c '...' 2>&1 | grep -E 'xdock|error|Error'
 ```
 
+### Testing
+
+XDock uses a two-tier testing strategy that runs automatically on every push and pull request via GitHub Actions.
+
+#### Unit tests (Jest)
+
+Pure logic functions (color math, magnification falloff, icon sizing, dock position calculations) are tested in Node.js with mocked GI modules. 184 tests at 90% code coverage.
+
+```bash
+# Run unit tests
+make test
+# or
+npm test
+
+# Run with coverage report
+NODE_OPTIONS='--experimental-vm-modules' npx jest --coverage
+```
+
+The GI module mocks are in `test/__mocks__/` — they provide minimal stubs of `St`, `Clutter`, `GObject`, `Gio`, etc. so that `utils.js` can be imported and tested without a GNOME Shell runtime.
+
+#### Smoke tests (containerized GNOME Shell)
+
+The extension is installed and enabled inside a real GNOME Shell session running in a [gnome-shell-pod](https://github.com/Schneegans/gnome-shell-pod) container (Fedora 41 / GNOME 47 and Fedora rawhide). This verifies the extension loads without `TypeError`, `SyntaxError`, or other crash errors. Screenshots are uploaded as CI artifacts.
+
+```bash
+# Run locally with podman (requires podman)
+make smoke-test-pod
+
+# Or manually
+bash test/smoke/run-in-pod.sh rawhide
+bash test/smoke/run-in-pod.sh 41
+```
+
+#### Local devkit smoke test
+
+If you have `mutter-devkit` installed, you can run a smoke test in a local nested session:
+
+```bash
+make smoke-test
+```
+
+#### Writing new tests
+
+To add unit tests for a new utility function:
+
+1. If the function uses GI modules, ensure the needed symbols are in `test/__mocks__/gi.js`
+2. Add tests to `test/utils.test.js` or create a new `test/*.test.js` file
+3. Run `make test` to verify
+
+Functions that depend on the GNOME Shell runtime (VFunc injection, Clutter actors, St widgets) cannot be unit-tested in Node.js — use the smoke test tier instead.
+
 ### Validating UI files
 
 ```bash
@@ -147,8 +199,9 @@ We welcome contributions of all kinds — bug fixes, new features, translations,
 
 1. Fork the repo and create a feature branch
 2. Make your changes
-3. Test in a [nested session](#nested-test-session-mutter-development-kit)
-4. Submit a pull request
+3. Run `make test` to verify unit tests pass
+4. Test in a [nested session](#nested-test-session-mutter-development-kit)
+5. Submit a pull request — CI will run unit tests and smoke tests automatically
 
 PRs are reviewed promptly. If you're unsure about an approach, open an issue first to discuss.
 
