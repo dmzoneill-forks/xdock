@@ -34,12 +34,20 @@ jobs:
         include:
           - fedora: '41'
             name: 'Fedora 41 / GNOME 47'
+            image: 'ghcr.io/schneegans/gnome-shell-pod-41'
+            custom: false
           - fedora: '42'
             name: 'Fedora 42 / GNOME 48'
+            image: ''
+            custom: true
           - fedora: '43'
             name: 'Fedora 43 / GNOME 49'
+            image: ''
+            custom: true
           - fedora: '44'
             name: 'Fedora 44 / GNOME 50'
+            image: ''
+            custom: true
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v4
@@ -49,12 +57,17 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq gettext imagemagick
 
-      - name: Build test container
+      - name: Build test container (custom)
+        if: matrix.custom
         run: |
           podman build \
             --build-arg=fedora_version=${{ matrix.fedora }} \
             -t xdock-test:f${{ matrix.fedora }} \
             test/container/
+
+      - name: Pull test container (Schneegans)
+        if: ${{ !matrix.custom }}
+        run: podman pull ${{ matrix.image }}
 
       - name: Build extension zip
         run: |
@@ -70,16 +83,20 @@ jobs:
       - name: Run smoke test
         run: |
           UUID="xdock@github.com"
+          if [ "${{ matrix.custom }}" = "true" ]; then
+            IMG="xdock-test:f${{ matrix.fedora }}"
+          else
+            IMG="${{ matrix.image }}"
+          fi
 
           do_in_pod() {
             podman exec --user gnomeshell --workdir /home/gnomeshell "${POD}" set-env.sh "$@"
           }
 
-          echo "Starting container..."
-          POD=$(podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK \
-                            -td xdock-test:f${{ matrix.fedora }})
+          echo "Starting container ($IMG)..."
+          POD=$(podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK -td "$IMG")
 
-          echo "Installing extension (file copy)..."
+          echo "Installing extension..."
           podman cp "${UUID}.zip" "${POD}:/home/gnomeshell/${UUID}.zip"
 
           echo "Waiting for user bus..."
@@ -102,17 +119,17 @@ jobs:
 
           echo "Enabling extension..."
           do_in_pod gnome-extensions enable "$UUID" || true
-          sleep 3
+          sleep 5
 
           echo "Closing overview..."
           do_in_pod xdotool key super || true
-          sleep 5
-
-          echo "Checking extension state..."
-          do_in_pod gnome-extensions info "$UUID" || true
+          sleep 3
 
           echo "GNOME Shell version:"
           do_in_pod gnome-shell --version || true
+
+          echo "Checking extension state..."
+          do_in_pod gnome-extensions info "$UUID" || true
 
           echo "Checking for errors..."
           ERRORS=$(podman exec "${POD}" journalctl --user -b \
@@ -122,22 +139,14 @@ jobs:
               || true)
 
           echo "Taking screenshot..."
-          # Capture Xvfb framebuffer via xwd inside the container
-          do_in_pod xwd -root -out /tmp/screenshot.xwd 2>/dev/null || true
-          podman cp "${POD}:/tmp/screenshot.xwd" screenshot.xwd 2>/dev/null || true
-
-          if [ -f screenshot.xwd ] && [ "$(stat -c%s screenshot.xwd)" -gt 1000 ]; then
-            convert xwd:screenshot.xwd screenshot.png 2>/dev/null || true
+          podman cp "${POD}:/opt/Xvfb_screen0" - 2>/dev/null \
+            | tar xf - 2>/dev/null || true
+          if [ -f Xvfb_screen0 ] && [ "$(stat -c%s Xvfb_screen0 2>/dev/null || echo 0)" -gt 10000 ]; then
+            convert xwd:Xvfb_screen0 screenshot.png
+            echo "Screenshot: $(stat -c%s screenshot.png) bytes"
           else
-            # Fallback: try the fbdir dump
-            podman cp "${POD}:/opt/Xvfb_screen0" - 2>/dev/null \
-              | tar xf - 2>/dev/null || true
-            if [ -f Xvfb_screen0 ] && [ "$(stat -c%s Xvfb_screen0)" -gt 1000 ]; then
-              convert xwd:Xvfb_screen0 screenshot.png 2>/dev/null || true
-            fi
+            echo "No framebuffer (expected on Fedora 42+ without X11)"
           fi
-
-          echo "Screenshot: $(stat -c%s screenshot.png 2>/dev/null || echo 'missing') bytes"
 
           podman stop "${POD}" >/dev/null 2>&1 || true
 
