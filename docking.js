@@ -2213,8 +2213,8 @@ export class DockManager {
             throw new Error('DashToDock has been already initialized');
         DockManager._singleton = this;
         this._extension = extension;
-        this._deferredModulesLoaded = _loadDeferredModules().catch(e =>
-            logError(e, 'XDock: Failed to load deferred modules'));
+        this._deferredModulesLoaded = _loadDeferredModules().then(() =>
+            logError(e, '[XDOCK] FATAL: Failed to load deferred modules'));
         this._signalsHandler = new Utils.GlobalSignalsHandler(this);
         this._methodInjections = new Utils.InjectionsHandler(this);
         this._vfuncInjections = new Utils.VFuncInjectionsHandler(this);
@@ -3075,12 +3075,8 @@ export class DockManager {
         // In devkit/headless sessions, the startup animation may have
         // crashed before monitors were available, leaving the overview
         // stuck open. Complete startup and dismiss the overview.
-        if (Main.layoutManager._startingUp) {
-            Main.layoutManager._startingUp = false;
-            Main.layoutManager.emit('startup-complete');
-        }
-        if (Main.overview.visible)
-            Main.overview.toggle();
+        if (Main.layoutManager._startingUp)
+            Main.layoutManager._startupAnimationComplete();
 
         // Adjust corners if necessary
         this._adjustPanelCorners();
