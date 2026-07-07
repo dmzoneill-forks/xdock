@@ -33,18 +33,26 @@ import {
     BounceAnimation,
     DBusMenuUtils,
     Docking,
-    LiveThumbnails,
     Locations,
-    MediaControls,
-    PinnedCommands,
-    RecentFilesMenu,
     Theming,
     Utils,
-    VolumeMenuItem,
     WindowPreview,
 } from './imports.js';
 
 import {Extension} from './dependencies/shell/extensions/extension.js';
+
+let LiveThumbnails, MediaControls, PinnedCommands, RecentFilesMenu;
+Promise.all([
+    import('./liveThumbnails.js'),
+    import('./mediaControls.js'),
+    import('./pinnedCommands.js'),
+    import('./recentFilesMenu.js'),
+]).then(([lt, mc, pc, rf]) => {
+    LiveThumbnails = lt;
+    MediaControls = mc;
+    PinnedCommands = pc;
+    RecentFilesMenu = rf;
+}).catch(e => logError(e, 'XDock: Failed to load deferred appIcons modules'));
 
 // Use __ () and N__() for the extension gettext domain, and reuse
 // the shell domain with the default _() and N_()
@@ -2050,9 +2058,11 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
                     this.sourceActor.app);
                 if (stream) {
                     this._appendSeparator();
-                    this._volumeMenuItem = new VolumeMenuItem.VolumeMenuItem(
-                        stream, volumeControl);
-                    this.addMenuItem(this._volumeMenuItem);
+                    import('./volumeMenuItem.js').then(VolMenu => {
+                        this._volumeMenuItem = new VolMenu.VolumeMenuItem(
+                            stream, volumeControl);
+                        this.addMenuItem(this._volumeMenuItem);
+                    }).catch(e => logError(e, 'XDock: Failed to load VolumeMenuItem'));
                 }
             }
         }

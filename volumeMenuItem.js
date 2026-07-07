@@ -13,9 +13,6 @@ import {
 
 import * as Slider from 'resource:///org/gnome/shell/ui/slider.js';
 
-import {
-    Utils,
-} from './imports.js';
 
 import {Extension} from './dependencies/shell/extensions/extension.js';
 
@@ -46,8 +43,14 @@ export const VolumeMenuItem = GObject.registerClass({
 
         this._stream = stream;
         this._volumeControl = volumeControl;
-        this._signalsHandler = new Utils.GlobalSignalsHandler(this);
+        this._trackedSignals = [];
         this._dragging = false;
+        this.connect('destroy', () => {
+            for (const {obj, id} of this._trackedSignals) {
+                try { obj.disconnect(id); } catch (e) { /* already disconnected */ }
+            }
+            this._trackedSignals = [];
+        });
 
         // Build the layout
         const box = new St.BoxLayout({

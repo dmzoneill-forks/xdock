@@ -1757,6 +1757,10 @@
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">5</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
                               <object class="GtkLabel" id="per_app_badge_hint">
                                 <property name="can_focus">0</property>
                                 <property name="hexpand">1</property>
@@ -1770,7 +1774,7 @@
                                 </style>
                                 <layout>
                                   <property name="column">0</property>
-                                  <property name="row">5</property>
+                                  <property name="row">6</property>
                                   <property name="column-span">2</property>
                                 </layout>
                               </object>
@@ -2653,7 +2657,6 @@
         <property name="position">4</property>
         <property name="child">
           <object class="GtkBox" id="features_box">
-          <object class="GtkBox" id="profiles_tab">
             <property name="can_focus">0</property>
             <property name="margin_start">24</property>
             <property name="margin_end">24</property>
@@ -2673,18 +2676,6 @@
                       <object class="GtkListBoxRow">
                         <property name="child">
                           <object class="GtkGrid">
-            <child>
-              <object class="GtkFrame" id="profiles_frame">
-                <property name="can_focus">0</property>
-                <property name="child">
-                  <object class="GtkListBox" id="profiles_listbox">
-                    <property name="can_focus">0</property>
-                    <property name="selection_mode">none</property>
-                    <child>
-                      <object class="GtkListBoxRow" id="profiles_selector_row">
-                        <property name="child">
-                          <object class="GtkBox" id="profiles_selector_box">
-                            <property name="can_focus">0</property>
                             <property name="margin_start">12</property>
                             <property name="margin_end">12</property>
                             <property name="margin_top">12</property>
@@ -2703,19 +2694,6 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <layout><property name="column">1</property><property name="row">0</property></layout>
-                            <property name="spacing">12</property>
-                            <child>
-                              <object class="GtkLabel" id="profiles_label">
-                                <property name="can_focus">0</property>
-                                <property name="hexpand">1</property>
-                                <property name="label" translatable="yes">Active profile</property>
-                                <property name="xalign">0</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkComboBoxText" id="profile_combo">
-                                <property name="halign">end</property>
-                                <property name="valign">center</property>
                               </object>
                             </child>
                           </object>
@@ -2761,11 +2739,6 @@
                       <object class="GtkListBoxRow">
                         <property name="child">
                           <object class="GtkGrid">
-                    <child>
-                      <object class="GtkListBoxRow" id="profiles_actions_row">
-                        <property name="child">
-                          <object class="GtkBox" id="profiles_actions_box">
-                            <property name="can_focus">0</property>
                             <property name="margin_start">12</property>
                             <property name="margin_end">12</property>
                             <property name="margin_top">12</property>
@@ -2784,19 +2757,6 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <layout><property name="column">1</property><property name="row">0</property></layout>
-                            <property name="spacing">12</property>
-                            <property name="halign">end</property>
-                            <child>
-                              <object class="GtkButton" id="profile_save_button">
-                                <property name="label" translatable="yes">Save Current</property>
-                                <property name="valign">center</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="profile_delete_button">
-                                <property name="label" translatable="yes">Delete</property>
-                                <property name="valign">center</property>
-                                <property name="sensitive">0</property>
                               </object>
                             </child>
                           </object>
@@ -3300,6 +3260,85 @@
           <object class="GtkLabel" id="features_label">
             <property name="can_focus">0</property>
             <property name="label" translatable="yes">Features</property>
+          </object>
+        </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkNotebookPage">
+        <property name="position">5</property>
+        <property name="child">
+          <object class="GtkBox" id="profiles_tab">
+            <property name="can_focus">0</property>
+            <property name="margin_start">24</property>
+            <property name="margin_end">24</property>
+            <property name="margin_top">24</property>
+            <property name="margin_bottom">24</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">24</property>
+            <child>
+              <object class="GtkFrame" id="profiles_frame">
+                <property name="can_focus">0</property>
+                <property name="child">
+                  <object class="GtkListBox" id="profiles_listbox">
+                    <property name="can_focus">0</property>
+                    <property name="selection_mode">none</property>
+                    <child>
+                      <object class="GtkListBoxRow" id="profiles_selector_row">
+                        <property name="child">
+                          <object class="GtkBox" id="profiles_selector_box">
+                            <property name="can_focus">0</property>
+                            <property name="margin_start">12</property>
+                            <property name="margin_end">12</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
+                            <property name="spacing">12</property>
+                            <child>
+                              <object class="GtkLabel" id="profiles_label">
+                                <property name="can_focus">0</property>
+                                <property name="hexpand">1</property>
+                                <property name="label" translatable="yes">Active profile</property>
+                                <property name="xalign">0</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkComboBoxText" id="profile_combo">
+                                <property name="halign">end</property>
+                                <property name="valign">center</property>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkListBoxRow" id="profiles_actions_row">
+                        <property name="child">
+                          <object class="GtkBox" id="profiles_actions_box">
+                            <property name="can_focus">0</property>
+                            <property name="margin_start">12</property>
+                            <property name="margin_end">12</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
+                            <property name="spacing">12</property>
+                            <property name="halign">end</property>
+                            <child>
+                              <object class="GtkButton" id="profile_save_button">
+                                <property name="label" translatable="yes">Save Current</property>
+                                <property name="valign">center</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="profile_delete_button">
+                                <property name="label" translatable="yes">Delete</property>
+                                <property name="valign">center</property>
+                                <property name="sensitive">0</property>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
                   </object>
                 </property>
                 <child type="label_item">
@@ -3319,7 +3358,7 @@
     </child>
     <child>
       <object class="GtkNotebookPage">
-        <property name="position">5</property>
+        <property name="position">6</property>
         <property name="child">
           <object class="GtkBox" id="about">
             <property name="visible">0</property>

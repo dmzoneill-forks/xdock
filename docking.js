@@ -33,26 +33,36 @@ import {
 import {
     AppIconsDecorator,
     AppSpread,
-    CommandPalette,
     DockDash,
-    DockTiling,
-    DockProfiles,
     DesktopIconsIntegration,
     FileManager1API,
     Intellihide,
     LauncherAPI,
     Locations,
-    MprisMonitor,
     NotificationsMonitor,
-    ScreencastMonitor,
-    SpringAnimation,
-    PinnedCommands,
     Theming,
     Utils,
-    VolumeControl,
 } from './imports.js';
 
 import {Extension} from './dependencies/shell/extensions/extension.js';
+
+let CommandPalette, DockProfiles, DockTiling, MprisMonitor,
+    ScreencastMonitor, SpringAnimation, PinnedCommands, VolumeControl;
+
+async function _loadDeferredModules() {
+    ([CommandPalette, DockProfiles, DockTiling, MprisMonitor,
+      ScreencastMonitor, SpringAnimation, PinnedCommands, VolumeControl] =
+        await Promise.all([
+            import('./commandPalette.js'),
+            import('./dockProfiles.js'),
+            import('./dockTiling.js'),
+            import('./mprisMonitor.js'),
+            import('./screencastMonitor.js'),
+            import('./springAnimation.js'),
+            import('./pinnedCommands.js'),
+            import('./volumeControl.js'),
+        ]));
+}
 
 // Use __ () and N__() for the extension gettext domain, and reuse
 // the shell domain with the default _() and N_()
@@ -1138,7 +1148,7 @@ const DockedDash = GObject.registerClass({
             }
         };
 
-        if (DockManager.settings.springAnimations && time > 0) {
+        if (SpringAnimation && DockManager.settings.springAnimations && time > 0) {
             this._slider.remove_all_transitions();
             if (this._activeSpringAnimation) {
                 this._activeSpringAnimation.destroy();
@@ -1187,7 +1197,7 @@ const DockedDash = GObject.registerClass({
             this.dash.iconAnimator.pause();
         };
 
-        if (DockManager.settings.springAnimations && time > 0) {
+        if (SpringAnimation && DockManager.settings.springAnimations && time > 0) {
             this._slider.remove_all_transitions();
             if (this._activeSpringAnimation) {
                 this._activeSpringAnimation.destroy();
@@ -2207,6 +2217,8 @@ export class DockManager {
             throw new Error('DashToDock has been already initialized');
         DockManager._singleton = this;
         this._extension = extension;
+        this._deferredModulesLoaded = _loadDeferredModules().catch(e =>
+            logError(e, 'XDock: Failed to load deferred modules'));
         this._signalsHandler = new Utils.GlobalSignalsHandler(this);
         this._methodInjections = new Utils.InjectionsHandler(this);
         this._vfuncInjections = new Utils.VFuncInjectionsHandler(this);
@@ -2223,10 +2235,16 @@ export class DockManager {
         this._discreteGpuAvailable = AppDisplay.discreteGpuAvailable;
         this._appSpread = new AppSpread.AppSpread();
         this._notificationsMonitor = new NotificationsMonitor.NotificationsMonitor();
-        this._screencastMonitor = new ScreencastMonitor.ScreencastMonitor();
-        this._mprisMonitor = new MprisMonitor.MprisMonitor();
-        this._volumeControl = new VolumeControl.VolumeControl();
-        this._dockProfiles = new DockProfiles.DockProfiles(this._settings);
+        this._screencastMonitor = null;
+        this._mprisMonitor = null;
+        this._volumeControl = null;
+        this._dockProfiles = null;
+        this._deferredModulesLoaded.then(() => {
+            this._screencastMonitor = new ScreencastMonitor.ScreencastMonitor();
+            this._mprisMonitor = new MprisMonitor.MprisMonitor();
+            this._volumeControl = new VolumeControl.VolumeControl();
+            this._dockProfiles = new DockProfiles.DockProfiles(this._settings);
+        }).catch(e => logError(e, 'XDock: deferred module init failed'));
 
         const needsRemoteModel = () =>
             !this._notificationsMonitor.dndMode && this._settings.showIconsEmblems;
@@ -2738,7 +2756,7 @@ export class DockManager {
 
         // ── Pinned Commands ─────────────────────────────────────────
         if (this.settings.showPinnedCommands) {
-            if (!this._pinnedCommandsManager)
+            if (!this._pinnedCommandsManager && PinnedCommands)
                 this._pinnedCommandsManager = new PinnedCommands.PinnedCommandsManager();
         } else if (this._pinnedCommandsManager) {
             this._pinnedCommandsManager.destroy();
@@ -2835,6 +2853,8 @@ export class DockManager {
     }
 
     toggleCommandPalette() {
+        if (!CommandPalette)
+            return;
         if (!this._commandPalette) {
             this._commandPalette = new CommandPalette.CommandPalette();
             Main.uiGroup.add_child(this._commandPalette);
@@ -3533,7 +3553,7 @@ export class DockManager {
 
     _ensureDockTiling() {
         if (this._settings.dockTilingEnabled) {
-            if (!this._dockTiling)
+            if (!this._dockTiling && DockTiling)
                 this._dockTiling = new DockTiling.DockTiling();
         } else if (this._dockTiling) {
             this._dockTiling.destroy();

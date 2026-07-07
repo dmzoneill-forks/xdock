@@ -63,9 +63,8 @@ export class AppIconIndicator {
             (badgeOverride.enabled === false || badgeOverride.source === 'none');
 
         if (settings.showIconsEmblems &&
-            !Docking.DockManager.getDefault().notificationsMonitor.dndMode &&
+            !Docking.DockManager.getDefault()?.notificationsMonitor?.dndMode &&
             !badgeDisabled) {
-            !Docking.DockManager.getDefault()?.notificationsMonitor?.dndMode) {
             const unityIndicator = new UnityIndicator(source);
             this._indicators.push(unityIndicator);
         }

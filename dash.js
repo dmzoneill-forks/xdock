@@ -27,11 +27,14 @@ import {
 import {
     AppIcons,
     Docking,
-    QuickSettings,
     Theming,
     Utils,
-    WorkspaceMinimap,
 } from './imports.js';
+
+let QuickSettings = null;
+let WorkspaceMinimap = null;
+import('./workspaceMinimap.js').then(m => { WorkspaceMinimap = m; })
+    .catch(e => logError(e, 'XDock: Failed to load WorkspaceMinimap'));
 
 // module "Dash" did not export DASH_ANIMATION_TIME in old versions
 // so we just define it like it is defined in Dash;
@@ -259,16 +262,23 @@ export const DockDash = GObject.registerClass({
         this._workspaceMinimap = null;
         this._workspaceMinimapContainer = null;
         this._updateWorkspaceMinimap();
-        // Quick Settings button
-        this._quickSettingsButton = new QuickSettings.QuickSettingsButton();
-        this._quickSettingsButton.visible = Docking.DockManager.settings.showQuickSettings;
+        // Quick Settings button — lazy-loaded to avoid circular import deadlock
+        this._quickSettingsButton = null;
+        import('./quickSettings.js').then(QS => {
+            QuickSettings = QS;
+            this._quickSettingsButton = new QuickSettings.QuickSettingsButton();
+            this._quickSettingsButton._panel?.setDockPosition(Utils.getPosition());
+            this._quickSettingsButton.visible = Docking.DockManager.settings.showQuickSettings;
+            this._updateQuickSettingsButton();
+        }).catch(e => logError(e, 'XDock: Failed to load QuickSettings'));
         this._signalsHandler.add(Docking.DockManager.settings,
             'changed::show-quick-settings', () => {
-                this._quickSettingsButton.visible =
-                    Docking.DockManager.settings.showQuickSettings;
-                this._updateQuickSettingsButton();
+                if (this._quickSettingsButton) {
+                    this._quickSettingsButton.visible =
+                        Docking.DockManager.settings.showQuickSettings;
+                    this._updateQuickSettingsButton();
+                }
             });
-        this._updateQuickSettingsButton();
 
         this._background = new St.Widget({
             style_class: 'dash-background',
@@ -494,7 +504,6 @@ export const DockDash = GObject.registerClass({
 
     _endItemDrag(...args) {
         this._cancelDragToFocus();
-        return Dash.Dash.prototype._endItemDrag.call(this, ...args);
         const result = Dash.Dash.prototype._endItemDrag.call(this, ...args);
         this._dragInProgress = false;
         this._flushDeferredDragWork();
@@ -1819,7 +1828,6 @@ export const DockDash = GObject.registerClass({
         }
 
         // ── Phase 4: Removables / Trash ───────────────────────────────
-        // ── Phase 3: Removables / Trash ──────────────────────────────
         // Location apps are placed right after favorites/categories so
         // they maintain a stable position regardless of running app
         // changes (issue #2443).
@@ -1847,39 +1855,6 @@ export const DockDash = GObject.registerClass({
             dockManager.pinnedCommandsManager.getApps().forEach(cmdApp => {
                 if (!newApps.includes(cmdApp))
                     newApps.push(cmdApp);
-            });
-        }
-
-        // Filter trash from oldApps to avoid errors if it was removed
-        if (dockManager.trash) {
-            const trashApp = dockManager.trash.getApp();
-            oldApps = oldApps.filter(app => !app.isTrash || app === trashApp);
-        } else {
-            oldApps = oldApps.filter(app => !app.isTrash);
-        }
-
-        // ── Phase 4: Running non-categorized apps ───────────────────────
-        // Preserve order from oldApps, append new ones.
-        const runningCat = []; // categorized -> Phase 5
-
-        if (settings.showRunning) {
-            oldApps.forEach(oldApp => {
-                const index = running.indexOf(oldApp);
-                if (index > -1) {
-                    const [app] = running.splice(index, 1);
-                    const appId = app.get_id();
-                    if (categorizedAppIds.has(appId))
-                        runningCat.push(app);
-                    else if (!showFavorites || !(appId in favorites))
-                        newApps.push(app);
-                }
-            });
-            running.forEach(app => {
-                const appId = app.get_id();
-                if (categorizedAppIds.has(appId))
-                    runningCat.push(app);
-                else if (!showFavorites || !(appId in favorites))
-                    newApps.push(app);
             });
         }
 
@@ -2057,8 +2032,6 @@ export const DockDash = GObject.registerClass({
         const nRunning = expectedItems.filter(item =>
             !item.isFavorite && !this._isLocationApp(item.app) &&
             !this._isPinnedCommandApp(item.app)).length;
-        const posLocations = this._box.get_n_children() - nLocationApps;
-            !item.isFavorite && !this._isLocationApp(item.app)).length;
         // Location apps are after favorites, so separator goes after both.
         // Account for the favorites separator already in the box.
         const posLocations = nFavorites + nLocationApps +
