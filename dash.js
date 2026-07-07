@@ -1460,9 +1460,7 @@ export const DockDash = GObject.registerClass({
                 : childY + childH / 2;
             const size = this._isHorizontal ? childW : childH;
             const distance = Math.abs((this._isHorizontal ? cursorX : cursorY) - center);
-            const normalized = distance / spread;
-            const falloff = Math.max(0.0, 1.0 - normalized * normalized);
-            const scale = 1.0 + (maxScale - 1.0) * falloff;
+            const scale = Utils.magnificationScale(distance, spread, maxScale);
             const extra = size * (scale - 1.0);
             return {child, scale, extra};
         });

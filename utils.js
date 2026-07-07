@@ -773,3 +773,27 @@ export function addActor(element, actor) {
 
 export const clamp = (v, m, M) => Math.min(Math.max(v, m), M);
 export const clampDouble = v => clamp(v, 0, 1);
+
+export const BASE_ICON_SIZES = [16, 22, 24, 32, 48, 64, 96, 128];
+
+export function computeAvailableIconSizes(maxSize, iconSizeFixed) {
+    const maxAllowed = BASE_ICON_SIZES[BASE_ICON_SIZES.length - 1];
+    maxSize = Math.min(maxSize, maxAllowed);
+    if (iconSizeFixed)
+        return [maxSize];
+    const sizes = BASE_ICON_SIZES.filter(val => val < maxSize);
+    sizes.push(maxSize);
+    return sizes;
+}
+
+export function magnificationFalloff(distance, spread) {
+    if (spread <= 0)
+        return 0.0;
+    const normalized = distance / spread;
+    return Math.max(0.0, 1.0 - normalized * normalized);
+}
+
+export function magnificationScale(distance, spread, maxScale) {
+    const falloff = magnificationFalloff(distance, spread);
+    return 1.0 + (maxScale - 1.0) * falloff;
+}

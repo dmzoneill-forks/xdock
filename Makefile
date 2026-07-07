@@ -164,3 +164,18 @@ endif
 
 check:
 	$(ESLINT) $(ESLINT_ARGS) .
+
+.PHONY: test smoke-test dev dev-no-ext
+
+# ── Testing ──────────────────────────────────────────────────────────
+
+# Unit tests (Node.js + Jest)
+test:
+	NODE_OPTIONS='--experimental-vm-modules' npx jest --verbose
+
+# Smoke test: load extension in headless gnome-shell (local dev only)
+# Requires: sudo dnf install mutter-devkit
+smoke-test: ./schemas/gschemas.compiled
+	@command -v gnome-shell-test-tool >/dev/null 2>&1 || \
+		{ echo "gnome-shell-test-tool not found — install mutter-devkit"; exit 1; }
+	gnome-shell-test-tool --headless --extension $(CURDIR) test/smoke/load-extension.js
