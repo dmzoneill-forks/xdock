@@ -1,5 +1,5 @@
 ---
-name: CodeQL
+name: Security / CodeQL
 'on':
   push:
     branches: [master]

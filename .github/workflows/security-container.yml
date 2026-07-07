@@ -1,5 +1,5 @@
 ---
-name: Container Scan
+name: Security / Container
 'on':
   push:
     branches: [master]

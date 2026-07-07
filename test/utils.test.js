@@ -1161,35 +1161,15 @@ describe('drawRoundedLine', () => {
 // cairoSetSourceColor
 // ---------------------------------------------------------------------------
 describe('cairoSetSourceColor', () => {
-    test('uses Clutter.cairo_set_source_color when available', () => {
-        const origFn = Clutter.cairo_set_source_color;
+    test('calls cr.setSourceColor', () => {
         const calls = [];
-        Clutter.cairo_set_source_color = function (cr, color) {
-            calls.push({cr, color});
+        const cr = {
+            setSourceColor(color) { calls.push(color); },
         };
-        const cr = {};
         const color = {red: 255};
         cairoSetSourceColor(cr, color);
         expect(calls).toHaveLength(1);
-        expect(calls[0].cr).toBe(cr);
-        expect(calls[0].color).toBe(color);
-        Clutter.cairo_set_source_color = origFn;
-    });
-
-    test('falls back to cr.setSourceColor when Clutter helper missing', () => {
-        const origFn = Clutter.cairo_set_source_color;
-        Clutter.cairo_set_source_color = undefined;
-        const calls = [];
-        const cr = {
-            setSourceColor(color) {
-                calls.push(color);
-            },
-        };
-        const color = {red: 128};
-        cairoSetSourceColor(cr, color);
-        expect(calls).toHaveLength(1);
         expect(calls[0]).toBe(color);
-        Clutter.cairo_set_source_color = origFn;
     });
 });
 
@@ -1239,10 +1219,9 @@ describe('getMonitorManager', () => {
         expect(getMonitorManager()).toBe(mgr);
     });
 
-    test('falls back to Meta.MonitorManager.get when backend method missing', () => {
-        const mgr = {name: 'fallback-mgr'};
-        global.backend = {};
-        Meta.MonitorManager = {get: () => mgr};
+    test('calls global.backend.get_monitor_manager', () => {
+        const mgr = {name: 'backend-mgr'};
+        global.backend = {get_monitor_manager: () => mgr};
         expect(getMonitorManager()).toBe(mgr);
     });
 });
@@ -1273,12 +1252,6 @@ describe('laterAdd', () => {
         expect(laterAdd(0, cb)).toBe(42);
     });
 
-    test('falls back to Meta.later_add when compositor method missing', () => {
-        global.compositor = undefined;
-        const cb = () => {};
-        Meta.later_add = (type, callback) => 99;
-        expect(laterAdd(0, cb)).toBe(99);
-    });
 });
 
 describe('laterRemove', () => {
@@ -1294,7 +1267,7 @@ describe('laterRemove', () => {
             global.compositor = savedCompositor;
     });
 
-    test('uses global.compositor.get_laters().remove when available', () => {
+    test('uses global.compositor.get_laters().remove', () => {
         const removed = [];
         global.compositor = {
             get_laters: () => ({
@@ -1303,14 +1276,6 @@ describe('laterRemove', () => {
         };
         laterRemove(42);
         expect(removed).toEqual([42]);
-    });
-
-    test('falls back to Meta.later_remove when compositor method missing', () => {
-        global.compositor = undefined;
-        const removed = [];
-        Meta.later_remove = id => { removed.push(id); };
-        laterRemove(99);
-        expect(removed).toEqual([99]);
     });
 });
 

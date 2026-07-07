@@ -1,5 +1,5 @@
 ---
-name: License Audit
+name: Security / Licenses
 'on':
   push:
     branches: [master]
