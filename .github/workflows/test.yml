@@ -76,12 +76,12 @@ jobs:
           POD=$(podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK --cap-add=SYS_ADMIN -td "$IMG")
 
           echo "Waiting for container boot..."
-          sleep 5
-          do_in_pod wait-user-bus.sh 2>/dev/null || sleep 15
+          sleep 3
+          do_in_pod wait-user-bus.sh 2>/dev/null || sleep 5
 
           echo "Installing extension..."
           podman cp "${UUID}.zip" "${POD}:/home/gnomeshell/${UUID}.zip"
-          for i in $(seq 1 20); do
+          for i in $(seq 1 10); do
             if do_in_pod gnome-extensions install "${UUID}.zip" 2>/dev/null; then
               echo "  installed after $((i * 2))s"
               break
