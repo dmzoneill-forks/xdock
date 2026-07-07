@@ -122,11 +122,19 @@ jobs:
               || true)
 
           echo "Taking screenshot..."
-          podman cp "${POD}:/opt/Xvfb_screen0" ./Xvfb_screen0 2>/dev/null || true
-          if [ -f Xvfb_screen0 ] && [ -s Xvfb_screen0 ]; then
+          # Xvfb writes framebuffer as XWD to /opt/Xvfb_screen0
+          # podman cp streams it as tar, extract then convert
+          podman cp "${POD}:/opt/Xvfb_screen0" - 2>/dev/null \
+            | tar xf - 2>/dev/null || true
+          if [ -f Xvfb_screen0 ] && [ "$(stat -c%s Xvfb_screen0 2>/dev/null)" -gt 1000 ]; then
             convert xwd:Xvfb_screen0 screenshot.png 2>/dev/null || true
+            echo "Screenshot captured ($(stat -c%s screenshot.png) bytes)"
           else
-            echo "No framebuffer found (Wayland-only session?)"
+            echo "No usable framebuffer found"
+            # Create a placeholder so the artifact upload doesn't fail
+            convert -size 400x100 xc:black -fill white -gravity center \
+              -annotate 0 "No screenshot available\n(Wayland-only or Xvfb not ready)" \
+              screenshot.png 2>/dev/null || true
           fi
 
           podman stop "${POD}" >/dev/null 2>&1 || true
