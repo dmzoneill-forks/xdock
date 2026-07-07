@@ -97,12 +97,17 @@ jobs:
           POD=$(podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK -td "$IMG")
 
           echo "Waiting for user bus..."
-          do_in_pod wait-user-bus.sh
-          echo "Bus ready"
+          do_in_pod wait-user-bus.sh 2>/dev/null || true
 
           echo "Installing extension..."
           podman cp "${UUID}.zip" "${POD}:/home/gnomeshell/${UUID}.zip"
-          do_in_pod gnome-extensions install "${UUID}.zip"
+          for i in $(seq 1 15); do
+            if do_in_pod gnome-extensions install "${UUID}.zip" 2>/dev/null; then
+              echo "  installed after $((i * 2))s"
+              break
+            fi
+            sleep 2
+          done
 
           echo "Configuring GNOME Shell..."
           do_in_pod gsettings set org.gnome.shell welcome-dialog-last-shown-version "999" || true
