@@ -5,14 +5,12 @@
 import {
     Clutter,
     GLib,
+    St,
 } from './dependencies/gi.js';
 
 import {
     Main,
 } from './dependencies/shell/ui.js';
-import {
-    St,
-} from './dependencies/gi.js';
 
 /**
  * Performs a bouncing animation on an icon

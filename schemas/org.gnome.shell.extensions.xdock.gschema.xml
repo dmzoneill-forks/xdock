@@ -12,7 +12,8 @@
     <value value='8' nick='focus-or-appspread'/>
     <value value='9' nick='focus-minimize-or-previews'/>
     <value value='10' nick='focus-minimize-or-appspread'/>
-    <value value='11' nick='quit'/>
+    <value value='11' nick='cycle-or-minimize'/>
+    <value value='12' nick='quit'/>
   </enum>
   <enum id='org.gnome.shell.extensions.xdock.scrollAction'>
     <value value='0' nick='do-nothing'/>

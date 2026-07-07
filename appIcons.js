@@ -63,7 +63,8 @@ function _ensureAppIconsDeferred() {
 // the shell domain with the default _() and N_()
 const {gettext: __, ngettext: N__} = Extension;
 
-const DBusMenu = await DBusMenuUtils.haveDBusMenu();
+let DBusMenu = null;
+DBusMenuUtils.haveDBusMenu().then(m => { DBusMenu = m; });
 
 const Labels = Object.freeze({
     ISOLATE_MONITORS: Symbol('isolate-monitors'),
@@ -265,8 +266,9 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
         // Live window thumbnails: replace static icon with a live clone
         // of the most-recent window when enabled.
-        this._liveThumbnailManager = new LiveThumbnails.LiveThumbnailManager(this);
-        if (Docking.DockManager.settings.liveWindowThumbnails)
+        this._liveThumbnailManager = LiveThumbnails
+            ? new LiveThumbnails.LiveThumbnailManager(this) : null;
+        if (this._liveThumbnailManager && Docking.DockManager.settings.liveWindowThumbnails)
             this._liveThumbnailManager.enable();
 
         this._signalsHandler.add(
@@ -363,10 +365,12 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (!playerInfo)
             return;
 
-        if (!this._mediaControlsOverlay) {
+        if (!this._mediaControlsOverlay && MediaControls) {
             this._mediaControlsOverlay =
                 new MediaControls.MediaControlsOverlay(this);
         }
+        if (!this._mediaControlsOverlay)
+            return;
 
         this._mediaControlsOverlay.updateState(playerInfo);
         this._mediaControlsOverlay.scheduleShow();
@@ -1192,6 +1196,8 @@ export const DockAbstractAppIcon = GObject.registerClass({
     }
 
     _recentFiles() {
+        if (!RecentFilesMenu)
+            return;
         if (!this._recentFilesMenuInstance) {
             this._recentFilesMenuManager = new PopupMenu.PopupMenuManager(this);
 
@@ -1713,7 +1719,7 @@ class DockCommandAppIconMenu extends PopupMenu.PopupMenu {
  * @param iconAnimator
  */
 export function makeAppIcon(app, monitorIndex, iconAnimator, window = null) {
-    if (app.appInfo instanceof PinnedCommands.CommandAppInfo)
+    if (PinnedCommands && app.appInfo instanceof PinnedCommands.CommandAppInfo)
         return new DockCommandAppIcon(app, monitorIndex, iconAnimator);
 
     if (app.appInfo instanceof Locations.LocationAppInfo)
@@ -1853,7 +1859,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
         }
 
         // Recent Files submenu
-        if (Docking.DockManager.settings.showRecentFiles && !app.is_window_backed()) {
+        if (RecentFilesMenu && Docking.DockManager.settings.showRecentFiles && !app.is_window_backed()) {
             const recentFiles = RecentFilesMenu.getRecentFilesForApp(app);
             if (recentFiles.length > 0) {
                 this._recentFilesMenuItem = new PopupMenu.PopupSubMenuMenuItem(
