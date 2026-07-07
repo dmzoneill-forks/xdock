@@ -165,7 +165,7 @@ endif
 check:
 	$(ESLINT) $(ESLINT_ARGS) .
 
-.PHONY: test smoke-test dev dev-no-ext
+.PHONY: test smoke-test smoke-test-pod dev dev-no-ext
 
 # ── Testing ──────────────────────────────────────────────────────────
 
@@ -173,9 +173,16 @@ check:
 test:
 	NODE_OPTIONS='--experimental-vm-modules' npx jest --verbose
 
-# Smoke test: load extension in headless gnome-shell (local dev only)
+# Smoke test (local): load extension in devkit session
 # Requires: sudo dnf install mutter-devkit
 smoke-test: ./schemas/gschemas.compiled
 	@command -v gnome-shell-test-tool >/dev/null 2>&1 || \
 		{ echo "gnome-shell-test-tool not found — install mutter-devkit"; exit 1; }
 	gnome-shell-test-tool --headless --extension $(CURDIR) test/smoke/load-extension.js
+
+# Smoke test (container): load extension in gnome-shell-pod
+# Requires: podman
+smoke-test-pod: ./schemas/gschemas.compiled
+	@command -v podman >/dev/null 2>&1 || \
+		{ echo "podman not found"; exit 1; }
+	bash test/smoke/run-in-pod.sh rawhide
