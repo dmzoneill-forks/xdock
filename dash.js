@@ -33,8 +33,6 @@ import {
 
 let QuickSettings = null;
 let WorkspaceMinimap = null;
-import('./workspaceMinimap.js').then(m => { WorkspaceMinimap = m; })
-    .catch(e => logError(e, 'XDock: Failed to load WorkspaceMinimap'));
 
 // module "Dash" did not export DASH_ANIMATION_TIME in old versions
 // so we just define it like it is defined in Dash;
@@ -258,10 +256,17 @@ export const DockDash = GObject.registerClass({
             });
         this.updateShowAppsButton();
 
-        // Workspace minimap indicator
+        // Workspace minimap indicator — lazy-loaded to avoid circular import deadlock
         this._workspaceMinimap = null;
         this._workspaceMinimapContainer = null;
-        this._updateWorkspaceMinimap();
+        if (!WorkspaceMinimap) {
+            import('./workspaceMinimap.js').then(m => {
+                WorkspaceMinimap = m;
+                this._updateWorkspaceMinimap();
+            }).catch(e => logError(e, 'XDock: Failed to load WorkspaceMinimap'));
+        } else {
+            this._updateWorkspaceMinimap();
+        }
         // Quick Settings button — lazy-loaded to avoid circular import deadlock
         this._quickSettingsButton = null;
         import('./quickSettings.js').then(QS => {

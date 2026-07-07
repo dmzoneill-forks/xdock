@@ -19,8 +19,14 @@ import {
 } from './imports.js';
 
 let WallpaperColorExtractor;
-import('./wallpaperColorExtractor.js').then(m => { WallpaperColorExtractor = m; })
-    .catch(e => logError(e, 'XDock: Failed to load WallpaperColorExtractor'));
+let _wallpaperModuleLoading = false;
+function _ensureWallpaperModule() {
+    if (WallpaperColorExtractor || _wallpaperModuleLoading)
+        return;
+    _wallpaperModuleLoading = true;
+    import('./wallpaperColorExtractor.js').then(m => { WallpaperColorExtractor = m; })
+        .catch(e => logError(e, 'XDock: Failed to load WallpaperColorExtractor'));
+}
 
 const {signals: Signals} = imports;
 
@@ -393,9 +399,10 @@ export class ThemeManager {
      * Create or destroy the WallpaperColorExtractor based on the setting.
      */
     _ensureWallpaperExtractor() {
+        _ensureWallpaperModule();
         const {settings} = Docking.DockManager;
         if (settings.wallpaperAdaptiveColor) {
-            if (!this._wallpaperExtractor) {
+            if (!this._wallpaperExtractor && WallpaperColorExtractor) {
                 this._wallpaperExtractor =
                     new WallpaperColorExtractor.WallpaperColorExtractor();
                 this._signalsHandler.addWithLabel(Labels.WALLPAPER_COLOR,
