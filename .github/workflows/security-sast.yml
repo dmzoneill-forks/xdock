@@ -1,5 +1,5 @@
 ---
-name: SAST
+name: Security / SAST
 'on':
   push:
     branches: [master]
