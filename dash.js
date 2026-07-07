@@ -559,16 +559,8 @@ export const DockDash = GObject.registerClass({
     }
 
     _queueRedisplay(...args) {
-        // Debounce rapid redisplay requests (e.g. from package updates
-        // triggering multiple installed-changed / app-state-changed signals
-        // in quick succession).  The upstream _queueRedisplay only coalesces
-        // within a single frame; this adds a 100 ms cooldown so that bursts
-        // of signals result in a single _redisplay call, preventing the
-        // visible icon flash/flicker described in #2485.
-        if (this._redisplayDebounceId) {
-            // Already scheduled — the pending call will pick up the latest state.
+        if (this._redisplayDebounceId)
             return;
-        }
 
         this._redisplayDebounceId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT, 100, () => {

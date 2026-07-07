@@ -514,10 +514,6 @@ const DockedDash = GObject.registerClass({
                 });
         } else {
             this._trackDock();
-            // Show the dock only once fully initialized. This workarounds a
-            // resize glitch we are seeing if the dock is initialized without
-            // an animation.
-            // $SOMETHING seems to resize it, but it's yet unclear what it is.
             this.opacity = 0;
             this._signalsHandler.addWithLabel(Labels.INITIALIZE, global.stage,
                 'after-paint', () => {
@@ -2240,10 +2236,14 @@ export class DockManager {
         this._volumeControl = null;
         this._dockProfiles = null;
         this._deferredModulesLoaded.then(() => {
-            this._screencastMonitor = new ScreencastMonitor.ScreencastMonitor();
-            this._mprisMonitor = new MprisMonitor.MprisMonitor();
-            this._volumeControl = new VolumeControl.VolumeControl();
-            this._dockProfiles = new DockProfiles.DockProfiles(this._settings);
+            if (ScreencastMonitor)
+                this._screencastMonitor = new ScreencastMonitor.ScreencastMonitor();
+            if (MprisMonitor && this._settings.get_boolean('show-media-controls'))
+                this._mprisMonitor = new MprisMonitor.MprisMonitor();
+            if (VolumeControl && this._settings.get_boolean('show-volume-control'))
+                this._volumeControl = new VolumeControl.VolumeControl();
+            if (DockProfiles)
+                this._dockProfiles = new DockProfiles.DockProfiles(this._settings);
         }).catch(e => logError(e, 'XDock: deferred module init failed'));
 
         const needsRemoteModel = () =>
@@ -3073,19 +3073,14 @@ export class DockManager {
         this._prepareMainDash();
 
         // In devkit/headless sessions, the startup animation may have
-        // failed (showAppsButton undefined when monitors weren't ready).
-        // If the shell is still in startup state after dock creation,
-        // complete startup on the next idle to dismiss the overview.
+        // crashed before monitors were available, leaving the overview
+        // stuck open. Complete startup and dismiss the overview.
         if (Main.layoutManager._startingUp) {
-            const startupId = GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
-                if (Main.layoutManager._startingUp) {
-                    Main.layoutManager._startingUp = false;
-                    Main.layoutManager.emit('startup-complete');
-                }
-                return GLib.SOURCE_REMOVE;
-            });
-            GLib.Source.set_name_by_id(startupId, '[xdock] deferred startup-complete');
+            Main.layoutManager._startingUp = false;
+            Main.layoutManager.emit('startup-complete');
         }
+        if (Main.overview.visible)
+            Main.overview.toggle();
 
         // Adjust corners if necessary
         this._adjustPanelCorners();
