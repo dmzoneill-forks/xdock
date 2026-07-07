@@ -112,7 +112,7 @@ jobs:
 
           echo "Configuring GNOME Shell..."
           do_in_pod gsettings set org.gnome.shell welcome-dialog-last-shown-version "999" || true
-          do_in_pod bash -c "gsettings set org.gnome.shell enabled-extensions \"['${UUID}']\"" || true
+          do_in_pod dconf write /org/gnome/shell/enabled-extensions "['${UUID}']" || true
 
           echo "Starting GNOME Shell..."
           if do_in_pod systemctl --user start "gnome-xsession@:99" 2>/dev/null; then
