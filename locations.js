@@ -1336,10 +1336,10 @@ export function wrapFileManagerApp() {
     }
 
     fileManagerApp._updateWindows = function () {
-        const locationWindows = [];
-        getRunningApps().forEach(a => locationWindows.push(...a.get_windows()));
+        const locationWindows = new Set();
+        getRunningApps().forEach(a => a.get_windows().forEach(w => locationWindows.add(w)));
         const windows = originalGetWindows.call(this).filter(w =>
-            !locationWindows.includes(w));
+            !locationWindows.has(w));
 
         this._signalConnections.blockWithLabel(Labels.WINDOWS_CHANGED);
         this._setWindows(windows);

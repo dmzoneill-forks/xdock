@@ -596,8 +596,9 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (this._optionalScrollCycleWindowsDeadTimeId) {
             return Clutter.EVENT_PROPAGATE;
         } else {
+            const SCROLL_CYCLE_DEBOUNCE_MS = 250;
             this._optionalScrollCycleWindowsDeadTimeId = GLib.timeout_add(
-                GLib.PRIORITY_DEFAULT, 250, () => {
+                GLib.PRIORITY_DEFAULT, SCROLL_CYCLE_DEBOUNCE_MS, () => {
                     this._optionalScrollCycleWindowsDeadTimeId = 0;
                 });
         }
@@ -980,7 +981,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         let shouldHideOverview = true;
 
         // We customize the action only when the application is already running
-        if (this.running) {
+        if (this.running && windows.length > 0) {
             const hasUrgentWindows = !!this._urgentWindows.size;
             const singleOrUrgentWindows = windows.length === 1 || hasUrgentWindows;
             switch (buttonAction) {
@@ -1488,6 +1489,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         const monitorIsolation = Docking.DockManager.settings.isolateMonitors;
         if (!recentlyClickedApp ||
             recentlyClickedApp.get_id() !== this.app.get_id() ||
+            !recentlyClickedAppWindows ||
             recentlyClickedAppWindows.length !== appWindows.length ||
             (recentlyClickedAppMonitor !== this.monitorIndex && monitorIsolation)) {
             recentlyClickedApp = this.app;

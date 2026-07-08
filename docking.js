@@ -2734,7 +2734,7 @@ export class DockManager {
         let configs = [];
         try {
             configs = JSON.parse(this._settings.get_string('user-categories'));
-        } catch {}
+        } catch { /* invalid JSON in settings, use empty default */ }
         if (!Array.isArray(configs))
             configs = [];
 

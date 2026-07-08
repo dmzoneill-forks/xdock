@@ -497,9 +497,6 @@ const DockSettings = GObject.registerClass({
             'value',
             Gio.SettingsBindFlags.DEFAULT);
 
-        // this._builder.get_object('animation_duration_spinbutton').set_value(
-        //   this._settings.get_double('animation-time'));
-
         // Create dialog for intelligent autohide advanced settings
         this._builder.get_object('intelligent_autohide_button').connect('clicked', () => {
             const dialog = new Gtk.Dialog({
