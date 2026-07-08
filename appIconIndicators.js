@@ -333,11 +333,15 @@ class RunningIndicatorDots extends RunningIndicatorBase {
             'apply-glossy-effect',
             'running-indicator-dominant-color'];
 
+        this._styleDirty = true;
         keys.forEach(function (key) {
             this._signalsHandler.add(
                 Docking.DockManager.settings,
                 `changed::${key}`,
-                this.update.bind(this)
+                () => {
+                    this._styleDirty = true;
+                    this.update();
+                }
             );
         }, this);
     }
@@ -364,6 +368,9 @@ class RunningIndicatorDots extends RunningIndicatorBase {
     }
 
     _computeStyle() {
+        if (!this._styleDirty)
+            return;
+        this._styleDirty = false;
         const [width, height] = this._area.get_surface_size();
         this._width = height;
         this._height = width;

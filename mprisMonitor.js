@@ -57,6 +57,7 @@ export class MprisMonitor {
     }
 
     destroy() {
+        this._destroyed = true;
         this.emit('destroy');
         this._stopWatching();
         this._signalsHandler?.destroy();
@@ -199,6 +200,8 @@ export class MprisMonitor {
             -1,
             null,
             (connection, result) => {
+                if (this._destroyed)
+                    return;
                 try {
                     const reply = connection.call_finish(result);
                     const [names] = reply.deepUnpack();
@@ -221,6 +224,8 @@ export class MprisMonitor {
             null,
             Gio.DBusSignalFlags.NONE,
             (_conn, _sender, _path, _iface, _signal, params) => {
+                if (this._destroyed)
+                    return;
                 const [name, oldOwner, newOwner] = params.deepUnpack();
                 if (!name.startsWith(MPRIS_PREFIX))
                     return;
@@ -268,6 +273,8 @@ export class MprisMonitor {
             -1,
             null,
             (connection, result) => {
+                if (this._destroyed)
+                    return;
                 let desktopEntry = null;
                 try {
                     const reply = connection.call_finish(result);

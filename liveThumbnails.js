@@ -181,8 +181,10 @@ export class LiveThumbnailManager {
             this._removeClone();
             this._showStaticIcon();
             // Try to pick another window.
-            GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
-                this._sync();
+            this._resyncIdleId = GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
+                this._resyncIdleId = 0;
+                if (this._appIcon)
+                    this._sync();
                 return GLib.SOURCE_REMOVE;
             });
         });
@@ -214,7 +216,7 @@ export class LiveThumbnailManager {
         const targetSize = iconSize * scaleFactor;
 
         const [winWidth, winHeight] = this._mutterWindow.get_size();
-        if (!winWidth || !winHeight)
+        if (winWidth <= 0 || winHeight <= 0)
             return;
 
         const scale = Math.min(targetSize / winWidth, targetSize / winHeight);
@@ -274,6 +276,10 @@ export class LiveThumbnailManager {
      * Full cleanup.
      */
     destroy() {
+        if (this._resyncIdleId) {
+            GLib.source_remove(this._resyncIdleId);
+            this._resyncIdleId = 0;
+        }
         this._removeClone();
         this._showStaticIcon();
         this._signalsHandler.removeWithLabel(Labels.LIVE_THUMBNAIL);

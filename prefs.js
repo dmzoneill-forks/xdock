@@ -231,7 +231,7 @@ const DockSettings = GObject.registerClass({
             this._icon_size_timeout = 0;
             const iconSizeScale = this._builder.get_object('icon_size_scale');
             if (iconSizeScale)
-                this._settings.set_int('dash-max-icon-size', iconSizeScale.get_value());
+                this._settings.set_int('dash-max-icon-size', Math.round(iconSizeScale.get_value()));
         }
 
         if (this._opacity_timeout) {

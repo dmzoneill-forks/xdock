@@ -77,7 +77,7 @@ class DockDashItemContainer extends Dash.DashItemContainer {
     // in order to apply a little modification at the end of the animation
     // which makes sure that the icon background is not blurry
     show(animate) {
-        if (this.child == null)
+        if (this.child === null || this.child === undefined)
             return;
 
         this.ease({

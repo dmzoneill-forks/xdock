@@ -331,8 +331,8 @@ export class RecentFilesMenu extends PopupMenu.PopupMenu {
         return true;
     }
 
-    popup() {
-        if (!this._redisplay())
+    async popup() {
+        if (!await this._redisplay())
             return;
 
         const workArea = Main.layoutManager.getWorkAreaForMonitor(

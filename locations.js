@@ -251,7 +251,7 @@ export const LocationAppInfo = GObject.registerClass({
     }
 
     _getFallbackCommandLine() {
-        return `gio open ${this.location?.get_uri()}`;
+        return `gio open ${this.location?.get_uri() ?? ''}`;
     }
 
     async _queryLocationIcons(params) {
