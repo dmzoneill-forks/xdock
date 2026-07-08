@@ -130,7 +130,7 @@ export class AppSpread {
             let hasEventVFunc = false;
             try {
                 hasEventVFunc = !!activitiesButton.constructor.prototype.vfunc_event;
-            } catch {}
+            } catch { /* vfunc_event may not exist in GNOME 50+ */ }
 
             if (hasEventVFunc) {
                 this._vfuncInjections.add([

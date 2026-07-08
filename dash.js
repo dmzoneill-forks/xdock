@@ -35,6 +35,7 @@ let WorkspaceMinimap = null;
 
 const {DASH_ANIMATION_TIME} = Dash;
 const DASH_VISIBILITY_TIMEOUT = 3;
+const DROP_TARGET_MARGIN = 0.25;
 
 const Labels = Object.freeze({
     DASH_LEAVE: Symbol('dash-leave'),
@@ -657,7 +658,7 @@ export const DockDash = GObject.registerClass({
             const [cw, ch] = clean[i].get_transformed_size();
             const start = this._isHorizontal ? cx : cy;
             const size = this._isHorizontal ? cw : ch;
-            const margin = size * 0.25;
+            const margin = size * DROP_TARGET_MARGIN;
 
             if (cursor >= start + margin && cursor <= start + size - margin) {
                 const childApp = clean[i].child?._delegate?.app;
@@ -1172,13 +1173,15 @@ export const DockDash = GObject.registerClass({
         // Mark: this icon comes from our dock (not from the Gnome Dash/Overview)
         appIcon._d2dFromOurDock = true;
 
+        const DRAG_OPACITY = 50;
+        const FULL_OPACITY = 255;
         if (appIcon._draggable) {
             appIcon._draggable.connect('drag-begin', () => {
-                appIcon.opacity = 50;
+                appIcon.opacity = DRAG_OPACITY;
                 this._clearDropTarget();
             });
             appIcon._draggable.connect('drag-end', () => {
-                appIcon.opacity = 255;
+                appIcon.opacity = FULL_OPACITY;
                 this._clearDropTarget();
             });
         }
@@ -1636,7 +1639,10 @@ export const DockDash = GObject.registerClass({
 
         const scale = oldIconSize / newIconSize;
         for (let i = 0; i < iconChildren.length; i++) {
-            const {icon} = iconChildren[i].child._delegate;
+            const delegate = iconChildren[i].child?._delegate;
+            if (!delegate)
+                continue;
+            const {icon} = delegate;
 
             // Set the new size immediately, to keep the icons' sizes
             // in sync with this.iconSize
@@ -1776,7 +1782,12 @@ export const DockDash = GObject.registerClass({
                 oldApps.push(app);
         });
 
+        const newAppsSet = new Set();
         const newApps = [];
+        const _pushApp = app => {
+            newApps.push(app);
+            newAppsSet.add(app);
+        };
         const {showFavorites} = settings;
 
         // ── Phase 1+2: Favorites + Category Icons from dock-order ────────
@@ -1790,15 +1801,18 @@ export const DockDash = GObject.registerClass({
                 // Category icon
                 const ci = catById.get(id);
                 const ciApp = ci.getApp();
-                if (showFavorites && !newApps.includes(ciApp))
-                    newApps.push(ciApp);
-                else if (!showFavorites)
-                    newApps.push(ciApp);
+                if (showFavorites && !newAppsSet.has(ciApp)) {
+                    _pushApp(ciApp);
+                    newAppsSet.add(ciApp);
+                } else if (!showFavorites) {
+                    _pushApp(ciApp);
+                    newAppsSet.add(ciApp);
+                }
                 catById.delete(id); // mark as placed
             } else if (remainingFavs.has(id)) {
                 // Favorite app
                 if (showFavorites)
-                    newApps.push(remainingFavs.get(id));
+                    _pushApp(remainingFavs.get(id));
                 remainingFavs.delete(id); // mark as placed
             }
             // else: stale entry (app uninstalled / category deleted) -> skip
@@ -1807,15 +1821,48 @@ export const DockDash = GObject.registerClass({
         // Append favorites not yet in dock-order (newly pinned outside our dock)
         if (showFavorites) {
             for (const app of remainingFavs.values())
-                newApps.push(app);
+                _pushApp(app);
         }
 
         // Append category icons not yet in dock-order (newly created)
         for (const ci of catById.values()) {
-            if (!newApps.includes(ci.getApp()))
-                newApps.push(ci.getApp());
+            if (!newAppsSet.has(ci.getApp()))
+                _pushApp(ci.getApp());
         }
 
+        // ── Phase 3: Running non-categorized apps ───────────────────────
+        // Use dock-order to persist user-defined running app positions
+        // (#2475).  Apps not yet in dock-order are appended at the end.
+        const runningCat = []; // categorized -> Phase 5
+
+        if (settings.showRunning) {
+            // Build a map of eligible running apps (non-categorized,
+            // non-favorite) keyed by app ID for quick lookup.
+            const runningById = new Map();
+            for (const app of running) {
+                const appId = app.get_id();
+                if (categorizedAppIds.has(appId))
+                    runningCat.push(app);
+                else if (!showFavorites || !(appId in favorites))
+                    runningById.set(appId, app);
+            }
+
+            // First pass: add running apps that appear in dock-order,
+            // preserving their stored sequence.
+            for (const id of dockOrder) {
+                if (runningById.has(id)) {
+                    _pushApp(runningById.get(id));
+                    runningById.delete(id);
+                }
+            }
+
+            // Second pass: append any remaining running apps not in
+            // dock-order (newly launched since last reorder).
+            for (const app of runningById.values())
+                _pushApp(app);
+        }
+
+        // ── Phase 4: Removables / Trash ───────────────────────────────
         // Location apps are placed right after favorites/categories so
         // they maintain a stable position regardless of running app
         // changes (issue #2443).
@@ -1825,15 +1872,15 @@ export const DockDash = GObject.registerClass({
             this._signalsHandler.addWithLabel(Labels.SHOW_MOUNTS,
                 dockManager.removables, 'changed', this._queueRedisplay.bind(this));
             dockManager.removables.getApps().forEach(removable => {
-                if (!newApps.includes(removable))
-                    newApps.push(removable);
+                if (!newAppsSet.has(removable))
+                    _pushApp(removable);
             });
         }
 
         if (dockManager.trash) {
             const trashApp = dockManager.trash.getApp();
-            if (!newApps.includes(trashApp))
-                newApps.push(trashApp);
+            if (!newAppsSet.has(trashApp))
+                _pushApp(trashApp);
         }
 
         // ── Phase 4b: Pinned Commands ────────────────────────────
@@ -1842,8 +1889,8 @@ export const DockDash = GObject.registerClass({
                 dockManager.pinnedCommandsManager, 'changed',
                 this._queueRedisplay.bind(this));
             dockManager.pinnedCommandsManager.getApps().forEach(cmdApp => {
-                if (!newApps.includes(cmdApp))
-                    newApps.push(cmdApp);
+                if (!newAppsSet.has(cmdApp))
+                    _pushApp(cmdApp);
             });
         }
 
@@ -1855,36 +1902,10 @@ export const DockDash = GObject.registerClass({
             oldApps = oldApps.filter(app => !app.isTrash);
         }
 
-        // ── Phase 4: Running non-categorized apps ───────────────────────
-        // Use dock-order to persist user-defined running app positions
-        // (#2475). Apps not yet in dock-order are appended at the end.
-        const runningCat = []; // categorized -> Phase 5
-
-        if (settings.showRunning) {
-            const runningById = new Map();
-            for (const app of running) {
-                const appId = app.get_id();
-                if (categorizedAppIds.has(appId))
-                    runningCat.push(app);
-                else if (!showFavorites || !(appId in favorites))
-                    runningById.set(appId, app);
-            }
-
-            for (const id of dockOrder) {
-                if (runningById.has(id)) {
-                    newApps.push(runningById.get(id));
-                    runningById.delete(id);
-                }
-            }
-
-            for (const app of runningById.values())
-                newApps.push(app);
-        }
-
         // ── Phase 5: Running categorized apps — always at the end ────
         // Transient, no influence on the position of other icons.
         for (const app of runningCat) {
-            if (!newApps.includes(app))
+            if (!newAppsSet.has(app))
                 newApps.push(app);
         }
 
@@ -1924,6 +1945,7 @@ export const DockDash = GObject.registerClass({
         // Figure out the actual changes to the list of items
         const addedItems = [];
         const removedActors = [];
+        const removedActorsSet = new Set();
         const itemMatches = (delegate, expectedItem) =>
             delegate.app === expectedItem.app &&
             (delegate.window ?? null) === (expectedItem.window ?? null);
@@ -1935,6 +1957,7 @@ export const DockDash = GObject.registerClass({
                 !expectedUsed[idx] && itemMatches(delegate, expectedItem));
             if (matchIndex < 0) {
                 removedActors.push(children[i]);
+                removedActorsSet.add(children[i]);
             } else {
                 expectedUsed[matchIndex] = true;
 
@@ -2081,10 +2104,11 @@ export const DockDash = GObject.registerClass({
         addedItems.forEach(({item}) => item.show(animate));
 
         // ── Category Icons: update sourceActor for panel positioning ──
+        const boxChildren = this._box.get_children();
         for (const ci of dockManager.categoryIcons) {
             const categoryApp = ci.getApp();
-            const categoryChild = this._box.get_children().find(actor =>
-                !removedActors.includes(actor) &&
+            const categoryChild = boxChildren.find(actor =>
+                !removedActorsSet.has(actor) &&
                 actor.child?._delegate?.app === categoryApp);
             if (categoryChild)
                 ci._sourceActor = categoryChild;
