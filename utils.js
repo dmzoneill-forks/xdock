@@ -733,7 +733,10 @@ export function laterRemove(id) {
  * @param {*} sourceColor The new color for source
  */
 export function cairoSetSourceColor(cr, sourceColor) {
-    cr.setSourceColor(sourceColor);
+    if (Clutter.cairo_set_source_color)
+        Clutter.cairo_set_source_color(cr, sourceColor);
+    else
+        cr.setSourceColor(sourceColor);
 }
 
 /**

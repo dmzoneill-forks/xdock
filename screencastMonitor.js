@@ -152,7 +152,19 @@ export class ScreencastMonitor {
     }
 
     _onMutterScreencastAppeared() {
-        this._startMutterPolling();
+        const MutterScreencastProxy = Gio.DBusProxy.makeProxyWrapper(MUTTER_SCREENCAST_IFACE);
+        this._mutterProxy = new MutterScreencastProxy(
+            Gio.DBus.session,
+            MUTTER_SCREENCAST_BUS_NAME,
+            MUTTER_SCREENCAST_OBJECT_PATH,
+            (_proxy, error) => {
+                if (error) {
+                    this._mutterProxy = null;
+                    return;
+                }
+                this._startMutterPolling();
+            }
+        );
     }
 
     _onMutterScreencastVanished() {
@@ -160,14 +172,10 @@ export class ScreencastMonitor {
             GLib.source_remove(this._pollTimeoutId);
             this._pollTimeoutId = 0;
         }
-
-        // Don't clear recording state here -- Shell.Screencast proxy
-        // is the primary source.  Mutter sessions are supplementary.
+        this._mutterProxy = null;
     }
 
     _startMutterPolling() {
-        // Poll Mutter ScreenCast sessions every 2 seconds to detect
-        // portal-based screen captures (e.g. OBS, Zoom screen share).
         if (this._pollTimeoutId)
             GLib.source_remove(this._pollTimeoutId);
 
@@ -178,31 +186,25 @@ export class ScreencastMonitor {
     }
 
     _checkMutterSessions() {
-        try {
-            const MutterScreencastProxy = Gio.DBusProxy.makeProxyWrapper(MUTTER_SCREENCAST_IFACE);
-            const proxy = new MutterScreencastProxy(
-                Gio.DBus.session,
-                MUTTER_SCREENCAST_BUS_NAME,
-                MUTTER_SCREENCAST_OBJECT_PATH
-            );
+        if (!this._mutterProxy)
+            return;
 
-            const sessions = proxy.ListSessionsSync();
-            const hasSessions = sessions && sessions[0] && sessions[0].length > 0;
+        this._mutterProxy.ListSessionsRemote(result => {
+            try {
+                const sessions = result?.[0];
+                const hasSessions = sessions && sessions.length > 0;
 
-            // If the Shell screencast proxy already reports active, don't
-            // override; only supplement when Shell says inactive.
-            if (!this._shellRecording && hasSessions)
-                this._updateRecordingState(true);
-            else if (!this._shellRecording && !hasSessions)
-                this._updateRecordingState(false);
-        } catch {
-            // D-Bus call failed -- service might not be available
-        }
+                if (!this._shellRecording && hasSessions)
+                    this._updateRecordingState(true);
+                else if (!this._shellRecording && !hasSessions)
+                    this._updateRecordingState(false);
+            } catch {
+                // D-Bus result parsing failed
+            }
+        });
     }
 
     _updateRecordingState(recording) {
-        // Track shell-level recording separately so mutter polling
-        // doesn't incorrectly clear it.
         if (this._shellProxy) {
             try {
                 this._shellRecording = this._shellProxy.Screencast ?? false;
