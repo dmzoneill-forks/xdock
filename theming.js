@@ -312,6 +312,7 @@ export class ThemeManager {
     }
 
     updateCustomTheme() {
+        print(`XDOCK-SIZE [${(GLib.get_monotonic_time() / 1e6).toFixed(1)}s] updateCustomTheme called`);
         if (this._destroyed)
             throw new Error(`Impossible to update a destroyed ${this.constructor.name}`);
         this._updateCustomStyleClasses();

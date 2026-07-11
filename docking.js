@@ -410,6 +410,26 @@ const DockedDash = GObject.registerClass({
         if (this.dash._magnificationEnabled)
             this._onMagnificationChanged(this.dash, true);
 
+        // === SIZE CHANGE INSTRUMENTATION ===
+        const logSize = (label, actor) => {
+            const now = GLib.get_monotonic_time() / 1e6;
+            print(`XDOCK-SIZE [${now.toFixed(1)}s] ${label}: ${actor.width}x${actor.height} ` +
+                  `ty=${actor.translation_y.toFixed(0)} offscreen=${actor.offscreen_redirect} ` +
+                  `ctv=${actor.clip_to_view ?? '-'} cta=${actor.clip_to_allocation}`);
+        };
+        this._signalsHandler.add(
+            [this, 'notify::height', () => logSize('DockedDash', this)],
+            [this, 'notify::width', () => logSize('DockedDash', this)],
+            [this._box, 'notify::height', () => logSize('dashtodockBox', this._box)],
+            [this._box, 'notify::width', () => logSize('dashtodockBox', this._box)],
+            [this.dash, 'notify::height', () => logSize('DockDash', this.dash)],
+            [this.dash, 'notify::width', () => logSize('DockDash', this.dash)],
+        );
+        logSize('INIT-DockedDash', this);
+        logSize('INIT-dashtodockBox', this._box);
+        logSize('INIT-DockDash', this.dash);
+        // === END INSTRUMENTATION ===
+
         if (!Main.overview.isDummy) {
             this._signalsHandler.add([
                 Main.overview,
@@ -456,8 +476,15 @@ const DockedDash = GObject.registerClass({
         }
 
         this._themeManager = new Theming.ThemeManager(this);
+        this._themeInitialUpdate = true;
         this._signalsHandler.add(this._themeManager, 'updated',
-            () => this.dash.resetAppIconsDebounced());
+            () => {
+                if (this._themeInitialUpdate) {
+                    this._themeInitialUpdate = false;
+                    return;
+                }
+                this.dash.resetAppIconsDebounced();
+            });
 
         this._signalsHandler.add(DockManager.iconTheme, 'changed',
             () => this.dash.resetAppIconsDebounced());
@@ -1085,8 +1112,16 @@ const DockedDash = GObject.registerClass({
             this.remove_clip();
             this._box.clip_to_view = false;
             this._magClipViewId = this._box.connect('notify::allocation', () => {
-                if (this._box.clip_to_view)
-                    this._box.clip_to_view = false;
+                if (!this._box.clip_to_view)
+                    return;
+                if (this._magClipIdleId)
+                    return;
+                this._magClipIdleId = GLib.idle_add(GLib.PRIORITY_DEFAULT, () => {
+                    this._magClipIdleId = 0;
+                    if (this._box.clip_to_view)
+                        this._box.clip_to_view = false;
+                    return GLib.SOURCE_REMOVE;
+                });
             });
             this._slider.magnificationOverflow = overflow;
         } else {
@@ -1096,6 +1131,10 @@ const DockedDash = GObject.registerClass({
             if (this._magClipViewId) {
                 this._box.disconnect(this._magClipViewId);
                 this._magClipViewId = 0;
+            }
+            if (this._magClipIdleId) {
+                GLib.source_remove(this._magClipIdleId);
+                this._magClipIdleId = 0;
             }
             this._box.clip_to_view = true;
             this._slider.magnificationOverflow = 0;
@@ -1571,6 +1610,8 @@ const DockedDash = GObject.registerClass({
     }
 
     _resetPosition() {
+        print(`XDOCK-SIZE [${(GLib.get_monotonic_time() / 1e6).toFixed(1)}s] _resetPosition called ` +
+              `${this.width}x${this.height} ty=${this.translation_y.toFixed(0)}`);
         // Ensure variables linked to settings are updated.
         this._updateVisibilityMode();
 
