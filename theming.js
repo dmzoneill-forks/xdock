@@ -317,9 +317,10 @@ export class ThemeManager {
     }
 
     updateCustomTheme() {
+        if (this._destroyed)
+            throw new Error(`Impossible to update a destroyed ${this.constructor.name}`);
         if (!this._actor.mapped)
             return;
-
         this._updateCustomStyleClasses();
         this._updateDashOpacity();
         this._updateDashColor();
