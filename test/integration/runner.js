@@ -34,7 +34,7 @@ function _getXDockSettings() {
 import Shell from 'gi://Shell';
 import Clutter from 'gi://Clutter';
 
-function takeScreenshot(name) {
+function takeScreenshot(name, label) {
     const path = `/tmp/xdock-test-${name}.png`;
     try {
         const file = Gio.File.new_for_path(path);
@@ -55,10 +55,24 @@ function takeScreenshot(name) {
         const ctx = GLib.MainContext.default();
         while (!done && GLib.get_monotonic_time() < end)
             ctx.iteration(false);
-        if (done && GLib.file_test(path, GLib.FileTest.EXISTS))
+        if (done && GLib.file_test(path, GLib.FileTest.EXISTS)) {
+            // Overlay the test name as embossed text centered on the screenshot
+            try {
+                label = (label || name).replace(/['"\\]/g, '');
+                GLib.spawn_command_line_sync(
+                    `convert "${path}" ` +
+                    `\\( -size 1920x1080 xc:none ` +
+                    `-font Helvetica-Bold -pointsize 36 -gravity Center ` +
+                    `-fill "rgba(0,0,0,0.4)" -annotate +2+2 "${label}" ` +
+                    `-fill "rgba(255,255,255,0.6)" -annotate +0+0 "${label}" ` +
+                    `\\) -composite "${path}"`);
+            } catch (_e) {
+                // ImageMagick not available — skip overlay
+            }
             log(`  screenshot: ${path}`);
-        else
+        } else {
             log(`  screenshot: failed`);
+        }
         return done ? path : null;
     } catch (e) {
         log(`  screenshot: skipped (${e.message})`);
@@ -144,9 +158,9 @@ async function runAllTests(testDir, testFiles) {
 
             // Auto-screenshot every test when enabled.
             if (GLib.getenv('XDOCK_TEST_SCREENSHOTS') === '1') {
-                const slug = `${file.replace('.test.js', '')}_${testIdx}`
+                const slug = `${file.replace('.test.js', '')}_${String(testIdx).padStart(2, '0')}`
                     .replace(/[^a-zA-Z0-9_-]/g, '_');
-                takeScreenshot(slug);
+                takeScreenshot(slug, test.name);
             }
             testIdx++;
         }
