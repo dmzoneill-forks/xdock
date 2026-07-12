@@ -440,7 +440,7 @@ const DockSettings = GObject.registerClass({
                 continue;
 
             const label = new Gtk.Label({
-                label: 'Position on ' + monitor.displayName + ' - ' + monitor.connector,
+                label: `Position on ${monitor.displayName} - ${monitor.connector}`,
                 halign: Gtk.Align.START,
                 hexpand: true,
                 xalign: 0,
@@ -453,7 +453,7 @@ const DockSettings = GObject.registerClass({
             if (!combo.set_active_id(stored[monitor.connector] ?? ''))
                 combo.set_active_id('');
 
-            const connector = monitor.connector;
+            const {connector} = monitor;
             combo.connect('changed', () => {
                 const positions = this._settings
                     .get_value('monitor-positions').deep_unpack();

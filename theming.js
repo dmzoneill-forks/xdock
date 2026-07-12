@@ -332,7 +332,7 @@ export class ThemeManager {
         this.emit('updated');
     }
 
-    _buildShelfStyle(position) {
+    _buildShelfStyle(_position) {
         const {settings} = Docking.DockManager;
         if (settings.dockStyle !== DockStyle.SHELF)
             return '';
@@ -543,12 +543,16 @@ export class ThemeManager {
             'shelf-height',
             'shelf-corner-radius-top',
             'shelf-corner-radius-bottom',
-            'shelf-reflection-opacity'];
+            'shelf-reflection-opacity',
+        ];
 
         this._signalsHandler.addWithLabel(Labels.THEME_CHANGED, ...styleOnlyKeys.map(key => [
             Docking.DockManager.settings,
             `changed::${key}`,
-            () => { this._adjustTheme(); this._updateShelfOverlay(); },
+            () => {
+                this._adjustTheme();
+                this._updateShelfOverlay();
+            },
         ]));
 
         // Toggling wallpaper-adaptive-color needs to create/destroy the extractor

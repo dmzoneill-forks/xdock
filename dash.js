@@ -1426,7 +1426,6 @@ export const DockDash = GObject.registerClass({
 
     _toggleMagnification() {
         const {settings} = Docking.DockManager;
-        print(`XDOCK-SIZE [${(GLib.get_monotonic_time() / 1e6).toFixed(1)}s] _toggleMagnification mag=${settings.iconMagnification}`);
         if (settings.iconMagnification)
             this._enableMagnification();
         else
@@ -1434,8 +1433,6 @@ export const DockDash = GObject.registerClass({
     }
 
     _enableMagnification() {
-        print(`XDOCK-SIZE [${(GLib.get_monotonic_time() / 1e6).toFixed(1)}s] _enableMagnification called, ` +
-              `dash=${this.width}x${this.height} offscreen=${this.offscreen_redirect}`);
         if (!this._magnificationEnabled) {
             this._magnificationEnabled = true;
             this._dashContainer.reactive = true;
@@ -1696,7 +1693,6 @@ export const DockDash = GObject.registerClass({
                 else
                     data.child.translation_y = offset;
             }
-
         }
 
         // Magnify utility elements (workspace minimap, show-apps, quick settings)
@@ -1784,7 +1780,6 @@ export const DockDash = GObject.registerClass({
     }
 
     _adjustIconSize() {
-        const _t = (GLib.get_monotonic_time() / 1e6).toFixed(1);
         // For the icon size, we only consider children which are "proper"
         // icons (i.e. ignoring drag placeholders) and which are not
         // animating out (which means they will be destroyed at the end of
@@ -1864,7 +1859,7 @@ export const DockDash = GObject.registerClass({
             }
         }
 
-        let maxIconSize = availSpace / iconChildren.length;
+        const maxIconSize = availSpace / iconChildren.length;
         // NOTE: global scaleFactor; per-monitor scale not yet used here.
         const {scaleFactor} = St.ThemeContext.get_for_stage(global.stage);
         const iconSizes = this._availableIconSizes.map(s => s * scaleFactor);
@@ -1880,9 +1875,9 @@ export const DockDash = GObject.registerClass({
         // changes available space, potentially flipping back. Verify
         // the new size is stable by recalculating with its padding.
         if (newIconSize !== this.iconSize) {
-            const padDiff = (this._isHorizontal
+            const padDiff = this._isHorizontal
                 ? buttonWidth - iconWidth
-                : buttonHeight - iconHeight);
+                : buttonHeight - iconHeight;
             const scaledPadDiff = padDiff * (newIconSize / this.iconSize);
             const adjustedAvail = availSpace +
                 iconChildren.length * (padDiff - scaledPadDiff);
@@ -1987,7 +1982,6 @@ export const DockDash = GObject.registerClass({
     }
 
     _redisplay() {
-        print(`XDOCK-SIZE [${(GLib.get_monotonic_time() / 1e6).toFixed(1)}s] _redisplay called`);
         const dockManager = Docking.DockManager.getDefault();
         if (!dockManager)
             return;
@@ -2614,7 +2608,6 @@ export const DockDash = GObject.registerClass({
      * show favorites/show running settings
      */
     resetAppIcons() {
-        print(`XDOCK-SIZE [${(GLib.get_monotonic_time() / 1e6).toFixed(1)}s] resetAppIcons called`);
         if (this._dragInProgress) {
             this._resetIconsQueuedDuringDrag = true;
             return;
@@ -2687,8 +2680,6 @@ export const DockDash = GObject.registerClass({
             this._maxHeight === maxHeight)
             return;
 
-        print(`XDOCK-SIZE [${(GLib.get_monotonic_time() / 1e6).toFixed(1)}s] setMaxSize ${this._maxWidth}x${this._maxHeight} → ${maxWidth}x${maxHeight}`);
-        print(new Error().stack.split('\n').slice(1, 5).join('\n'));
         this._maxWidth = maxWidth;
         this._maxHeight = maxHeight;
         this._queueRedisplay();
