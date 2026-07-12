@@ -10,24 +10,39 @@ BASE_MODULES = extension.js \
 EXTRA_MODULES = \
                 appSpread.js \
                 bounceAnimation.js \
+                commandPalette.js \
                 dash.js \
+                dbusmenuUtils.js \
+                desktopIconsIntegration.js \
+                dockProfiles.js \
                 docking.js \
+                dockTiling.js \
                 appIcons.js \
-				appIconsDecorator.js \
+                appIconsDecorator.js \
                 appIconIndicators.js \
                 fileManager1API.js \
                 imports.js \
+                intellihide.js \
                 launcherAPI.js \
+                liveThumbnails.js \
                 locations.js \
                 locationsWorker.js \
+                mediaControls.js \
+                mprisMonitor.js \
                 notificationsMonitor.js \
-                windowPreview.js \
-                intellihide.js \
+                pinnedCommands.js \
                 prefs.js \
+                quickSettings.js \
+                recentFilesMenu.js \
+                screencastMonitor.js \
+                springAnimation.js \
                 theming.js \
                 utils.js \
-                dbusmenuUtils.js \
-                desktopIconsIntegration.js \
+                volumeControl.js \
+                volumeMenuItem.js \
+                wallpaperColorExtractor.js \
+                windowPreview.js \
+                workspaceMinimap.js \
                 Settings.ui \
                 $(NULL)
 
@@ -165,7 +180,7 @@ endif
 check:
 	$(ESLINT) $(ESLINT_ARGS) .
 
-.PHONY: test smoke-test smoke-test-pod dev dev-no-ext
+.PHONY: test smoke-test smoke-test-pod integration-test zip-file-nocheck dev dev-no-ext
 
 # ── Testing ──────────────────────────────────────────────────────────
 
@@ -175,10 +190,27 @@ test:
 
 # Smoke test (local): load extension in devkit session
 # Requires: sudo dnf install mutter-devkit
-smoke-test: ./schemas/gschemas.compiled
+smoke-test: zip-file-nocheck
 	@command -v gnome-shell-test-tool >/dev/null 2>&1 || \
 		{ echo "gnome-shell-test-tool not found — install mutter-devkit"; exit 1; }
-	gnome-shell-test-tool --headless --extension $(CURDIR) test/smoke/load-extension.js
+	dbus-run-session -- gnome-shell-test-tool --headless \
+		--extension $(UUID).zip test/smoke/load-extension.js
+
+# Integration tests (local): run full test suite in headless session
+integration-test: zip-file-nocheck
+	@command -v gnome-shell-test-tool >/dev/null 2>&1 || \
+		{ echo "gnome-shell-test-tool not found — install mutter-devkit"; exit 1; }
+	dbus-run-session -- gnome-shell-test-tool --headless \
+		--extension $(UUID).zip test/integration/runner.js
+
+# Build zip without running lint (for testing)
+zip-file-nocheck: _build
+	mkdir -p _build/test/integration _build/test/smoke
+	cp test/integration/*.js _build/test/integration/ 2>/dev/null || true
+	cp test/smoke/*.js _build/test/smoke/ 2>/dev/null || true
+	cd _build && zip -qr "../$(UUID).zip" .
+	-rm -fR _build
+	rm -f /run/user/$$(id -u)/gnome-shell-disable-extensions
 
 # Smoke test (container): load extension in gnome-shell-pod
 # Requires: podman

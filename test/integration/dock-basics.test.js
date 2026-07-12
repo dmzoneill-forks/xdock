@@ -4,7 +4,7 @@
 // Integration tests: basic dock functionality.
 // Each test is a placeholder (assert(true, 'TODO')) to be filled in later.
 
-const {assert} = imports.helpers.XDockTestHelpers;
+function assert(cond, msg) { if (!cond) throw new Error(msg); }
 
 function getTests() {
     return [
@@ -114,4 +114,4 @@ function getTests() {
 }
 
 /* exported XDockTests, getTests */
-var XDockTests = getTests();
+exports.getTests = getTests;
