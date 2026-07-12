@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="shelf" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#667" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#223" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2d3436"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="url(#bg)" stroke="#444" stroke-width="1.5"/>
+  <!-- Shelf trapezoid -->
+  <path d="M24 88 L34 72 L94 72 L104 88 Z" fill="url(#shelf)" rx="4" filter="url(#shadow)"/>
+  <!-- Highlight line on shelf -->
+  <line x1="36" y1="72.5" x2="92" y2="72.5" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+  <!-- App icons on shelf -->
+  <rect x="35" y="52" width="16" height="16" rx="4" fill="#e17055" filter="url(#shadow)"/>
+  <rect x="56" y="46" width="16" height="22" rx="4" fill="#74b9ff" filter="url(#shadow)"/>
+  <rect x="77" y="52" width="16" height="16" rx="4" fill="#55efc4" filter="url(#shadow)"/>
+  <!-- Magnification effect on center icon -->
+  <rect x="53" y="43" width="22" height="28" rx="5" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="3,2"/>
+  <!-- X label -->
+  <text x="64" y="104" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="14" fill="#dfe6e9">XDock</text>
+</svg>
