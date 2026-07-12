@@ -174,7 +174,7 @@ export const DockDash = GObject.registerClass({
         this._separatorLocations = null;
 
         this._monitorIndex = monitorIndex;
-        this._position = isSecondary ? Utils.getSecondaryPosition() : Utils.getPosition();
+        this._position = isSecondary ? Utils.getSecondaryPosition() : Utils.getPosition(this._monitorIndex);
         this._isHorizontal = (this._position === St.Side.TOP) ||
                                (this._position === St.Side.BOTTOM);
 
@@ -269,7 +269,7 @@ export const DockDash = GObject.registerClass({
         import('./quickSettings.js').then(QS => {
             QuickSettings = QS;
             this._quickSettingsButton = new QuickSettings.QuickSettingsButton();
-            this._quickSettingsButton._panel?.setDockPosition(Utils.getPosition());
+            this._quickSettingsButton._panel?.setDockPosition(Utils.getPosition(this._monitorIndex));
             this._quickSettingsButton.visible = Docking.DockManager.settings.showQuickSettings;
             this._updateQuickSettingsButton();
         }).catch(e => logError(e, 'XDock: Failed to load QuickSettings'));

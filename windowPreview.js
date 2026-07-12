@@ -88,7 +88,7 @@ const ACTIVE_WINDOW_PREVIEW_CLASS = 'active-window-preview';
 
 export class WindowPreviewMenu extends PopupMenu.PopupMenu {
     constructor(source) {
-        super(source, 0.5, Utils.getPosition());
+        super(source, 0.5, Utils.getPosition(source.monitorIndex));
 
         // For click-opened menus, block source events
         // For hover-opened menus, keep source reactive so user can move between icons
@@ -678,7 +678,8 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
 
         this.actor.connect('scroll-event', this._onScrollEvent.bind(this));
 
-        const position = Utils.getPosition();
+        this._position = Utils.getPosition(source.monitorIndex);
+        const position = this._position;
         this.isHorizontal = position === St.Side.BOTTOM || position === St.Side.TOP;
         // Remove this when can use GNOME 48
         this.box.set_vertical?.(!this.isHorizontal);
@@ -784,7 +785,7 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
     }
 
     _createPreviewItem(window) {
-        const preview = new WindowPreviewMenuItem(window, Utils.getPosition());
+        const preview = new WindowPreviewMenuItem(window, this._position);
 
         // Connect activate signal to focus the window when clicked
         preview.connect('activate', () => {
