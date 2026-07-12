@@ -1,0 +1,105 @@
+    <child>
+      <object class="GtkNotebookPage">
+        <property name="position">6</property>
+        <property name="child">
+          <object class="GtkBox" id="about">
+            <property name="visible">0</property>
+            <property name="can_focus">0</property>
+            <property name="margin_top">24</property>
+            <property name="margin_bottom">24</property>
+            <property name="hexpand">1</property>
+            <property name="vexpand">1</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">5</property>
+            <child>
+              <object class="GtkImage" id="logo">
+                <property name="can_focus">0</property>
+                <property name="file">./media/logo.svg</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="extension_name">
+                <property name="can_focus">0</property>
+                <property name="label">&lt;b&gt;XDock&lt;/b&gt;</property>
+                <property name="use_markup">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="box1">
+                <property name="can_focus">0</property>
+                <property name="halign">center</property>
+                <child>
+                  <object class="GtkLabel" id="extension_version_label">
+                    <property name="can_focus">0</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">version: </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="extension_version">
+                    <property name="can_focus">0</property>
+                    <property name="halign">start</property>
+                    <property name="label">...</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="extension_description">
+                <property name="can_focus">0</property>
+                <property name="label" translatable="yes">A community-driven dock for the GNOME Shell</property>
+                <property name="justify">center</property>
+                <property name="wrap">1</property>
+                <property name="xalign">0</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="box10">
+                <property name="can_focus">0</property>
+                <property name="halign">center</property>
+                <property name="spacing">5</property>
+                <child>
+                  <object class="GtkLabel" id="label15">
+                    <property name="can_focus">0</property>
+                    <property name="label" translatable="yes">Originally created by</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label16">
+                    <property name="label">Forked from Dash to Dock by Michele (&lt;a href=&quot;mailto:micxgx@gmail.com&quot;&gt;micxgx@gmail.com&lt;/a&gt;)</property>
+                    <property name="use_markup">1</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLinkButton" id="homepage_link">
+                <property name="label" translatable="yes">Webpage</property>
+                <property name="receives_default">1</property>
+                <property name="halign">center</property>
+
+                <property name="uri">https://github.com/daoneill/xdock</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label1">
+                <property name="vexpand">1</property>
+                <property name="valign">end</property>
+                <property name="label" translatable="yes">&lt;span size=&quot;small&quot;&gt;This program comes with ABSOLUTELY NO WARRANTY.
+See the &lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&quot;&gt;GNU General Public License, version 2 or later&lt;/a&gt; for details.&lt;/span&gt;</property>
+                <property name="use_markup">1</property>
+                <property name="justify">center</property>
+                <property name="wrap">1</property>
+                <property name="xalign">0</property>
+              </object>
+            </child>
+          </object>
+        </property>
+        <property name="tab">
+          <object class="GtkLabel" id="about_label">
+            <property name="can_focus">0</property>
+            <property name="label" translatable="yes">About</property>
+          </object>
+        </property>
+      </object>
+    </child>

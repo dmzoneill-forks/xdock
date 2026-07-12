@@ -77,7 +77,7 @@ endif
 all: extension
 
 # Development: symlink + nested test session
-dev: ./schemas/gschemas.compiled
+dev: ./schemas/gschemas.compiled Settings.ui
 	@ln -sfn $(CURDIR) $(HOME)/.local/share/gnome-shell/extensions/$(UUID)
 	@echo "Symlinked $(UUID) → $(CURDIR)"
 	@rm -f /run/user/$$(id -u)/gnome-shell-disable-extensions
@@ -94,10 +94,14 @@ dev-no-ext: ./schemas/gschemas.compiled
 
 clean:
 	rm -f ./schemas/gschemas.compiled
-	rm -f stylesheet.css
+	rm -f stylesheet.css Settings.ui
 	rm -rf _build
 
-extension: ./schemas/gschemas.compiled ./stylesheet.css $(MSGSRC:.po=.mo)
+# Generate Settings.ui from ui/ parts
+Settings.ui: ui/Settings.ui.in ui/adjustments.xml ui/dialogs.xml $(wildcard ui/tab-*.xml)
+	bash ui/build-settings-ui.sh > Settings.ui
+
+extension: ./schemas/gschemas.compiled ./stylesheet.css Settings.ui $(MSGSRC:.po=.mo)
 
 ./schemas/gschemas.compiled: ./schemas/org.gnome.shell.extensions.xdock.gschema.xml
 	glib-compile-schemas ./schemas/
