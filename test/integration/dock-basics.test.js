@@ -29,11 +29,11 @@ function getTests() {
      */
     function findDash(dock) {
         if (!dock) return null;
-        const box = dock.child; // dashtodockBox
-        if (!box) return null;
-        const slider = box.get_children()[0]; // DashSlideContainer
+        const slider = dock.get_children()[0];
         if (!slider) return null;
-        return slider.child; // DockDash (name='dash')
+        const box = slider.get_children().find(c => c.name === 'dashtodockBox');
+        if (!box) return null;
+        return box.get_children().find(c => c.name === 'dash') || null;
     }
 
     /**
