@@ -1,13 +1,11 @@
-// Smoke test automation script for gnome-shell-test-tool --headless --extension
-// Verifies the extension loads and enables without crash.
-// Usage: gnome-shell-test-tool --headless --extension /path/to/xdock test/smoke/load-extension.js
+// Smoke test: verify xdock loads and enables without crash.
+// Run: make smoke-test
 
-print('[XDOCK-SMOKE] Smoke test starting');
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
-const {Shell} = imports.gi;
-const Main = imports.ui.main;
+export function run(_argv) {
+    print('[XDOCK-SMOKE] Smoke test starting');
 
-function run() {
     const uuid = 'xdock@github.com';
     const manager = Main.extensionManager;
 
@@ -22,11 +20,8 @@ function run() {
         return;
     }
 
-    if (ext.state === 1) {
+    if (ext.state === 1)
         print('[XDOCK-SMOKE] PASS: Extension loaded and enabled');
-    } else {
+    else
         print(`[XDOCK-SMOKE] FAIL: Extension state is ${ext.state}, expected ENABLED (1)`);
-    }
 }
-
-run();

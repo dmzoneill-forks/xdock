@@ -1,12 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-// SPDX-FileCopyrightText: Contributors to XDock
-//
-// Integration tests for the shelf dock style.
-// Runs INSIDE gnome-shell via gnome-shell-test-tool.
-
-const {assert, assertEqual, assertVisible, assertHidden,
-    getDock, getDash, getDockManager, getSettings,
-    setSetting, resetSetting, waitMs} = XDockTestHelpers;
+function assert(cond, msg) { if (!cond) throw new Error(msg); }
 
 function getTests() {
     return [
@@ -134,4 +127,4 @@ function getTests() {
 }
 
 /* exported XDockTests */
-var XDockTests = getTests();  // eslint-disable-line no-unused-vars
+exports.getTests = getTests;  // eslint-disable-line no-unused-vars

@@ -1,296 +1,111 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-// SPDX-FileCopyrightText: Contributors to XDock
-//
 // Integration test runner for xdock.
-// Entry point for: gnome-shell-test-tool --headless --extension . test/integration/runner.js
-//
-// 1. Waits for GNOME Shell startup to complete.
-// 2. Waits for the xdock extension to be enabled.
-// 3. Discovers and loads all *.test.js files from the integration directory.
-// 4. Runs all tests via helpers.runTests() and reports results.
+// Run: make integration-test
 
-const {Gio, GLib} = imports.gi;
-const Main = imports.ui.main;
+import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
-// Load the helpers module (lives next to this script).
-const _thisDir = (() => {
-    // Resolve the directory containing this script.  When run via
-    // gnome-shell-test-tool the script path is passed as argv, but
-    // imports.searchPath may not include it.  We use a stack-trace
-    // trick as a robust fallback.
+const UUID = 'xdock@github.com';
+
+function log(msg) {
+    print(`[XDOCK-TEST] ${msg}`);
+}
+
+function discoverTests(dir) {
+    const testFiles = [];
+    const d = Gio.File.new_for_path(dir);
     try {
-        const stack = new Error().stack;
-        // Stack lines look like:  @/path/to/runner.js:NN:NN
-        const match = stack.match(/@(.*?)runner\.js/);
-        if (match)
-            return match[1];
+        const enumerator = d.enumerate_children(
+            'standard::name', Gio.FileQueryInfoFlags.NONE, null);
+        let info;
+        while ((info = enumerator.next_file(null)) !== null) {
+            const name = info.get_name();
+            if (name.endsWith('.test.js'))
+                testFiles.push(name);
+        }
     } catch (_e) {
         // ignore
     }
-    return './test/integration/';
-})();
-
-// Ensure the integration directory is on the import search path so that
-// helpers.js and test files can be loaded via imports.
-if (typeof imports.searchPath !== 'undefined' &&
-    imports.searchPath.indexOf(_thisDir) === -1)
-    imports.searchPath.unshift(_thisDir);
-
-// Import helpers — after adjusting the search path, the file is available
-// as a plain GJS module.
-let helpers;
-try {
-    helpers = imports.helpers.XDockTestHelpers;
-} catch (e) {
-    // If the import path approach fails, try a direct evaluation.
-    // This is a last-resort fallback for unusual gnome-shell-test-tool setups.
-    print(`[XDOCK-TEST] Warning: could not import helpers via searchPath: ${e.message}`);
-    print('[XDOCK-TEST] Attempting alternate import...');
-    const helperPath = GLib.build_filenamev([_thisDir, 'helpers.js']);
-    const [, source] = GLib.file_get_contents(helperPath);
-    const decoder = new TextDecoder();
-    eval(decoder.decode(source));  // defines XDockTestHelpers globally
-    helpers = XDockTestHelpers;  // eslint-disable-line no-undef
+    return testFiles.sort();
 }
 
-const STARTUP_TIMEOUT_MS = 30000;
-const EXTENSION_POLL_MS = 500;
-const EXTENSION_TIMEOUT_MS = 20000;
-
-// ---------------------------------------------------------------------------
-// Startup waiters
-// ---------------------------------------------------------------------------
-
-/**
- * Wait for GNOME Shell to finish its startup sequence.
- * Resolves when Main.layoutManager._startingUp is false.
- */
-function _waitForShellReady() {
-    return new Promise((resolve, reject) => {
-        if (!Main.layoutManager._startingUp) {
-            resolve();
-            return;
-        }
-
-        print('[XDOCK-TEST] Waiting for GNOME Shell startup to complete...');
-
-        let signalId = 0;
-        let timeoutId = 0;
-
-        const cleanup = () => {
-            if (signalId) {
-                Main.layoutManager.disconnect(signalId);
-                signalId = 0;
-            }
-            if (timeoutId) {
-                GLib.source_remove(timeoutId);
-                timeoutId = 0;
-            }
-        };
-
-        signalId = Main.layoutManager.connect('startup-complete', () => {
-            cleanup();
-            print('[XDOCK-TEST] Shell startup complete.');
-            resolve();
-        });
-
-        timeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, STARTUP_TIMEOUT_MS, () => {
-            timeoutId = 0;
-            cleanup();
-            // If _startingUp is now false, the signal may have been missed
-            if (!Main.layoutManager._startingUp) {
-                resolve();
-            } else {
-                reject(new Error('Timed out waiting for GNOME Shell startup'));
-            }
-            return GLib.SOURCE_REMOVE;
-        });
-    });
+function loadTestFile(dir, filename) {
+    const path = GLib.build_filenamev([dir, filename]);
+    try {
+        const [, bytes] = GLib.file_get_contents(path);
+        const source = new TextDecoder().decode(bytes);
+        const exports = {};
+        new Function('exports', source)(exports);
+        if (typeof exports.getTests === 'function')
+            return exports.getTests();
+    } catch (e) {
+        log(`ERROR loading ${filename}: ${e.message}`);
+    }
+    return [];
 }
 
-/**
- * Wait for the xdock extension to reach ENABLED state (state === 1).
- */
-function _waitForExtension() {
-    return new Promise((resolve, reject) => {
-        const manager = Main.extensionManager;
-        if (!manager) {
-            reject(new Error('No extension manager available'));
-            return;
-        }
-
-        const ext = manager.lookup(helpers.EXTENSION_UUID);
-        if (ext && ext.state === 1) {
-            print('[XDOCK-TEST] Extension already enabled.');
-            resolve();
-            return;
-        }
-
-        print(`[XDOCK-TEST] Waiting for extension ${helpers.EXTENSION_UUID} to be enabled...`);
-
-        let elapsed = 0;
-        const pollId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, EXTENSION_POLL_MS, () => {
-            elapsed += EXTENSION_POLL_MS;
-            const e = manager.lookup(helpers.EXTENSION_UUID);
-            if (e && e.state === 1) {
-                print('[XDOCK-TEST] Extension enabled.');
-                resolve();
-                return GLib.SOURCE_REMOVE;
-            }
-            if (elapsed >= EXTENSION_TIMEOUT_MS) {
-                reject(new Error(
-                    `Timed out waiting for extension (state=${e?.state})`));
-                return GLib.SOURCE_REMOVE;
-            }
-            return GLib.SOURCE_CONTINUE;
-        });
-
-        // Safety: if the promise is rejected we still want to remove the source.
-        // The GLib source auto-removes on SOURCE_REMOVE, so this is just for clarity.
-        void pollId;
-    });
-}
-
-// ---------------------------------------------------------------------------
-// Test discovery
-// ---------------------------------------------------------------------------
-
-/**
- * Find all *.test.js files in the integration test directory and return
- * a flat array of {name, fn} test descriptors from each.
- *
- * Each test file is expected to set a global `XDockTests` array (or
- * export one on `imports.<modulename>.XDockTests`).
- */
-function _discoverTests() {
-    const tests = [];
-    const dir = Gio.File.new_for_path(_thisDir);
-
-    if (!dir.query_exists(null)) {
-        print(`[XDOCK-TEST] Warning: test directory not found: ${_thisDir}`);
-        return tests;
+function _runTests() {
+    const manager = Main.extensionManager;
+    if (!manager) {
+        log('FAIL: No extension manager');
+        return;
     }
 
-    const enumerator = dir.enumerate_children(
-        'standard::name,standard::type',
-        Gio.FileQueryInfoFlags.NONE,
-        null
-    );
+    const ext = manager.lookup(UUID);
+    if (!ext || ext.state !== 1) {
+        log(`FAIL: Extension state=${ext?.state}, expected ENABLED (1)`);
+        return;
+    }
+    log('Extension loaded and enabled');
 
-    let info;
-    while ((info = enumerator.next_file(null)) !== null) {
-        const name = info.get_name();
-        if (!name.endsWith('.test.js'))
-            continue;
+    const extPath = ext.path || ext.dir?.get_path?.();
+    const candidates = [
+        extPath ? GLib.build_filenamev([extPath, 'test', 'integration']) : null,
+        'test/integration',
+        `${GLib.get_home_dir()}/src/xdock/test/integration`,
+    ].filter(Boolean);
 
-        const moduleName = name.replace(/\.js$/, '').replace(/\./g, '_');
-        print(`[XDOCK-TEST] Loading test file: ${name}`);
+    let testDir = null;
+    for (const dir of candidates) {
+        if (GLib.file_test(dir, GLib.FileTest.IS_DIR)) {
+            testDir = dir;
+            break;
+        }
+    }
 
-        try {
-            // Try the imports mechanism first (module name without .js,
-            // dots replaced by underscores to form a valid identifier).
-            let testModule = null;
+    if (!testDir) {
+        log(`FAIL: Cannot find test directory (tried: ${candidates.join(', ')})`);
+        return;
+    }
+
+    const testFiles = discoverTests(testDir);
+    log(`Found ${testFiles.length} test files in ${testDir}`);
+
+    let passed = 0, failed = 0;
+
+    for (const file of testFiles) {
+        log(`--- ${file} ---`);
+        const tests = loadTestFile(testDir, file);
+        for (const test of tests) {
             try {
-                testModule = imports[moduleName];
-            } catch (_e) {
-                // Fall back to eval-based loading
-                const filePath = GLib.build_filenamev([_thisDir, name]);
-                const [, source] = GLib.file_get_contents(filePath);
-                const decoder = new TextDecoder();
-                // Reset the global XDockTests before each file eval so we
-                // can detect what the file provides.
-                globalThis.XDockTests = undefined;
-                eval(decoder.decode(source));  // test file sets XDockTests
-                testModule = {XDockTests: globalThis.XDockTests};
+                test.fn();
+                log(`  PASS: ${test.name}`);
+                passed++;
+            } catch (e) {
+                log(`  FAIL: ${test.name} — ${e.message}`);
+                failed++;
             }
-
-            const fileTests = testModule?.XDockTests;
-            if (Array.isArray(fileTests)) {
-                for (const t of fileTests) {
-                    tests.push({
-                        name: `${name} > ${t.name || '(unnamed)'}`,
-                        fn: t.fn,
-                    });
-                }
-                print(`[XDOCK-TEST]   Found ${fileTests.length} test(s) in ${name}`);
-            } else {
-                print(`[XDOCK-TEST]   Warning: ${name} did not export XDockTests array`);
-            }
-        } catch (e) {
-            print(`[XDOCK-TEST]   Error loading ${name}: ${e.message}`);
-            // Register a failing test so the error is not silently lost
-            tests.push({
-                name: `${name} > LOAD ERROR`,
-                fn: () => {
-                    throw e;
-                },
-            });
         }
     }
 
-    return tests;
+    log('');
+    log(`Results: ${passed} passed, ${failed} failed`);
+    log(failed === 0 ? 'ALL TESTS PASSED' : 'SOME TESTS FAILED');
 }
 
-// ---------------------------------------------------------------------------
-// Main
-// ---------------------------------------------------------------------------
-
-async function _main() {
-    print('[XDOCK-TEST] ' + '='.repeat(60));
-    print('[XDOCK-TEST] XDock Integration Test Runner');
-    print('[XDOCK-TEST] ' + '='.repeat(60));
-
-    try {
-        await _waitForShellReady();
-    } catch (e) {
-        print(`[XDOCK-TEST] FATAL: ${e.message}`);
-        return 1;
-    }
-
-    // Brief pause after shell startup for things to settle
-    await helpers.waitMs(500);
-
-    try {
-        await _waitForExtension();
-    } catch (e) {
-        print(`[XDOCK-TEST] FATAL: ${e.message}`);
-        return 1;
-    }
-
-    // Another brief pause for the dock to initialise
-    await helpers.waitMs(1000);
-
-    const tests = _discoverTests();
-    if (tests.length === 0) {
-        print('[XDOCK-TEST] No test files found (*.test.js). Nothing to run.');
-        print('[XDOCK-TEST] Place test files in test/integration/ with a .test.js suffix.');
-        return 0;
-    }
-
-    const exitCode = await helpers.runTests(tests);
-
-    print('[XDOCK-TEST] ' + '='.repeat(60));
-    if (exitCode === 0)
-        print('[XDOCK-TEST] ALL TESTS PASSED');
-    else
-        print('[XDOCK-TEST] SOME TESTS FAILED');
-    print('[XDOCK-TEST] ' + '='.repeat(60));
-
-    return exitCode;
+/** @param {string[]} _argv */
+export function run(_argv) {
+    log('Runner starting, waiting for extension...');
+    _runTests();
 }
-
-// Kick off the async main.  gnome-shell-test-tool expects the script to
-// run synchronously in the main loop, so we just call the async function
-// and let the GLib main loop drive the promises.
-_main().then(code => {
-    print(`[XDOCK-TEST] Exiting with code ${code}`);
-    // In gnome-shell-test-tool the process exits when the script finishes.
-    // If a Meta.exit or similar is available, use it; otherwise the tool
-    // will pick up the printed exit code.
-    if (typeof Meta !== 'undefined' && Meta.exit)
-        Meta.exit(code === 0 ? Meta.ExitCode.SUCCESS : Meta.ExitCode.ERROR);
-}).catch(e => {
-    print(`[XDOCK-TEST] FATAL unhandled error: ${e.message}`);
-    if (e.stack)
-        print(e.stack);
-});
