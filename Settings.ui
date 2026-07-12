@@ -55,6 +55,20 @@
     <property name="page-increment">0.1</property>
     <property name="value">0.15</property>
   </object>
+  <object class="GtkAdjustment" id="shelf_angle_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">0.5</property>
+    <property name="step-increment">0.02</property>
+    <property name="page-increment">0.05</property>
+    <property name="value">0.2</property>
+  </object>
+  <object class="GtkAdjustment" id="shelf_height_adjustment">
+    <property name="lower">0.1</property>
+    <property name="upper">0.8</property>
+    <property name="step-increment">0.05</property>
+    <property name="page-increment">0.1</property>
+    <property name="value">0.45</property>
+  </object>
   <object class="GtkAdjustment" id="tooltip_max_width_adjustment">
     <property name="lower">20</property>
     <property name="upper">100</property>
@@ -81,7 +95,6 @@
             <child>
               <object class="GtkListBoxRow" id="listboxrow11">
                 <property name="width_request">100</property>
-                <property name="height_request">80</property>
                 <property name="child">
                   <object class="GtkGrid" id="buitin_theme7">
                     <property name="can_focus">0</property>
@@ -154,7 +167,6 @@
             <child>
               <object class="GtkListBoxRow" id="listboxrow_middle_click">
                 <property name="width_request">100</property>
-                <property name="height_request">80</property>
                 <property name="child">
                   <object class="GtkGrid" id="grid_middle_click">
                     <property name="can_focus">0</property>
@@ -227,7 +239,6 @@
             <child>
               <object class="GtkListBoxRow" id="listboxrow_shift_middle_click">
                 <property name="width_request">100</property>
-                <property name="height_request">80</property>
                 <property name="child">
                   <object class="GtkGrid" id="grid_shift_middle_click">
                     <property name="can_focus">0</property>
@@ -341,7 +352,6 @@
             <child>
               <object class="GtkListBoxRow" id="listboxrow10">
                 <property name="width_request">100</property>
-                <property name="height_request">80</property>
                 <property name="child">
                   <object class="GtkBox" id="dot_style_box">
                     <property name="can_focus">0</property>
@@ -684,8 +694,7 @@
                     <child>
                       <object class="GtkListBoxRow" id="listboxrow14">
                         <property name="width_request">100</property>
-                        <property name="height_request">80</property>
-                        <property name="child">
+                                <property name="child">
                           <object class="GtkGrid" id="intelligent_autohide_grid">
                             <property name="can_focus">0</property>
                             <property name="margin_start">12</property>
@@ -779,8 +788,7 @@
                     <child>
                       <object class="GtkListBoxRow" id="dock_size_listboxrow">
                         <property name="width_request">100</property>
-                        <property name="height_request">80</property>
-                        <property name="child">
+                                <property name="child">
                           <object class="GtkGrid" id="dock_size_grid">
                             <property name="can_focus">0</property>
                             <property name="margin_start">12</property>
@@ -1831,7 +1839,7 @@
         <property name="tab">
           <object class="GtkLabel" id="launchers_label">
             <property name="can_focus">0</property>
-            <property name="label" translatable="yes">Launchers</property>
+            <property name="label" translatable="yes">Applications</property>
           </object>
         </property>
       </object>
@@ -2172,9 +2180,10 @@
             <!-- Dock Style section -->
             <child>
               <object class="GtkFrame">
-                <property name="label" translatable="yes">Dock Style</property>
+                <property name="can_focus">0</property>
                 <property name="child">
                   <object class="GtkListBox">
+                    <property name="can_focus">0</property>
                     <property name="selection_mode">none</property>
 
                     <child>
@@ -2214,8 +2223,8 @@
                           <object class="GtkBox">
                             <property name="margin_start">12</property>
                             <property name="margin_end">12</property>
-                            <property name="margin_top">6</property>
-                            <property name="margin_bottom">6</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
                             <property name="spacing">32</property>
                             <child>
                               <object class="GtkLabel">
@@ -2246,8 +2255,8 @@
                           <object class="GtkBox">
                             <property name="margin_start">12</property>
                             <property name="margin_end">12</property>
-                            <property name="margin_top">6</property>
-                            <property name="margin_bottom">6</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
                             <property name="spacing">32</property>
                             <child>
                               <object class="GtkLabel">
@@ -2278,8 +2287,8 @@
                           <object class="GtkBox">
                             <property name="margin_start">12</property>
                             <property name="margin_end">12</property>
-                            <property name="margin_top">6</property>
-                            <property name="margin_bottom">6</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
                             <property name="spacing">32</property>
                             <child>
                               <object class="GtkLabel">
@@ -2310,8 +2319,8 @@
                           <object class="GtkBox">
                             <property name="margin_start">12</property>
                             <property name="margin_end">12</property>
-                            <property name="margin_top">6</property>
-                            <property name="margin_bottom">6</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
                             <property name="spacing">32</property>
                             <child>
                               <object class="GtkLabel">
@@ -2326,6 +2335,70 @@
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
                                 <property name="adjustment">shelf_border_adjustment</property>
+                                <property name="digits">2</property>
+                                <property name="draw_value">1</property>
+                                <property name="width_request">200</property>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkListBoxRow" id="shelf_angle_row">
+                        <property name="child">
+                          <object class="GtkBox">
+                            <property name="margin_start">12</property>
+                            <property name="margin_end">12</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
+                            <property name="spacing">32</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="hexpand">1</property>
+                                <property name="label" translatable="yes">Shelf angle</property>
+                                <property name="xalign">0</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkScale" id="shelf_angle_scale">
+                                <property name="halign">end</property>
+                                <property name="valign">center</property>
+                                <property name="hexpand">1</property>
+                                <property name="adjustment">shelf_angle_adjustment</property>
+                                <property name="digits">2</property>
+                                <property name="draw_value">1</property>
+                                <property name="width_request">200</property>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkListBoxRow" id="shelf_height_row">
+                        <property name="child">
+                          <object class="GtkBox">
+                            <property name="margin_start">12</property>
+                            <property name="margin_end">12</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
+                            <property name="spacing">32</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="hexpand">1</property>
+                                <property name="label" translatable="yes">Shelf height</property>
+                                <property name="xalign">0</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkScale" id="shelf_height_scale">
+                                <property name="halign">end</property>
+                                <property name="valign">center</property>
+                                <property name="hexpand">1</property>
+                                <property name="adjustment">shelf_height_adjustment</property>
                                 <property name="digits">2</property>
                                 <property name="draw_value">1</property>
                                 <property name="width_request">200</property>
@@ -2369,8 +2442,8 @@
                           <object class="GtkBox">
                             <property name="margin_start">12</property>
                             <property name="margin_end">12</property>
-                            <property name="margin_top">6</property>
-                            <property name="margin_bottom">6</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
                             <property name="spacing">32</property>
                             <child>
                               <object class="GtkLabel">
@@ -2464,8 +2537,7 @@
                     <child>
                       <object class="GtkListBoxRow" id="listboxrow_rnd_border">
                         <property name="width_request">100</property>
-                        <property name="height_request">80</property>
-                        <property name="child">
+                                <property name="child">
                           <object class="GtkBox">
                             <property name="can_focus">0</property>
                             <property name="spacing">32</property>
@@ -2496,8 +2568,7 @@
                     <child>
                       <object class="GtkListBoxRow">
                         <property name="width_request">100</property>
-                        <property name="height_request">80</property>
-                        <property name="child">
+                                <property name="child">
                           <object class="GtkBox">
                             <property name="can_focus">0</property>
                             <property name="spacing">32</property>
@@ -2534,8 +2605,7 @@
                     <child>
                       <object class="GtkListBoxRow">
                         <property name="width_request">100</property>
-                        <property name="height_request">80</property>
-                        <property name="child">
+                                <property name="child">
                           <object class="GtkBox">
                             <property name="can_focus">0</property>
                             <property name="spacing">32</property>
@@ -2934,9 +3004,10 @@
             <!-- Visual Effects section -->
             <child>
               <object class="GtkFrame">
-                <property name="label" translatable="yes">Visual Effects</property>
+                <property name="can_focus">0</property>
                 <property name="child">
                   <object class="GtkListBox">
+                    <property name="can_focus">0</property>
                     <property name="selection_mode">none</property>
 
                     <child>
@@ -2972,8 +3043,8 @@
                           <object class="GtkBox">
                             <property name="margin_start">12</property>
                             <property name="margin_end">12</property>
-                            <property name="margin_top">6</property>
-                            <property name="margin_bottom">6</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
                             <property name="spacing">32</property>
                             <child>
                               <object class="GtkLabel">
@@ -3139,8 +3210,8 @@
                           <object class="GtkBox">
                             <property name="margin_start">12</property>
                             <property name="margin_end">12</property>
-                            <property name="margin_top">6</property>
-                            <property name="margin_bottom">6</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
                             <property name="spacing">32</property>
                             <child>
                               <object class="GtkLabel">
@@ -3174,9 +3245,10 @@
             <!-- Productivity section -->
             <child>
               <object class="GtkFrame">
-                <property name="label" translatable="yes">Productivity</property>
+                <property name="can_focus">0</property>
                 <property name="child">
                   <object class="GtkListBox">
+                    <property name="can_focus">0</property>
                     <property name="selection_mode">none</property>
 
                     <child>
@@ -3383,9 +3455,10 @@
             <!-- System Integration section -->
             <child>
               <object class="GtkFrame">
-                <property name="label" translatable="yes">System Integration</property>
+                <property name="can_focus">0</property>
                 <property name="child">
                   <object class="GtkListBox">
+                    <property name="can_focus">0</property>
                     <property name="selection_mode">none</property>
 
                     <child>
@@ -3746,7 +3819,6 @@ See the &lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&
             <child>
               <object class="GtkListBoxRow" id="advanced_transparency_listboxrow">
                 <property name="width_request">100</property>
-                <property name="height_request">80</property>
                 <property name="child">
                   <object class="GtkBox" id="advanced_transparency_box">
                     <property name="can_focus">0</property>
@@ -3877,7 +3949,6 @@ See the &lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&
             <child>
               <object class="GtkListBoxRow" id="listboxrow_overlay_shortcut">
                 <property name="width_request">100</property>
-                <property name="height_request">80</property>
                 <property name="child">
                   <object class="GtkGrid" id="grid_overlay">
                     <property name="can_focus">0</property>
@@ -3933,7 +4004,6 @@ See the &lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&
             <child>
               <object class="GtkListBoxRow" id="listboxrow_show_dock">
                 <property name="width_request">100</property>
-                <property name="height_request">80</property>
                 <property name="child">
                   <object class="GtkGrid" id="grid_show_dock">
                     <property name="can_focus">0</property>
@@ -3990,7 +4060,6 @@ See the &lt;a href=&quot;https://www.gnu.org/licenses/old-licenses/gpl-2.0.html&
             <child>
               <object class="GtkListBoxRow" id="listboxrow_extra_shortcut">
                 <property name="width_request">100</property>
-                <property name="height_request">80</property>
                 <property name="child">
                   <object class="GtkGrid" id="grid_shortcut">
                     <property name="margin_start">12</property>

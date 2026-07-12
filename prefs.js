@@ -1265,7 +1265,8 @@ const DockSettings = GObject.registerClass({
         const updateShelfSensitivity = () => {
             const isShelf = this._settings.get_enum('dock-style') === 1;
             for (const id of ['shelf_gradient_top_row', 'shelf_gradient_bottom_row',
-                'shelf_highlight_row', 'shelf_border_row', 'shelf_reflection_row'])
+                'shelf_highlight_row', 'shelf_border_row',
+                'shelf_angle_row', 'shelf_height_row', 'shelf_reflection_row'])
                 this._builder.get_object(id).set_sensitive(isShelf);
             this._builder.get_object('shelf_reflection_opacity_row').set_sensitive(
                 isShelf && this._settings.get_boolean('shelf-reflection'));
@@ -1285,6 +1286,12 @@ const DockSettings = GObject.registerClass({
             'value', Gio.SettingsBindFlags.DEFAULT);
         this._settings.bind('shelf-border-opacity',
             this._builder.get_object('shelf_border_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('shelf-angle',
+            this._builder.get_object('shelf_angle_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('shelf-height',
+            this._builder.get_object('shelf_height_scale').get_adjustment(),
             'value', Gio.SettingsBindFlags.DEFAULT);
         this._settings.bind('shelf-reflection',
             this._builder.get_object('shelf_reflection_switch'),

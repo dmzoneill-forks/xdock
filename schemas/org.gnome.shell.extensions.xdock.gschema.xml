@@ -666,6 +666,16 @@
       <summary>Shelf border opacity</summary>
       <description>Opacity of the border edges in shelf style (0.0 to 1.0).</description>
     </key>
+    <key name="shelf-angle" type="d">
+      <default>0.2</default>
+      <summary>Shelf trapezoid angle</summary>
+      <description>Controls the inward slope of the shelf sides (0.0 = rectangle, 1.0 = maximum angle).</description>
+    </key>
+    <key name="shelf-height" type="d">
+      <default>0.45</default>
+      <summary>Shelf height ratio</summary>
+      <description>How far down the dock the shelf starts (0.0 = full height, 1.0 = just a sliver at the bottom).</description>
+    </key>
     <key name="shelf-reflection" type="b">
       <default>true</default>
       <summary>Enable shelf reflection</summary>

@@ -383,10 +383,10 @@ export class ThemeManager {
         cr.paint();
         cr.restore();
 
-        // The shelf occupies the bottom half — icons stand on top of it.
-        const shelfTop = Math.round(h * 0.45);
+        // The shelf occupies the lower portion — icons stand on top of it.
+        const shelfTop = Math.round(h * settings.shelfHeight);
         const shelfH = h - shelfTop;
-        const inset = Math.round(shelfH * 0.2);
+        const inset = Math.round(shelfH * settings.shelfAngle);
         const r = 10;
 
         cr.save();
@@ -532,6 +532,8 @@ export class ThemeManager {
             'shelf-gradient-bottom-opacity',
             'shelf-highlight-opacity',
             'shelf-border-opacity',
+            'shelf-angle',
+            'shelf-height',
             'shelf-reflection-opacity'];
 
         this._signalsHandler.addWithLabel(Labels.THEME_CHANGED, ...styleOnlyKeys.map(key => [
