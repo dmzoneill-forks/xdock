@@ -1,8 +1,5 @@
-# XDock test container — runs GNOME Shell for CI smoke testing.
-#
-# Fedora 41: X11 via Xvfb with gnome-session-xsession
-# Fedora 42+: X11 via Xvfb with gnome-session + Xwayland fallback
-#              OR headless Wayland via gnome-shell --headless
+# XDock test container — runs GNOME Shell headless for CI testing.
+# Wayland only (GNOME 49+, Fedora 43+).
 #
 # Build: podman build --build-arg=fedora_version=44 -t xdock-test:f44 test/container/
 # Run:   podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK -td xdock-test:f44
@@ -10,16 +7,14 @@
 ARG fedora_version=44
 FROM registry.fedoraproject.org/fedora:${fedora_version}
 
-# Core packages — install X11 session packages where available
+# Core packages for headless Wayland GNOME Shell
 RUN dnf update -y && \
     dnf --nodocs install -y \
         gnome-shell gnome-session gnome-extensions-app \
-        dbus dbus-tools xdotool sudo \
-        xorg-x11-server-Xvfb && \
-    dnf --nodocs install -y gnome-session-xsession xorg-x11-xinit 2>/dev/null || true && \
+        dbus dbus-tools sudo \
+        mesa-dri-drivers ImageMagick bc && \
     dnf --nodocs install -y gnome-session-wayland-session 2>/dev/null || true && \
-    dnf --nodocs install -y xautomation gnome-terminal 2>/dev/null || true && \
-    dnf --nodocs install -y mesa-dri-drivers 2>/dev/null || true && \
+    dnf --nodocs install -y gnome-terminal 2>/dev/null || true && \
     dnf clean all -y && \
     rm -rf /var/cache/dnf
 
@@ -27,7 +22,6 @@ COPY etc /etc
 COPY bin /usr/local/bin
 
 RUN systemctl unmask systemd-logind.service console-getty.service getty.target && \
-    systemctl enable xvfb@:99.service && \
     systemctl set-default multi-user.target && \
     adduser -m -U -G users,adm gnomeshell && \
     echo "gnomeshell     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers

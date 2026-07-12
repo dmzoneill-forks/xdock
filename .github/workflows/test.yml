@@ -54,10 +54,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - fedora: '43'
-            name: 'Fedora 43 / GNOME 49'
           - fedora: '44'
             name: 'Fedora 44 / GNOME 50'
+          - fedora: '45'
+            name: 'Fedora 45 / GNOME 51'
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v4
@@ -105,7 +105,7 @@ jobs:
           podman exec -d --user gnomeshell "${POD}" bash -c '
             export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
             export LIBGL_ALWAYS_SOFTWARE=1
-            gnome-shell --headless --no-x11 --virtual-monitor 1920x1080 &
+            gnome-shell --headless --virtual-monitor 1920x1080 &
             sleep 10
             gnome-extensions enable '"${UUID}"' 2>/dev/null || true
             sleep 5
