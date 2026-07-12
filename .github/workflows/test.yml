@@ -18,6 +18,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
@@ -77,13 +78,13 @@ jobs:
             -t xdock-test:f${{ matrix.fedora }} \
             test/container/
 
-      - name: Build extension zip
+      - name: Install build dependencies
         run: |
-          if [ ! -f "xdock@github.com.zip" ]; then
-            zip -r "xdock@github.com.zip" . \
-              -x '.git/*' 'node_modules/*' 'venv/*' '.claude/*' 'coverage/*' \
-              'test/*' '_build/*' '*.zip' 'lint/*' '.github/*'
-          fi
+          sudo apt-get update -qq && sudo apt-get install -y -qq gettext
+          npm install -g sass
+
+      - name: Build extension zip
+        run: make zip-file-nocheck
 
       - name: Run smoke test
         run: |
@@ -158,12 +159,13 @@ jobs:
             -t xdock-test:f${{ matrix.fedora }} \
             test/container/
 
-      - name: Build extension zip
+      - name: Install build dependencies
         run: |
-          UUID="xdock@github.com"
-          zip -r "${UUID}.zip" . \
-            -x '.git/*' 'node_modules/*' 'venv/*' '.claude/*' 'coverage/*' \
-            '_build/*' '*.zip' 'lint/*' '.github/*'
+          sudo apt-get update -qq && sudo apt-get install -y -qq gettext
+          npm install -g sass
+
+      - name: Build extension zip
+        run: make zip-file-nocheck
 
       - name: Run integration tests
         run: |

@@ -120,12 +120,8 @@ mergepo: potfile
 	msgfmt -c $< -o $@
 
 ./stylesheet.css: ./_stylesheet.scss
-ifeq ($(SASS), ruby)
-	sass --sourcemap=none --no-cache --scss _stylesheet.scss stylesheet.css
-else ifeq ($(SASS), sassc)
+ifeq ($(SASS), sassc)
 	sassc --omit-map-comment _stylesheet.scss stylesheet.css
-else ifeq ($(SASS), dart)
-	sass --no-source-map _stylesheet.scss stylesheet.css
 else
 	sass --no-source-map _stylesheet.scss stylesheet.css
 endif
@@ -184,7 +180,11 @@ endif
 check:
 	$(ESLINT) $(ESLINT_ARGS) .
 
-.PHONY: test smoke-test smoke-test-pod integration-test zip-file-nocheck dev dev-no-ext
+.PHONY: all extension clean install install-local potfile mergepo check \
+        test smoke-test smoke-test-pod \
+        integration-test integration-test-interactive integration-test-screenshots \
+        visual-regression update-baselines \
+        zip-file zip-file-nocheck dev dev-no-ext
 
 # ── Testing ──────────────────────────────────────────────────────────
 

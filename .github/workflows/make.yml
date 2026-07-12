@@ -14,12 +14,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
       - name: Install dependencies.
         run: |
           sudo apt-get install -y gettext
-          sudo npm install -g sass
+          npm install -g sass
 
       - name: Make
         run: make

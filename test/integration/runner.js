@@ -141,6 +141,7 @@ async function runAllTests(testDir, testFiles) {
         log(`--- ${file} ---`);
         const tests = loadTestFile(testDir, file);
         let testIdx = 0;
+        let filePassed = 0, fileFailed = 0;
         for (const test of tests) {
             try {
                 const result = test.fn();
@@ -148,9 +149,11 @@ async function runAllTests(testDir, testFiles) {
                     await result;
                 log(`  PASS: ${test.name}`);
                 passed++;
+                filePassed++;
             } catch (e) {
                 log(`  FAIL: ${test.name} — ${e.message}`);
                 failed++;
+                fileFailed++;
             }
             // Pump the main loop so the compositor processes pending
             // layout/paint work before the screenshot.
@@ -164,6 +167,7 @@ async function runAllTests(testDir, testFiles) {
             }
             testIdx++;
         }
+        log(`  --- ${file}: ${filePassed}/${filePassed + fileFailed} passed ---`);
     }
 
     log('');

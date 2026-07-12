@@ -1,15 +1,21 @@
+# Editor/OS
 .~
 *~
+
+# Generated files
 gschemas.compiled
-dash-to-dock@micxgx.gmail.com.zip
 *.mo
-po/dashtodock.pot
 stylesheet.css
-Settings.ui.h
-_build
-xdock@github.com.zip
-venv/
+Settings.ui
+
+# Build artifacts
+_build/
+*.zip
+
+# Dependencies
 node_modules/
+venv/
+
+# IDE/tools
 .claude/worktrees/
 coverage/
-Settings.ui
