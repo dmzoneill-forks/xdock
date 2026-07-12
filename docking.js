@@ -129,6 +129,7 @@ const WorkspaceLayout = Object.freeze({
  * must have a WEST (SOUTH) anchor_point to achieve the sliding to the RIGHT (BOTTOM)
  * side.
  */
+// --- TODO: Extract to docking/containers.js (#831) ---
 const DashSlideContainer = GObject.registerClass({
     Properties: {
         'monitor-index': GObject.ParamSpec.uint(
@@ -260,6 +261,7 @@ const DashSlideContainer = GObject.registerClass({
     }
 });
 
+// --- (continues containers.js) ---
 const DockedDash = GObject.registerClass({
     Properties: {
         'is-main': GObject.ParamSpec.boolean(
@@ -2372,6 +2374,7 @@ const WorkspaceIsolation = class DashToDockWorkspaceIsolation {
 };
 
 
+// --- TODO: Extract to docking/manager.js (#831) ---
 export class DockManager {
     constructor(extension) {
         if (DockManager._singleton)
@@ -4260,6 +4263,7 @@ export class DockManager {
 }
 Signals.addSignalMethods(DockManager.prototype);
 
+// --- TODO: Extract to docking/animator.js (#831) ---
 // This class drives long-running icon animations, to keep them running in sync
 // with each other, and to save CPU by pausing them when the dock is hidden.
 export class IconAnimator {
