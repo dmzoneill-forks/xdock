@@ -31,27 +31,37 @@ function _getXDockSettings() {
 
 // ── Screenshot helper ────────────────────────────────────────────────
 
+import Shell from 'gi://Shell';
+import Clutter from 'gi://Clutter';
+
 function takeScreenshot(name) {
+    const path = `/tmp/xdock-test-${name}.png`;
     try {
-        const path = `/tmp/xdock-test-${name}.png`;
-        const proxy = Gio.DBusProxy.new_for_bus_sync(
-            Gio.BusType.SESSION,
-            Gio.DBusProxyFlags.NONE,
-            null,
-            'org.gnome.Shell.Screenshot',
-            '/org/gnome/Shell/Screenshot',
-            'org.gnome.Shell.Screenshot',
-            null);
-        proxy.call_sync(
-            'Screenshot',
-            new GLib.Variant('(bbs)', [false, true, path]),
-            Gio.DBusCallFlags.NONE,
-            5000,
-            null);
-        log(`  screenshot: ${path}`);
-        return path;
+        const file = Gio.File.new_for_path(path);
+        const stream = file.replace(null, false,
+            Gio.FileCreateFlags.REPLACE_DESTINATION, null);
+        const screenshot = new Shell.Screenshot();
+        let done = false;
+        screenshot.screenshot(false, stream, (_obj, res) => {
+            try {
+                screenshot.screenshot_finish(res);
+            } catch (_e) {
+                // ignore
+            }
+            stream.close(null);
+            done = true;
+        });
+        const end = GLib.get_monotonic_time() + 3000000;
+        const ctx = GLib.MainContext.default();
+        while (!done && GLib.get_monotonic_time() < end)
+            ctx.iteration(false);
+        if (done && GLib.file_test(path, GLib.FileTest.EXISTS))
+            log(`  screenshot: ${path}`);
+        else
+            log(`  screenshot: failed`);
+        return done ? path : null;
     } catch (e) {
-        log(`  screenshot failed: ${e.message}`);
+        log(`  screenshot: skipped (${e.message})`);
         return null;
     }
 }
@@ -116,23 +126,29 @@ async function runAllTests(testDir, testFiles) {
     for (const file of testFiles) {
         log(`--- ${file} ---`);
         const tests = loadTestFile(testDir, file);
+        let testIdx = 0;
         for (const test of tests) {
             try {
                 const result = test.fn();
-                // Support async tests — if fn returns a Promise, await it
-                // with main loop pumping so GLib timers/signals fire.
-                if (result && typeof result.then === 'function') {
+                if (result && typeof result.then === 'function')
                     await result;
-                }
                 log(`  PASS: ${test.name}`);
                 passed++;
             } catch (e) {
                 log(`  FAIL: ${test.name} — ${e.message}`);
                 failed++;
             }
-            // Pump the main loop briefly between tests so the compositor
-            // processes any pending layout/paint work.
-            pumpMainLoop(10);
+            // Pump the main loop so the compositor processes pending
+            // layout/paint work before the screenshot.
+            pumpMainLoop(50);
+
+            // Auto-screenshot every test when enabled.
+            if (GLib.getenv('XDOCK_TEST_SCREENSHOTS') === '1') {
+                const slug = `${file.replace('.test.js', '')}_${testIdx}`
+                    .replace(/[^a-zA-Z0-9_-]/g, '_');
+                takeScreenshot(slug);
+            }
+            testIdx++;
         }
     }
 
