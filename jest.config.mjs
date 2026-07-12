@@ -14,4 +14,14 @@ export default {
     setupFiles: ['<rootDir>/test/setup.js'],
     globalSetup: '<rootDir>/test/globalSetup.js',
     testMatch: ['<rootDir>/test/**/*.test.js'],
+    testPathIgnorePatterns: ['<rootDir>/test/integration/'],
+    collectCoverageFrom: ['*.js', '!eslint.config.mjs'],
+    coverageThreshold: {
+        global: {
+            branches: 60,
+            functions: 60,
+            lines: 60,
+            statements: 60,
+        },
+    },
 };

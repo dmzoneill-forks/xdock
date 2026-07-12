@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the codebase
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -22,10 +22,15 @@ jobs:
       - name: Install shexli
         run: pip install 'tree-sitter==0.23.2' 'tree-sitter-javascript==0.23.1' && pip install --no-deps shexli
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Install build dependencies
         run: |
           sudo apt-get install -y gettext
-          sudo npm install -g sass
+          npm install -g sass
 
       - name: Build extension
         run: make

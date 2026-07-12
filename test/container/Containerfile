@@ -7,16 +7,14 @@
 ARG fedora_version=44
 FROM registry.fedoraproject.org/fedora:${fedora_version}
 
-# Core packages for headless Wayland GNOME Shell
 RUN dnf update -y && \
     dnf --nodocs install -y \
         gnome-shell gnome-session gnome-extensions-app \
+        gnome-session-wayland-session gnome-terminal \
         dbus dbus-tools sudo \
         mesa-dri-drivers ImageMagick bc && \
-    dnf --nodocs install -y gnome-session-wayland-session 2>/dev/null || true && \
-    dnf --nodocs install -y gnome-terminal 2>/dev/null || true && \
     dnf clean all -y && \
-    rm -rf /var/cache/dnf
+    rm -rf /var/cache/dnf /tmp/* /var/tmp/*
 
 COPY etc /etc
 COPY bin /usr/local/bin
