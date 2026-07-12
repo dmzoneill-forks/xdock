@@ -16,3 +16,4 @@ package-lock.json
 xdock@github.com.zip
 po/xdock.pot
 coverage/
+Settings.ui

@@ -1,0 +1,723 @@
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkAdjustment" id="magnification_factor_adjustment">
+    <property name="lower">1</property>
+    <property name="upper">3</property>
+    <property name="step-increment">0.1</property>
+    <property name="page-increment">0.5</property>
+    <property name="value">1.5</property>
+  </object>
+  <object class="GtkAdjustment" id="wallpaper_intensity_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">1</property>
+    <property name="step-increment">0.05</property>
+    <property name="page-increment">0.1</property>
+    <property name="value">0.6</property>
+  </object>
+  <object class="GtkAdjustment" id="animation_time_adjustment">
+    <property name="upper">1</property>
+    <property name="step-increment">0.050000000000000003</property>
+    <property name="page-increment">0.25</property>
+  </object>
+  <object class="GtkAdjustment" id="shelf_gradient_top_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">1</property>
+    <property name="step-increment">0.05</property>
+    <property name="page-increment">0.1</property>
+    <property name="value">0.4</property>
+  </object>
+  <object class="GtkAdjustment" id="shelf_gradient_bottom_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">1</property>
+    <property name="step-increment">0.05</property>
+    <property name="page-increment">0.1</property>
+    <property name="value">0.15</property>
+  </object>
+  <object class="GtkAdjustment" id="shelf_highlight_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">1</property>
+    <property name="step-increment">0.05</property>
+    <property name="page-increment">0.1</property>
+    <property name="value">0.3</property>
+  </object>
+  <object class="GtkAdjustment" id="shelf_border_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">1</property>
+    <property name="step-increment">0.05</property>
+    <property name="page-increment">0.1</property>
+    <property name="value">0.5</property>
+  </object>
+  <object class="GtkAdjustment" id="shelf_reflection_opacity_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">1</property>
+    <property name="step-increment">0.05</property>
+    <property name="page-increment">0.1</property>
+    <property name="value">0.15</property>
+  </object>
+  <object class="GtkAdjustment" id="shelf_angle_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">0.5</property>
+    <property name="step-increment">0.02</property>
+    <property name="page-increment">0.05</property>
+    <property name="value">0.2</property>
+  </object>
+  <object class="GtkAdjustment" id="shelf_height_adjustment">
+    <property name="lower">0.1</property>
+    <property name="upper">0.8</property>
+    <property name="step-increment">0.05</property>
+    <property name="page-increment">0.1</property>
+    <property name="value">0.45</property>
+  </object>
+  <object class="GtkAdjustment" id="tooltip_max_width_adjustment">
+    <property name="lower">20</property>
+    <property name="upper">100</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">5</property>
+    <property name="value">60</property>
+  </object>
+  <!-- Visual Effects adjustments -->
+  <object class="GtkAdjustment" id="spring_stiffness_adjustment">
+    <property name="lower">50</property>
+    <property name="upper">500</property>
+    <property name="step-increment">10</property>
+    <property name="page-increment">50</property>
+    <property name="value">200</property>
+  </object>
+  <object class="GtkAdjustment" id="spring_damping_adjustment">
+    <property name="lower">5</property>
+    <property name="upper">50</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">5</property>
+    <property name="value">20</property>
+  </object>
+  <object class="GtkAdjustment" id="magnification_spread_adjustment">
+    <property name="lower">1</property>
+    <property name="upper">6</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+    <property name="value">3</property>
+  </object>
+  <object class="GtkAdjustment" id="magnification_easing_adjustment">
+    <property name="lower">30</property>
+    <property name="upper">300</property>
+    <property name="step-increment">10</property>
+    <property name="page-increment">50</property>
+    <property name="value">100</property>
+  </object>
+  <object class="GtkAdjustment" id="startup_animation_adjustment">
+    <property name="lower">100</property>
+    <property name="upper">2000</property>
+    <property name="step-increment">50</property>
+    <property name="page-increment">200</property>
+    <property name="value">500</property>
+  </object>
+  <object class="GtkAdjustment" id="icon_animator_adjustment">
+    <property name="lower">1000</property>
+    <property name="upper">5000</property>
+    <property name="step-increment">100</property>
+    <property name="page-increment">500</property>
+    <property name="value">3000</property>
+  </object>
+  <object class="GtkAdjustment" id="spring_overshoot_adjustment">
+    <property name="lower">1.0</property>
+    <property name="upper">1.5</property>
+    <property name="step-increment">0.01</property>
+    <property name="page-increment">0.05</property>
+    <property name="value">1.15</property>
+  </object>
+  <!-- Applications tab adjustments -->
+  <object class="GtkAdjustment" id="preview_max_height_adjustment">
+    <property name="lower">80</property>
+    <property name="upper">400</property>
+    <property name="step-increment">10</property>
+    <property name="page-increment">50</property>
+    <property name="value">150</property>
+  </object>
+  <object class="GtkAdjustment" id="preview_animation_adjustment">
+    <property name="lower">50</property>
+    <property name="upper">500</property>
+    <property name="step-increment">10</property>
+    <property name="page-increment">50</property>
+    <property name="value">250</property>
+  </object>
+  <object class="GtkAdjustment" id="preview_hover_enter_adjustment">
+    <property name="lower">100</property>
+    <property name="upper">1000</property>
+    <property name="step-increment">25</property>
+    <property name="page-increment">100</property>
+    <property name="value">300</property>
+  </object>
+  <object class="GtkAdjustment" id="preview_hover_leave_adjustment">
+    <property name="lower">100</property>
+    <property name="upper">1000</property>
+    <property name="step-increment">25</property>
+    <property name="page-increment">100</property>
+    <property name="value">300</property>
+  </object>
+  <object class="GtkAdjustment" id="aero_peek_opacity_adjustment">
+    <property name="lower">1</property>
+    <property name="upper">100</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+    <property name="value">3</property>
+  </object>
+  <object class="GtkAdjustment" id="aero_peek_duration_adjustment">
+    <property name="lower">50</property>
+    <property name="upper">500</property>
+    <property name="step-increment">10</property>
+    <property name="page-increment">50</property>
+    <property name="value">200</property>
+  </object>
+  <!-- Behavior tab adjustments -->
+  <object class="GtkAdjustment" id="intellihide_interval_adjustment">
+    <property name="lower">50</property>
+    <property name="upper">500</property>
+    <property name="step-increment">10</property>
+    <property name="page-increment">50</property>
+    <property name="value">100</property>
+  </object>
+  <object class="GtkAdjustment" id="scroll_cycle_debounce_adjustment">
+    <property name="lower">50</property>
+    <property name="upper">500</property>
+    <property name="step-increment">10</property>
+    <property name="page-increment">50</property>
+    <property name="value">250</property>
+  </object>
+  <object class="GtkAdjustment" id="scroll_workspace_deadtime_adjustment">
+    <property name="lower">100</property>
+    <property name="upper">500</property>
+    <property name="step-increment">10</property>
+    <property name="page-increment">50</property>
+    <property name="value">250</property>
+  </object>
+  <object class="GtkAdjustment" id="wiggle_timeout_adjustment">
+    <property name="lower">200</property>
+    <property name="upper">1500</property>
+    <property name="step-increment">50</property>
+    <property name="page-increment">100</property>
+    <property name="value">500</property>
+  </object>
+  <object class="GtkAdjustment" id="window_cycle_memory_adjustment">
+    <property name="lower">1000</property>
+    <property name="upper">10000</property>
+    <property name="step-increment">100</property>
+    <property name="page-increment">500</property>
+    <property name="value">3000</property>
+  </object>
+  <!-- Appearance tab adjustments -->
+  <object class="GtkAdjustment" id="shelf_corner_radius_top_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">30</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">5</property>
+    <property name="value">6</property>
+  </object>
+  <object class="GtkAdjustment" id="shelf_corner_radius_bottom_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">30</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">5</property>
+    <property name="value">12</property>
+  </object>
+  <object class="GtkAdjustment" id="reflection_size_adjustment">
+    <property name="lower">5</property>
+    <property name="upper">50</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">5</property>
+    <property name="value">20</property>
+  </object>
+  <object class="GtkAdjustment" id="progress_arc_width_adjustment">
+    <property name="lower">1</property>
+    <property name="upper">8</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+    <property name="value">3</property>
+  </object>
+  <object class="GtkAdjustment" id="hotkey_label_scale_adjustment">
+    <property name="lower">0.1</property>
+    <property name="upper">0.6</property>
+    <property name="step-increment">0.02</property>
+    <property name="page-increment">0.05</property>
+    <property name="value">0.3</property>
+  </object>
+  <object class="GtkAdjustment" id="tooltip_max_width_px_adjustment">
+    <property name="lower">200</property>
+    <property name="upper">1200</property>
+    <property name="step-increment">50</property>
+    <property name="page-increment">100</property>
+    <property name="value">700</property>
+  </object>
+  <!-- Position and size tab adjustments -->
+  <object class="GtkAdjustment" id="dock_dwell_width_adjustment">
+    <property name="lower">1</property>
+    <property name="upper">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
+    <property name="value">2</property>
+  </object>
+  <object class="GtkAdjustment" id="dock_dwell_interval_adjustment">
+    <property name="lower">50</property>
+    <property name="upper">500</property>
+    <property name="step-increment">10</property>
+    <property name="page-increment">50</property>
+    <property name="value">100</property>
+  </object>
+  <object class="GtkAdjustment" id="pressure_timeout_adjustment">
+    <property name="lower">50</property>
+    <property name="upper">500</property>
+    <property name="step-increment">10</property>
+    <property name="page-increment">50</property>
+    <property name="value">250</property>
+  </object>
+  <object class="GtkBox" id="box_middle_click_options">
+    <property name="can_focus">0</property>
+    <property name="margin_start">12</property>
+    <property name="margin_end">12</property>
+    <property name="margin_top">12</property>
+    <property name="margin_bottom">12</property>
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkFrame" id="frame_middle_click_options">
+        <property name="can_focus">0</property>
+        <property name="child">
+          <object class="GtkListBox" id="listbox_middle_click_options">
+            <property name="can_focus">0</property>
+            <property name="hexpand">1</property>
+            <property name="vexpand">1</property>
+            <property name="selection_mode">none</property>
+            <child>
+              <object class="GtkListBoxRow" id="listboxrow11">
+                <property name="width_request">100</property>
+                <property name="child">
+                  <object class="GtkGrid" id="buitin_theme7">
+                    <property name="can_focus">0</property>
+                    <property name="margin_start">12</property>
+                    <property name="margin_end">12</property>
+                    <property name="margin_top">12</property>
+                    <property name="margin_bottom">12</property>
+                    <property name="column_spacing">32</property>
+                    <child>
+                      <object class="GtkLabel" id="builtin_theme_description4">
+                        <property name="can_focus">0</property>
+                        <property name="hexpand">1</property>
+                        <property name="label" translatable="yes">When set to minimize, double clicking minimizes all the windows of the application.</property>
+                        <property name="wrap">1</property>
+                        <property name="xalign">0</property>
+                        <property name="max_width_chars">40</property>
+
+                        <style>
+                          <class name="dim-label"/>
+                        </style>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="builtin_theme_label4">
+                        <property name="can_focus">0</property>
+                        <property name="hexpand">1</property>
+                        <property name="label" translatable="yes">Shift+Click action</property>
+                        <property name="xalign">0</property>
+
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkComboBoxText" id="shift_click_action_combo">
+                        <property name="can_focus">0</property>
+                        <property name="valign">center</property>
+                        <items>
+                          <item translatable="yes">Raise window</item>
+                          <item translatable="yes">Minimize window</item>
+                          <item translatable="yes">Launch new instance</item>
+                          <item translatable="yes">Cycle through windows</item>
+                          <item translatable="yes">Minimize or overview</item>
+                          <item translatable="yes">Show window previews</item>
+                          <item translatable="yes">Minimize or show previews</item>
+                          <item translatable="yes">Focus or show previews</item>
+                          <item translatable="yes">Focus or app spread</item>
+                          <item translatable="yes">Focus, minimize or show previews</item>
+                          <item translatable="yes">Focus, minimize or app spread</item>
+                          <item translatable="yes">Cycle or minimize</item>
+                          <item translatable="yes">Quit</item>
+                        </items>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">0</property>
+                          <property name="row-span">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkListBoxRow" id="listboxrow_middle_click">
+                <property name="width_request">100</property>
+                <property name="child">
+                  <object class="GtkGrid" id="grid_middle_click">
+                    <property name="can_focus">0</property>
+                    <property name="margin_start">12</property>
+                    <property name="margin_end">12</property>
+                    <property name="margin_top">12</property>
+                    <property name="margin_bottom">12</property>
+                    <property name="column_spacing">32</property>
+                    <child>
+                      <object class="GtkLabel" id="description_middle_click">
+                        <property name="can_focus">0</property>
+                        <property name="hexpand">1</property>
+                        <property name="label" translatable="yes">Behavior for Middle-Click.</property>
+                        <property name="wrap">1</property>
+                        <property name="xalign">0</property>
+                        <property name="max_width_chars">40</property>
+
+                        <style>
+                          <class name="dim-label"/>
+                        </style>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_middle_click">
+                        <property name="can_focus">0</property>
+                        <property name="hexpand">1</property>
+                        <property name="label" translatable="yes">Middle-Click action</property>
+                        <property name="xalign">0</property>
+
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkComboBoxText" id="middle_click_action_combo">
+                        <property name="can_focus">0</property>
+                        <property name="valign">center</property>
+                        <items>
+                          <item translatable="yes">Raise window</item>
+                          <item translatable="yes">Minimize window</item>
+                          <item translatable="yes">Launch new instance</item>
+                          <item translatable="yes">Cycle through windows</item>
+                          <item translatable="yes">Minimize or overview</item>
+                          <item translatable="yes">Show window previews</item>
+                          <item translatable="yes">Minimize or show previews</item>
+                          <item translatable="yes">Focus or show previews</item>
+                          <item translatable="yes">Focus or app spread</item>
+                          <item translatable="yes">Focus, minimize or show previews</item>
+                          <item translatable="yes">Focus, minimize or app spread</item>
+                          <item translatable="yes">Cycle or minimize</item>
+                          <item translatable="yes">Quit</item>
+                        </items>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">0</property>
+                          <property name="row-span">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkListBoxRow" id="listboxrow_shift_middle_click">
+                <property name="width_request">100</property>
+                <property name="child">
+                  <object class="GtkGrid" id="grid_shift_middle_click">
+                    <property name="can_focus">0</property>
+                    <property name="margin_start">12</property>
+                    <property name="margin_end">12</property>
+                    <property name="margin_top">12</property>
+                    <property name="margin_bottom">12</property>
+                    <property name="column_spacing">32</property>
+                    <child>
+                      <object class="GtkLabel" id="description_shift_middle_click">
+                        <property name="can_focus">0</property>
+                        <property name="hexpand">1</property>
+                        <property name="label" translatable="yes">Behavior for Shift+Middle-Click.</property>
+                        <property name="wrap">1</property>
+                        <property name="xalign">0</property>
+                        <property name="max_width_chars">40</property>
+
+                        <style>
+                          <class name="dim-label"/>
+                        </style>
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_shift_middle_click">
+                        <property name="can_focus">0</property>
+                        <property name="hexpand">1</property>
+                        <property name="label" translatable="yes">Shift+Middle-Click action</property>
+                        <property name="xalign">0</property>
+
+                        <layout>
+                          <property name="column">0</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkComboBoxText" id="shift_middle_click_action_combo">
+                        <property name="can_focus">0</property>
+                        <property name="valign">center</property>
+                        <items>
+                          <item translatable="yes">Raise window</item>
+                          <item translatable="yes">Minimize window</item>
+                          <item translatable="yes">Launch new instance</item>
+                          <item translatable="yes">Cycle through windows</item>
+                          <item translatable="yes">Minimize or overview</item>
+                          <item translatable="yes">Show window previews</item>
+                          <item translatable="yes">Minimize or show previews</item>
+                          <item translatable="yes">Focus or show previews</item>
+                          <item translatable="yes">Focus or app spread</item>
+                          <item translatable="yes">Focus, minimize or show previews</item>
+                          <item translatable="yes">Focus, minimize or app spread</item>
+                          <item translatable="yes">Cycle or minimize</item>
+                          <item translatable="yes">Quit</item>
+                        </items>
+                        <layout>
+                          <property name="column">1</property>
+                          <property name="row">0</property>
+                          <property name="row-span">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </property>
+        <child type="label_item">
+          <placeholder/>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkAdjustment" id="custom_opacity_adjustement">
+    <property name="upper">1</property>
+    <property name="step-increment">0.01</property>
+    <property name="page-increment">0.10</property>
+  </object>
+  <object class="GtkAdjustment" id="dock_size_adjustment">
+    <property name="lower">0.33</property>
+    <property name="upper">1</property>
+    <property name="step-increment">0.01</property>
+    <property name="page-increment">0.10</property>
+  </object>
+  <object class="GtkAdjustment" id="dot_border_width_adjustment">
+    <property name="upper">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">5</property>
+  </object>
+  <object class="GtkBox" id="running_dots_advance_settings_box">
+    <property name="hexpand">1</property>
+    <property name="vexpand">1</property>
+    <property name="can_focus">0</property>
+    <property name="margin_start">12</property>
+    <property name="margin_end">12</property>
+    <property name="margin_top">12</property>
+    <property name="margin_bottom">12</property>
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkFrame" id="frame1">
+        <property name="can_focus">0</property>
+
+        <property name="child">
+          <object class="GtkListBox" id="listbox7">
+            <property name="can_focus">0</property>
+            <property name="selection_mode">none</property>
+            <child>
+              <object class="GtkListBoxRow" id="listboxrow10">
+                <property name="width_request">100</property>
+                <property name="child">
+                  <object class="GtkBox" id="dot_style_box">
+                    <property name="can_focus">0</property>
+                    <property name="margin_start">12</property>
+                    <property name="margin_end">12</property>
+                    <property name="margin_top">12</property>
+                    <property name="margin_bottom">12</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">12</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="can_focus">0</property>
+                        <property name="spacing">32</property>
+                        <child>
+                          <object class="GtkLabel" id="unity_backlit_items_label">
+                            <property name="hexpand">1</property>
+                            <property name="xalign">0</property>
+                            <property name="can_focus">0</property>
+                            <property name="valign">center</property>
+                            <property name="label" translatable="yes">Enable Unity7 like glossy backlit items</property>
+
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkSwitch" id="unity_backlit_items_switch">
+                            <property name="valign">center</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="apply_gloss_effect_checkbutton">
+                        <property name="label" translatable="yes">Apply glossy effect.</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="can_focus">0</property>
+                        <child>
+                          <object class="GtkLabel" id="dominant_color_label">
+                            <property name="hexpand">1</property>
+                            <property name="xalign">0</property>
+                            <property name="can_focus">0</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="yes">Use dominant color</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkSwitch" id="dominant_color_switch"/>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkGrid" id="grid1">
+                        <property name="can_focus">0</property>
+                        <property name="column_spacing">32</property>
+                        <child>
+                          <object class="GtkSwitch" id="dot_style_switch">
+                            <layout>
+                              <property name="column">1</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label4">
+                            <property name="can_focus">0</property>
+                            <property name="hexpand">1</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">Customize indicator style</property>
+                            <property name="justify">fill</property>
+
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="dot_style_settings_box">
+                        <property name="can_focus">0</property>
+                        <property name="margin_bottom">1</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">12</property>
+                        <child>
+                          <object class="GtkBox" id="dot_color_box">
+                            <property name="can_focus">0</property>
+                            <property name="spacing">32</property>
+                            <child>
+                              <object class="GtkLabel" id="dot_color_label">
+                                <property name="hexpand">1</property>
+                                <property name="xalign">0</property>
+                                <property name="can_focus">0</property>
+                                <property name="label" translatable="yes">Color</property>
+
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkColorButton" id="dot_color_colorbutton">
+                                <property name="receives_default">1</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="border_color_box">
+                            <property name="can_focus">0</property>
+                            <property name="spacing">32</property>
+                            <child>
+                              <object class="GtkLabel" id="dot_border_color_label">
+                                <property name="hexpand">1</property>
+                                <property name="xalign">0</property>
+                                <property name="can_focus">0</property>
+                                <property name="label" translatable="yes">Border color</property>
+
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkColorButton" id="dot_border_color_colorbutton">
+                                <property name="receives_default">1</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="box_boder_width_box">
+                            <property name="can_focus">0</property>
+                            <property name="spacing">32</property>
+                            <child>
+                              <object class="GtkLabel" id="dot_border_width_label">
+                                <property name="hexpand">1</property>
+                                <property name="xalign">0</property>
+                                <property name="can_focus">0</property>
+                                <property name="label" translatable="yes">Border width</property>
+
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton" id="dot_border_width_spin_button">
+                                <property name="adjustment">dot_border_width_adjustment</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </property>
+        <child type="label_item">
+          <placeholder/>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkAdjustment" id="hide_timeout_adjustment">
+    <property name="upper">1</property>
+    <property name="step-increment">0.050000000000000003</property>
+    <property name="page-increment">0.25</property>
+  </object>
+  <object class="GtkAdjustment" id="icon_size_adjustment">
+    <property name="lower">16</property>
+    <property name="upper">128</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="preview_size_adjustment">
+    <property name="lower">0.0</property>
+    <property name="upper">1</property>
+    <property name="step_increment">0.01</property>
+    <property name="page_increment">0.1</property>
+  </object>

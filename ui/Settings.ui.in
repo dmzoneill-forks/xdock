@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <!-- Adjustments and shared objects -->
+  <xi:include href="adjustments.xml" />
+
+  <object class="GtkNotebook" id="settings_notebook">
+    <property name="margin_start">6</property>
+    <property name="margin_end">6</property>
+    <property name="margin_top">6</property>
+    <property name="margin_bottom">6</property>
+
+    <!-- Position and size tab -->
+    <xi:include href="tab-position.xml" />
+
+    <!-- Applications tab -->
+    <xi:include href="tab-applications.xml" />
+
+    <!-- Behavior tab -->
+    <xi:include href="tab-behavior.xml" />
+
+    <!-- Appearance tab -->
+    <xi:include href="tab-appearance.xml" />
+
+    <!-- Features tab -->
+    <xi:include href="tab-features.xml" />
+
+    <!-- Profiles tab -->
+    <xi:include href="tab-profiles.xml" />
+
+    <!-- About tab -->
+    <xi:include href="tab-about.xml" />
+
+  </object>
+
+  <!-- Dialog frames (transparency, overlay shortcut, autohide advanced) -->
+  <xi:include href="dialogs.xml" />
+
+</interface>
