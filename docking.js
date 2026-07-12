@@ -3669,6 +3669,12 @@ export class DockManager {
                 });
         } else {
             replaceMainDash();
+
+            // Extension loaded after startup completed — if overview is
+            // still visible and the user has disabled it, close it now.
+            if (this._settings.disableOverviewOnStartup &&
+                Main.overview.visible)
+                Main.overview.hide();
         }
     }
 

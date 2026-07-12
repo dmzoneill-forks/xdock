@@ -173,7 +173,10 @@ export const DockAbstractAppIcon = GObject.registerClass({
         }
 
         this._signalsHandler.add(this.app, 'windows-changed', () => this._updateWindows());
-        this._signalsHandler.add(this.app, 'notify::state', () => this._updateRunningState());
+        this._signalsHandler.add(this.app, 'notify::state', () => {
+            this._updateRunningState();
+            this._updateFocusState();
+        });
         this._signalsHandler.add(global.display, 'window-demands-attention', (_dpy, win) =>
             this._onWindowDemandsAttention(win));
         this._signalsHandler.add(global.display, 'window-marked-urgent', (_dpy, win) =>
@@ -950,6 +953,10 @@ export const DockAbstractAppIcon = GObject.registerClass({
                 buttonAction = clickAction.FOCUS_MINIMIZE_OR_PREVIEWS;
             break;
         }
+
+        // Recompute cached state at click time so the action always
+        // matches the actual state (fixes stale focus after app start).
+        this._updateState();
 
         // We check if the app is running, and that the # of windows is > 0 in
         // case we use workspace isolation.
@@ -2477,8 +2484,15 @@ class DockShowAppsIconMenu extends DockAppIconMenu {
         this.addMenuItem(new PopupMenu.PopupSeparatorMenuItem(__('XDock')));
 
         const item = this._appendMenuItem(_('Settings'));
-        item.connect('activate', () =>
-            Docking.DockManager.extension.openPreferences());
+        item.connect('activate', () => {
+            const {extension} = Docking.DockManager;
+            const prefsWindow = global.get_window_actors().map(a => a.meta_window)
+                .find(w => w.get_title() === extension.metadata.name);
+            if (prefsWindow)
+                Main.activateWindow(prefsWindow);
+            else
+                extension.openPreferences();
+        });
     }
 }
 
