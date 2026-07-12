@@ -210,6 +210,16 @@ integration-test-interactive: zip-file-nocheck
 	dbus-run-session -- gnome-shell-test-tool --devkit \
 		--extension $(UUID).zip test/integration/runner.js
 
+# Integration tests with screenshot of every test (saved to /tmp/xdock-test-*.png)
+integration-test-screenshots: zip-file-nocheck
+	@command -v gnome-shell-test-tool >/dev/null 2>&1 || \
+		{ echo "gnome-shell-test-tool not found — install mutter-devkit"; exit 1; }
+	XDOCK_TEST_SCREENSHOTS=1 XDOCK_TEST_HOLD=0 dbus-run-session -- \
+		gnome-shell-test-tool --headless \
+		--extension $(UUID).zip test/integration/runner.js
+	@echo "Screenshots saved to /tmp/xdock-test-*.png"
+	@ls -1 /tmp/xdock-test-*.png 2>/dev/null | wc -l | xargs -I{} echo "{} screenshots captured"
+
 # Build zip without running lint (for testing)
 zip-file-nocheck: _build
 	mkdir -p _build/test/integration _build/test/smoke
