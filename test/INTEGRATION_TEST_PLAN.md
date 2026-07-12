@@ -10,7 +10,7 @@ test/
 ├── integration/
 │   ├── runner.js            # GJS test runner (discovers + runs test files)
 │   ├── helpers.js           # Shared utilities (get dock, wait, assert)
-│   ├── dock-position.test.js
+│   ├── dock-basics.test.js
 │   ├── magnification.test.js
 │   ├── shelf-style.test.js
 │   ├── auto-hide.test.js
@@ -79,7 +79,7 @@ GJS script that:
 
 ## Test Specifications
 
-### 1. dock-position.test.js
+### 1. dock-basics.test.js
 ```
 - Default position: dock at BOTTOM edge
 - Change dock-position to LEFT → dock moves to left edge
