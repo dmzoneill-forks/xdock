@@ -278,7 +278,7 @@ const DockedDash = GObject.registerClass({
         if (isSecondary)
             this._position = Utils.getSecondaryPosition();
         else
-            this._position = Utils.getPosition();
+            this._position = Utils.getPosition(params?.monitorIndex ?? this.monitorIndex);
 
         // This is the centering actor
         super._init({
@@ -3067,6 +3067,10 @@ export class DockManager {
             this._toggle.bind(this),
         ], [
             this._settings,
+            'changed::monitor-positions',
+            this._toggle.bind(this),
+        ], [
+            this._settings,
             'changed::preferred-monitor-by-connector',
             this._toggle.bind(this),
         ], [
@@ -3211,7 +3215,7 @@ export class DockManager {
         // Create secondary dock on a different edge if enabled
         if (this.settings.secondaryDockEnabled) {
             const secondaryPosition = Utils.getSecondaryPosition();
-            const primaryPosition = Utils.getPosition();
+            const primaryPosition = Utils.getPosition(this._preferredMonitorIndex);
             // Only create if positions differ
             if (secondaryPosition !== primaryPosition) {
                 this._createDock({
@@ -3840,7 +3844,7 @@ export class DockManager {
         if (!this._hasPanelCorners())
             return;
 
-        const position = Utils.getPosition();
+        const position = Utils.getPosition(this._preferredMonitorIndex);
         const isHorizontal = (position === St.Side.TOP) || (position === St.Side.BOTTOM);
         const dockOnPrimary  = this._settings.multiMonitor ||
                              this._preferredMonitorIndex === Main.layoutManager.primaryIndex;

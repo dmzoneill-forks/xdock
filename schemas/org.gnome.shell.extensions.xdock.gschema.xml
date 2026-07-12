@@ -1020,5 +1020,10 @@
       <summary>Timeout in ms for pressure-triggered dock show</summary>
       <description>Timeout in ms for pressure-triggered dock show (50-500).</description>
     </key>
+    <key type="a{ss}" name="monitor-positions">
+      <default>{}</default>
+      <summary>Per-monitor dock position overrides</summary>
+      <description>Map of monitor connector names (e.g. DP-1, eDP-1) to dock position (TOP, RIGHT, BOTTOM, LEFT). Each connected monitor can have its own dock edge. Overrides are applied as-is without RTL flipping. Default empty means all monitors follow the global dock-position setting.</description>
+    </key>
   </schema>
 </schemalist>

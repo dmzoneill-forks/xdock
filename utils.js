@@ -464,10 +464,29 @@ export class PropertyInjectionsHandler extends BasicHandler {
     }
 }
 
+function getMonitorPositionOverride(monitorIndex) {
+    if (monitorIndex < 0)
+        return null;
+    const {monitorPositions} = Docking.DockManager.settings;
+    if (!monitorPositions || typeof monitorPositions !== 'object')
+        return null;
+    const monitorManager = getMonitorManager();
+    for (const [connector, side] of Object.entries(monitorPositions)) {
+        if (monitorManager.get_monitor_for_connector(connector) === monitorIndex)
+            return St.Side[side] ?? null;
+    }
+    return null;
+}
+
 /**
  * Return the actual position reverseing left and right in rtl
  */
-export function getPosition() {
+export function getPosition(monitorIndex) {
+    if (monitorIndex !== undefined && monitorIndex !== null) {
+        const override = getMonitorPositionOverride(monitorIndex);
+        if (override !== null)
+            return override;
+    }
     const position = Docking.DockManager.settings.dockPosition;
     if (Clutter.get_default_text_direction() === Clutter.TextDirection.RTL) {
         if (position === St.Side.LEFT)

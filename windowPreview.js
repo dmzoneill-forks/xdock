@@ -41,7 +41,7 @@ const ACTIVE_WINDOW_PREVIEW_CLASS = 'active-window-preview';
 
 export class WindowPreviewMenu extends PopupMenu.PopupMenu {
     constructor(source) {
-        super(source, 0.5, Utils.getPosition());
+        super(source, 0.5, Utils.getPosition(source.monitorIndex));
 
         this.blockSourceEvents = false;
 
@@ -365,7 +365,8 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
 
         this.actor.connect('scroll-event', this._onScrollEvent.bind(this));
 
-        const position = Utils.getPosition();
+        this._position = Utils.getPosition(source.monitorIndex);
+        const position = this._position;
         this.isHorizontal = position === St.Side.BOTTOM || position === St.Side.TOP;
         this.box.set_vertical(!this.isHorizontal);
         this.box.set_name('dashtodockWindowList');
@@ -455,7 +456,7 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
     }
 
     _createPreviewItem(window) {
-        const preview = new WindowPreviewMenuItem(window, Utils.getPosition());
+        const preview = new WindowPreviewMenuItem(window, this._position);
         return preview;
     }
 

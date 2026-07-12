@@ -212,6 +212,7 @@ const DockSettings = GObject.registerClass({
         this._opacity_timeout = 0;
 
         this._monitorsConfig = new MonitorsConfig();
+        this._monitorPositionRows = [];
         this._bindSettings();
     }
 
@@ -413,6 +414,70 @@ const DockSettings = GObject.registerClass({
             dockMonitorCombo.set_active(primaryIndex);
     }
 
+    _updateMonitorPositionRows() {
+        const anchorRow = this._builder.get_object('dock_monitor_listboxrow');
+        const listbox = anchorRow.get_parent();
+
+        this._monitorPositionRows.forEach(row => listbox.remove(row));
+        this._monitorPositionRows = [];
+
+        const stored = this._settings.get_value('monitor-positions').deep_unpack();
+        const sideLabels = {
+            TOP: 'Top',
+            RIGHT: 'Right',
+            BOTTOM: 'Bottom',
+            LEFT: 'Left',
+        };
+
+        let insertAt = anchorRow.get_index() + 1;
+        for (const monitor of this._monitorsConfig.monitors) {
+            if (!monitor.active)
+                continue;
+
+            const label = new Gtk.Label({
+                label: 'Position on ' + monitor.displayName + ' - ' + monitor.connector,
+                halign: Gtk.Align.START,
+                hexpand: true,
+                xalign: 0,
+            });
+
+            const combo = new Gtk.ComboBoxText({valign: Gtk.Align.CENTER});
+            combo.append('', 'Follow global setting');
+            for (const [side, sideLabel] of Object.entries(sideLabels))
+                combo.append(side, sideLabel);
+            if (!combo.set_active_id(stored[monitor.connector] ?? ''))
+                combo.set_active_id('');
+
+            const connector = monitor.connector;
+            combo.connect('changed', () => {
+                const positions = this._settings
+                    .get_value('monitor-positions').deep_unpack();
+                const side = combo.get_active_id();
+                if (side)
+                    positions[connector] = side;
+                else
+                    delete positions[connector];
+                this._settings.set_value('monitor-positions',
+                    new GLib.Variant('a{ss}', positions));
+            });
+
+            const grid = new Gtk.Grid({
+                column_spacing: 32,
+                margin_start: 12,
+                margin_end: 12,
+                margin_top: 6,
+                margin_bottom: 6,
+            });
+            grid.attach(label, 0, 0, 1, 1);
+            grid.attach(combo, 1, 0, 1, 1);
+
+            const row = new Gtk.ListBoxRow({activatable: false});
+            row.set_child(grid);
+            listbox.insert(row, insertAt++);
+            this._monitorPositionRows.push(row);
+        }
+    }
+
     _update_scroll_action_warning() {
         const sensitive = !this._builder.get_object('icon_size_fixed_checkbutton').get_active();
         this._builder.get_object('note_about_fixed_size_icon').set_visible(!sensitive);
@@ -422,8 +487,11 @@ const DockSettings = GObject.registerClass({
         // Position and size panel
 
         this._updateMonitorsSettings();
-        this._monitorsConfig.connect('updated',
-            () => this._updateMonitorsSettings());
+        this._updateMonitorPositionRows();
+        this._monitorsConfig.connect('updated', () => {
+            this._updateMonitorsSettings();
+            this._updateMonitorPositionRows();
+        });
         this._settings.connect('changed::preferred-monitor-by-connector',
             () => this._updateMonitorsSettings());
 
