@@ -12,9 +12,11 @@ function getTests() {
     function getDash() {
         const dock = findDock();
         if (!dock) return null;
-        const box = dock.child;
-        const slider = box.get_children()[0];
-        return slider.child;
+        const slider = dock.get_children()[0];
+        if (!slider) return null;
+        const box = slider.get_children().find(c => c.name === 'dashtodockBox');
+        if (!box) return null;
+        return box.get_children().find(c => c.name === 'dash') || null;
     }
 
     function getSettings() {
