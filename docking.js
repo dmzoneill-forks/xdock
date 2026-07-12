@@ -68,6 +68,7 @@ const {gettext: __} = Extension;
 
 const {signals: Signals} = imports;
 
+// Defaults kept as fallbacks; live values come from DockManager.settings
 const DOCK_DWELL_EDGE_PX = 2;
 const DOCK_DWELL_CHECK_INTERVAL = 100;
 const ICON_ANIMATOR_DURATION = 3000;
@@ -1278,15 +1279,16 @@ const DockedDash = GObject.registerClass({
             }
 
             // Slightly underdamped for ~10% overshoot on show
+            const overshootClamp = DockManager.settings.springOvershootClamp ?? 1.15;
             this._activeSpringAnimation = new SpringAnimation.SpringAnimation({
-                stiffness: 200,
-                damping: 18,
+                stiffness: DockManager.settings.springStiffness ?? 200,
+                damping: DockManager.settings.springDamping ?? 18,
                 mass: 1,
                 target: 1.0,
                 initial: this._slider.slideX,
                 actor: this._slider,
                 onUpdate: value => {
-                    this._slider.slideX = Math.max(0, Math.min(value, 1.15));
+                    this._slider.slideX = Math.max(0, Math.min(value, overshootClamp));
                 },
                 onComplete: () => {
                     this._activeSpringAnimation = null;
@@ -1331,15 +1333,16 @@ const DockedDash = GObject.registerClass({
             }
 
             // Critically damped for smooth hide without overshoot
+            const hideOvershootClamp = DockManager.settings.springOvershootClamp ?? 1.15;
             this._activeSpringAnimation = new SpringAnimation.SpringAnimation({
-                stiffness: 200,
-                damping: 28,
+                stiffness: DockManager.settings.springStiffness ?? 200,
+                damping: (DockManager.settings.springDamping ?? 18) + 10,
                 mass: 1,
                 target: 0.0,
                 initial: this._slider.slideX,
                 actor: this._slider,
                 onUpdate: value => {
-                    this._slider.slideX = Math.max(0, Math.min(value, 1.15));
+                    this._slider.slideX = Math.max(0, Math.min(value, hideOvershootClamp));
                 },
                 onComplete: () => {
                     this._activeSpringAnimation = null;
@@ -1381,7 +1384,7 @@ const DockedDash = GObject.registerClass({
             return;
 
         this._checkDockDwellId = GLib.timeout_add(GLib.PRIORITY_DEFAULT,
-            DOCK_DWELL_CHECK_INTERVAL, () => {
+            DockManager.settings.dockDwellCheckInterval ?? DOCK_DWELL_CHECK_INTERVAL, () => {
                 this._checkDockDwellNow(x, y);
                 this._checkDockDwellId = 0;
                 return GLib.SOURCE_REMOVE;
@@ -1390,20 +1393,21 @@ const DockedDash = GObject.registerClass({
 
     _checkDockDwellNow(x, y) {
         const workArea = Main.layoutManager.getWorkAreaForMonitor(this._monitor.index);
+        const edgePx = DockManager.settings.dockEdgeDwellWidth ?? DOCK_DWELL_EDGE_PX;
         let shouldDwell;
         // Check for the correct screen edge, extending the sensitive area to the whole workarea,
-        // minus DOCK_DWELL_EDGE_PX to avoid conflicting with other active corners.
+        // minus edgePx to avoid conflicting with other active corners.
         if (this._position === St.Side.LEFT) {
-            shouldDwell = (x <= this._monitor.x + DOCK_DWELL_EDGE_PX) && (y > workArea.y) &&
+            shouldDwell = (x <= this._monitor.x + edgePx) && (y > workArea.y) &&
                 (y < workArea.y + workArea.height);
         } else if (this._position === St.Side.RIGHT) {
-            shouldDwell = (x >= this._monitor.x + this._monitor.width - DOCK_DWELL_EDGE_PX) &&
+            shouldDwell = (x >= this._monitor.x + this._monitor.width - edgePx) &&
                 (y > workArea.y) && (y < workArea.y + workArea.height);
         } else if (this._position === St.Side.TOP) {
-            shouldDwell = (y <= this._monitor.y + DOCK_DWELL_EDGE_PX) && (x > workArea.x) &&
+            shouldDwell = (y <= this._monitor.y + edgePx) && (x > workArea.x) &&
                 (x < workArea.x + workArea.width);
         } else if (this._position === St.Side.BOTTOM) {
-            shouldDwell = (y >= this._monitor.y + this._monitor.height - DOCK_DWELL_EDGE_PX) &&
+            shouldDwell = (y >= this._monitor.y + this._monitor.height - edgePx) &&
                 (x > workArea.x) && (x < workArea.x + workArea.width);
         }
 
@@ -1520,7 +1524,8 @@ const DockedDash = GObject.registerClass({
         // In case the mouse move away from the dock area before hovering it,
         // in such case the leave event would never be triggered and the dock
         // would stay visible forever.
-        this._triggerTimeoutId =  GLib.timeout_add(GLib.PRIORITY_DEFAULT, 250, () => {
+        this._triggerTimeoutId = GLib.timeout_add(GLib.PRIORITY_DEFAULT,
+            DockManager.settings.pressureShowTimeout ?? 250, () => {
             // Guard against accessing destroyed state
             if (!this._staticBox || !this._monitor) {
                 this._triggerTimeoutId = 0;
@@ -1608,7 +1613,7 @@ const DockedDash = GObject.registerClass({
         }
 
         // Create new barrier
-        // The barrier extends to the whole workarea, minus DOCK_DWELL_EDGE_PX
+        // The barrier extends to the whole workarea, minus edgePx
         // to avoid conflicting with other active corners
         // Note: dash in fixed position doesn't use pressure barrier.
         if (this._canUsePressure && this.autohideEnabled &&
@@ -1616,29 +1621,30 @@ const DockedDash = GObject.registerClass({
             let x1, x2, y1, y2, direction;
             const workArea = Main.layoutManager.getWorkAreaForMonitor(
                 this._monitor.index);
+            const edgePx = DockManager.settings.dockEdgeDwellWidth ?? DOCK_DWELL_EDGE_PX;
 
             if (this._position === St.Side.LEFT) {
-                x1 = this._monitor.x + DOCK_DWELL_EDGE_PX;
+                x1 = this._monitor.x + edgePx;
                 x2 = x1;
-                y1 = workArea.y + DOCK_DWELL_EDGE_PX;
-                y2 = workArea.y + workArea.height - DOCK_DWELL_EDGE_PX;
+                y1 = workArea.y + edgePx;
+                y2 = workArea.y + workArea.height - edgePx;
                 direction = Meta.BarrierDirection.POSITIVE_X;
             } else if (this._position === St.Side.RIGHT) {
-                x1 = this._monitor.x + this._monitor.width - DOCK_DWELL_EDGE_PX;
+                x1 = this._monitor.x + this._monitor.width - edgePx;
                 x2 = x1;
-                y1 = workArea.y + DOCK_DWELL_EDGE_PX;
-                y2 = workArea.y + workArea.height - DOCK_DWELL_EDGE_PX;
+                y1 = workArea.y + edgePx;
+                y2 = workArea.y + workArea.height - edgePx;
                 direction = Meta.BarrierDirection.NEGATIVE_X;
             } else if (this._position === St.Side.TOP) {
-                x1 = workArea.x + DOCK_DWELL_EDGE_PX;
-                x2 = workArea.x + workArea.width - DOCK_DWELL_EDGE_PX;
-                y1 = this._monitor.y + DOCK_DWELL_EDGE_PX;
+                x1 = workArea.x + edgePx;
+                x2 = workArea.x + workArea.width - edgePx;
+                y1 = this._monitor.y + edgePx;
                 y2 = y1;
                 direction = Meta.BarrierDirection.POSITIVE_Y;
             } else if (this._position === St.Side.BOTTOM) {
-                x1 = workArea.x + DOCK_DWELL_EDGE_PX;
-                x2 = workArea.x + workArea.width - DOCK_DWELL_EDGE_PX;
-                y1 = this._monitor.y + this._monitor.height - DOCK_DWELL_EDGE_PX;
+                x1 = workArea.x + edgePx;
+                x2 = workArea.x + workArea.width - edgePx;
+                y1 = this._monitor.y + this._monitor.height - edgePx;
                 y2 = y1;
                 direction = Meta.BarrierDirection.NEGATIVE_Y;
             }
@@ -1975,7 +1981,7 @@ const DockedDash = GObject.registerClass({
 
             if (direction) {
                 // Prevent scroll events from triggering too many workspace switches
-                // by adding a 250ms dead time between each scroll event.
+                // by adding a dead time between each scroll event.
                 // Useful on laptops when using a touch pad.
 
                 // During the deadtime do nothing
@@ -1983,7 +1989,8 @@ const DockedDash = GObject.registerClass({
                     return false;
                 } else {
                     this._optionalScrollWorkspaceSwitchDeadTimeId = GLib.timeout_add(
-                        GLib.PRIORITY_DEFAULT, 250, () => {
+                        GLib.PRIORITY_DEFAULT,
+                        DockManager.settings.scrollWorkspaceDeadtime ?? 250, () => {
                             this._optionalScrollWorkspaceSwitchDeadTimeId = 0;
                         });
                 }
@@ -3620,7 +3627,7 @@ export class DockManager {
                 opacity: 255,
                 translation_x: 0,
                 translation_y: 0,
-                duration: STARTUP_ANIMATION_TIME,
+                duration: DockManager.settings.startupAnimationTime ?? STARTUP_ANIMATION_TIME,
                 mode: Clutter.AnimationMode.EASE_OUT_QUAD,
             });
         });
@@ -4273,8 +4280,9 @@ export class IconAnimator {
             jiggle: [],
         };
         this._signalsHandler = new Utils.GlobalSignalsHandler();
+        const iconAnimDuration = DockManager.settings.iconAnimatorDuration ?? ICON_ANIMATOR_DURATION;
         this._timeline = new Clutter.Timeline({
-            duration: AnimationUtils.adjustAnimationTime(ICON_ANIMATOR_DURATION) || 1,
+            duration: AnimationUtils.adjustAnimationTime(iconAnimDuration) || 1,
             repeat_count: -1,
             actor,
         });
@@ -4306,8 +4314,9 @@ export class IconAnimator {
     }
 
     _updateSettings() {
+        const iconAnimDuration = DockManager.settings.iconAnimatorDuration ?? ICON_ANIMATOR_DURATION;
         this._timeline.set_duration(
-            AnimationUtils.adjustAnimationTime(ICON_ANIMATOR_DURATION) || 1);
+            AnimationUtils.adjustAnimationTime(iconAnimDuration) || 1);
     }
 
     destroy() {

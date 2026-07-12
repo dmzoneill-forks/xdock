@@ -584,7 +584,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
             return;
 
         this._wiggleLongPressTimeoutId = GLib.timeout_add(
-            GLib.PRIORITY_DEFAULT, 500, () => {
+            GLib.PRIORITY_DEFAULT, Docking.DockManager.settings.wiggleLongPressTimeout, () => {
                 this._wiggleLongPressTimeoutId = 0;
                 dockManager?.enterWiggleMode();
                 return GLib.SOURCE_REMOVE;
@@ -622,9 +622,8 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (this._optionalScrollCycleWindowsDeadTimeId) {
             return Clutter.EVENT_PROPAGATE;
         } else {
-            const SCROLL_CYCLE_DEBOUNCE_MS = 250;
             this._optionalScrollCycleWindowsDeadTimeId = GLib.timeout_add(
-                GLib.PRIORITY_DEFAULT, SCROLL_CYCLE_DEBOUNCE_MS, () => {
+                GLib.PRIORITY_DEFAULT, Docking.DockManager.settings.scrollCycleDebounce, () => {
                     this._optionalScrollCycleWindowsDeadTimeId = 0;
                 });
         }
@@ -1360,7 +1359,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         // Set the font size to something smaller than the whole icon so it is
         // still visible. The border radius is large to make the shape circular
         const [minWidth_, natWidth] = this._iconContainer.get_preferred_width(-1);
-        const fontSize = Math.round(Math.max(12, 0.3 * natWidth) / scaleFactor);
+        const fontSize = Math.round(Math.max(12, Docking.DockManager.settings.hotkeyLabelScale * natWidth) / scaleFactor);
         const size = Math.round(fontSize * 1.2);
         this._numberOverlayLabel.set_style(
             `font-size: ${fontSize}px;` +
@@ -1506,8 +1505,6 @@ export const DockAbstractAppIcon = GObject.registerClass({
     _cycleThroughWindows(reversed, shouldMinimize) {
         // Store for a little amount of time last clicked app and its windows
         // since the order changes upon window interaction
-        const MEMORY_TIME = 3000;
-
         const appWindows = this.getInterestingWindows();
 
         if (appWindows.length < 1)
@@ -1519,7 +1516,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (recentlyClickedAppLoopId > 0)
             GLib.source_remove(recentlyClickedAppLoopId);
         recentlyClickedAppLoopId = GLib.timeout_add(
-            GLib.PRIORITY_DEFAULT, MEMORY_TIME, this._resetRecentlyClickedApp);
+            GLib.PRIORITY_DEFAULT, Docking.DockManager.settings.windowCycleMemoryTime, this._resetRecentlyClickedApp);
 
         // If there isn't already a list of windows for the current app,
         // or the stored list is outdated, use the current windows list.
@@ -2523,6 +2520,15 @@ export function itemShowLabel() {
     const itemWidth  = this.allocation.x2 - this.allocation.x1;
     const itemHeight = this.allocation.y2 - this.allocation.y1;
 
+    const monitor = Main.layoutManager.findMonitorForActor(this);
+    const widthPercent = Math.max(20, Math.min(100,
+        Docking.DockManager.settings.tooltipMaxWidthPercent || 60));
+    const maxLabelWidth = Math.min(
+        Math.floor(monitor.width * widthPercent / 100),
+        Docking.DockManager.settings.tooltipMaxWidthPx);
+    const naturalLabelWidth = this.label.get_width();
+    this.label.clutter_text.ellipsize = Pango.EllipsizeMode.END;
+    this.label.set_width(naturalLabelWidth > maxLabelWidth ? maxLabelWidth : -1);
     const labelWidth = this.label.get_width();
     const labelHeight = this.label.get_height();
 
@@ -2561,16 +2567,16 @@ export function itemShowLabel() {
 
     // Leave a few pixel gap
     const gap = 5;
-    const monitor = Main.layoutManager.findMonitorForActor(this);
-    if (x - monitor.x < gap)
-        x += monitor.x - x + labelOffset;
-    else if (x + labelWidth > monitor.x + monitor.width - gap)
-        x -= x + labelWidth - (monitor.x + monitor.width) + gap;
+    const screen = Main.layoutManager.findMonitorForActor(this);
+    if (x - screen.x < gap)
+        x += screen.x - x + labelOffset;
+    else if (x + labelWidth > screen.x + screen.width - gap)
+        x -= x + labelWidth - (screen.x + screen.width) + gap;
 
-    if (y - monitor.y < gap)
-        y = monitor.y + gap;
-    else if (y + labelHeight > monitor.y + monitor.height - gap)
-        y = monitor.y + monitor.height - labelHeight - gap;
+    if (y - screen.y < gap)
+        y = screen.y + gap;
+    else if (y + labelHeight > screen.y + screen.height - gap)
+        y = screen.y + screen.height - labelHeight - gap;
 
     this.label.remove_all_transitions();
     this.label.set_position(x, y);
