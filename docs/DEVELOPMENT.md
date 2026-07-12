@@ -4,7 +4,7 @@ This guide covers building, testing, and iterating on XDock locally.
 
 ## Prerequisites
 
-| Dependency | Purpose | Install (Fedora 44+) |
+| Dependency | Purpose | Install (Fedora 43+) |
 |---|---|---|
 | `dart-sass` (or `sassc`) | Compile SCSS to CSS | `npm install -g sass` |
 | `glib-compile-schemas` | Compile GSettings XML | `sudo dnf install glib2-devel` |
@@ -25,7 +25,7 @@ make extension      # compile schemas + stylesheet
 make install        # copy to ~/.local/share/gnome-shell/extensions/
 ```
 
-A shell reload is required after `make install`: log out/in on Wayland, or `Alt+F2 > r` on Xorg.
+A shell reload is required after `make install`: log out and back in.
 
 ### SASS backend
 
@@ -62,7 +62,7 @@ make extension SASS=ruby     # use ruby-sass
 
 1. It creates a symlink from `~/.local/share/gnome-shell/extensions/xdock@github.com` to your source tree.
 2. It compiles schemas if needed.
-3. It launches a nested GNOME Shell session (Wayland, no X11) inside a window on your desktop.
+3. It launches a nested GNOME Shell session  inside a window on your desktop.
 
 ```bash
 make dev

@@ -17,7 +17,7 @@ We welcome contributions of all kinds -- bug fixes, new features, translations, 
    ```
 4. **Set up devkit** for testing (see [Development Guide](DEVELOPMENT.md)):
    ```bash
-   sudo dnf install mutter-devkit   # Fedora 44+
+   sudo dnf install mutter-devkit   # Fedora 43+
    make dev                          # launches nested GNOME Shell
    ```
 
@@ -126,7 +126,7 @@ Every PR triggers the following CI jobs automatically:
 | Check | What it verifies |
 |---|---|
 | **Jest Unit Tests** | Pure logic tests pass |
-| **Smoke Test** | Extension loads without crash on Fedora 43 + 44 |
+| **Smoke Test** | Extension loads without crash on Fedora 43-45 (GNOME 49-51) |
 | **Integration Tests** | Full test suite passes in headless GNOME Shell |
 | **Visual Regression** | Screenshots match baselines (1% RMSE threshold) |
 | **ESLint** | Code style compliance |

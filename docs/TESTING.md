@@ -176,7 +176,7 @@ GitHub Actions runs on every push and PR (`.github/workflows/test.yml`):
 | Job | What it does |
 |---|---|
 | **Jest Unit Tests** | `npm test` on Ubuntu with Node.js 20 |
-| **Smoke Test** | Build extension in Podman containers (Fedora 43/GNOME 49, Fedora 44/GNOME 50), verify no crash errors in journal |
+| **Smoke Test** | Build extension in Podman containers (Fedora 44/GNOME 50, Fedora 44/GNOME 50, Fedora 45/GNOME 51), verify no crash errors in journal |
 | **Integration Tests** | Run the full test suite headless in a Podman container (Fedora 44), capture screenshots |
 | **Visual Regression** | Compare screenshots against `test/visual/baselines/` using ImageMagick RMSE (1% threshold) |
 

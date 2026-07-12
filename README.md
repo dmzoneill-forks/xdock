@@ -6,7 +6,7 @@
 
 <p align="center">
   <b>A community-driven dock for GNOME Shell</b><br>
-  <sub>Forked from <a href="https://github.com/micheleg/dash-to-dock">Dash to Dock</a> · GNOME 45–50+ · Wayland & X11</sub>
+  <sub>Forked from <a href="https://github.com/micheleg/dash-to-dock">Dash to Dock</a> · GNOME 49–51 · Wayland only</sub>
 </p>
 
 <p align="center">
@@ -19,14 +19,14 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/dmzoneill/6b234c35e25d3f586f68db8e79591d65/raw/xdock-unit-tests.json" alt="Unit Tests">
-  <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/dmzoneill/6b234c35e25d3f586f68db8e79591d65/raw/xdock-integration-tests.json" alt="Integration Tests">
+  <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/dmzoneill/93eef357f1e61f8d337a348fa5c180f0/raw/xdock-unit-tests.json" alt="Unit Tests">
+  <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/dmzoneill/93eef357f1e61f8d337a348fa5c180f0/raw/xdock-integration-tests.json" alt="Integration Tests">
 </p>
 
 ---
 
 <p align="center">
-  <img src="docs/demo.gif" alt="XDock Demo" width="960">
+  <a href="docs/demo.mp4"><img src="docs/screenshot.png" alt="XDock Demo — click to play" width="960"></a>
 </p>
 
 ---
@@ -49,7 +49,7 @@ cd xdock
 make install
 ```
 
-Restart GNOME Shell (<kbd>Alt</kbd>+<kbd>F2</kbd> → `r` on X11, or log out/in on Wayland), then enable via GNOME Extensions.
+Log out and back in, then enable via GNOME Extensions.
 
 ## Documentation
 
