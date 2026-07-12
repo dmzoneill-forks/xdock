@@ -1,0 +1,41 @@
+---
+name: Build Test Container
+'on':
+  workflow_call:
+    inputs:
+      fedora_version:
+        required: true
+        type: string
+    outputs:
+      image_name:
+        description: Container image tag
+        value: ${{ jobs.build.outputs.image_name }}
+
+jobs:
+  build:
+    name: Build Container (Fedora ${{ inputs.fedora_version }})
+    runs-on: ubuntu-latest
+    outputs:
+      image_name: xdock-test:f${{ inputs.fedora_version }}
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v4
+
+      - name: Build container (with cache)
+        run: |
+          podman build \
+            --build-arg=fedora_version=${{ inputs.fedora_version }} \
+            -t xdock-test:f${{ inputs.fedora_version }} \
+            test/container/
+
+      - name: Save container image
+        run: |
+          podman save xdock-test:f${{ inputs.fedora_version }} \
+            -o /tmp/xdock-test-f${{ inputs.fedora_version }}.tar
+
+      - name: Upload container image
+        uses: actions/upload-artifact@v4
+        with:
+          name: container-f${{ inputs.fedora_version }}
+          path: /tmp/xdock-test-f${{ inputs.fedora_version }}.tar
+          retention-days: 1

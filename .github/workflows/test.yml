@@ -52,8 +52,23 @@ jobs:
           message: "${{ steps.jest.outputs.passed }}/${{ steps.jest.outputs.total }} passed"
           color: ${{ steps.jest.outputs.failed == '0' && 'brightgreen' || 'red' }}
 
+  build-container:
+    name: Build Container (${{ matrix.name }})
+    uses: ./.github/workflows/build-container.yml
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - fedora_version: '44'
+            name: 'Fedora 44'
+          - fedora_version: '45'
+            name: 'Fedora 45'
+    with:
+      fedora_version: ${{ matrix.fedora_version }}
+
   smoke-test:
     name: Smoke Test (${{ matrix.name }})
+    needs: build-container
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
@@ -68,15 +83,11 @@ jobs:
       - name: Check out the codebase
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq gettext
-
-      - name: Build test container
-        run: |
-          podman build \
-            --build-arg=fedora_version=${{ matrix.fedora }} \
-            -t xdock-test:f${{ matrix.fedora }} \
-            test/container/
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
       - name: Install build dependencies
         run: |
@@ -85,6 +96,14 @@ jobs:
 
       - name: Build extension zip
         run: make zip-file-nocheck
+
+      - name: Download container image
+        uses: actions/download-artifact@v4
+        with:
+          name: container-f${{ matrix.fedora }}
+
+      - name: Load container image
+        run: podman load -i xdock-test-f${{ matrix.fedora }}.tar
 
       - name: Run smoke test
         run: |
@@ -137,6 +156,7 @@ jobs:
 
   integration-test:
     name: Integration Tests (${{ matrix.name }})
+    needs: build-container
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -149,20 +169,24 @@ jobs:
       - name: Check out the codebase
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq gettext
-
-      - name: Build test container
-        run: |
-          podman build \
-            --build-arg=fedora_version=${{ matrix.fedora }} \
-            -t xdock-test:f${{ matrix.fedora }} \
-            test/container/
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
       - name: Install build dependencies
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq gettext
           npm install -g sass
+
+      - name: Download container image
+        uses: actions/download-artifact@v4
+        with:
+          name: container-f${{ matrix.fedora }}
+
+      - name: Load container image
+        run: podman load -i xdock-test-f${{ matrix.fedora }}.tar
 
       - name: Build extension zip
         run: make zip-file-nocheck
