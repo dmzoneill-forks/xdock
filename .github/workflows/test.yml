@@ -107,3 +107,98 @@ jobs:
           fi
 
           echo "Smoke test passed — no errors detected"
+
+  integration-test:
+    name: Integration Tests (${{ matrix.name }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - fedora: '44'
+            name: 'Fedora 44 / GNOME 50'
+    steps:
+      - name: Check out the codebase
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq gettext
+
+      - name: Build test container
+        run: |
+          podman build \
+            --build-arg=fedora_version=${{ matrix.fedora }} \
+            -t xdock-test:f${{ matrix.fedora }} \
+            test/container/
+
+      - name: Build extension zip
+        run: |
+          UUID="xdock@github.com"
+          zip -r "${UUID}.zip" . \
+            -x '.git/*' 'node_modules/*' 'venv/*' '.claude/*' 'coverage/*' \
+            '_build/*' '*.zip' 'lint/*' '.github/*'
+
+      - name: Run integration tests
+        run: |
+          UUID="xdock@github.com"
+
+          do_in_pod() {
+            podman exec --user gnomeshell --workdir /home/gnomeshell "${POD}" set-env.sh "$@"
+          }
+
+          POD=$(podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK --cap-add=SYS_ADMIN -td xdock-test:f${{ matrix.fedora }})
+
+          sleep 3
+          for i in $(seq 1 10); do
+            do_in_pod true 2>/dev/null && break
+            sleep 2
+          done
+
+          # Copy extension and test runner
+          podman cp "${UUID}.zip" "${POD}:/home/gnomeshell/${UUID}.zip"
+          podman cp test/integration "${POD}:/home/gnomeshell/test/integration"
+          podman cp test/smoke "${POD}:/home/gnomeshell/test/smoke"
+
+          # Install extension
+          do_in_pod gnome-extensions install "${UUID}.zip" || true
+
+          # Run integration tests headless
+          RESULT=$(podman exec --user gnomeshell "${POD}" bash -c '
+            export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
+            export LIBGL_ALWAYS_SOFTWARE=1
+            export XDOCK_TEST_HOLD=0
+            export XDOCK_TEST_SCREENSHOTS=1
+            rm -f /run/user/$(id -u)/gnome-shell-disable-extensions
+            dbus-run-session -- gnome-shell-test-tool --headless \
+              --extension xdock@github.com.zip \
+              /home/gnomeshell/test/integration/runner.js 2>&1 \
+              | grep "XDOCK-TEST"
+          ' 2>&1 || true)
+
+          echo "$RESULT"
+
+          # Copy screenshots out
+          mkdir -p screenshots
+          podman cp "${POD}:/tmp/." screenshots/ 2>/dev/null || true
+          ls screenshots/xdock-test-*.png 2>/dev/null | wc -l | xargs -I{} echo "{} screenshots captured"
+
+          podman stop "${POD}" >/dev/null 2>&1 || true
+
+          # Check for failures
+          if echo "$RESULT" | grep -q "SOME TESTS FAILED"; then
+            echo "::error::Integration tests failed"
+            echo "$RESULT" | grep "FAIL:"
+            exit 1
+          fi
+
+          echo "Integration tests passed"
+
+      - name: Upload test screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-screenshots-f${{ matrix.fedora }}
+          path: screenshots/xdock-test-*.png
+          if-no-files-found: ignore
+          retention-days: 7
