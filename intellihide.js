@@ -15,9 +15,6 @@ import {
 
 const {signals: Signals} = imports;
 
-// A good compromise between reactivity and efficiency; to be tuned.
-const INTELLIHIDE_CHECK_INTERVAL = 100;
-
 const OverlapStatus = Object.freeze({
     UNDEFINED: -1,
     FALSE: 0,
@@ -191,7 +188,7 @@ export class Intellihide {
         this._doCheckOverlap();
 
         this._checkOverlapTimeoutId = GLib.timeout_add(
-            GLib.PRIORITY_DEFAULT, INTELLIHIDE_CHECK_INTERVAL, () => {
+            GLib.PRIORITY_DEFAULT, Docking.DockManager.settings.intellihideCheckInterval, () => {
                 try {
                     this._doCheckOverlap();
                 } catch (e) {

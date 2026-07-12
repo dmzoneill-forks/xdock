@@ -785,8 +785,8 @@ class ProgressArcDrawingArea extends St.DrawingArea {
         const [width, height] = this.get_surface_size();
         const centerX = width / 2;
         const centerY = height / 2;
-        const radius = Math.min(width, height) / 2 - 3;
-        const lineWidth = 3;
+        const lineWidth = Docking.DockManager.settings.progressArcWidth;
+        const radius = Math.min(width, height) / 2 - lineWidth;
 
         cr.setLineWidth(lineWidth);
 

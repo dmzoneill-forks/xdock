@@ -615,6 +615,15 @@ const DockSettings = GObject.registerClass({
             'value',
             Gio.SettingsBindFlags.DEFAULT
         );
+        this._settings.bind('dock-edge-dwell-width',
+            this._builder.get_object('dock_dwell_width_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('dock-dwell-check-interval',
+            this._builder.get_object('dock_dwell_interval_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('pressure-show-timeout',
+            this._builder.get_object('pressure_timeout_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
 
         // Corrent for rtl languages
         if (this._rtl) {
@@ -771,6 +780,24 @@ const DockSettings = GObject.registerClass({
             this._builder.get_object('preview_animation_combo'),
             'active',
             Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('preview-max-height',
+            this._builder.get_object('preview_max_height_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('preview-animation-duration',
+            this._builder.get_object('preview_animation_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('preview-hover-enter-timeout',
+            this._builder.get_object('preview_hover_enter_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('preview-hover-leave-timeout',
+            this._builder.get_object('preview_hover_leave_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('aero-peek-opacity',
+            this._builder.get_object('aero_peek_opacity_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('aero-peek-duration',
+            this._builder.get_object('aero_peek_duration_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
         this._settings.bind('show-icons-emblems',
             this._builder.get_object('show_icons_emblems_switch'),
             'active',
@@ -884,6 +911,22 @@ const DockSettings = GObject.registerClass({
         this._builder.get_object('scroll_action_combo').connect('changed', widget => {
             this._settings.set_enum('scroll-action', widget.get_active());
         });
+
+        this._settings.bind('intellihide-check-interval',
+            this._builder.get_object('intellihide_interval_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('scroll-cycle-debounce',
+            this._builder.get_object('scroll_cycle_debounce_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('scroll-workspace-deadtime',
+            this._builder.get_object('scroll_workspace_deadtime_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('wiggle-long-press-timeout',
+            this._builder.get_object('wiggle_timeout_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('window-cycle-memory-time',
+            this._builder.get_object('window_cycle_memory_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
 
         this._builder.get_object('shift_click_action_combo').connect('changed', widget => {
             this._settings.set_enum('shift-click-action', widget.get_active());
@@ -1299,6 +1342,24 @@ const DockSettings = GObject.registerClass({
         this._settings.bind('shelf-reflection-opacity',
             this._builder.get_object('shelf_reflection_opacity_scale').get_adjustment(),
             'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('shelf-corner-radius-top',
+            this._builder.get_object('shelf_corner_radius_top_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('shelf-corner-radius-bottom',
+            this._builder.get_object('shelf_corner_radius_bottom_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('reflection-size',
+            this._builder.get_object('reflection_size_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('progress-arc-width',
+            this._builder.get_object('progress_arc_width_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('hotkey-label-scale',
+            this._builder.get_object('hotkey_label_scale_ctrl').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('tooltip-max-width-px',
+            this._builder.get_object('tooltip_max_width_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
 
         this._settings.bind('disable-overview-on-startup',
             this._builder.get_object('show_overview_on_startup_switch'),
@@ -1337,6 +1398,27 @@ const DockSettings = GObject.registerClass({
             'sensitive', Gio.SettingsBindFlags.GET);
         this._settings.bind('wallpaper-adaptive-intensity',
             this._builder.get_object('wallpaper_adaptive_intensity_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('spring-stiffness',
+            this._builder.get_object('spring_stiffness_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('spring-damping',
+            this._builder.get_object('spring_damping_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('magnification-spread',
+            this._builder.get_object('magnification_spread_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('magnification-easing-duration',
+            this._builder.get_object('magnification_easing_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('startup-animation-time',
+            this._builder.get_object('startup_animation_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('icon-animator-duration',
+            this._builder.get_object('icon_animator_scale').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('spring-overshoot-clamp',
+            this._builder.get_object('spring_overshoot_scale').get_adjustment(),
             'value', Gio.SettingsBindFlags.DEFAULT);
 
         // Features tab — Productivity

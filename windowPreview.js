@@ -28,15 +28,9 @@ import {
     Utils,
 } from './imports.js';
 
-const PREVIEW_MAX_HEIGHT = 150;
-
-const PREVIEW_ANIMATION_DURATION = 250;
 const MAX_PREVIEW_GENERATION_ATTEMPTS = 15;
 
 const MENU_MARGINS = 10;
-
-const HOVER_ENTER_TIMEOUT = 300;
-const HOVER_MENU_LEAVE_TIMEOUT = 300;
 const WINDOW_INIT_TIMEOUT = 200;
 
 const Labels = Object.freeze({
@@ -234,7 +228,7 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
 
         this._hoverOpenTimeoutId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT,
-            HOVER_ENTER_TIMEOUT,
+            Docking.DockManager.settings.previewHoverEnterTimeout,
             () => {
                 this.hoverOpen();
                 return GLib.SOURCE_REMOVE;
@@ -252,7 +246,7 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
 
         this._hoverCloseTimeoutId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT,
-            HOVER_MENU_LEAVE_TIMEOUT,
+            Docking.DockManager.settings.previewHoverLeaveTimeout,
             () => {
                 this.hoverClose();
                 return GLib.SOURCE_REMOVE;
@@ -322,7 +316,7 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
 
         this._hoverCloseTimeoutId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT,
-            HOVER_MENU_LEAVE_TIMEOUT,
+            Docking.DockManager.settings.previewHoverLeaveTimeout,
             () => {
                 this.hoverClose();
                 return GLib.SOURCE_REMOVE;
@@ -668,7 +662,7 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         if (Docking.DockManager.settings.customThemeShrink)
             this.add_style_class_name('shrink');
 
-        // Now we don't have to set PREVIEW_MAX_WIDTH and PREVIEW_MAX_HEIGHT as
+        // Now we don't have to set fixed preview max width/height as
         // preview size - that made all kinds of windows either stretched or
         // squished (aspect ratio problem)
         this._cloneBin = new St.Bin();
@@ -700,7 +694,7 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
             text: window.get_title(),
             style_class: 'window-preview-label',
         });
-        label.set_style(`max-width: ${PREVIEW_MAX_HEIGHT * 2}px`);
+        label.set_style(`max-width: ${Docking.DockManager.settings.previewMaxHeight * 2}px`);
         const labelBin = new St.Bin({
             child: label,
             x_align: Clutter.ActorAlign.CENTER,
@@ -759,8 +753,8 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
 
         let {previewSizeScale: scale} = Docking.DockManager.settings;
         if (!scale) {
-            const maxWidth = PREVIEW_MAX_HEIGHT * 2;
-            scale = Math.min(1.0, maxWidth / width, PREVIEW_MAX_HEIGHT / height);
+            const maxWidth = Docking.DockManager.settings.previewMaxHeight * 2;
+            scale = Math.min(1.0, maxWidth / width, Docking.DockManager.settings.previewMaxHeight / height);
         }
 
         // NOTE: global scaleFactor; per-monitor scale not yet used here.
@@ -938,8 +932,8 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
                 this._peekingWindows.push(actor);
 
                 actor.ease({
-                    opacity: 3,
-                    duration: 200,
+                    opacity: Docking.DockManager.settings.aeroPeekOpacity,
+                    duration: Docking.DockManager.settings.aeroPeekDuration,
                     mode: Clutter.AnimationMode.EASE_OUT_QUAD,
                 });
             }
@@ -952,7 +946,7 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
                 const originalOpacity = actor._originalOpacity || 255;
                 actor.ease({
                     opacity: originalOpacity,
-                    duration: 200,
+                    duration: Docking.DockManager.settings.aeroPeekDuration,
                     mode: Clutter.AnimationMode.EASE_OUT_QUAD,
                     onComplete: () => {
                         delete actor._originalOpacity;
@@ -1003,7 +997,7 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         this.opacity = 0;
         this.set_width(0);
 
-        const time = animate ? PREVIEW_ANIMATION_DURATION : 0;
+        const time = animate ? Docking.DockManager.settings.previewAnimationDuration : 0;
         this.remove_all_transitions();
         this.ease({
             opacity: 255,
@@ -1017,14 +1011,14 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         this.remove_all_transitions();
         this.ease({
             opacity: 0,
-            duration: PREVIEW_ANIMATION_DURATION,
+            duration: Docking.DockManager.settings.previewAnimationDuration,
         });
 
         this.ease({
             width: 0,
             height: 0,
-            duration: PREVIEW_ANIMATION_DURATION,
-            delay: PREVIEW_ANIMATION_DURATION,
+            duration: Docking.DockManager.settings.previewAnimationDuration,
+            delay: Docking.DockManager.settings.previewAnimationDuration,
             onComplete: () => this.destroy(),
         });
     }

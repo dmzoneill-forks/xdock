@@ -387,22 +387,23 @@ export class ThemeManager {
         const shelfTop = Math.round(h * settings.shelfHeight);
         const shelfH = h - shelfTop;
         const inset = Math.round(shelfH * settings.shelfAngle);
-        const r = 10;
+        const rt = settings.shelfCornerRadiusTop;
+        const rb = settings.shelfCornerRadiusBottom;
 
         cr.save();
         cr.translate(0, shelfTop);
 
-        // Trapezoid path: top narrower, bottom wider
+        // Trapezoid path: top narrower (rt radius), bottom wider (rb radius)
         cr.newPath();
-        cr.moveTo(inset + r, 0);
-        cr.lineTo(w - inset - r, 0);
-        cr.arc(w - inset - r, r, r, -Math.PI / 2, 0);
-        cr.lineTo(w, shelfH - r);
-        cr.arc(w - r, shelfH - r, r, 0, Math.PI / 2);
-        cr.lineTo(r, shelfH);
-        cr.arc(r, shelfH - r, r, Math.PI / 2, Math.PI);
-        cr.lineTo(inset, r);
-        cr.arc(inset + r, r, r, Math.PI, 3 * Math.PI / 2);
+        cr.moveTo(inset + rt, 0);
+        cr.lineTo(w - inset - rt, 0);
+        cr.arc(w - inset - rt, rt, rt, -Math.PI / 2, 0);
+        cr.lineTo(w, shelfH - rb);
+        cr.arc(w - rb, shelfH - rb, rb, 0, Math.PI / 2);
+        cr.lineTo(rb, shelfH);
+        cr.arc(rb, shelfH - rb, rb, Math.PI / 2, Math.PI);
+        cr.lineTo(inset, rt);
+        cr.arc(inset + rt, rt, rt, Math.PI, 3 * Math.PI / 2);
         cr.closePath();
 
         // Fill with gradient
@@ -415,15 +416,15 @@ export class ThemeManager {
         // Top highlight along the shelf edge
         cr.setSourceRGBA(1, 1, 1, hlOp);
         cr.setLineWidth(1);
-        cr.moveTo(inset + r, 0.5);
-        cr.lineTo(w - inset - r, 0.5);
+        cr.moveTo(inset + rt, 0.5);
+        cr.lineTo(w - inset - rt, 0.5);
         cr.stroke();
 
         // Bottom shadow
         cr.setSourceRGBA(0, 0, 0, brOp * 0.4);
         cr.setLineWidth(1);
-        cr.moveTo(r, shelfH - 0.5);
-        cr.lineTo(w - r, shelfH - 0.5);
+        cr.moveTo(rb, shelfH - 0.5);
+        cr.lineTo(w - rb, shelfH - 0.5);
         cr.stroke();
 
         cr.restore();
@@ -534,6 +535,8 @@ export class ThemeManager {
             'shelf-border-opacity',
             'shelf-angle',
             'shelf-height',
+            'shelf-corner-radius-top',
+            'shelf-corner-radius-bottom',
             'shelf-reflection-opacity'];
 
         this._signalsHandler.addWithLabel(Labels.THEME_CHANGED, ...styleOnlyKeys.map(key => [

@@ -310,13 +310,13 @@ export const DockDash = GObject.registerClass({
                 source: this._background,
                 coordinate: Clutter.BindCoordinate.WIDTH,
             }));
-            this._reflection.height = 20;
+            this._reflection.height = Docking.DockManager.settings.reflectionSize;
         } else {
             this._reflection.add_constraint(new Clutter.BindConstraint({
                 source: this._background,
                 coordinate: Clutter.BindCoordinate.HEIGHT,
             }));
-            this._reflection.width = 20;
+            this._reflection.width = Docking.DockManager.settings.reflectionSize;
         }
 
         this.add_child(this._background);
@@ -1564,7 +1564,7 @@ export const DockDash = GObject.registerClass({
         if (!icon)
             return;
         icon.set_pivot_point(pivotX, pivotY);
-        icon.set_easing_duration(100);
+        icon.set_easing_duration(Docking.DockManager.settings.magnificationEasingDuration);
         icon.set_easing_mode(Clutter.AnimationMode.EASE_OUT_QUAD);
         icon.set_scale(scale, scale);
     }
@@ -1594,7 +1594,7 @@ export const DockDash = GObject.registerClass({
         const [cursorX, cursorY] = event.get_coords();
         const cursor = this._isHorizontal ? cursorX : cursorY;
 
-        const spreadIcons = 3;
+        const spreadIcons = settings.magnificationSpread;
         const spread = this.iconSize * spreadIcons;
         const [pivotX, pivotY] = this._getMagnificationPivot();
 
@@ -1653,7 +1653,7 @@ export const DockDash = GObject.registerClass({
                 const bgW = this._background.width || 1;
                 const scaleX = (bgW + totalExtra) / bgW;
                 this._background.set_pivot_point(0.5, 0.5);
-                this._background.set_easing_duration(100);
+                this._background.set_easing_duration(settings.magnificationEasingDuration);
                 this._background.set_easing_mode(Clutter.AnimationMode.EASE_OUT_QUAD);
                 if (this._isHorizontal)
                     this._background.set_scale(scaleX, 1.0);
@@ -1671,7 +1671,7 @@ export const DockDash = GObject.registerClass({
                                  data.child.child?.icon ?? data.child.child;
                     if (icon) {
                         icon.set_pivot_point(pivotX, pivotY);
-                        icon.set_easing_duration(100);
+                        icon.set_easing_duration(settings.magnificationEasingDuration);
                         icon.set_easing_mode(Clutter.AnimationMode.EASE_OUT_QUAD);
                         icon.set_scale(data.scale, data.scale);
                     }
@@ -1681,7 +1681,7 @@ export const DockDash = GObject.registerClass({
                 data.child.set_z_position(data.scale > 1.0 ? data.scale * 10 : 0);
 
                 // Translate ALL children so separators stay in sync
-                data.child.set_easing_duration(100);
+                data.child.set_easing_duration(settings.magnificationEasingDuration);
                 data.child.set_easing_mode(Clutter.AnimationMode.EASE_OUT_QUAD);
                 if (this._isHorizontal)
                     data.child.translation_x = offset;

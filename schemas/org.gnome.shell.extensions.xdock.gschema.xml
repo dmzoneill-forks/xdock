@@ -885,5 +885,140 @@
       <summary>Secondary dock position</summary>
       <description>Screen edge for the secondary dock. Must be different from the primary dock position.</description>
     </key>
+    <key type="d" name="spring-stiffness">
+      <default>200</default>
+      <summary>Spring animation stiffness constant</summary>
+      <description>Spring animation stiffness constant (50-500).</description>
+    </key>
+    <key type="d" name="spring-damping">
+      <default>20</default>
+      <summary>Spring animation damping coefficient</summary>
+      <description>Spring animation damping coefficient (5-50).</description>
+    </key>
+    <key type="i" name="magnification-spread">
+      <default>3</default>
+      <summary>Number of icons affected on each side during magnification</summary>
+      <description>Number of icons affected on each side during magnification (1-6).</description>
+    </key>
+    <key type="i" name="magnification-easing-duration">
+      <default>100</default>
+      <summary>Duration in ms for magnification easing transitions</summary>
+      <description>Duration in ms for magnification easing transitions (30-300).</description>
+    </key>
+    <key type="i" name="startup-animation-time">
+      <default>500</default>
+      <summary>Duration in ms for initial dock startup animation</summary>
+      <description>Duration in ms for initial dock startup animation (100-2000).</description>
+    </key>
+    <key type="i" name="icon-animator-duration">
+      <default>3000</default>
+      <summary>Duration in ms for icon bounce/launch animation</summary>
+      <description>Duration in ms for icon bounce/launch animation (1000-5000).</description>
+    </key>
+    <key type="i" name="preview-max-height">
+      <default>150</default>
+      <summary>Maximum height in pixels for window preview thumbnails</summary>
+      <description>Maximum height in pixels for window preview thumbnails (80-400).</description>
+    </key>
+    <key type="i" name="preview-animation-duration">
+      <default>250</default>
+      <summary>Duration in ms for preview show/hide animation</summary>
+      <description>Duration in ms for preview show/hide animation (50-500).</description>
+    </key>
+    <key type="i" name="preview-hover-enter-timeout">
+      <default>300</default>
+      <summary>Delay in ms before showing preview on hover</summary>
+      <description>Delay in ms before showing preview on hover (100-1000).</description>
+    </key>
+    <key type="i" name="preview-hover-leave-timeout">
+      <default>300</default>
+      <summary>Delay in ms before closing preview after mouse leaves</summary>
+      <description>Delay in ms before closing preview after mouse leaves (100-1000).</description>
+    </key>
+    <key type="i" name="aero-peek-opacity">
+      <default>3</default>
+      <summary>Opacity (0-255) for windows during Aero Peek</summary>
+      <description>Opacity (0-255) for windows during Aero Peek (1-100).</description>
+    </key>
+    <key type="i" name="aero-peek-duration">
+      <default>200</default>
+      <summary>Duration in ms for Aero Peek fade animation</summary>
+      <description>Duration in ms for Aero Peek fade animation (50-500).</description>
+    </key>
+    <key type="i" name="intellihide-check-interval">
+      <default>100</default>
+      <summary>Interval in ms for checking window overlap in intellihide mode</summary>
+      <description>Interval in ms for checking window overlap in intellihide mode (50-500).</description>
+    </key>
+    <key type="i" name="scroll-cycle-debounce">
+      <default>250</default>
+      <summary>Debounce time in ms for scroll wheel window cycling</summary>
+      <description>Debounce time in ms for scroll wheel window cycling (50-500).</description>
+    </key>
+    <key type="i" name="scroll-workspace-deadtime">
+      <default>250</default>
+      <summary>Dead time in ms between scroll workspace switch events</summary>
+      <description>Dead time in ms between scroll workspace switch events (100-500).</description>
+    </key>
+    <key type="i" name="wiggle-long-press-timeout">
+      <default>500</default>
+      <summary>Duration in ms of long press to enter wiggle/rearrange mode</summary>
+      <description>Duration in ms of long press to enter wiggle/rearrange mode (200-1500).</description>
+    </key>
+    <key type="i" name="window-cycle-memory-time">
+      <default>3000</default>
+      <summary>Duration in ms to remember window cycling order</summary>
+      <description>Duration in ms to remember window cycling order (1000-10000).</description>
+    </key>
+    <key type="i" name="dock-edge-dwell-width">
+      <default>2</default>
+      <summary>Width in pixels of the dock edge dwell trigger zone</summary>
+      <description>Width in pixels of the dock edge dwell trigger zone (1-10).</description>
+    </key>
+    <key type="i" name="dock-dwell-check-interval">
+      <default>100</default>
+      <summary>Polling interval in ms for edge dwell detection</summary>
+      <description>Polling interval in ms for edge dwell detection (50-500).</description>
+    </key>
+    <key type="i" name="shelf-corner-radius-top">
+      <default>6</default>
+      <summary>Top corner radius for the shelf trapezoid</summary>
+      <description>Corner radius in pixels for the top (narrower) edge of the shelf (0-30).</description>
+    </key>
+    <key type="i" name="shelf-corner-radius-bottom">
+      <default>12</default>
+      <summary>Bottom corner radius for the shelf trapezoid</summary>
+      <description>Corner radius in pixels for the bottom (wider) edge of the shelf (0-30).</description>
+    </key>
+    <key type="i" name="reflection-size">
+      <default>20</default>
+      <summary>Size in pixels of the dock reflection effect</summary>
+      <description>Size in pixels of the dock reflection effect (5-50).</description>
+    </key>
+    <key type="i" name="progress-arc-width">
+      <default>3</default>
+      <summary>Line width in pixels for progress arc indicators</summary>
+      <description>Line width in pixels for progress arc indicators (1-8).</description>
+    </key>
+    <key type="d" name="hotkey-label-scale">
+      <default>0.3</default>
+      <summary>Scale factor for hotkey number overlay labels</summary>
+      <description>Scale factor for hotkey number overlay labels (0.1-0.6).</description>
+    </key>
+    <key type="i" name="tooltip-max-width-px">
+      <default>700</default>
+      <summary>Maximum width in pixels for application tooltips</summary>
+      <description>Maximum width in pixels for application tooltips (200-1200).</description>
+    </key>
+    <key type="d" name="spring-overshoot-clamp">
+      <default>1.15</default>
+      <summary>Maximum overshoot value for spring slide animations</summary>
+      <description>Maximum overshoot value for spring slide animations (1.0-1.5).</description>
+    </key>
+    <key type="i" name="pressure-show-timeout">
+      <default>250</default>
+      <summary>Timeout in ms for pressure-triggered dock show</summary>
+      <description>Timeout in ms for pressure-triggered dock show (50-500).</description>
+    </key>
   </schema>
 </schemalist>
