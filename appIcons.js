@@ -9,6 +9,7 @@ import {
     GObject,
     Meta,
     Mtk,
+    Pango,
     Shell,
     St,
 } from './dependencies/gi.js';
@@ -38,6 +39,8 @@ import {
     WindowPreview,
 } from './imports.js';
 
+import * as Settings from './platform/settings.js';
+
 import {Extension} from './dependencies/shell/extensions/extension.js';
 
 let LiveThumbnails, MediaControls, PinnedCommands, RecentFilesMenu;
@@ -61,12 +64,14 @@ function _ensureAppIconsDeferred() {
 
 // Use __ () and N__() for the extension gettext domain, and reuse
 // the shell domain with the default _() and N_()
-const {gettext: __, ngettext: N__} = Extension;
+const {gettext: __, ngettext} = Extension;
 
 let DBusMenu = null;
 DBusMenuUtils.haveDBusMenu().then(m => {
     DBusMenu = m;
 }).catch(e => logError(e, 'XDock: Failed to load DBusMenu'));
+
+const tracker = Shell.WindowTracker.get_default();
 
 const Labels = Object.freeze({
     ISOLATE_MONITORS: Symbol('isolate-monitors'),
@@ -79,7 +84,7 @@ const Labels = Object.freeze({
     WIGGLE_MODE: Symbol('wiggle-mode'),
 });
 
-const clickAction = Object.freeze({
+export const clickAction = Object.freeze({
     SKIP: 0,
     MINIMIZE: 1,
     LAUNCH: 2,
@@ -95,7 +100,7 @@ const clickAction = Object.freeze({
     QUIT: 12,
 });
 
-const scrollAction = Object.freeze({
+export const scrollAction = Object.freeze({
     DO_NOTHING: 0,
     CYCLE_WINDOWS: 1,
     SWITCH_WORKSPACE: 2,
@@ -150,12 +155,13 @@ export const DockAbstractAppIcon = GObject.registerClass({
     },
 }, class DockAbstractAppIcon extends Dash.DashIcon {
     // settings are required inside.
-    _init(app, monitorIndex, iconAnimator) {
+    _init(app, monitorIndex, iconAnimator, window = null) {
         super._init(app);
         _ensureAppIconsDeferred();
 
         // a prefix is required to avoid conflicting with the parent class variable
         this.monitorIndex = monitorIndex;
+        this.window = window;
         this._signalsHandler = new Utils.GlobalSignalsHandler(this);
         this.iconAnimator = iconAnimator;
         this._indicator = new AppIconIndicators.AppIconIndicator(this);
@@ -183,7 +189,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         // window of any application opened or moved to a different desktop),
         // we restrict this signal to  the case when Labels.ISOLATE_MONITORS is true,
         // and if there are at least 2 monitors.
-        if (Docking.DockManager.settings.isolateMonitors &&
+        if (Settings.get('isolate-monitors') &&
             Main.layoutManager.monitors.length > 1) {
             this._signalsHandler.addWithLabel(Labels.ISOLATE_MONITORS,
                 global.display,
@@ -221,7 +227,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
             const icon = this.icon._iconBin;
             this._signalsHandler.removeWithLabel(Labels.URGENT_WINDOWS);
             if (this.urgent) {
-                if (Docking.DockManager.settings.danceUrgentApplications &&
+                if (Settings.get('dance-urgent-applications') &&
                     notificationsMonitor.enabled) {
                     icon.set_pivot_point(0.5, 0.5);
                     this.iconAnimator.addAnimation(icon, 'wiggle');
@@ -280,7 +286,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         // of the most-recent window when enabled.
         this._liveThumbnailManager = LiveThumbnails
             ? new LiveThumbnails.LiveThumbnailManager(this) : null;
-        if (this._liveThumbnailManager && Docking.DockManager.settings.liveWindowThumbnails) {
+        if (this._liveThumbnailManager && Settings.get('live-window-thumbnails')) {
             try {
                 this._liveThumbnailManager.enable();
             } catch (e) {
@@ -292,7 +298,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
             Docking.DockManager.settings,
             'changed::live-window-thumbnails', () => {
                 try {
-                    if (Docking.DockManager.settings.liveWindowThumbnails)
+                    if (Settings.get('live-window-thumbnails'))
                         this._liveThumbnailManager.enable();
                     else
                         this._liveThumbnailManager.disable();
@@ -304,22 +310,9 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
         this._previewMenuManager = null;
         this._previewMenu = null;
-
-        // This requires GNOME 49
-        if (Clutter.ClickGesture) {
-            const doubleClickGesture = new Clutter.ClickGesture({nClicksRequired: 2});
-            doubleClickGesture.connect('recognize', () => {
-                this._activate({
-                    button: doubleClickGesture.get_button(),
-                    modifiers: doubleClickGesture.get_state(),
-                    clickCount: doubleClickGesture.get_n_presses(),
-                });
-            });
-            this.add_action(doubleClickGesture);
-            this._doubleClickGesture = doubleClickGesture;
-        }
         this._hoverIsEnabled = false;
         this._originalOpenStateChangeId = null;
+
         // MPRIS media controls
         this._mediaControlsOverlay = null;
         this._mediaPlayingIndicator = null;
@@ -352,7 +345,6 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (!mprisMonitor)
             return;
 
-        // Create a small green dot indicator for apps with active players
         this._mediaPlayingIndicator = new St.Bin({
             style_class: 'media-playing-indicator',
             x_align: Clutter.ActorAlign.END,
@@ -363,11 +355,9 @@ export const DockAbstractAppIcon = GObject.registerClass({
         });
         this._iconContainer.add_child(this._mediaPlayingIndicator);
 
-        // Listen for player changes
         this._signalsHandler.add(mprisMonitor, 'player-changed',
             () => this._updateMediaState());
 
-        // Hover signals for media controls overlay
         this._signalsHandler.add(this, 'enter-event', () => this._onMediaHoverEnter());
         this._signalsHandler.add(this, 'leave-event', () => this._onMediaHoverLeave());
 
@@ -385,7 +375,6 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
         this._mediaPlayingIndicator.visible = hasPlayer;
 
-        // Update overlay if it's currently showing
         if (this._mediaControlsOverlay?.visible && appId) {
             const playerInfo = mprisMonitor.getPlayerForApp(appId);
             this._mediaControlsOverlay.updateState(playerInfo);
@@ -421,27 +410,10 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (!this._mediaControlsOverlay)
             return;
 
-        // Don't hide if the pointer moved to the overlay
         if (this._mediaControlsOverlay.has_pointer)
             return;
 
         this._mediaControlsOverlay.scheduleHide();
-        // Wiggle mode state
-        this._wiggleLongPressTimeoutId = 0;
-        this._wiggleRemoveBadge = null;
-        this._wiggleJiggling = false;
-        this._wigglePhaseOffset = Math.random() * 2 * Math.PI;
-
-        // Listen for wiggle mode changes from DockManager
-        const dockManager = Docking.DockManager.getDefault();
-        if (dockManager) {
-            this._signalsHandler.addWithLabel(Labels.WIGGLE_MODE,
-                dockManager, 'wiggle-mode-changed',
-                (_dm, active) => this._onWiggleModeChanged(active));
-            // If wiggle mode is already active (icon added during wiggle mode)
-            if (dockManager.wiggleMode)
-                this._onWiggleModeChanged(true);
-        }
         this._recentFilesMenuManager = null;
         this._recentFilesMenuInstance = null;
     }
@@ -468,7 +440,6 @@ export const DockAbstractAppIcon = GObject.registerClass({
         this._cancelWiggleLongPress();
         this._removeWiggleBadge();
         this._stopJiggle();
-
         // Clean up live thumbnail manager
         if (this._liveThumbnailManager) {
             this._liveThumbnailManager.destroy();
@@ -477,10 +448,11 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
         super._onDestroy();
 
+        // This is necessary due to an upstream bug
+        // https://bugzilla.gnome.org/show_bug.cgi?id=757556
+        // It can be safely removed once it get solved upstream.
+        this._menu?.close(false);
         delete this._menu;
-
-        this._doubleClickGesture?.cancel();
-        delete this._doubleClickGesture;
     }
 
     // ── Wiggle Mode (iOS-style jiggle for rearranging/unpinning) ──────────
@@ -578,7 +550,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
     _startWiggleLongPress() {
         this._cancelWiggleLongPress();
 
-        if (!Docking.DockManager.settings.wiggleModeEnabled)
+        if (!Settings.get('wiggle-mode-enabled'))
             return;
 
         // Don't start long-press if already in wiggle mode
@@ -586,8 +558,9 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (dockManager?.wiggleMode)
             return;
 
+        const longPressTimeout = Settings.get('wiggle-long-press-timeout');
         this._wiggleLongPressTimeoutId = GLib.timeout_add(
-            GLib.PRIORITY_DEFAULT, Docking.DockManager.settings.wiggleLongPressTimeout, () => {
+            GLib.PRIORITY_DEFAULT, longPressTimeout, () => {
                 this._wiggleLongPressTimeoutId = 0;
                 dockManager?.enterWiggleMode();
                 return GLib.SOURCE_REMOVE;
@@ -602,7 +575,10 @@ export const DockAbstractAppIcon = GObject.registerClass({
     }
 
     ownsWindow(window) {
-        return this.app === Docking.DockManager.windowTracker.get_window_app(window);
+        if (this.window)
+            return this.window === window;
+
+        return this.app === tracker.get_window_app(window);
     }
 
     _onWindowEntered(metaScreen, monitorIndex, metaWin) {
@@ -611,8 +587,8 @@ export const DockAbstractAppIcon = GObject.registerClass({
     }
 
     vfunc_scroll_event(scrollEvent) {
-        const {settings} = Docking.DockManager;
-        const isEnabled = settings.scrollAction === scrollAction.CYCLE_WINDOWS;
+        const currentScrollAction = Settings.get('scroll-action');
+        const isEnabled = currentScrollAction === scrollAction.CYCLE_WINDOWS;
         if (!isEnabled)
             return Clutter.EVENT_PROPAGATE;
 
@@ -625,8 +601,9 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (this._optionalScrollCycleWindowsDeadTimeId) {
             return Clutter.EVENT_PROPAGATE;
         } else {
+            const debounce = Settings.get('scroll-cycle-debounce');
             this._optionalScrollCycleWindowsDeadTimeId = GLib.timeout_add(
-                GLib.PRIORITY_DEFAULT, Docking.DockManager.settings.scrollCycleDebounce, () => {
+                GLib.PRIORITY_DEFAULT, debounce, () => {
                     this._optionalScrollCycleWindowsDeadTimeId = 0;
                 });
         }
@@ -684,7 +661,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         this._updateFocusState();
         this._updateUrgentWindows(interestingWindows);
 
-        if (Docking.DockManager.settings.isolateWorkspaces) {
+        if (Settings.get('isolate-workspaces')) {
             this._signalsHandler.removeWithLabel(Labels.ISOLATE_WORKSPACES);
             interestingWindows.forEach(window =>
                 this._signalsHandler.addWithLabel(Labels.ISOLATE_WORKSPACES,
@@ -697,40 +674,45 @@ export const DockAbstractAppIcon = GObject.registerClass({
     }
 
     _updateFocusState() {
-        let isFocused = Docking.DockManager.windowTracker.focus_app === this.app;
-        // Fallback when focus_app is stale or references a different app
-        // object than this pinned icon (#122).
-        if (!isFocused) {
-            const focusWin = global.display.focus_window;
-            if (focusWin)
-                isFocused = Docking.DockManager.windowTracker.get_window_app(focusWin) ===
-                    this.app;
+        let isFocused;
+        if (this.window) {
+            isFocused = global.display.focus_window === this.window;
+        } else {
+            isFocused = tracker.focus_app === this.app;
+            // Fallback: if tracker.focus_app does not match, check
+            // whether the focused window belongs to this app.  This
+            // covers cases where the tracker's focus_app is stale or
+            // points to a different Shell.App instance (#122).
+            if (!isFocused) {
+                const focusWin = global.display.focus_window;
+                if (focusWin)
+                    isFocused = this.app === tracker.get_window_app(focusWin);
+            }
+            // When isolate-monitors is active, only show focus if the
+            // focused window actually belongs to this monitor (#105).
+            if (isFocused && Settings.get('isolate-monitors')) {
+                const focusWin = global.display.focus_window;
+                if (focusWin)
+                    isFocused = focusWin.get_monitor() === this.monitorIndex;
+            }
+            // When all windows are minimized, GNOME Shell's
+            // tracker.focus_app may still report this app as focused.
+            // Clear the focus indicator so the icon highlight is removed
+            // and click-to-raise works on the next click (#107).
+            if (isFocused) {
+                const windows = this.getInterestingWindows();
+                const activeWs = global.workspace_manager.get_active_workspace();
+                const hasVisibleWindow = windows.some(
+                    w => w.get_workspace() === activeWs &&
+                         w.showing_on_its_workspace());
+                if (windows.length > 0 && !hasVisibleWindow)
+                    isFocused = false;
+            }
         }
-
-        // When isolate-monitors is active, only show focus if the focused
-        // window actually belongs to this monitor (#105).
-        if (isFocused && Docking.DockManager.settings.isolateMonitors) {
-            const focusWin = global.display.focus_window;
-            if (focusWin)
-                isFocused = focusWin.get_monitor() === this.monitorIndex;
-        }
-
-        // When all windows are minimized, GNOME Shell's tracker.focus_app may
-        // still report this app as focused. Clear stale icon highlighting.
-        if (isFocused) {
-            const windows = this.getInterestingWindows();
-            const activeWs = global.workspace_manager.get_active_workspace();
-            const hasVisibleWindow = windows.some(
-                w => w.get_workspace() === activeWs &&
-                     w.showing_on_its_workspace());
-            if (windows.length > 0 && !hasVisibleWindow)
-                isFocused = false;
-        }
-
         this.focused = isFocused && this.running;
 
         // Clear notification counter badge when the app gets focus (#55)
-        if (this.focused && Docking.DockManager.settings.clearNotificationsOnFocus) {
+        if (this.focused && Settings.get('clear-notifications-on-focus')) {
             const appId = this.app?.id;
             if (appId) {
                 const {notificationsMonitor} = Docking.DockManager.getDefault() ?? {};
@@ -811,7 +793,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         [rect.width, rect.height] = this.get_transformed_size();
 
         let windows = this.getWindows();
-        if (Docking.DockManager.settings.multiMonitor) {
+        if (Settings.get('multi-monitor')) {
             const {monitorIndex} = this;
             windows = windows.filter(w => w.get_monitor() === monitorIndex);
         }
@@ -827,15 +809,14 @@ export const DockAbstractAppIcon = GObject.registerClass({
     notifyAppIconUpdating(monitorIndex) {
         const icon = Gio.Icon.new_for_string('action-unavailable-symbolic');
         const {osdWindowManager} = Main;
-        const showOsd = osdWindowManager.showOne ?? osdWindowManager.show;
-        showOsd.call(osdWindowManager, monitorIndex ?? this.monitorIndex, icon,
-            __('%s is updating, try again later').format(this.name), null);
+        osdWindowManager.showOne(monitorIndex ?? this.monitorIndex, icon,
+            _('%s is updating, try again later').format(this.name), null);
     }
 
     popupMenu() {
         this._removeMenuTimeout?.();
         this.fake_release();
-        this._draggable.fakeRelease?.();
+        this._draggable?.fakeRelease?.();
 
         // Close hover-opened preview menus when opening right-click menu
         if (this._previewMenu) {
@@ -873,7 +854,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
                     const {scaleFactor} = St.ThemeContext.get_for_stage(global.stage);
                     const isHorizontal = position === St.Side.TOP || position === St.Side.BOTTOM;
                     // If horizontal also remove the height of the dash
-                    const {dockFixed: fixedDock} = Docking.DockManager.settings;
+                    const fixedDock = Settings.get('dock-fixed');
                     const additionalMargin = isHorizontal && !fixedDock ? Main.overview.dash.height : 0;
                     const verticalMargins = this._menu.actor.margin_top + this._menu.actor.margin_bottom;
                     const maxMenuHeight = workArea.height - additionalMargin - verticalMargins;
@@ -933,14 +914,8 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
 
         const event = Clutter.get_current_event();
-        this._activate({
-            button,
-            modifiers: event?.get_state() ?? 0,
-            clickCount: event?.get_click_count?.() ?? 1,
-        });
-    }
+        let modifiers = event ? event.get_state() : 0;
 
-    _activate({button, modifiers, clickCount = 1}) {
         // Only consider SHIFT and CONTROL as modifiers (exclude SUPER, CAPS-LOCK, etc.)
         modifiers &= Clutter.ModifierType.SHIFT_MASK | Clutter.ModifierType.CONTROL_MASK;
 
@@ -958,18 +933,10 @@ export const DockAbstractAppIcon = GObject.registerClass({
         // being used. We then define what buttonAction should be for this
         // event.
         let buttonAction = 0;
-        const {settings} = Docking.DockManager;
-        if (button && button === 2) {
-            if (modifiers & Clutter.ModifierType.SHIFT_MASK)
-                buttonAction = settings.shiftMiddleClickAction;
-            else
-                buttonAction = settings.middleClickAction;
-        } else if (button && button === 1) {
-            if (modifiers & Clutter.ModifierType.SHIFT_MASK)
-                buttonAction = settings.shiftClickAction;
-            else
-                buttonAction = settings.clickAction;
-        }
+        const shiftHeld = !!(modifiers & Clutter.ModifierType.SHIFT_MASK);
+        const actionKey = resolveClickSettingsKey(button, shiftHeld);
+        if (actionKey)
+            buttonAction = Settings.get(actionKey);
 
         switch (buttonAction) {
         case clickAction.FOCUS_OR_APP_SPREAD:
@@ -1029,9 +996,9 @@ export const DockAbstractAppIcon = GObject.registerClass({
                         modifiers & Clutter.ModifierType.SHIFT_MASK) {
                         // minimize all windows on double click and always in
                         // the case of primary click without additional modifiers
-						let clickCount = 0;
-						if (event.type() === Clutter.EventType.BUTTON_PRESS)
-							clickCount = event.get_click_count();
+                        let clickCount = 0;
+                        if (event.type() === Clutter.EventType.BUTTON_PRESS)
+                            clickCount = event.get_click_count();
                         const allWindows = (button === 1 && !modifiers) || clickCount > 1;
                         this._minimizeWindow(allWindows);
                     } else {
@@ -1167,7 +1134,6 @@ export const DockAbstractAppIcon = GObject.registerClass({
             case clickAction.FOCUS_OR_APP_SPREAD:
                 if (effectiveFocused && !singleOrUrgentWindows && !modifiers && button === 1) {
                     shouldHideOverview = false;
-                    this._doubleClickGesture?.cancel();
                     Docking.DockManager.getDefault()?.appSpread?.toggle(this.app);
                 } else {
                     // Activate the first window
@@ -1178,7 +1144,6 @@ export const DockAbstractAppIcon = GObject.registerClass({
             case clickAction.FOCUS_MINIMIZE_OR_APP_SPREAD:
                 if (effectiveFocused && !singleOrUrgentWindows && !modifiers && button === 1) {
                     shouldHideOverview = false;
-                    this._doubleClickGesture?.cancel();
                     Docking.DockManager.getDefault()?.appSpread?.toggle(this.app);
                 } else if (!effectiveFocused) {
                     // Activate the first window
@@ -1208,7 +1173,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
     shouldShowTooltip() {
         return super.shouldShowTooltip() && !this._previewMenu?.isOpen &&
             !this._recentFilesMenuInstance?.isOpen &&
-            !Docking.DockManager.settings.hideTooltip;
+            !Settings.get('hide-tooltip');
     }
 
     _windowPreviews() {
@@ -1234,9 +1199,8 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (this._previewMenu.isOpen) {
             this._previewMenu.close();
         } else {
-            this._previewMenu.fromHover = false; // Mark as click-opened
+            this._previewMenu.fromHover = false;
             this._previewMenu.popup();
-            // Set keyboard navigation for click-opened menus
             this._previewMenu.actor.navigate_focus(null, St.DirectionType.TAB_FORWARD, false);
         }
 
@@ -1286,20 +1250,14 @@ export const DockAbstractAppIcon = GObject.registerClass({
         this._hoverIsEnabled = true;
 
         if (!this._previewMenu) {
-            // Create preview menu if it doesn't exist
             this._windowPreviews();
-            // Close it immediately since we only wanted to initialize it
             if (this._previewMenu.isOpen)
                 this._previewMenu.close();
         }
 
-        // Store reference to app icons list for hover transitions
         this._appIconsHoverList = appIcons;
 
-        // Note: Removed menu-closed handler that was causing infinite loop
-        // Icon-to-icon transitions are now handled directly in windowPreview.js _onEnter()
 
-        // Pass the menu manager so hover mode can disable its event capture
         this._previewMenu.enableHover(this._previewMenuManager);
     }
 
@@ -1366,15 +1324,10 @@ export const DockAbstractAppIcon = GObject.registerClass({
         // Set the font size to something smaller than the whole icon so it is
         // still visible. The border radius is large to make the shape circular
         const [minWidth_, natWidth] = this._iconContainer.get_preferred_width(-1);
-        const labelScale = Docking.DockManager.settings.hotkeyLabelScale;
-        const fontSize = Math.round(
-            Math.max(12, labelScale * natWidth) / scaleFactor);
-        const size = Math.round(fontSize * 1.2);
-        this._numberOverlayLabel.set_style(
-            `font-size: ${fontSize}px;` +
-           `border-radius: ${this.icon.iconSize}px;` +
-           `width: ${size}px; height: ${size}px;`
-        );
+        const labelScale = Settings.get('hotkey-label-scale');
+        const {style} = computeHotkeyLabelStyle(
+            natWidth, scaleFactor, labelScale, this.icon.iconSize);
+        this._numberOverlayLabel.set_style(style);
     }
 
     setNumberOverlay(number) {
@@ -1412,8 +1365,8 @@ export const DockAbstractAppIcon = GObject.registerClass({
     _activateAllWindows() {
         // First activate first window so workspace is switched if needed.
         // We don't do this if isolation is on!
-        if (!Docking.DockManager.settings.isolateWorkspaces &&
-            !Docking.DockManager.settings.isolateMonitors) {
+        if (!Settings.get('isolate-workspaces') &&
+            !Settings.get('isolate-monitors')) {
             if (!this.running)
                 this.animateLaunch();
             this.app.activate();
@@ -1460,7 +1413,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
             }
 
             // Start a new bounce and keep the handle so we can stop it later
-            if (Docking.DockManager.settings.bounceIcons)
+            if (Settings.get('bounce-icons'))
                 this._bounceHandle = BounceAnimation.startBounceAnimation(this.icon._iconBin);
 
 
@@ -1524,15 +1477,14 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
         if (recentlyClickedAppLoopId > 0)
             GLib.source_remove(recentlyClickedAppLoopId);
-        const memoryTime =
-            Docking.DockManager.settings.windowCycleMemoryTime;
+        const memoryTime = Settings.get('window-cycle-memory-time');
         recentlyClickedAppLoopId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT, memoryTime,
             this._resetRecentlyClickedApp);
 
         // If there isn't already a list of windows for the current app,
         // or the stored list is outdated, use the current windows list.
-        const monitorIsolation = Docking.DockManager.settings.isolateMonitors;
+        const monitorIsolation = Settings.get('isolate-monitors');
         if (!recentlyClickedApp ||
             recentlyClickedApp.get_id() !== this.app.get_id() ||
             !recentlyClickedAppWindows ||
@@ -1577,6 +1529,9 @@ export const DockAbstractAppIcon = GObject.registerClass({
     }
 
     getWindows() {
+        if (this.window)
+            return this.window.get_compositor_private() ? [this.window] : [];
+
         return this.app.get_windows();
     }
 
@@ -1599,14 +1554,20 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
 const DockAppIcon = GObject.registerClass({
 }, class DockAppIcon extends DockAbstractAppIcon {
-    _init(app, monitorIndex, iconAnimator) {
-        super._init(app, monitorIndex, iconAnimator);
+    _init(app, monitorIndex, iconAnimator, window = null) {
+        super._init(app, monitorIndex, iconAnimator, window);
 
-        const {windowTracker} = Docking.DockManager;
-        this._signalsHandler.add(windowTracker, 'notify::focus-app',
-            () => this._updateFocusState());
-        this._signalsHandler.add(global.display, 'notify::focus-window',
-            () => this._updateFocusState());
+        if (window) {
+            this._signalsHandler.add(global.display, 'notify::focus-window',
+                () => this._updateFocusState());
+        } else {
+            this._signalsHandler.add(tracker, 'notify::focus-app', () => this._updateFocusState());
+            // Also listen for focus-window changes so that focus state is
+            // updated even when the tracker's focus_app does not change
+            // (e.g. pinned apps whose focused window is already set) (#122).
+            this._signalsHandler.add(global.display, 'notify::focus-window',
+                () => this._updateFocusState());
+        }
     }
 });
 
@@ -1618,16 +1579,27 @@ const DockLocationAppIcon = GObject.registerClass({
 
         super._init(app, monitorIndex, iconAnimator);
 
-        if (Docking.DockManager.settings.isolateLocations) {
-            const {windowTracker} = Docking.DockManager;
-            this._signalsHandler.add(windowTracker, 'notify::focus-app',
-                () => this._updateFocusState());
+        if (app._categoryIconInstance) {
+            this._setupCompositeIcon(app._categoryIconInstance);
+            this.popupMenu = () => {};
         } else {
-            this._signalsHandler.add(global.display, 'notify::focus-window',
-                () => this._updateFocusState());
+            if (Settings.get('isolate-locations')) {
+                this._signalsHandler.add(tracker, 'notify::focus-app', () => this._updateFocusState());
+            } else {
+                this._signalsHandler.add(global.display, 'notify::focus-window',
+                    () => this._updateFocusState());
+            }
+            this._signalsHandler.add(this.app, 'notify::icon', () => this.icon.update());
         }
+    }
 
-        this._signalsHandler.add(this.app, 'notify::icon', () => this.icon.update());
+    _setupCompositeIcon(categoryIcon) {
+        // Override createIcon so it always creates a fresh composite (BaseIcon destroys the previous one)
+        this.icon.createIcon = size => categoryIcon.createCompositeIcon(size);
+        categoryIcon._baseIcon = this.icon;
+        this.icon._createIconTexture(this.icon.iconSize);
+        // Override getDragActor so the composite icon appears when dragging
+        this.getDragActor = () => categoryIcon.createCompositeIcon(this.icon.iconSize);
     }
 
     get location() {
@@ -1635,7 +1607,7 @@ const DockLocationAppIcon = GObject.registerClass({
     }
 
     _updateFocusState() {
-        if (Docking.DockManager.settings.isolateLocations) {
+        if (Settings.get('isolate-locations')) {
             super._updateFocusState();
             return;
         }
@@ -1777,7 +1749,7 @@ export function makeAppIcon(app, monitorIndex, iconAnimator, window = null) {
     if (app.appInfo instanceof Locations.LocationAppInfo)
         return new DockLocationAppIcon(app, monitorIndex, iconAnimator);
 
-    return new DockAppIcon(app, monitorIndex, iconAnimator);
+    return new DockAppIcon(app, monitorIndex, iconAnimator, window);
 }
 
 /**
@@ -1875,13 +1847,13 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
         this.removeAll();
 
         const appItemLabel = this.sourceActor.updating
-            ? __('%s is being updated…').format(this.sourceActor.name)
+            ? _('%s is being updated…').format(this.sourceActor.name)
             : this.sourceActor.name;
         this.addMenuItem(new PopupMenu.PopupSeparatorMenuItem(appItemLabel));
 
         const {app} = this.sourceActor;
 
-        if (Docking.DockManager.settings.showWindowsPreview) {
+        if (Settings.get('show-windows-preview')) {
             // Display the app windows menu items and the separator between windows
             // of the current desktop and other windows.
             const windows = this.sourceActor.getInterestingWindows();
@@ -1897,7 +1869,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
 
             if (windows.length > 0) {
                 this.addMenuItem(
-                    /* TRANSLATORS: This is the heading of a list of open windows */
+                    /* Translators: This is the heading of a list of open windows */
                     new PopupMenu.PopupSeparatorMenuItem(_('Open Windows')));
             }
 
@@ -1911,7 +1883,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
         }
 
         // Recent Files submenu
-        if (RecentFilesMenu && Docking.DockManager.settings.showRecentFiles && !app.is_window_backed()) {
+        if (RecentFilesMenu && Settings.get('show-recent-files') && !app.is_window_backed()) {
             const recentFiles = await RecentFilesMenu.getRecentFilesForApp(app);
             if (recentFiles.length > 0) {
                 this._recentFilesMenuItem = new PopupMenu.PopupSubMenuMenuItem(
@@ -1966,8 +1938,8 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
                     ? Shell.AppLaunchGpu.DEFAULT
                     : Shell.AppLaunchGpu.DISCRETE;
                 const gpuMenuItem = this._appendMenuItem(appPrefersNonDefaultGPU
-                    ? __('Launch using Integrated Graphics Card')
-                    : __('Launch using Discrete Graphics Card'));
+                    ? _('Launch using Integrated Graphics Card')
+                    : _('Launch using Discrete Graphics Card'));
                 gpuMenuItem.connect('activate', () => {
                     this.sourceActor.animateLaunch();
                     app.launch(0, -1, gpuPref);
@@ -1987,6 +1959,8 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
 
             const canFavorite = global.settings.is_writable('favorite-apps') &&
                 (this.sourceActor instanceof DockAppIcon) &&
+                !this.sourceActor._d2dInCategoryId &&
+                !this.sourceActor._d2dIsTransient &&
                 ParentalControlsManager.getDefault().shouldShowApp(app.appInfo);
 
             if (canFavorite) {
@@ -2087,7 +2061,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
             }
 
             // Badge Settings submenu — per-app badge overrides
-            if (Docking.DockManager.settings.showIconsEmblems) {
+            if (Settings.get('show-icons-emblems')) {
                 this._appendSeparator();
                 this._appendBadgeSettingsSubmenu(app);
             }
@@ -2111,7 +2085,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
 
         // Per-app volume control
         this._volumeMenuItem = null;
-        if (Docking.DockManager.settings.showVolumeControl) {
+        if (Settings.get('show-volume-control')) {
             const {volumeControl} = Docking.DockManager.getDefault();
             if (volumeControl) {
                 const stream = volumeControl.getStreamForApp(
@@ -2212,16 +2186,14 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
     // update menu content when application windows change. This is desirable as actions
     // acting on windows (closing) are performed while the menu is shown.
     update() {
-        const {windowsCount} = this.sourceActor;
-
         // update, show or hide the quit menu
-        if (windowsCount > 0) {
-            if (windowsCount === 1) {
+        if (this.sourceActor.windowsCount > 0) {
+            if (this.sourceActor.windowsCount === 1) {
                 this._quitMenuItem.label.set_text(_('Quit'));
             } else {
-                this._quitMenuItem.label.set_text(N__(
-                    'Quit %d Window', 'Quit %d Windows', windowsCount).format(
-                    windowsCount));
+                this._quitMenuItem.label.set_text(ngettext(
+                    'Quit %d Window', 'Quit %d Windows', this.sourceActor.windowsCount).format(
+                    this.sourceActor.windowsCount));
             }
 
             this._quitMenuItem.actor.show();
@@ -2229,7 +2201,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
             this._quitMenuItem.actor.hide();
         }
 
-        if (Docking.DockManager.settings.showWindowsPreview) {
+        if (Settings.get('show-windows-preview')) {
             const windows = this.sourceActor.getInterestingWindows();
 
             // update, show, or hide the allWindows menu
@@ -2258,7 +2230,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
                 this._allWindowsMenuItem.show();
                 this._allWindowsMenuItem.setSensitive(true);
 
-                if (Docking.DockManager.settings.defaultWindowsPreviewToOpen)
+                if (Settings.get('default-windows-preview-to-open'))
                     this._allWindowsMenuItem.menu.open();
             }
         }
@@ -2304,9 +2276,60 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
 };
 
 /**
+ * Resolve which click action constant to use given a mouse button and modifier state.
+ *
+ * @param {number} button - Mouse button (1=primary, 2=middle)
+ * @param {boolean} shiftHeld - Whether SHIFT is held
+ * @returns {string} Settings key for the action to look up
+ */
+export function resolveClickSettingsKey(button, shiftHeld) {
+    if (button === 2) {
+        return shiftHeld ? 'shift-middle-click-action' : 'middle-click-action';
+    } else if (button === 1) {
+        return shiftHeld ? 'shift-click-action' : 'click-action';
+    }
+    return null;
+}
+
+/**
+ * Compute the hotkey overlay label font size and dimensions.
+ *
+ * @param {number} natWidth - Natural width of the icon container (physical px)
+ * @param {number} scaleFactor - HiDPI scale factor
+ * @param {number} labelScale - Settings value for hotkey-label-scale
+ * @param {number} iconSize - Icon size for border-radius
+ * @returns {{fontSize: number, size: number, style: string}}
+ */
+export function computeHotkeyLabelStyle(natWidth, scaleFactor, labelScale, iconSize) {
+    const fontSize = Math.round(
+        Math.max(12, labelScale * natWidth) / scaleFactor);
+    const size = Math.round(fontSize * 1.2);
+    const style =
+        `font-size: ${fontSize}px;` +
+        `border-radius: ${iconSize}px;` +
+        `width: ${size}px; height: ${size}px;`;
+    return {fontSize, size, style};
+}
+
+/**
+ * Compute the maximum tooltip label width.
+ *
+ * @param {number} monitorWidth - Monitor width in pixels
+ * @param {number} tooltipMaxWidthPercent - Settings percent (0-100, 0 treated as 60)
+ * @param {number} tooltipMaxWidthPx - Absolute max width in pixels
+ * @returns {number} Maximum label width
+ */
+export function computeTooltipMaxWidth(monitorWidth, tooltipMaxWidthPercent, tooltipMaxWidthPx) {
+    const pct = Math.max(20, Math.min(100, tooltipMaxWidthPercent || 60));
+    return Math.min(
+        Math.floor(monitorWidth * pct / 100),
+        tooltipMaxWidthPx);
+}
+
+/**
  * @param w
  */
-function isWindowUrgent(w) {
+export function isWindowUrgent(w) {
     return w.urgent || w.demandsAttention || w._manualUrgency;
 }
 
@@ -2318,12 +2341,13 @@ function isWindowUrgent(w) {
  * @param monitorIndex
  */
 export function getInterestingWindows(windows, monitorIndex) {
-    const {settings} = Docking.DockManager;
+    const isolateWorkspaces = Settings.get('isolate-workspaces');
+    const isolateMonitors = Settings.get('isolate-monitors');
 
     // When using workspace isolation, we filter out windows
     // that are neither in the current workspace nor marked urgent
-    if (settings.isolateWorkspaces) {
-        const showUrgent = settings.workspaceAgnosticUrgentWindows;
+    if (isolateWorkspaces) {
+        const showUrgent = Settings.get('workspace-agnostic-urgent-windows');
         const activeWorkspace = global.workspace_manager.get_active_workspace();
         windows = windows.filter(w => {
             const inWorkspace = w.get_workspace() === activeWorkspace;
@@ -2331,7 +2355,7 @@ export function getInterestingWindows(windows, monitorIndex) {
         });
     }
 
-    if (settings.isolateMonitors && monitorIndex >= 0) {
+    if (isolateMonitors && monitorIndex >= 0) {
         windows = windows.filter(w => {
             return w.get_monitor() === monitorIndex;
         });
@@ -2379,7 +2403,7 @@ export const DockShowAppsIcon = GObject.registerClass({
             this._removeMenuTimeout(...args);
 
         this.label?.add_style_class_name(Theming.PositionStyleClass[position]);
-        if (Docking.DockManager.settings.customThemeShrink)
+        if (Settings.get('custom-theme-shrink'))
             this.label?.add_style_class_name('shrink');
 
         this._menu = null;
@@ -2530,6 +2554,7 @@ export function itemShowLabel() {
         return;
 
     this.label.set_text(this._labelText);
+    this.label.set_width(-1);
     this.label.opacity = 0;
     this.label.show();
 
@@ -2540,11 +2565,10 @@ export function itemShowLabel() {
     const itemHeight = this.allocation.y2 - this.allocation.y1;
 
     const monitor = Main.layoutManager.findMonitorForActor(this);
-    const widthPercent = Math.max(20, Math.min(100,
-        Docking.DockManager.settings.tooltipMaxWidthPercent || 60));
-    const maxLabelWidth = Math.min(
-        Math.floor(monitor.width * widthPercent / 100),
-        Docking.DockManager.settings.tooltipMaxWidthPx);
+    const maxLabelWidth = computeTooltipMaxWidth(
+        monitor.width,
+        Settings.get('tooltip-max-width-percent'),
+        Settings.get('tooltip-max-width-px'));
     const naturalLabelWidth = this.label.get_width();
     this.label.clutter_text.ellipsize = Pango.EllipsizeMode.END;
     this.label.set_width(naturalLabelWidth > maxLabelWidth ? maxLabelWidth : -1);
@@ -2586,16 +2610,15 @@ export function itemShowLabel() {
 
     // Leave a few pixel gap
     const gap = 5;
-    const screen = Main.layoutManager.findMonitorForActor(this);
-    if (x - screen.x < gap)
-        x += screen.x - x + labelOffset;
-    else if (x + labelWidth > screen.x + screen.width - gap)
-        x -= x + labelWidth - (screen.x + screen.width) + gap;
+    if (x - monitor.x < gap)
+        x += monitor.x - x + labelOffset;
+    else if (x + labelWidth > monitor.x + monitor.width - gap)
+        x -= x + labelWidth - (monitor.x + monitor.width) + gap;
 
-    if (y - screen.y < gap)
-        y = screen.y + gap;
-    else if (y + labelHeight > screen.y + screen.height - gap)
-        y = screen.y + screen.height - labelHeight - gap;
+    if (y - monitor.y < gap)
+        y = monitor.y + gap;
+    else if (y + labelHeight > monitor.y + monitor.height - gap)
+        y = monitor.y + monitor.height - labelHeight - gap;
 
     this.label.remove_all_transitions();
     this.label.set_position(x, y);

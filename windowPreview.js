@@ -9,7 +9,6 @@
 
 import {
     Clutter,
-    Gio,
     GLib,
     GObject,
     Meta,
@@ -29,69 +28,53 @@ import {
     Utils,
 } from './imports.js';
 
+import * as Settings from './platform/settings.js';
+
 const MAX_PREVIEW_GENERATION_ATTEMPTS = 15;
 
 const MENU_MARGINS = 10;
-/*
- * Debug logging to file
- * Using async file operations to avoid blocking
- */
-const DEBUG_ENABLED = false;  // Set to true only for debugging
-const LOG_FILE = `/tmp/dash-to-dock-${new Date().toISOString().split('T')[0]}.log`;
+const WINDOW_INIT_TIMEOUT = 200;
 
-function debugLog(message) {
-    if (!DEBUG_ENABLED)
-        return;
-
-    const timestamp = new Date().toISOString();
-    const logLine = `${timestamp} ${message}\n`;
-
-    // Write to console
-    console.log(message);
-
-    // Write to file synchronously using GLib (blocking but reliable)
-    try {
-        const file = Gio.File.new_for_path(LOG_FILE);
-        const stream = file.append_to(Gio.FileCreateFlags.NONE, null);
-        stream.write(logLine, null);
-        stream.close(null);
-    } catch {
-        // Silently fail file writes
-    }
-}
-
-/*
- * Timeouts for the hovering events
- */
-const HOVER_ENTER_TIMEOUT = 300;
-const HOVER_MENU_LEAVE_TIMEOUT = 300;
-const WINDOW_INIT_TIMEOUT = 200;  // Delay for window to initialize before showing preview
-
-/*
- * Animation styles for preview appearance
- */
-const PreviewAnimationStyle = Object.freeze({
-    INSTANT: 0,      // No animation - instant display
-    FADE: 1,         // Pure opacity fade
-    SLIDE: 2,        // Slide from dock with fade
-    SCALE: 3,        // Zoom in with scale
-    EXPAND: 4,       // Width/height expand (current default)
-    DISSOLVE: 5,     // Quick fade with subtle scale
-    CASCADE: 6,      // Staggered item appearance
-});
 const Labels = Object.freeze({
     HOVER: Symbol('hover'),
     WINDOW_ADDED: Symbol('window-added'),
 });
-
 const ACTIVE_WINDOW_PREVIEW_CLASS = 'active-window-preview';
+
+/**
+ * Compute the preview scale factor for a window of the given size.
+ *
+ * @param {number} width - window pixel width
+ * @param {number} height - window pixel height
+ * @param {number} sizeScale - explicit scale (0 means auto-compute)
+ * @param {number} maxHeight - maximum preview height in pixels
+ * @returns {number} scale factor (0 < scale <= 1)
+ */
+export function computePreviewScale(width, height, sizeScale, maxHeight) {
+    if (!width || !height)
+        return 0;
+
+    if (sizeScale)
+        return sizeScale;
+
+    const maxWidth = maxHeight * 2;
+    return Math.min(1.0, maxWidth / width, maxHeight / height);
+}
+
+/**
+ * Compute the label max-width for a preview item.
+ *
+ * @param {number} maxHeight - maximum preview height in pixels
+ * @returns {number} label max-width in pixels
+ */
+export function computeLabelMaxWidth(maxHeight) {
+    return maxHeight * 2;
+}
 
 export class WindowPreviewMenu extends PopupMenu.PopupMenu {
     constructor(source) {
         super(source, 0.5, Utils.getPosition(source.monitorIndex));
 
-        // For click-opened menus, block source events
-        // For hover-opened menus, keep source reactive so user can move between icons
         this.blockSourceEvents = false;
 
         this._source = source;
@@ -104,7 +87,6 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
 
         this.actor.add_style_class_name('app-menu');
 
-        // Store max dimensions for later use
         this._maxWidth = Math.round(workArea.width / scaleFactor) - MENU_MARGINS;
         this._maxHeight = Math.round(workArea.height / scaleFactor) - MENU_MARGINS;
 
@@ -128,209 +110,82 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
         this.connect('destroy', this._onDestroy.bind(this));
     }
 
-
-    open(animate) {
-        const timestamp = new Date().toISOString();
-        debugLog(`[PREVIEW] open() ENTRY - app: ${this._app.get_name()}, isOpen: ${this.isOpen}, animate: ${animate}, timestamp: ${timestamp}`);
-        super.open(animate);
-        debugLog(`[PREVIEW] open() EXIT - isOpen: ${this.isOpen}`);
-    }
-
-    close(animate) {
-        const timestamp = new Date().toISOString();
-        debugLog(`[PREVIEW] close() ENTRY - app: ${this._app.get_name()}, isOpen: ${this.isOpen}, animate: ${animate}, timestamp: ${timestamp}`);
-
-        // Get stack trace to see what's calling close()
-        try {
-            throw new Error('Stack trace');
-        } catch (e) {
-            debugLog(`[PREVIEW] close() called from:\n${e.stack}`);
-        }
-
-        super.close(animate);
-        debugLog(`[PREVIEW] close() EXIT - isOpen: ${this.isOpen}`);
-    }
-
     _redisplay() {
-        debugLog(`[PREVIEW] WindowPreviewMenu._redisplay() called for ${this._app.get_name()}`);
         if (this._previewBox)
             this._previewBox.destroy();
-        const animConfig = this._getAnimationConfig();
-        this._previewBox = new WindowPreviewList(this._source, animConfig, this.fromHover);
+        this._previewBox = new WindowPreviewList(this._source, this.fromHover);
         this.addMenuItem(this._previewBox);
         this._previewBox._redisplay();
-        debugLog(`[PREVIEW] _redisplay() completed for ${this._app.get_name()}`);
-    }
-
-    _getAnimationConfig() {
-        const style = Docking.DockManager.settings.previewAnimationStyle;
-        debugLog(`[PREVIEW] _getAnimationConfig() style=${style}`);
-
-        switch (style) {
-        case PreviewAnimationStyle.INSTANT:
-            return {
-                boxPointer: BoxPointer.PopupAnimation.NONE,
-                itemDuration: 0,
-                itemMode: null,
-                itemEffect: 'instant',
-            };
-
-        case PreviewAnimationStyle.FADE:
-            return {
-                boxPointer: BoxPointer.PopupAnimation.NONE,
-                itemDuration: 200,
-                itemMode: Clutter.AnimationMode.EASE_OUT_QUAD,
-                itemEffect: 'fade',
-            };
-
-        case PreviewAnimationStyle.SLIDE:
-            return {
-                boxPointer: BoxPointer.PopupAnimation.SLIDE,
-                itemDuration: 250,
-                itemMode: Clutter.AnimationMode.EASE_OUT_BACK,
-                itemEffect: 'slide',
-            };
-
-        case PreviewAnimationStyle.SCALE:
-            return {
-                boxPointer: BoxPointer.PopupAnimation.FULL,
-                itemDuration: 300,
-                itemMode: Clutter.AnimationMode.EASE_OUT_EXPO,
-                itemEffect: 'scale',
-            };
-
-        case PreviewAnimationStyle.EXPAND:  // Current default
-            return {
-                boxPointer: BoxPointer.PopupAnimation.FULL,
-                itemDuration: 250,
-                itemMode: Clutter.AnimationMode.EASE_IN_OUT_QUAD,
-                itemEffect: 'expand',
-            };
-
-        case PreviewAnimationStyle.DISSOLVE:
-            return {
-                boxPointer: BoxPointer.PopupAnimation.FADE,
-                itemDuration: 150,
-                itemMode: Clutter.AnimationMode.EASE_IN_SINE,
-                itemEffect: 'dissolve',
-            };
-
-        case PreviewAnimationStyle.CASCADE:
-            return {
-                boxPointer: BoxPointer.PopupAnimation.FADE,
-                itemDuration: 200,
-                itemMode: Clutter.AnimationMode.EASE_OUT_CUBIC,
-                itemEffect: 'cascade',
-                itemDelay: 50,  // Stagger delay per item
-            };
-
-        default:
-            // Fallback to EXPAND if invalid value
-            return {
-                boxPointer: BoxPointer.PopupAnimation.FULL,
-                itemDuration: 250,
-                itemMode: Clutter.AnimationMode.EASE_IN_OUT_QUAD,
-                itemEffect: 'expand',
-            };
-        }
     }
 
     popup() {
-        const timestamp = new Date().toISOString();
-        debugLog(`[PREVIEW] popup() ENTRY - app: ${this._app.get_name()}, isOpen: ${this.isOpen}, fromHover: ${this.fromHover}, timestamp: ${timestamp}`);
         const windows = this._source.getInterestingWindows();
         if (windows.length > 0) {
-            const config = this._getAnimationConfig();
-
-            // Only redisplay if preview box doesn't exist, windows changed, or animation style changed
-            // This is a CRITICAL performance optimization for hover mode
             const needsRedisplay = !this._previewBox ||
-                                   this._needsRedisplay(windows) ||
-                                   this._lastAnimationStyle !== config.itemEffect;
+                this._needsRedisplay(windows);
 
-            debugLog(`[PREVIEW] popup() needsRedisplay=${needsRedisplay}, hasBox=${!!this._previewBox}, lastStyle=${this._lastAnimationStyle}, currentStyle=${config.itemEffect}`);
-
-            if (needsRedisplay) {
-                this._lastAnimationStyle = config.itemEffect;
+            if (needsRedisplay)
                 this._redisplay();
-            }
 
-            // Always use this.open() for proper layout and sizing
-            // The difference is whether we block source events (click) or not (hover)
             this.blockSourceEvents = !this.fromHover;
 
-            // Calculate max width as 90% of desktop width
-            const workArea = Main.layoutManager.getWorkAreaForMonitor(this._source.monitorIndex);
+            const workArea = Main.layoutManager.getWorkAreaForMonitor(
+                this._source.monitorIndex);
             // NOTE: global scaleFactor; per-monitor scale not yet used here.
             const {scaleFactor} = St.ThemeContext.get_for_stage(global.stage);
             const maxPreviewWidth = Math.round((workArea.width * 0.9) / scaleFactor);
 
             if (this.fromHover) {
-                debugLog(`[PREVIEW] popup() HOVER - app: ${this._app.get_name()}, isOpen: ${this.isOpen}`);
-                // For hover menus, constrain to 90% desktop width but allow natural sizing
-                // min-width: 0 prevents expanding to fill max-width unnecessarily
                 this.actor.set_style(`max-width: ${maxPreviewWidth}px; min-width: 0;`);
             } else {
-                debugLog(`[PREVIEW] popup() CLICK - app: ${this._app.get_name()}`);
-                // For click menus, set full constraints to prevent oversized menus
                 this.actor.set_style(
                     `max-width: ${this._maxWidth}px; ` +
                     `max-height: ${this._maxHeight}px;`);
             }
 
             if (!this.isOpen) {
-                debugLog(`[PREVIEW] popup() calling this.open() with animation=${config.boxPointer}`);
-                this.open(config.boxPointer);
-                debugLog(`[PREVIEW] popup() this.open() completed, isOpen=${this.isOpen}`);
-            } else {
-                debugLog(`[PREVIEW] popup() skipping open because isOpen=${this.isOpen}`);
-            }
+                this.open(BoxPointer.PopupAnimation.FULL);
 
-            if (!this.fromHover) {
-                // Focus preview item for currently active window instead of
-                // always focusing first item.
+                // Find the preview item for the currently active window
+                // so we can highlight and scroll to it.
                 const focusWindow = global.display.focus_window;
-                let focusTarget = null;
+                let activeItem = null;
                 if (focusWindow && this._previewBox) {
                     const items = this._previewBox._getMenuItems()
                         .filter(item => item._window);
-                    const activeItem = items.find(
-                        item => item._window === focusWindow);
-                    if (activeItem)
-                        focusTarget = activeItem;
+                    activeItem = items.find(
+                        item => item._window === focusWindow) ?? null;
                 }
-                if (focusTarget)
-                    focusTarget.grab_key_focus();
-                else
-                    this.actor.navigate_focus(null, St.DirectionType.TAB_FORWARD, false);
+
+                if (!this.fromHover) {
+                    // For keyboard/click activation, give key focus to the
+                    // active window's preview so it is visually selected.
+                    if (activeItem)
+                        activeItem.grab_key_focus();
+                    else
+                        this.actor.navigate_focus(null, St.DirectionType.TAB_FORWARD, false);
+                }
 
                 // Scroll to the active item so it is visible when the
                 // preview list is longer than the available space.
-                if (focusTarget && this._previewBox)
-                    this._previewBox._scrollToItem(focusTarget);
-
-                this._markActiveWindow();
+                if (activeItem && this._previewBox)
+                    this._previewBox._scrollToItem(activeItem);
             }
 
             this._source.emit('sync-tooltip');
         }
-        debugLog('[PREVIEW] popup() EXIT');
     }
 
     _needsRedisplay(currentWindows) {
         if (!this._previewBox)
             return true;
 
-        // Get currently displayed windows
         const displayedItems = this._previewBox._getMenuItems().filter(item => item._window);
         const displayedWindows = displayedItems.map(item => item._window);
 
-        // Check if window count changed
         if (currentWindows.length !== displayedWindows.length)
             return true;
 
-        // Check if window list changed (order-sensitive)
-        // Use get_stable_sequence() for consistent ordering
         const sortedCurrent = currentWindows.slice().sort((a, b) =>
             a.get_stable_sequence() - b.get_stable_sequence());
         const sortedDisplayed = displayedWindows.slice().sort((a, b) =>
@@ -340,42 +195,25 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
     }
 
     enableHover(menuManager) {
-        // Show window previews on mouse hover
         this.blockSourceEvents = false;
-        debugLog(`[PREVIEW] enableHover() called for ${this._app.get_name()}`);
 
-        // CRITICAL: Disable PopupMenuManager's global event capture
-        // PopupMenuManager installs a capture-event handler that closes menus when clicking outside
-        // For hover menus, we handle closing ourselves via hover events, so we need to
-        // disable the manager's interference
+        // PopupMenuManager's capture-event handler closes menus on outside clicks;
+        // hover menus handle closing via hover events instead.
         if (menuManager) {
-            debugLog('[PREVIEW] enableHover() disabling menu manager event capture');
-            // Remove this menu from the manager's tracking so it doesn't auto-close on outside clicks
             menuManager.removeMenu(this);
-            // Store reference so we can re-add it later when disabling hover
             this._menuManager = menuManager;
         }
 
-        // Make the BoxPointer NOT intercept pointer events - let them pass through to dock
-        // The key insight: we need to make the entire BoxPointer (background + arrow)
-        // transparent to pointer events, while keeping only the bin (content) reactive
-
-        // Disable pointer event interception on the BoxPointer container
         this._boxPointer.set_reactive(false);
         this._boxPointer.set_track_hover(false);
-        debugLog('[PREVIEW] enableHover() set BoxPointer reactive=false, track_hover=false');
 
-        // Also disable on the actor wrapper if it exists
         if (this._boxPointer.actor) {
             this._boxPointer.actor.set_reactive(false);
             this._boxPointer.actor.set_track_hover(false);
-            debugLog('[PREVIEW] enableHover() set BoxPointer.actor reactive=false, track_hover=false');
         }
 
-        // The bin (menu content) should still be reactive for clicking windows
         this._boxPointer.bin.set_reactive(true);
         this._boxPointer.bin.set_track_hover(true);
-        debugLog('[PREVIEW] enableHover() set BoxPointer.bin reactive=true, track_hover=true');
 
         this._signalsHandler.addWithLabel(Labels.HOVER,
             this._source, 'enter-event', () => this._onEnter());
@@ -394,14 +232,11 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
     disableHover() {
         this.blockSourceEvents = true;
 
-        // Re-add menu to PopupMenuManager if we removed it
         if (this._menuManager) {
-            debugLog('[PREVIEW] disableHover() re-enabling menu manager');
             this._menuManager.addMenu(this);
             this._menuManager = null;
         }
 
-        // Cancel any pending timeouts FIRST to prevent leaks
         this.cancelOpen();
         this.cancelClose();
 
@@ -409,51 +244,25 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
     }
 
     _onEnter() {
-        const timestamp = new Date().toISOString();
-        debugLog(`[PREVIEW] _onEnter() ENTRY - app: ${this._app.get_name()}, isOpen: ${this.isOpen}, timestamp: ${timestamp}`);
-
-        // Close any other open hover preview immediately when entering a new icon
-        // This ensures smooth transitions between icon hovers
-        const hasAppIconsList = !!this._source._appIconsHoverList;
-        const listLength = this._source._appIconsHoverList?.length || 0;
-        debugLog(`[PREVIEW] _onEnter() appIconsHoverList exists: ${hasAppIconsList}, length: ${listLength}`);
-
         if (this._source._appIconsHoverList) {
-            debugLog(`[PREVIEW] _onEnter() iterating through ${this._source._appIconsHoverList.length} icons`);
             this._source._appIconsHoverList.forEach(appIcon => {
-                const isSelf = appIcon === this._source;
-                const hasPreview = !!appIcon._previewMenu;
-                const previewIsOpen = appIcon._previewMenu?.isOpen || false;
-                const previewFromHover = appIcon._previewMenu?.fromHover || false;
-
-                if (hasPreview && (previewIsOpen || previewFromHover))
-                    debugLog(`[PREVIEW] _onEnter() checking ${appIcon.app.get_name()}: isSelf=${isSelf}, hasPreview=${hasPreview}, isOpen=${previewIsOpen}, fromHover=${previewFromHover}`);
-
-                // Close ANY hover preview on other icons, regardless of isOpen state
-                // This handles cases where preview was created but didn't open due to no windows
-                if (appIcon !== this._source && appIcon._previewMenu && appIcon._previewMenu.fromHover) {
-                    debugLog(`[PREVIEW] _onEnter() CLOSING other hover menu: ${appIcon.app.get_name()} (isOpen=${appIcon._previewMenu.isOpen})`);
+                if (appIcon !== this._source && appIcon._previewMenu &&
+                    appIcon._previewMenu.fromHover) {
                     appIcon._previewMenu.hoverClose();
-                    // Also hide the actor if it's visible but not marked as open
-                    if (!appIcon._previewMenu.isOpen && appIcon._previewMenu.actor.visible) {
-                        debugLog(`[PREVIEW] _onEnter() hiding orphaned preview actor for ${appIcon.app.get_name()}`);
+                    if (!appIcon._previewMenu.isOpen && appIcon._previewMenu.actor.visible)
                         appIcon._previewMenu.actor.hide();
-                    }
                 }
             });
-            debugLog('[PREVIEW] _onEnter() finished iterating');
-        } else {
-            debugLog('[PREVIEW] _onEnter() no appIconsHoverList!');
         }
 
         this.cancelOpen();
         this.cancelClose();
 
+        const enterTimeout = Settings.get('preview-hover-enter-timeout');
         this._hoverOpenTimeoutId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT,
-            Docking.DockManager.settings.previewHoverEnterTimeout,
+            enterTimeout,
             () => {
-                debugLog('[PREVIEW] _onEnter() timeout fired, calling hoverOpen()');
                 this.hoverOpen();
                 return GLib.SOURCE_REMOVE;
             }
@@ -461,196 +270,109 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
     }
 
     _onLeave() {
-        const timestamp = new Date().toISOString();
-        debugLog(`[PREVIEW] _onLeave() ENTRY - app: ${this._app.get_name()}, isOpen: ${this.isOpen}, timestamp: ${timestamp}`);
-        const binHasPointer = this._boxPointer?.bin?.has_pointer || false;
-        debugLog(`[PREVIEW] _onLeave() bin.has_pointer: ${binHasPointer}, bin.visible: ${this._boxPointer?.bin?.visible}, bin.mapped: ${this._boxPointer?.bin?.mapped}`);
-        debugLog(`[PREVIEW] _onLeave() source.has_pointer: ${this._source.has_pointer}`);
-
         this.cancelOpen();
 
-        // Check if pointer is on the menu bin or still on the source
-        // icon - if so, this is a spurious leave event caused by the
-        // menu appearing over the icon, not the user actually leaving
-        // Since we made BoxPointer non-reactive, check the bin instead of actor
-        if (binHasPointer) {
-            debugLog('[PREVIEW] _onLeave() EXIT - Ignoring spurious leave - pointer is on menu bin');
+        if (this._boxPointer?.bin?.has_pointer)
             return;
-        }
-        if (this._source.has_pointer) {
-            debugLog('[PREVIEW] _onLeave() EXIT - Ignoring spurious leave - pointer still on source icon');
+        if (this._source.has_pointer)
             return;
-        }
 
-        // User has left the source icon and is not on the menu
-        // Give time to move mouse from icon to preview menu
-        debugLog(`[PREVIEW] _onLeave() setting ${HOVER_MENU_LEAVE_TIMEOUT}ms timeout to hoverClose()`);
+        const leaveTimeout = Settings.get('preview-hover-leave-timeout');
         this._hoverCloseTimeoutId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT,
-            Docking.DockManager.settings.previewHoverLeaveTimeout,
+            leaveTimeout,
             () => {
-                debugLog('[PREVIEW] _onLeave() timeout fired, calling hoverClose()');
                 this.hoverClose();
                 return GLib.SOURCE_REMOVE;
             }
         );
-        debugLog(`[PREVIEW] _onLeave() EXIT - new hoverCloseTimeoutId: ${this._hoverCloseTimeoutId}`);
     }
 
     cancelOpen() {
         if (this._hoverOpenTimeoutId) {
-            debugLog(`[PREVIEW] cancelOpen() removing timeout ${this._hoverOpenTimeoutId}`);
             GLib.source_remove(this._hoverOpenTimeoutId);
             this._hoverOpenTimeoutId = null;
-        } else {
-            debugLog('[PREVIEW] cancelOpen() no timeout to cancel');
         }
     }
 
     cancelClose() {
         if (this._hoverCloseTimeoutId) {
-            debugLog(`[PREVIEW] cancelClose() removing timeout ${this._hoverCloseTimeoutId}`);
             GLib.source_remove(this._hoverCloseTimeoutId);
             this._hoverCloseTimeoutId = null;
-        } else {
-            debugLog('[PREVIEW] cancelClose() no timeout to cancel');
         }
     }
 
     hoverOpen() {
         this._hoverOpenTimeoutId = null;
         this.fromHover = true;
-        const timestamp = new Date().toISOString();
-        debugLog(`[PREVIEW] hoverOpen() ENTRY - app: ${this._app.get_name()}, isOpen: ${this.isOpen}, fromHover: ${this.fromHover}, timestamp: ${timestamp}`);
-        if (!this.isOpen) {
-            debugLog('[PREVIEW] hoverOpen() calling popup()');
+        if (!this.isOpen)
             this.popup();
-            debugLog(`[PREVIEW] hoverOpen() popup() returned, isOpen now: ${this.isOpen}`);
-        } else {
-            debugLog(`[PREVIEW] hoverOpen() skipped popup because isOpen=${this.isOpen}`);
-        }
-        debugLog('[PREVIEW] hoverOpen() EXIT');
     }
 
     hoverClose() {
         this._hoverCloseTimeoutId = null;
-        const timestamp = new Date().toISOString();
-        debugLog(`[PREVIEW] hoverClose() ENTRY - app: ${this._app.get_name()}, isOpen: ${this.isOpen}, fromHover: ${this.fromHover}, timestamp: ${timestamp}`);
-        const menuHasPointer = this._boxPointer?.bin?.has_pointer || false;
-        debugLog(`[PREVIEW] hoverClose() pointer states - menu.has_pointer: ${menuHasPointer}, source.has_pointer: ${this._source.has_pointer}`);
 
-        // Safety check: Don't close if mouse is still on the preview or source icon
-        if (menuHasPointer || this._source.has_pointer) {
-            debugLog('[PREVIEW] hoverClose() ABORT - mouse still present on menu or source');
+        if (this._boxPointer?.bin?.has_pointer || this._source.has_pointer)
             return;
-        }
 
         if (this.isOpen) {
-            // For hover menus, close WITHOUT going through PopupMenuManager
             if (this.fromHover) {
-                debugLog(`[PREVIEW] hoverClose() closing hover menu for ${this._app.get_name()}`);
                 this._boxPointer.close(BoxPointer.PopupAnimation.FADE, () => {
-                    debugLog('[PREVIEW] hoverClose() boxPointer.close callback - hiding actor');
                     this.actor.hide();
                     this.isOpen = false;
-                    // Destroy preview box so it's recreated fresh on next hover with current animation style
                     if (this._previewBox) {
-                        debugLog('[PREVIEW] hoverClose() destroying preview box');
                         this._previewBox.destroy();
                         this._previewBox = null;
                     }
 
-                    // Force dock autohide check when preview closes
-                    // This ensures the dock hides when the mouse moves from preview to window area
                     Docking.DockManager.allDocks.forEach(dock => {
-                        if (dock._intellihideIsEnabled && dock._intellihide) {
-                            debugLog(`[PREVIEW] hoverClose() triggering intellihide update for dock on monitor ${dock.monitorIndex}`);
+                        if (dock._intellihideIsEnabled && dock._intellihide)
                             dock._intellihide.forceUpdate();
-                        }
                     });
 
-                    debugLog(`[PREVIEW] hoverClose() closed hover menu for ${this._app.get_name()}, emitting menu-closed`);
                     this.emit('menu-closed');
                 });
             } else {
-                debugLog('[PREVIEW] hoverClose() closing click menu');
                 this.close(BoxPointer.PopupAnimation.FADE);
             }
-        } else {
-            debugLog(`[PREVIEW] hoverClose() skipped because isOpen=${this.isOpen}`);
         }
-        debugLog('[PREVIEW] hoverClose() EXIT');
     }
 
     _onMenuEnter() {
-        const timestamp = new Date().toISOString();
-        debugLog(`[PREVIEW] _onMenuEnter() - app: ${this._app.get_name()}, timestamp: ${timestamp}`);
-        const binHasPointer = this._boxPointer?.bin?.has_pointer || false;
-        debugLog(`[PREVIEW] _onMenuEnter() bin.has_pointer: ${binHasPointer}, source.has_pointer: ${this._source.has_pointer}`);
-
-        // Cancel close timeout when mouse enters the preview menu
-        // Since we made the BoxPointer non-reactive, we check the bin instead
-        debugLog('[PREVIEW] _onMenuEnter() canceling close timeout - mouse entered preview');
         this.cancelClose();
     }
 
     _onMenuLeave() {
-        const timestamp = new Date().toISOString();
-        debugLog(`[PREVIEW] _onMenuLeave() ENTRY - app: ${this._app.get_name()}, timestamp: ${timestamp}`);
-        debugLog(`[PREVIEW] _onMenuLeave() actor.has_pointer: ${this.actor.has_pointer}, source.has_pointer: ${this._source.has_pointer}`);
-
         this.cancelOpen();
 
-        // Only set close timeout if one isn't already pending
-        if (this._hoverCloseTimeoutId) {
-            debugLog(`[PREVIEW] _onMenuLeave() EXIT - close timeout already pending (${this._hoverCloseTimeoutId})`);
+        if (this._hoverCloseTimeoutId)
             return;
-        }
 
-        debugLog(`[PREVIEW] _onMenuLeave() setting ${HOVER_MENU_LEAVE_TIMEOUT}ms timeout to hoverClose()`);
+        const leaveTimeout = Settings.get('preview-hover-leave-timeout');
         this._hoverCloseTimeoutId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT,
-            Docking.DockManager.settings.previewHoverLeaveTimeout,
+            leaveTimeout,
             () => {
-                debugLog('[PREVIEW] _onMenuLeave() timeout fired, calling hoverClose()');
                 this.hoverClose();
                 return GLib.SOURCE_REMOVE;
             }
         );
-        debugLog(`[PREVIEW] _onMenuLeave() EXIT - new hoverCloseTimeoutId: ${this._hoverCloseTimeoutId}`);
     }
 
     _onWindowsChanged() {
-        // Handle windows appearing/disappearing while in hover mode
-        // This gives instant feedback when launching an app from the dock
-        const timestamp = new Date().toISOString();
         const windows = this._source.getInterestingWindows();
-        debugLog(`[PREVIEW] _onWindowsChanged() - app: ${this._app.get_name()}, windows: ${windows.length}, isOpen: ${this.isOpen}, fromHover: ${this.fromHover}, timestamp: ${timestamp}`);
 
-        // Only auto-open if:
-        // 1. We're in hover mode (not click mode)
-        // 2. The preview is not already open
-        // 3. There are windows to show
-        // 4. The user is still hovering over the source icon
-        if (this.fromHover && !this.isOpen && windows.length > 0 && this._source.has_pointer) {
-            debugLog('[PREVIEW] _onWindowsChanged() windows appeared while hovering - scheduling preview');
-            // Cancel any pending timeouts
+        if (this.fromHover && !this.isOpen && windows.length > 0 &&
+            this._source.has_pointer) {
             this.cancelOpen();
             this.cancelClose();
 
-            // Small delay to let the window finish initializing and get proper size
-            // This prevents showing tiny/partial window thumbnails
             this._hoverOpenTimeoutId = GLib.timeout_add(
                 GLib.PRIORITY_DEFAULT,
                 WINDOW_INIT_TIMEOUT,
                 () => {
-                    // Verify user is still hovering before opening
-                    if (this._source.has_pointer) {
-                        debugLog('[PREVIEW] _onWindowsChanged() timeout - opening preview');
+                    if (this._source.has_pointer)
                         this.popup();
-                    } else {
-                        debugLog('[PREVIEW] _onWindowsChanged() timeout - user left, not opening');
-                    }
                     this._hoverOpenTimeoutId = null;
                     return GLib.SOURCE_REMOVE;
                 }
@@ -666,7 +388,7 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
 }
 
 class WindowPreviewList extends PopupMenu.PopupMenuSection {
-    constructor(source, animConfig, isHoverMenu = false) {
+    constructor(source, isHoverMenu = false) {
         super();
         this.actor = new St.ScrollView({
             name: 'dashtodockWindowScrollview',
@@ -681,31 +403,22 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
         this._position = Utils.getPosition(source.monitorIndex);
         const position = this._position;
         this.isHorizontal = position === St.Side.BOTTOM || position === St.Side.TOP;
-        // Remove this when can use GNOME 48
-        this.box.set_vertical?.(!this.isHorizontal);
-        this.box.set_orientation?.(this.isHorizontal
-            ? Clutter.Orientation.HORIZONTAL : Clutter.Orientation.VERTICAL);
+        this.box.set_vertical(!this.isHorizontal);
         this.box.set_name('dashtodockWindowList');
 
-        // Don't expand horizontally - size to content
         this.box.x_expand = false;
         this.box.x_align = Clutter.ActorAlign.CENTER;
 
         Utils.addActor(this.actor, this.box);
         this.actor._delegate = this;
 
-        // For hover menus, always animate (even on first display)
-        // For click menus, skip animation on first display to avoid all items zooming in at once
         this._shownInitially = isHoverMenu;
 
         this._source = source;
         this.app = source.app;
-        this._animConfig = animConfig;
         this._isHoverMenu = isHoverMenu;
         this._signalsHandler = new Utils.GlobalSignalsHandler();
 
-        // For hover menus, don't use deferred work or listen to windows-changed
-        // to avoid interrupting animations. The menu will be recreated on next hover anyway.
         if (!isHoverMenu) {
             this._redisplayId = Main.initializeDeferredWork(this.actor,
                 this._redisplay.bind(this));
@@ -719,13 +432,9 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
     }
 
     _queueRedisplay() {
-        // Don't queue redisplays for hover menus to avoid interrupting animations
-        if (this._isHoverMenu) {
-            debugLog('[PREVIEW] _queueRedisplay() ignored for hover menu');
+        if (this._isHoverMenu)
             return;
-        }
 
-        debugLog('[PREVIEW] _queueRedisplay() called');
         Main.queueDeferredWork(this._redisplayId);
     }
 
@@ -777,29 +486,16 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
     _onDestroy() {
         this._signalsHandler.destroy();
 
-        // Clean up deferred work to prevent memory leak
-        if (this._redisplayId) {
-            // Note: There's no public API to cancel deferred work, but we can null it
+        if (this._redisplayId)
             this._redisplayId = null;
-        }
     }
 
     _createPreviewItem(window) {
         const preview = new WindowPreviewMenuItem(window, this._position);
-
-        // Connect activate signal to focus the window when clicked
-        preview.connect('activate', () => {
-            debugLog(`[PREVIEW] Activating window: ${window.get_title()}`);
-            Main.activateWindow(window);
-            this._getTopMenu().close();
-        });
-
         return preview;
     }
 
     _redisplay() {
-        const windows = this._source.getInterestingWindows();
-        debugLog(`[PREVIEW] WindowPreviewList._redisplay() called - ${windows.length} windows`);
         const children = this._getMenuItems().filter(actor => {
             return actor._window;
         });
@@ -881,13 +577,12 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
         // Skip animations on first run when adding the initial set
         // of items, to avoid all items zooming in at once
         const animate = this._shownInitially;
-        debugLog(`[PREVIEW] _redisplay calling show() - animate=${animate}, effect=${this._animConfig?.itemEffect}, items=${addedItems.length}`);
 
         if (!this._shownInitially)
             this._shownInitially = true;
 
         for (let i = 0; i < addedItems.length; i++)
-            addedItems[i].item.show(animate, this._animConfig, i);
+            addedItems[i].item.show(animate);
 
         // Mark the preview item for the currently focused window so that it
         // gets a visual highlight, regardless of whether the menu was opened
@@ -907,12 +602,8 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
         // of width-for-height in St.BoxLayout and St.ScrollView. This looks bad
         // when we *don't* need it, so turn off the scrollbar when that's true.
         // Dynamic changes in whether we need it aren't handled properly.
-
-        // For hover menus, always disable scrollbars to avoid sizing issues
         const topMenu = this._getTopMenu();
-        const isHoverMenu = topMenu.fromHover;
-
-        const needsScrollbar = !isHoverMenu && this._needsScrollbar();
+        const needsScrollbar = !topMenu.fromHover && this._needsScrollbar();
         const scrollbarPolicy = needsScrollbar
             ? St.PolicyType.AUTOMATIC : St.PolicyType.NEVER;
         if (this.isHorizontal)
@@ -1004,7 +695,7 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         this.remove_child(this._ornamentIcon);
         this.add_style_class_name('dashtodock-app-well-preview-menu-item');
         this.add_style_class_name(Theming.PositionStyleClass[position]);
-        if (Docking.DockManager.settings.customThemeShrink)
+        if (Settings.get('custom-theme-shrink'))
             this.add_style_class_name('shrink');
 
         // Now we don't have to set fixed preview max width/height as
@@ -1039,7 +730,8 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
             text: window.get_title(),
             style_class: 'window-preview-label',
         });
-        label.set_style(`max-width: ${Docking.DockManager.settings.previewMaxHeight * 2}px`);
+        const previewMaxHeight = Settings.get('preview-max-height');
+        label.set_style(`max-width: ${computeLabelMaxWidth(previewMaxHeight)}px`);
         const labelBin = new St.Bin({
             child: label,
             x_align: Clutter.ActorAlign.CENTER,
@@ -1050,15 +742,11 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         });
 
         const box = new St.BoxLayout({
+            vertical: true,
             reactive: true,
-            x_expand: false,  // Don't expand - size to content (preview + label)
+            x_expand: false,
             x_align: Clutter.ActorAlign.CENTER,
         });
-
-        if (box.orientation !== undefined)
-            box.orientation = Clutter.Orientation.VERTICAL;
-        else
-            box.vertical = true;
 
         if (box.add) {
             box.add(overlayGroup);
@@ -1100,11 +788,9 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         if (!width || !height)
             return emptySize;
 
-        let {previewSizeScale: scale} = Docking.DockManager.settings;
-        if (!scale) {
-            const maxWidth = Docking.DockManager.settings.previewMaxHeight * 2;
-            scale = Math.min(1.0, maxWidth / width, Docking.DockManager.settings.previewMaxHeight / height);
-        }
+        const sizeScale = Settings.get('preview-size-scale');
+        const maxHeight = Settings.get('preview-max-height');
+        let scale = computePreviewScale(width, height, sizeScale, maxHeight);
 
         // NOTE: global scaleFactor; per-monitor scale not yet used here.
         scale *= St.ThemeContext.get_for_stage(global.stage).scaleFactor;
@@ -1260,43 +946,32 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
     }
 
     _startAeroPeek() {
-        debugLog(`[PEEK] Starting Aero Peek for ${this._window.get_title()}`);
-
-        // Get all windows in stack order (top to bottom)
         const workspace = this._window.get_workspace();
         if (!workspace)
             return;
 
         const allWindows = global.display.sort_windows_by_stacking(
             workspace.list_windows()
-        ).reverse(); // Reverse to get top-to-bottom order
+        ).reverse();
 
-        // Find our target window's position in stack
         const targetIndex = allWindows.indexOf(this._window);
         if (targetIndex === -1)
             return;
 
-        // Get all windows above our target (obscuring it)
-        const windowsAbove = allWindows.slice(0, targetIndex);
+        const peekOpacity = Settings.get('aero-peek-opacity');
+        const peekDuration = Settings.get('aero-peek-duration');
 
-        debugLog(`[PEEK] Found ${windowsAbove.length} windows above target`);
-
-        // Fade out windows above our target
-        windowsAbove.forEach(win => {
+        allWindows.slice(0, targetIndex).forEach(win => {
             const actor = win.get_compositor_private();
             if (actor && !win.minimized) {
-                debugLog(`[PEEK] Fading window: ${win.get_title()}`);
-
-                // Store original opacity if not already stored
                 if (!actor._originalOpacity)
                     actor._originalOpacity = actor.opacity;
 
                 this._peekingWindows.push(actor);
 
-                // Animate to 99% transparent (1% opacity)
                 actor.ease({
-                    opacity: Docking.DockManager.settings.aeroPeekOpacity,
-                    duration: Docking.DockManager.settings.aeroPeekDuration,
+                    opacity: peekOpacity,
+                    duration: peekDuration,
                     mode: Clutter.AnimationMode.EASE_OUT_QUAD,
                 });
             }
@@ -1304,15 +979,14 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
     }
 
     _endAeroPeek() {
-        debugLog(`[PEEK] Ending Aero Peek, restoring ${this._peekingWindows.length} windows`);
+        const peekDuration = Settings.get('aero-peek-duration');
 
-        // Restore opacity to all peeked windows
         this._peekingWindows.forEach(actor => {
             if (actor && !actor.is_destroyed()) {
                 const originalOpacity = actor._originalOpacity || 255;
                 actor.ease({
                     opacity: originalOpacity,
-                    duration: Docking.DockManager.settings.aeroPeekDuration,
+                    duration: peekDuration,
                     mode: Clutter.AnimationMode.EASE_OUT_QUAD,
                     onComplete: () => {
                         delete actor._originalOpacity;
@@ -1357,253 +1031,36 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         });
     }
 
-    show(animate, animConfig, itemIndex = 0) {
-        debugLog(`[PREVIEW] WindowPreviewMenuItem.show() - animate=${animate}, effect=${animConfig?.itemEffect}, index=${itemIndex}`);
-
-        if (!animate || !animConfig) {
-            // No animation - just show immediately
-            debugLog('[PREVIEW] show() - no animation, setting opacity=255');
-            this.opacity = 255;
-            return;
-        }
-
+    show(animate) {
         const fullWidth = this.get_width();
-        const delay = animConfig.itemDelay ? animConfig.itemDelay * itemIndex : 0;
-        debugLog(`[PREVIEW] show() - fullWidth=${fullWidth}, delay=${delay}, visible=${this.visible}, mapped=${this.mapped}`);
 
         this.opacity = 0;
         this.set_width(0);
 
-        const time = animate ? Docking.DockManager.settings.previewAnimationDuration : 0;
+        const time = animate ? Settings.get('preview-animation-duration') : 0;
         this.remove_all_transitions();
-
-        switch (animConfig.itemEffect) {
-        case 'instant':
-            this.opacity = 255;
-            break;
-
-        case 'fade': {
-            this.opacity = 0;
-
-            // Animation only works when actor is mapped. If not mapped yet, wait for it.
-            const startAnimation = () => {
-                debugLog(`[PREVIEW] FADE animation starting - opacity 0→255, duration=${animConfig.itemDuration}ms, delay=${delay}ms, mapped=${this.mapped}`);
-                this.ease({
-                    opacity: 255,
-                    duration: animConfig.itemDuration,
-                    delay,
-                    mode: animConfig.itemMode,
-                    onComplete: () => {
-                        debugLog('[PREVIEW] FADE animation completed');
-                    },
-                });
-            };
-
-            if (this.mapped) {
-                startAnimation();
-            } else {
-                debugLog('[PREVIEW] FADE waiting for actor to be mapped before starting animation');
-                this._mappedSignalId = this.connect('notify::mapped', () => {
-                    if (this.mapped) {
-                        debugLog('[PREVIEW] FADE actor now mapped, starting animation');
-                        this.disconnect(this._mappedSignalId);
-                        this._mappedSignalId = 0;
-                        startAnimation();
-                    }
-                });
-            }
-            break;
-        }
-
-        case 'slide': {
-            this.opacity = 0;
-            this.translationY = -20;  // Slide down from above
-
-            const startAnimation = () => {
-                debugLog(`[PREVIEW] SLIDE animation starting - duration=${animConfig.itemDuration}ms, delay=${delay}ms, mapped=${this.mapped}`);
-                this.ease({
-                    opacity: 255,
-                    translationY: 0,
-                    duration: animConfig.itemDuration,
-                    delay,
-                    mode: animConfig.itemMode,
-                    onComplete: () => {
-                        debugLog('[PREVIEW] SLIDE animation completed');
-                    },
-                });
-            };
-
-            if (this.mapped) {
-                startAnimation();
-            } else {
-                debugLog('[PREVIEW] SLIDE waiting for actor to be mapped before starting animation');
-                this._mappedSignalId = this.connect('notify::mapped', () => {
-                    if (this.mapped) {
-                        debugLog('[PREVIEW] SLIDE actor now mapped, starting animation');
-                        this.disconnect(this._mappedSignalId);
-                        this._mappedSignalId = 0;
-                        startAnimation();
-                    }
-                });
-            }
-            break;
-        }
-
-        case 'scale': {
-            this.opacity = 0;
-            this.set_scale(0.8, 0.8);
-
-            const startAnimation = () => {
-                debugLog(`[PREVIEW] SCALE animation starting - duration=${animConfig.itemDuration}ms, delay=${delay}ms, mapped=${this.mapped}`);
-                this.ease({
-                    opacity: 255,
-                    scaleX: 1.0,
-                    scaleY: 1.0,
-                    duration: animConfig.itemDuration,
-                    delay,
-                    mode: animConfig.itemMode,
-                    onComplete: () => {
-                        debugLog('[PREVIEW] SCALE animation completed');
-                    },
-                });
-            };
-
-            if (this.mapped) {
-                startAnimation();
-            } else {
-                debugLog('[PREVIEW] SCALE waiting for actor to be mapped before starting animation');
-                this._mappedSignalId = this.connect('notify::mapped', () => {
-                    if (this.mapped) {
-                        debugLog('[PREVIEW] SCALE actor now mapped, starting animation');
-                        this.disconnect(this._mappedSignalId);
-                        this._mappedSignalId = 0;
-                        startAnimation();
-                    }
-                });
-            }
-            break;
-        }
-
-        case 'expand': {  // Original behavior
-            this.opacity = 0;
-            this.set_width(0);
-
-            const startAnimation = () => {
-                debugLog(`[PREVIEW] EXPAND animation starting - duration=${animConfig.itemDuration}ms, delay=${delay}ms, mapped=${this.mapped}`);
-                this.ease({
-                    opacity: 255,
-                    width: fullWidth,
-                    duration: animConfig.itemDuration,
-                    delay,
-                    mode: animConfig.itemMode,
-                    onComplete: () => {
-                        debugLog('[PREVIEW] EXPAND animation completed');
-                    },
-                });
-            };
-
-            if (this.mapped) {
-                startAnimation();
-            } else {
-                debugLog('[PREVIEW] EXPAND waiting for actor to be mapped before starting animation');
-                this._mappedSignalId = this.connect('notify::mapped', () => {
-                    if (this.mapped) {
-                        debugLog('[PREVIEW] EXPAND actor now mapped, starting animation');
-                        this.disconnect(this._mappedSignalId);
-                        this._mappedSignalId = 0;
-                        startAnimation();
-                    }
-                });
-            }
-            break;
-        }
-
-        case 'dissolve': {
-            this.opacity = 0;
-            this.set_scale(0.95, 0.95);
-
-            const startAnimation = () => {
-                debugLog(`[PREVIEW] DISSOLVE animation starting - duration=${animConfig.itemDuration}ms, delay=${delay}ms, mapped=${this.mapped}`);
-                this.ease({
-                    opacity: 255,
-                    scaleX: 1.0,
-                    scaleY: 1.0,
-                    duration: animConfig.itemDuration,
-                    delay,
-                    mode: animConfig.itemMode,
-                    onComplete: () => {
-                        debugLog('[PREVIEW] DISSOLVE animation completed');
-                    },
-                });
-            };
-
-            if (this.mapped) {
-                startAnimation();
-            } else {
-                debugLog('[PREVIEW] DISSOLVE waiting for actor to be mapped before starting animation');
-                this._mappedSignalId = this.connect('notify::mapped', () => {
-                    if (this.mapped) {
-                        debugLog('[PREVIEW] DISSOLVE actor now mapped, starting animation');
-                        this.disconnect(this._mappedSignalId);
-                        this._mappedSignalId = 0;
-                        startAnimation();
-                    }
-                });
-            }
-            break;
-        }
-
-        case 'cascade': {
-            this.opacity = 0;
-
-            const startAnimation = () => {
-                debugLog(`[PREVIEW] CASCADE animation starting - duration=${animConfig.itemDuration}ms, delay=${delay}ms, mapped=${this.mapped}`);
-                this.ease({
-                    opacity: 255,
-                    duration: animConfig.itemDuration,
-                    delay,
-                    mode: animConfig.itemMode,
-                    onComplete: () => {
-                        debugLog('[PREVIEW] CASCADE animation completed');
-                    },
-                });
-            };
-
-            if (this.mapped) {
-                startAnimation();
-            } else {
-                debugLog('[PREVIEW] CASCADE waiting for actor to be mapped before starting animation');
-                this._mappedSignalId = this.connect('notify::mapped', () => {
-                    if (this.mapped) {
-                        debugLog('[PREVIEW] CASCADE actor now mapped, starting animation');
-                        this.disconnect(this._mappedSignalId);
-                        this._mappedSignalId = 0;
-                        startAnimation();
-                    }
-                });
-            }
-            break;
-        }
-
-        default:
-            // Fallback to instant
-            this.opacity = 255;
-            break;
-        }
+        this.ease({
+            opacity: 255,
+            width: fullWidth,
+            duration: time,
+            mode: Clutter.AnimationMode.EASE_IN_OUT_QUAD,
+        });
     }
 
     _animateOutAndDestroy() {
+        const animDuration = Settings.get('preview-animation-duration');
+
         this.remove_all_transitions();
         this.ease({
             opacity: 0,
-            duration: Docking.DockManager.settings.previewAnimationDuration,
+            duration: animDuration,
         });
 
         this.ease({
             width: 0,
             height: 0,
-            duration: Docking.DockManager.settings.previewAnimationDuration,
-            delay: Docking.DockManager.settings.previewAnimationDuration,
+            duration: animDuration,
+            delay: animDuration,
             onComplete: () => this.destroy(),
         });
     }
@@ -1614,7 +1071,6 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
     }
 
     _onDestroy() {
-        // Clean up Aero Peek if active
         this._endAeroPeek();
 
         if (this._cloneTextureLater) {
