@@ -16,7 +16,16 @@ export default {
     globalSetup: '<rootDir>/test/globalSetup.js',
     testMatch: ['<rootDir>/test/**/*.test.js'],
     testPathIgnorePatterns: ['<rootDir>/test/integration/'],
-    collectCoverageFrom: ['*.js', '!eslint.config.mjs'],
+    collectCoverageFrom: [
+        'docking.js',
+        'dash.js',
+        'appIcons.js',
+        'theming.js',
+        'intellihide.js',
+        'windowPreview.js',
+        'utils.js',
+        'springAnimation.js',
+    ],
     collectCoverage: true,
     coverageReporters: ['text', 'json-summary'],
 };
