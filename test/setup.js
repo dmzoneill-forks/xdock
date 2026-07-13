@@ -9,6 +9,13 @@ globalThis.print = (...args) => console.log(...args);
 // GJS `imports` global — provide a minimal stub for modules that use it
 // (e.g. intellihide.js uses `const {signals: Signals} = imports;`).
 globalThis.imports = globalThis.imports ?? {
+    cairo: {
+        Operator: {CLEAR: 0, SOURCE: 1, OVER: 2},
+        LinearGradient: class {
+            constructor() {}
+            addColorStopRGBA() {}
+        },
+    },
     signals: {
         addSignalMethods(proto) {
             proto.connect = function (name, cb) {
