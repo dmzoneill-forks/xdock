@@ -13,15 +13,17 @@ import {
     Utils,
 } from './imports.js';
 
+import * as Settings from './platform/settings.js';
+
 const {signals: Signals} = imports;
 
-const OverlapStatus = Object.freeze({
+export const OverlapStatus = Object.freeze({
     UNDEFINED: -1,
     FALSE: 0,
     TRUE: 1,
 });
 
-const IntellihideMode = Object.freeze({
+export const IntellihideMode = Object.freeze({
     ALL_WINDOWS: 0,
     FOCUS_APPLICATION_WINDOWS: 1,
     MAXIMIZED_WINDOWS: 2,
@@ -44,6 +46,53 @@ const handledWindowTypes = [
 
 // List of applications, ignore windows of these applications in considering intellihide
 const ignoreApps = ['com.rastersoft.ding', 'com.desktop.ding'];
+
+/**
+ * Test whether a window rectangle overlaps a target box.
+ *
+ * @param {{x: number, y: number, width: number, height: number}} rect - window frame rect
+ * @param {{x1: number, y1: number, x2: number, y2: number}} targetBox - dock target box
+ * @returns {boolean}
+ */
+export function rectsOverlap(rect, targetBox) {
+    return (rect.x < targetBox.x2) &&
+           (rect.x + rect.width >= targetBox.x1) &&
+           (rect.y < targetBox.y2) &&
+           (rect.y + rect.height >= targetBox.y1);
+}
+
+/**
+ * Check whether two tiled (half-maximized) windows together span the full
+ * monitor width (within a 2px tolerance).
+ *
+ * @param {{x: number, width: number}} r1 - first window frame rect
+ * @param {{x: number, width: number}} r2 - second window frame rect
+ * @param {{width: number}} monitor - monitor geometry
+ * @returns {boolean}
+ */
+export function tiledWindowsSpanMonitor(r1, r2, monitor) {
+    const combinedLeft = Math.min(r1.x, r2.x);
+    const combinedRight = Math.max(r1.x + r1.width, r2.x + r2.width);
+    return combinedRight - combinedLeft >= monitor.width - 2;
+}
+
+/**
+ * Check whether a window type is in the handled set.
+ * handledWindowTypes must be sorted ascending; uses early exit.
+ *
+ * @param {number} windowType - Meta.WindowType value
+ * @returns {boolean}
+ */
+export function isHandledWindowType(windowType) {
+    for (let i = 0; i < handledWindowTypes.length; i++) {
+        const hwtype = handledWindowTypes[i];
+        if (hwtype === windowType)
+            return true;
+        else if (hwtype > windowType)
+            return false;
+    }
+    return false;
+}
 
 /**
  * A rough and ugly implementation of the intellihide behaviour.
@@ -187,8 +236,9 @@ export class Intellihide {
 
         this._doCheckOverlap();
 
+        const checkInterval = Settings.get('intellihide-check-interval');
         this._checkOverlapTimeoutId = GLib.timeout_add(
-            GLib.PRIORITY_DEFAULT, Docking.DockManager.settings.intellihideCheckInterval, () => {
+            GLib.PRIORITY_DEFAULT, checkInterval, () => {
                 try {
                     this._doCheckOverlap();
                 } catch (e) {
@@ -241,12 +291,7 @@ export class Intellihide {
                     if (win) {
                         const rect = win.get_frame_rect();
 
-                        const test = (rect.x < this._targetBox.x2) &&
-                                   (rect.x + rect.width >= this._targetBox.x1) &&
-                                   (rect.y < this._targetBox.y2) &&
-                                   (rect.y + rect.height >= this._targetBox.y1);
-
-                        if (test) {
+                        if (rectsOverlap(rect, this._targetBox)) {
                             overlaps = OverlapStatus.TRUE;
                             break;
                         }
@@ -271,10 +316,7 @@ export class Intellihide {
                                     const monitor = global.display.get_monitor_geometry(this._monitorIndex);
                                     const r1 = win.get_frame_rect();
                                     const r2 = partner.get_frame_rect();
-                                    const combinedLeft = Math.min(r1.x, r2.x);
-                                    const combinedRight = Math.max(r1.x + r1.width,
-                                        r2.x + r2.width);
-                                    if (combinedRight - combinedLeft >= monitor.width - 2) {
+                                    if (tiledWindowsSpanMonitor(r1, r2, monitor)) {
                                         overlaps = OverlapStatus.TRUE;
                                         break;
                                     }
@@ -308,7 +350,8 @@ export class Intellihide {
         const workspaceIndex = workspace.index();
 
         // Depending on the intellihide mode, exclude non-relevent windows
-        switch (Docking.DockManager.settings.intellihideMode) {
+        const mode = Settings.get('intellihide-mode');
+        switch (mode) {
         case IntellihideMode.ALL_WINDOWS:
             // Do nothing
             break;
@@ -380,15 +423,7 @@ export class Intellihide {
         if (metaWindow.get_wm_class() === 'DropDownTerminalWindow')
             return true;
 
-        const wtype = metaWindow.get_window_type();
-        for (let i = 0; i < handledWindowTypes.length; i++) {
-            const hwtype = handledWindowTypes[i];
-            if (hwtype === wtype)
-                return true;
-            else if (hwtype > wtype)
-                return false;
-        }
-        return false;
+        return isHandledWindowType(metaWindow.get_window_type());
     }
 }
 

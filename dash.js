@@ -30,6 +30,8 @@ import {
     Utils,
 } from './imports.js';
 
+import * as Settings from './platform/settings.js';
+
 let QuickSettings = null;
 let WorkspaceMinimap = null;
 
@@ -64,7 +66,7 @@ class DockDashItemContainer extends Dash.DashItemContainer {
         super._init();
 
         this.label?.add_style_class_name(Theming.PositionStyleClass[position]);
-        if (Docking.DockManager.settings.customThemeShrink)
+        if (Settings.get('custom-theme-shrink'))
             this.label?.add_style_class_name('shrink');
     }
 
@@ -164,7 +166,7 @@ export const DockDash = GObject.registerClass({
         this._isSecondary = isSecondary;
         this._maxWidth = -1;
         this._maxHeight = -1;
-        this.iconSize = Docking.DockManager.settings.dashMaxIconSize;
+        this.iconSize = Settings.get('dash-max-icon-size');
         this._availableIconSizes = baseIconSizes;
         this._shownInitially = false;
         this._initializeIconSize(this.iconSize);
@@ -270,14 +272,14 @@ export const DockDash = GObject.registerClass({
             QuickSettings = QS;
             this._quickSettingsButton = new QuickSettings.QuickSettingsButton();
             this._quickSettingsButton._panel?.setDockPosition(Utils.getPosition(this._monitorIndex));
-            this._quickSettingsButton.visible = Docking.DockManager.settings.showQuickSettings;
+            this._quickSettingsButton.visible = Settings.get('show-quick-settings');
             this._updateQuickSettingsButton();
         }).catch(e => logError(e, 'XDock: Failed to load QuickSettings'));
-        this._signalsHandler.add(Docking.DockManager.settings,
+        this._signalsHandler.add(Settings.getGSettings(),
             'changed::show-quick-settings', () => {
                 if (this._quickSettingsButton) {
                     this._quickSettingsButton.visible =
-                        Docking.DockManager.settings.showQuickSettings;
+                        Settings.get('show-quick-settings');
                     this._updateQuickSettingsButton();
                 }
             });
@@ -305,18 +307,19 @@ export const DockDash = GObject.registerClass({
             x_expand: false,
             visible: false,
         });
+        const reflectionSize = Settings.get('reflection-size');
         if (this._isHorizontal) {
             this._reflection.add_constraint(new Clutter.BindConstraint({
                 source: this._background,
                 coordinate: Clutter.BindCoordinate.WIDTH,
             }));
-            this._reflection.height = Docking.DockManager.settings.reflectionSize;
+            this._reflection.height = reflectionSize;
         } else {
             this._reflection.add_constraint(new Clutter.BindConstraint({
                 source: this._background,
                 coordinate: Clutter.BindCoordinate.HEIGHT,
             }));
-            this._reflection.width = Docking.DockManager.settings.reflectionSize;
+            this._reflection.width = reflectionSize;
         }
 
         this.add_child(this._background);
@@ -467,11 +470,12 @@ export const DockDash = GObject.registerClass({
      * the current settings.
      */
     _updateReflection() {
-        const {settings} = Docking.DockManager;
-        const visible = settings.dockStyle === 1 && settings.shelfReflection;
+        const dockStyle = Settings.get('dock-style');
+        const shelfReflection = Settings.get('shelf-reflection');
+        const visible = dockStyle === 1 && shelfReflection;
         this._reflection.visible = visible;
         if (visible) {
-            const op = settings.shelfReflectionOpacity;
+            const op = Settings.get('shelf-reflection-opacity');
             const dir = this._isHorizontal ? 'to bottom' : 'to right';
             this._reflection.set_style(
                 `background-image: linear-gradient(${dir}, ` +
@@ -1081,7 +1085,7 @@ export const DockDash = GObject.registerClass({
      * user can drop the file into it.
      */
     _handleExternalDragOver(x, y) {
-        if (!Docking.DockManager.settings.dragToFocus)
+        if (!Settings.get('drag-to-focus'))
             return;
 
         // Convert local coords to stage-space along the dock axis
@@ -1163,7 +1167,7 @@ export const DockDash = GObject.registerClass({
 
     _onScrollEvent(actor, event) {
         // If scroll is not used because the icon is resized, let the scroll event propagate.
-        if (!Docking.DockManager.settings.iconSizeFixed)
+        if (!Settings.get('icon-size-fixed'))
             return Clutter.EVENT_PROPAGATE;
 
         // reset timeout to avid conflicts with the mousehover event
@@ -1267,7 +1271,7 @@ export const DockDash = GObject.registerClass({
         appIcon.connectObject('notify::urgent', () => {
             if (appIcon.urgent) {
                 ensureActorVisibleInScrollView(this._scrollView, item);
-                if (Docking.DockManager.settings.showDockUrgentNotify)
+                if (Settings.get('show-dock-urgent-notify'))
                     this._requireVisibility();
             }
         }, this);
@@ -1356,7 +1360,7 @@ export const DockDash = GObject.registerClass({
     }
 
     _togglePreviewHover() {
-        if (Docking.DockManager.settings.showPreviewsHover)
+        if (Settings.get('show-previews-hover'))
             this._enableHover();
         else
             this._disableHover();
@@ -1417,8 +1421,7 @@ export const DockDash = GObject.registerClass({
     // ── Icon Magnification (parabolic zoom) ──────────────────────────────
 
     _toggleMagnification() {
-        const {settings} = Docking.DockManager;
-        if (settings.iconMagnification)
+        if (Settings.get('icon-magnification'))
             this._enableMagnification();
         else
             this._disableMagnification();
@@ -1547,7 +1550,7 @@ export const DockDash = GObject.registerClass({
                element.child ?? element;
     }
 
-    _magnifyUtilityElement(element, cursor, spread, maxScale, pivotX, pivotY) {
+    _magnifyUtilityElement(element, cursor, spread, maxScale, pivotX, pivotY, easingDuration) {
         if (!element?.visible || !element.get_stage())
             return;
 
@@ -1561,7 +1564,7 @@ export const DockDash = GObject.registerClass({
         if (!icon)
             return;
         icon.set_pivot_point(pivotX, pivotY);
-        icon.set_easing_duration(Docking.DockManager.settings.magnificationEasingDuration);
+        icon.set_easing_duration(easingDuration);
         icon.set_easing_mode(Clutter.AnimationMode.EASE_OUT_QUAD);
         icon.set_scale(scale, scale);
     }
@@ -1581,9 +1584,9 @@ export const DockDash = GObject.registerClass({
      * position along the dock's major axis.
      */
     _onMagnificationMotion(actor, event) {
-        const {settings} = Docking.DockManager;
-        const maxScale = Math.max(1.0, Math.min(3.0,
-            settings.iconMagnificationFactor));
+        // Read all settings once at the top of this hot path
+        const magFactor = Settings.get('icon-magnification-factor');
+        const maxScale = Math.max(1.0, Math.min(3.0, magFactor));
 
         if (maxScale <= 1.0)
             return Clutter.EVENT_PROPAGATE;
@@ -1591,8 +1594,10 @@ export const DockDash = GObject.registerClass({
         const [cursorX, cursorY] = event.get_coords();
         const cursor = this._isHorizontal ? cursorX : cursorY;
 
-        const spreadIcons = settings.magnificationSpread;
+        const spreadIcons = Settings.get('magnification-spread');
         const spread = this.iconSize * spreadIcons;
+        const easingDuration = Settings.get('magnification-easing-duration');
+        const magnifyAll = Settings.get('icon-magnification-all');
         const [pivotX, pivotY] = this._getMagnificationPivot();
 
         // Build a flat list of ALL visible dock elements in visual order:
@@ -1650,7 +1655,7 @@ export const DockDash = GObject.registerClass({
                 const bgW = this._background.width || 1;
                 const scaleX = (bgW + totalExtra) / bgW;
                 this._background.set_pivot_point(0.5, 0.5);
-                this._background.set_easing_duration(settings.magnificationEasingDuration);
+                this._background.set_easing_duration(easingDuration);
                 this._background.set_easing_mode(Clutter.AnimationMode.EASE_OUT_QUAD);
                 if (this._isHorizontal)
                     this._background.set_scale(scaleX, 1.0);
@@ -1668,7 +1673,7 @@ export const DockDash = GObject.registerClass({
                                  data.child.child?.icon ?? data.child.child;
                     if (icon) {
                         icon.set_pivot_point(pivotX, pivotY);
-                        icon.set_easing_duration(settings.magnificationEasingDuration);
+                        icon.set_easing_duration(easingDuration);
                         icon.set_easing_mode(Clutter.AnimationMode.EASE_OUT_QUAD);
                         icon.set_scale(data.scale, data.scale);
                     }
@@ -1678,7 +1683,7 @@ export const DockDash = GObject.registerClass({
                 data.child.set_z_position(data.scale > 1.0 ? data.scale * 10 : 0);
 
                 // Translate ALL children so separators stay in sync
-                data.child.set_easing_duration(settings.magnificationEasingDuration);
+                data.child.set_easing_duration(easingDuration);
                 data.child.set_easing_mode(Clutter.AnimationMode.EASE_OUT_QUAD);
                 if (this._isHorizontal)
                     data.child.translation_x = offset;
@@ -1688,13 +1693,13 @@ export const DockDash = GObject.registerClass({
         }
 
         // Magnify utility elements (workspace minimap, show-apps, quick settings)
-        if (settings.iconMagnificationAll) {
+        if (magnifyAll) {
             this._magnifyUtilityElement(
-                this._workspaceMinimapContainer, cursor, spread, maxScale, pivotX, pivotY);
+                this._workspaceMinimapContainer, cursor, spread, maxScale, pivotX, pivotY, easingDuration);
             this._magnifyUtilityElement(
-                this._showAppsIcon, cursor, spread, maxScale, pivotX, pivotY);
+                this._showAppsIcon, cursor, spread, maxScale, pivotX, pivotY, easingDuration);
             this._magnifyUtilityElement(
-                this._quickSettingsButton, cursor, spread, maxScale, pivotX, pivotY);
+                this._quickSettingsButton, cursor, spread, maxScale, pivotX, pivotY, easingDuration);
         }
 
         return Clutter.EVENT_PROPAGATE;
@@ -2567,7 +2572,7 @@ export const DockDash = GObject.registerClass({
         const maxAllowed = baseIconSizes[baseIconSizes.length - 1];
         maxSize = Math.min(maxSize, maxAllowed);
 
-        if (Docking.DockManager.settings.iconSizeFixed) {
+        if (Settings.get('icon-size-fixed')) {
             this._availableIconSizes = [maxSize];
         } else {
             this._availableIconSizes = baseIconSizes.filter(val => {
@@ -2679,7 +2684,7 @@ export const DockDash = GObject.registerClass({
         if (this._showAppsIcon.get_parent() !== showAppsContainer) {
             this._showAppsIcon.get_parent()?.remove_child(this._showAppsIcon);
 
-            if (Docking.DockManager.settings.showAppsAtTop)
+            if (Settings.get('show-apps-at-top'))
                 showAppsContainer.insert_child_below(this._showAppsIcon, null);
             else
                 showAppsContainer.insert_child_above(this._showAppsIcon, null);

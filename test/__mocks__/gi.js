@@ -5,6 +5,31 @@
 globalThis.logError = globalThis.logError ?? ((...args) => console.error(...args));
 globalThis.log = globalThis.log ?? ((...args) => console.log(...args));
 
+// GJS `imports` global — provide a minimal Signals stub for modules like intellihide.js
+globalThis.imports = globalThis.imports ?? {
+    signals: {
+        addSignalMethods(proto) {
+            proto.connect = function (name, cb) {
+                this._signals = this._signals ?? {};
+                this._signals[name] = this._signals[name] ?? [];
+                const id = Math.random();
+                this._signals[name].push({id, cb});
+                return id;
+            };
+            proto.disconnect = function (id) {
+                if (!this._signals) return;
+                for (const name of Object.keys(this._signals))
+                    this._signals[name] = this._signals[name].filter(s => s.id !== id);
+            };
+            proto.emit = function (name, ...args) {
+                if (!this._signals?.[name]) return;
+                for (const s of this._signals[name])
+                    s.cb(...args);
+            };
+        },
+    },
+};
+
 const _hookUpVfuncSym = Symbol('__GObject__hook_up_vfunc');
 const _gobjectProtoSym = Symbol('__GObject__prototype');
 
@@ -150,6 +175,24 @@ Gio.Cancellable.$gtype = 'GCancellable';
 
 export const Meta = {
     LaterType: {BEFORE_REDRAW: 0},
+    WindowType: {
+        NORMAL: 0,
+        DESKTOP: 1,
+        DOCK: 2,
+        DIALOG: 3,
+        MODAL_DIALOG: 4,
+        TOOLBAR: 5,
+        MENU: 6,
+        UTILITY: 7,
+        SPLASHSCREEN: 8,
+        DROPDOWN_MENU: 9,
+        POPUP_MENU: 10,
+        TOOLTIP: 11,
+        NOTIFICATION: 12,
+        COMBO: 13,
+        DND: 14,
+        OVERRIDE_OTHER: 15,
+    },
 };
 
 export const Pango = {

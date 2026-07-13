@@ -39,6 +39,8 @@ import {
     WindowPreview,
 } from './imports.js';
 
+import * as Settings from './platform/settings.js';
+
 import {Extension} from './dependencies/shell/extensions/extension.js';
 
 let LiveThumbnails, MediaControls, PinnedCommands, RecentFilesMenu;
@@ -82,7 +84,7 @@ const Labels = Object.freeze({
     WIGGLE_MODE: Symbol('wiggle-mode'),
 });
 
-const clickAction = Object.freeze({
+export const clickAction = Object.freeze({
     SKIP: 0,
     MINIMIZE: 1,
     LAUNCH: 2,
@@ -98,7 +100,7 @@ const clickAction = Object.freeze({
     QUIT: 12,
 });
 
-const scrollAction = Object.freeze({
+export const scrollAction = Object.freeze({
     DO_NOTHING: 0,
     CYCLE_WINDOWS: 1,
     SWITCH_WORKSPACE: 2,
@@ -187,7 +189,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         // window of any application opened or moved to a different desktop),
         // we restrict this signal to  the case when Labels.ISOLATE_MONITORS is true,
         // and if there are at least 2 monitors.
-        if (Docking.DockManager.settings.isolateMonitors &&
+        if (Settings.get('isolate-monitors') &&
             Main.layoutManager.monitors.length > 1) {
             this._signalsHandler.addWithLabel(Labels.ISOLATE_MONITORS,
                 global.display,
@@ -225,7 +227,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
             const icon = this.icon._iconBin;
             this._signalsHandler.removeWithLabel(Labels.URGENT_WINDOWS);
             if (this.urgent) {
-                if (Docking.DockManager.settings.danceUrgentApplications &&
+                if (Settings.get('dance-urgent-applications') &&
                     notificationsMonitor.enabled) {
                     icon.set_pivot_point(0.5, 0.5);
                     this.iconAnimator.addAnimation(icon, 'wiggle');
@@ -284,7 +286,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         // of the most-recent window when enabled.
         this._liveThumbnailManager = LiveThumbnails
             ? new LiveThumbnails.LiveThumbnailManager(this) : null;
-        if (this._liveThumbnailManager && Docking.DockManager.settings.liveWindowThumbnails) {
+        if (this._liveThumbnailManager && Settings.get('live-window-thumbnails')) {
             try {
                 this._liveThumbnailManager.enable();
             } catch (e) {
@@ -296,7 +298,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
             Docking.DockManager.settings,
             'changed::live-window-thumbnails', () => {
                 try {
-                    if (Docking.DockManager.settings.liveWindowThumbnails)
+                    if (Settings.get('live-window-thumbnails'))
                         this._liveThumbnailManager.enable();
                     else
                         this._liveThumbnailManager.disable();
@@ -548,7 +550,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
     _startWiggleLongPress() {
         this._cancelWiggleLongPress();
 
-        if (!Docking.DockManager.settings.wiggleModeEnabled)
+        if (!Settings.get('wiggle-mode-enabled'))
             return;
 
         // Don't start long-press if already in wiggle mode
@@ -556,8 +558,9 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (dockManager?.wiggleMode)
             return;
 
+        const longPressTimeout = Settings.get('wiggle-long-press-timeout');
         this._wiggleLongPressTimeoutId = GLib.timeout_add(
-            GLib.PRIORITY_DEFAULT, Docking.DockManager.settings.wiggleLongPressTimeout, () => {
+            GLib.PRIORITY_DEFAULT, longPressTimeout, () => {
                 this._wiggleLongPressTimeoutId = 0;
                 dockManager?.enterWiggleMode();
                 return GLib.SOURCE_REMOVE;
@@ -584,8 +587,8 @@ export const DockAbstractAppIcon = GObject.registerClass({
     }
 
     vfunc_scroll_event(scrollEvent) {
-        const {settings} = Docking.DockManager;
-        const isEnabled = settings.scrollAction === scrollAction.CYCLE_WINDOWS;
+        const currentScrollAction = Settings.get('scroll-action');
+        const isEnabled = currentScrollAction === scrollAction.CYCLE_WINDOWS;
         if (!isEnabled)
             return Clutter.EVENT_PROPAGATE;
 
@@ -598,8 +601,9 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (this._optionalScrollCycleWindowsDeadTimeId) {
             return Clutter.EVENT_PROPAGATE;
         } else {
+            const debounce = Settings.get('scroll-cycle-debounce');
             this._optionalScrollCycleWindowsDeadTimeId = GLib.timeout_add(
-                GLib.PRIORITY_DEFAULT, Docking.DockManager.settings.scrollCycleDebounce, () => {
+                GLib.PRIORITY_DEFAULT, debounce, () => {
                     this._optionalScrollCycleWindowsDeadTimeId = 0;
                 });
         }
@@ -657,7 +661,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         this._updateFocusState();
         this._updateUrgentWindows(interestingWindows);
 
-        if (Docking.DockManager.settings.isolateWorkspaces) {
+        if (Settings.get('isolate-workspaces')) {
             this._signalsHandler.removeWithLabel(Labels.ISOLATE_WORKSPACES);
             interestingWindows.forEach(window =>
                 this._signalsHandler.addWithLabel(Labels.ISOLATE_WORKSPACES,
@@ -686,7 +690,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
             }
             // When isolate-monitors is active, only show focus if the
             // focused window actually belongs to this monitor (#105).
-            if (isFocused && Docking.DockManager.settings.isolateMonitors) {
+            if (isFocused && Settings.get('isolate-monitors')) {
                 const focusWin = global.display.focus_window;
                 if (focusWin)
                     isFocused = focusWin.get_monitor() === this.monitorIndex;
@@ -708,7 +712,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         this.focused = isFocused && this.running;
 
         // Clear notification counter badge when the app gets focus (#55)
-        if (this.focused && Docking.DockManager.settings.clearNotificationsOnFocus) {
+        if (this.focused && Settings.get('clear-notifications-on-focus')) {
             const appId = this.app?.id;
             if (appId) {
                 const {notificationsMonitor} = Docking.DockManager.getDefault() ?? {};
@@ -789,7 +793,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         [rect.width, rect.height] = this.get_transformed_size();
 
         let windows = this.getWindows();
-        if (Docking.DockManager.settings.multiMonitor) {
+        if (Settings.get('multi-monitor')) {
             const {monitorIndex} = this;
             windows = windows.filter(w => w.get_monitor() === monitorIndex);
         }
@@ -850,7 +854,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
                     const {scaleFactor} = St.ThemeContext.get_for_stage(global.stage);
                     const isHorizontal = position === St.Side.TOP || position === St.Side.BOTTOM;
                     // If horizontal also remove the height of the dash
-                    const {dockFixed: fixedDock} = Docking.DockManager.settings;
+                    const fixedDock = Settings.get('dock-fixed');
                     const additionalMargin = isHorizontal && !fixedDock ? Main.overview.dash.height : 0;
                     const verticalMargins = this._menu.actor.margin_top + this._menu.actor.margin_bottom;
                     const maxMenuHeight = workArea.height - additionalMargin - verticalMargins;
@@ -929,18 +933,10 @@ export const DockAbstractAppIcon = GObject.registerClass({
         // being used. We then define what buttonAction should be for this
         // event.
         let buttonAction = 0;
-        const {settings} = Docking.DockManager;
-        if (button && button === 2) {
-            if (modifiers & Clutter.ModifierType.SHIFT_MASK)
-                buttonAction = settings.shiftMiddleClickAction;
-            else
-                buttonAction = settings.middleClickAction;
-        } else if (button && button === 1) {
-            if (modifiers & Clutter.ModifierType.SHIFT_MASK)
-                buttonAction = settings.shiftClickAction;
-            else
-                buttonAction = settings.clickAction;
-        }
+        const shiftHeld = !!(modifiers & Clutter.ModifierType.SHIFT_MASK);
+        const actionKey = resolveClickSettingsKey(button, shiftHeld);
+        if (actionKey)
+            buttonAction = Settings.get(actionKey);
 
         switch (buttonAction) {
         case clickAction.FOCUS_OR_APP_SPREAD:
@@ -1177,7 +1173,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
     shouldShowTooltip() {
         return super.shouldShowTooltip() && !this._previewMenu?.isOpen &&
             !this._recentFilesMenuInstance?.isOpen &&
-            !Docking.DockManager.settings.hideTooltip;
+            !Settings.get('hide-tooltip');
     }
 
     _windowPreviews() {
@@ -1328,15 +1324,10 @@ export const DockAbstractAppIcon = GObject.registerClass({
         // Set the font size to something smaller than the whole icon so it is
         // still visible. The border radius is large to make the shape circular
         const [minWidth_, natWidth] = this._iconContainer.get_preferred_width(-1);
-        const labelScale = Docking.DockManager.settings.hotkeyLabelScale;
-        const fontSize = Math.round(
-            Math.max(12, labelScale * natWidth) / scaleFactor);
-        const size = Math.round(fontSize * 1.2);
-        this._numberOverlayLabel.set_style(
-            `font-size: ${fontSize}px;` +
-           `border-radius: ${this.icon.iconSize}px;` +
-           `width: ${size}px; height: ${size}px;`
-        );
+        const labelScale = Settings.get('hotkey-label-scale');
+        const {style} = computeHotkeyLabelStyle(
+            natWidth, scaleFactor, labelScale, this.icon.iconSize);
+        this._numberOverlayLabel.set_style(style);
     }
 
     setNumberOverlay(number) {
@@ -1374,8 +1365,8 @@ export const DockAbstractAppIcon = GObject.registerClass({
     _activateAllWindows() {
         // First activate first window so workspace is switched if needed.
         // We don't do this if isolation is on!
-        if (!Docking.DockManager.settings.isolateWorkspaces &&
-            !Docking.DockManager.settings.isolateMonitors) {
+        if (!Settings.get('isolate-workspaces') &&
+            !Settings.get('isolate-monitors')) {
             if (!this.running)
                 this.animateLaunch();
             this.app.activate();
@@ -1422,7 +1413,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
             }
 
             // Start a new bounce and keep the handle so we can stop it later
-            if (Docking.DockManager.settings.bounceIcons)
+            if (Settings.get('bounce-icons'))
                 this._bounceHandle = BounceAnimation.startBounceAnimation(this.icon._iconBin);
 
 
@@ -1486,15 +1477,14 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
         if (recentlyClickedAppLoopId > 0)
             GLib.source_remove(recentlyClickedAppLoopId);
-        const memoryTime =
-            Docking.DockManager.settings.windowCycleMemoryTime;
+        const memoryTime = Settings.get('window-cycle-memory-time');
         recentlyClickedAppLoopId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT, memoryTime,
             this._resetRecentlyClickedApp);
 
         // If there isn't already a list of windows for the current app,
         // or the stored list is outdated, use the current windows list.
-        const monitorIsolation = Docking.DockManager.settings.isolateMonitors;
+        const monitorIsolation = Settings.get('isolate-monitors');
         if (!recentlyClickedApp ||
             recentlyClickedApp.get_id() !== this.app.get_id() ||
             !recentlyClickedAppWindows ||
@@ -1593,7 +1583,7 @@ const DockLocationAppIcon = GObject.registerClass({
             this._setupCompositeIcon(app._categoryIconInstance);
             this.popupMenu = () => {};
         } else {
-            if (Docking.DockManager.settings.isolateLocations) {
+            if (Settings.get('isolate-locations')) {
                 this._signalsHandler.add(tracker, 'notify::focus-app', () => this._updateFocusState());
             } else {
                 this._signalsHandler.add(global.display, 'notify::focus-window',
@@ -1617,7 +1607,7 @@ const DockLocationAppIcon = GObject.registerClass({
     }
 
     _updateFocusState() {
-        if (Docking.DockManager.settings.isolateLocations) {
+        if (Settings.get('isolate-locations')) {
             super._updateFocusState();
             return;
         }
@@ -1863,7 +1853,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
 
         const {app} = this.sourceActor;
 
-        if (Docking.DockManager.settings.showWindowsPreview) {
+        if (Settings.get('show-windows-preview')) {
             // Display the app windows menu items and the separator between windows
             // of the current desktop and other windows.
             const windows = this.sourceActor.getInterestingWindows();
@@ -1893,7 +1883,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
         }
 
         // Recent Files submenu
-        if (RecentFilesMenu && Docking.DockManager.settings.showRecentFiles && !app.is_window_backed()) {
+        if (RecentFilesMenu && Settings.get('show-recent-files') && !app.is_window_backed()) {
             const recentFiles = await RecentFilesMenu.getRecentFilesForApp(app);
             if (recentFiles.length > 0) {
                 this._recentFilesMenuItem = new PopupMenu.PopupSubMenuMenuItem(
@@ -2071,7 +2061,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
             }
 
             // Badge Settings submenu — per-app badge overrides
-            if (Docking.DockManager.settings.showIconsEmblems) {
+            if (Settings.get('show-icons-emblems')) {
                 this._appendSeparator();
                 this._appendBadgeSettingsSubmenu(app);
             }
@@ -2095,7 +2085,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
 
         // Per-app volume control
         this._volumeMenuItem = null;
-        if (Docking.DockManager.settings.showVolumeControl) {
+        if (Settings.get('show-volume-control')) {
             const {volumeControl} = Docking.DockManager.getDefault();
             if (volumeControl) {
                 const stream = volumeControl.getStreamForApp(
@@ -2211,7 +2201,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
             this._quitMenuItem.actor.hide();
         }
 
-        if (Docking.DockManager.settings.showWindowsPreview) {
+        if (Settings.get('show-windows-preview')) {
             const windows = this.sourceActor.getInterestingWindows();
 
             // update, show, or hide the allWindows menu
@@ -2240,7 +2230,7 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
                 this._allWindowsMenuItem.show();
                 this._allWindowsMenuItem.setSensitive(true);
 
-                if (Docking.DockManager.settings.defaultWindowsPreviewToOpen)
+                if (Settings.get('default-windows-preview-to-open'))
                     this._allWindowsMenuItem.menu.open();
             }
         }
@@ -2286,9 +2276,60 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
 };
 
 /**
+ * Resolve which click action constant to use given a mouse button and modifier state.
+ *
+ * @param {number} button - Mouse button (1=primary, 2=middle)
+ * @param {boolean} shiftHeld - Whether SHIFT is held
+ * @returns {string} Settings key for the action to look up
+ */
+export function resolveClickSettingsKey(button, shiftHeld) {
+    if (button === 2) {
+        return shiftHeld ? 'shift-middle-click-action' : 'middle-click-action';
+    } else if (button === 1) {
+        return shiftHeld ? 'shift-click-action' : 'click-action';
+    }
+    return null;
+}
+
+/**
+ * Compute the hotkey overlay label font size and dimensions.
+ *
+ * @param {number} natWidth - Natural width of the icon container (physical px)
+ * @param {number} scaleFactor - HiDPI scale factor
+ * @param {number} labelScale - Settings value for hotkey-label-scale
+ * @param {number} iconSize - Icon size for border-radius
+ * @returns {{fontSize: number, size: number, style: string}}
+ */
+export function computeHotkeyLabelStyle(natWidth, scaleFactor, labelScale, iconSize) {
+    const fontSize = Math.round(
+        Math.max(12, labelScale * natWidth) / scaleFactor);
+    const size = Math.round(fontSize * 1.2);
+    const style =
+        `font-size: ${fontSize}px;` +
+        `border-radius: ${iconSize}px;` +
+        `width: ${size}px; height: ${size}px;`;
+    return {fontSize, size, style};
+}
+
+/**
+ * Compute the maximum tooltip label width.
+ *
+ * @param {number} monitorWidth - Monitor width in pixels
+ * @param {number} tooltipMaxWidthPercent - Settings percent (0-100, 0 treated as 60)
+ * @param {number} tooltipMaxWidthPx - Absolute max width in pixels
+ * @returns {number} Maximum label width
+ */
+export function computeTooltipMaxWidth(monitorWidth, tooltipMaxWidthPercent, tooltipMaxWidthPx) {
+    const pct = Math.max(20, Math.min(100, tooltipMaxWidthPercent || 60));
+    return Math.min(
+        Math.floor(monitorWidth * pct / 100),
+        tooltipMaxWidthPx);
+}
+
+/**
  * @param w
  */
-function isWindowUrgent(w) {
+export function isWindowUrgent(w) {
     return w.urgent || w.demandsAttention || w._manualUrgency;
 }
 
@@ -2300,12 +2341,13 @@ function isWindowUrgent(w) {
  * @param monitorIndex
  */
 export function getInterestingWindows(windows, monitorIndex) {
-    const {settings} = Docking.DockManager;
+    const isolateWorkspaces = Settings.get('isolate-workspaces');
+    const isolateMonitors = Settings.get('isolate-monitors');
 
     // When using workspace isolation, we filter out windows
     // that are neither in the current workspace nor marked urgent
-    if (settings.isolateWorkspaces) {
-        const showUrgent = settings.workspaceAgnosticUrgentWindows;
+    if (isolateWorkspaces) {
+        const showUrgent = Settings.get('workspace-agnostic-urgent-windows');
         const activeWorkspace = global.workspace_manager.get_active_workspace();
         windows = windows.filter(w => {
             const inWorkspace = w.get_workspace() === activeWorkspace;
@@ -2313,7 +2355,7 @@ export function getInterestingWindows(windows, monitorIndex) {
         });
     }
 
-    if (settings.isolateMonitors && monitorIndex >= 0) {
+    if (isolateMonitors && monitorIndex >= 0) {
         windows = windows.filter(w => {
             return w.get_monitor() === monitorIndex;
         });
@@ -2361,7 +2403,7 @@ export const DockShowAppsIcon = GObject.registerClass({
             this._removeMenuTimeout(...args);
 
         this.label?.add_style_class_name(Theming.PositionStyleClass[position]);
-        if (Docking.DockManager.settings.customThemeShrink)
+        if (Settings.get('custom-theme-shrink'))
             this.label?.add_style_class_name('shrink');
 
         this._menu = null;
@@ -2523,11 +2565,10 @@ export function itemShowLabel() {
     const itemHeight = this.allocation.y2 - this.allocation.y1;
 
     const monitor = Main.layoutManager.findMonitorForActor(this);
-    const widthPercent = Math.max(20, Math.min(100,
-        Docking.DockManager.settings.tooltipMaxWidthPercent || 60));
-    const maxLabelWidth = Math.min(
-        Math.floor(monitor.width * widthPercent / 100),
-        Docking.DockManager.settings.tooltipMaxWidthPx);
+    const maxLabelWidth = computeTooltipMaxWidth(
+        monitor.width,
+        Settings.get('tooltip-max-width-percent'),
+        Settings.get('tooltip-max-width-px'));
     const naturalLabelWidth = this.label.get_width();
     this.label.clutter_text.ellipsize = Pango.EllipsizeMode.END;
     this.label.set_width(naturalLabelWidth > maxLabelWidth ? maxLabelWidth : -1);

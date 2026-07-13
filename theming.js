@@ -20,6 +20,8 @@ import {
     Utils,
 } from './imports.js';
 
+import * as Settings from './platform/settings.js';
+
 let WallpaperColorExtractor;
 let _wallpaperModuleLoading = false;
 function _ensureWallpaperModule() {
@@ -170,7 +172,7 @@ export class ThemeManager {
     }
 
     _updateDashOpacity() {
-        const newAlpha = Docking.DockManager.settings.backgroundOpacity;
+        const newAlpha = Settings.get('background-opacity');
 
         const [backgroundColor, borderColor] = this._getDefaultColors();
 
@@ -231,12 +233,16 @@ export class ThemeManager {
         if (!backgroundColor)
             return;
 
-        const {settings} = Docking.DockManager;
+        const wallpaperAdaptiveColor = Settings.get('wallpaper-adaptive-color');
+        const customBackgroundColor = Settings.get('custom-background-color');
+        const transparencyMode = Settings.get('transparency-mode');
+        const backgroundOpacity = Settings.get('background-opacity');
+        const bgColorSetting = Settings.get('background-color');
 
         // Wallpaper-adaptive color takes priority over manual custom color
-        const useWallpaperColor = settings.wallpaperAdaptiveColor && this._wallpaperColor;
+        const useWallpaperColor = wallpaperAdaptiveColor && this._wallpaperColor;
 
-        if (useWallpaperColor || settings.customBackgroundColor) {
+        if (useWallpaperColor || customBackgroundColor) {
             // When applying a custom color, we need to check the alpha value,
             // if not the opacity will always be overridden by the color below.
             // Note that if using 'dynamic' transparency modes,
@@ -247,7 +253,7 @@ export class ThemeManager {
             if (useWallpaperColor)
                 colorString = this._wallpaperColor;
             else
-                ({backgroundColor: colorString} = settings);
+                colorString = bgColorSetting;
 
             // colorString is a string like rgb(0,0,0) or #rrggbb
             const {Color} = Cogl;
@@ -257,8 +263,8 @@ export class ThemeManager {
                 return;
             }
 
-            if (settings.transparencyMode === TransparencyMode.FIXED) {
-                newAlpha = settings.backgroundOpacity;
+            if (transparencyMode === TransparencyMode.FIXED) {
+                newAlpha = backgroundOpacity;
                 this._customizedBackground =
                     `rgba(${color.red}, ${color.green}, ${color.blue}, ${newAlpha})`;
             } else {
@@ -276,26 +282,32 @@ export class ThemeManager {
     }
 
     _updateCustomStyleClasses() {
-        const {settings} = Docking.DockManager;
+        const applyCustomTheme = Settings.get('apply-custom-theme');
+        const customThemeShrink = Settings.get('custom-theme-shrink');
+        const runningIndicatorStyle = Settings.get('running-indicator-style');
+        const forceStraightCorner = Settings.get('force-straight-corner');
+        const iconMagnification = Settings.get('icon-magnification');
+        const magnificationHoverHighlight = Settings.get('magnification-hover-highlight');
+        const dockStyle = Settings.get('dock-style');
 
-        if (settings.applyCustomTheme)
+        if (applyCustomTheme)
             this._actor.add_style_class_name('dashtodock');
         else
             this._actor.remove_style_class_name('dashtodock');
 
-        if (settings.customThemeShrink)
+        if (customThemeShrink)
             this._actor.add_style_class_name('shrink');
         else
             this._actor.remove_style_class_name('shrink');
 
-        if (settings.runningIndicatorStyle !== 0)
+        if (runningIndicatorStyle !== 0)
             this._actor.add_style_class_name('running-dots');
         else
             this._actor.remove_style_class_name('running-dots');
 
         // If not the built-in theme option is not selected
-        if (!settings.applyCustomTheme) {
-            if (settings.forceStraightCorner)
+        if (!applyCustomTheme) {
+            if (forceStraightCorner)
                 this._actor.add_style_class_name('straight-corner');
             else
                 this._actor.remove_style_class_name('straight-corner');
@@ -303,12 +315,12 @@ export class ThemeManager {
             this._actor.remove_style_class_name('straight-corner');
         }
 
-        if (settings.iconMagnification && !settings.magnificationHoverHighlight)
+        if (iconMagnification && !magnificationHoverHighlight)
             this._actor.add_style_class_name('no-hover-highlight');
         else
             this._actor.remove_style_class_name('no-hover-highlight');
 
-        if (settings.dockStyle === DockStyle.SHELF)
+        if (dockStyle === DockStyle.SHELF)
             this._actor.add_style_class_name('shelf');
         else
             this._actor.remove_style_class_name('shelf');
@@ -326,8 +338,8 @@ export class ThemeManager {
     }
 
     _buildShelfStyle(_position) {
-        const {settings} = Docking.DockManager;
-        if (settings.dockStyle !== DockStyle.SHELF)
+        const dockStyle = Settings.get('dock-style');
+        if (dockStyle !== DockStyle.SHELF)
             return '';
 
         // The shelf uses a Cairo-drawn trapezoid overlay, so hide the
@@ -336,12 +348,12 @@ export class ThemeManager {
     }
 
     _updateShelfOverlay() {
-        const {settings} = Docking.DockManager;
+        const dockStyle = Settings.get('dock-style');
         const bg = this._dash?._background;
         if (!bg)
             return;
 
-        if (settings.dockStyle !== DockStyle.SHELF) {
+        if (dockStyle !== DockStyle.SHELF) {
             if (this._shelfOverlay) {
                 this._shelfOverlay.destroy();
                 this._shelfOverlay = null;
@@ -364,17 +376,21 @@ export class ThemeManager {
     }
 
     _paintShelf(area) {
-        const {settings} = Docking.DockManager;
         const cr = area.get_context();
         const [w, h] = area.get_surface_size();
 
         if (w < 2 || h < 2)
             return;
 
-        const topOp = settings.shelfGradientTopOpacity;
-        const botOp = settings.shelfGradientBottomOpacity;
-        const hlOp = settings.shelfHighlightOpacity;
-        const brOp = settings.shelfBorderOpacity;
+        // Read all shelf settings once (this is a repaint callback — hot path)
+        const topOp = Settings.get('shelf-gradient-top-opacity');
+        const botOp = Settings.get('shelf-gradient-bottom-opacity');
+        const hlOp = Settings.get('shelf-highlight-opacity');
+        const brOp = Settings.get('shelf-border-opacity');
+        const shelfHeightFrac = Settings.get('shelf-height');
+        const shelfAngleFrac = Settings.get('shelf-angle');
+        const rt = Settings.get('shelf-corner-radius-top');
+        const rb = Settings.get('shelf-corner-radius-bottom');
 
         // Clear
         cr.save();
@@ -383,11 +399,9 @@ export class ThemeManager {
         cr.restore();
 
         // The shelf occupies the lower portion — icons stand on top of it.
-        const shelfTop = Math.round(h * settings.shelfHeight);
+        const shelfTop = Math.round(h * shelfHeightFrac);
         const shelfH = h - shelfTop;
-        const inset = Math.round(shelfH * settings.shelfAngle);
-        const rt = settings.shelfCornerRadiusTop;
-        const rb = settings.shelfCornerRadiusBottom;
+        const inset = Math.round(shelfH * shelfAngleFrac);
 
         cr.save();
         cr.translate(0, shelfTop);
@@ -435,13 +449,16 @@ export class ThemeManager {
      * Reimported back and adapted from atomdock
      */
     _adjustTheme() {
-        const {settings} = Docking.DockManager;
+        const applyCustomTheme = Settings.get('apply-custom-theme');
+        const customBorderRadius = Settings.get('custom-border-radius');
+        const transparencyMode = Settings.get('transparency-mode');
+        const customBackgroundColor = Settings.get('custom-background-color');
 
         this._transparency.disable();
 
         // If built-in theme is enabled, just clear any leftover inline style
-        if (settings.applyCustomTheme) {
-            const shelfStyle = this._buildShelfStyle(Utils.getPosition(settings));
+        if (applyCustomTheme) {
+            const shelfStyle = this._buildShelfStyle(Utils.getPosition());
             this._dash._background.set_style(shelfStyle || null);
             return;
         }
@@ -460,7 +477,7 @@ export class ThemeManager {
         // Restore previous style immediately so no unstyled frame is painted.
         this._dash._background.set_style(prevStyle);
 
-        const position = Utils.getPosition(settings);
+        const position = Utils.getPosition();
 
         // We're copying border and corner styles to left border and top-left
         // corner, also removing bottom border and bottom-right corner styles
@@ -475,7 +492,6 @@ export class ThemeManager {
         }
 
         // Apply custom border radius if configured
-        const {customBorderRadius} = settings;
         if (customBorderRadius >= 0)
             newStyle = `${newStyle}border-radius: ${customBorderRadius}px; `;
 
@@ -483,14 +499,14 @@ export class ThemeManager {
         newStyle += this._buildShelfStyle(position);
 
         // Customize background
-        const fixedTransparency = settings.transparencyMode === TransparencyMode.FIXED;
-        const defaultTransparency = settings.transparencyMode === TransparencyMode.DEFAULT;
+        const fixedTransparency = transparencyMode === TransparencyMode.FIXED;
+        const defaultTransparency = transparencyMode === TransparencyMode.DEFAULT;
         if (!defaultTransparency && !fixedTransparency) {
             // Apply structural style (border, radius) first, then enable
             // dynamic transparency which will set its own background style.
             this._dash._background.set_style(newStyle || null);
             this._transparency.enable();
-        } else if (!defaultTransparency || settings.customBackgroundColor) {
+        } else if (!defaultTransparency || customBackgroundColor) {
             newStyle = `${newStyle}background-color:${this._customizedBackground}; ` +
                        `border-color:${this._customizedBorder}; ` +
                        'transition-delay: 0s; transition-duration: 0.250s;';
@@ -563,8 +579,8 @@ export class ThemeManager {
      */
     _ensureWallpaperExtractor() {
         _ensureWallpaperModule();
-        const {settings} = Docking.DockManager;
-        if (settings.wallpaperAdaptiveColor) {
+        const wallpaperAdaptiveColor = Settings.get('wallpaper-adaptive-color');
+        if (wallpaperAdaptiveColor) {
             if (!this._wallpaperExtractor && WallpaperColorExtractor) {
                 this._wallpaperExtractor =
                     new WallpaperColorExtractor.WallpaperColorExtractor();
@@ -775,7 +791,7 @@ class Transparency {
          * up when it slides out. This is avoid an ugly transition.
          * */
         let factor = 0;
-        if (!Docking.DockManager.settings.dockFixed &&
+        if (!Settings.get('dock-fixed') &&
             this._dock.getDockState() === Docking.State.HIDDEN)
             factor = 1;
         const [leftCoord, topCoord] = this._actor.get_transformed_position();
@@ -856,12 +872,11 @@ class Transparency {
 
         Main.uiGroup.remove_child(dummyObject);
 
-        const {settings} = Docking.DockManager;
-
-        if (settings.customizeAlphas) {
-            this._opaqueAlpha = settings.maxAlpha;
+        const customizeAlphas = Settings.get('customize-alphas');
+        if (customizeAlphas) {
+            this._opaqueAlpha = Settings.get('max-alpha');
             this._opaqueAlphaBorder = this._opaqueAlpha / 2;
-            this._transparentAlpha = settings.minAlpha;
+            this._transparentAlpha = Settings.get('min-alpha');
             this._transparentAlphaBorder = this._transparentAlpha / 2;
         }
     }

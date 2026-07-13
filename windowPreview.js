@@ -28,6 +28,8 @@ import {
     Utils,
 } from './imports.js';
 
+import * as Settings from './platform/settings.js';
+
 const MAX_PREVIEW_GENERATION_ATTEMPTS = 15;
 
 const MENU_MARGINS = 10;
@@ -38,6 +40,36 @@ const Labels = Object.freeze({
     WINDOW_ADDED: Symbol('window-added'),
 });
 const ACTIVE_WINDOW_PREVIEW_CLASS = 'active-window-preview';
+
+/**
+ * Compute the preview scale factor for a window of the given size.
+ *
+ * @param {number} width - window pixel width
+ * @param {number} height - window pixel height
+ * @param {number} sizeScale - explicit scale (0 means auto-compute)
+ * @param {number} maxHeight - maximum preview height in pixels
+ * @returns {number} scale factor (0 < scale <= 1)
+ */
+export function computePreviewScale(width, height, sizeScale, maxHeight) {
+    if (!width || !height)
+        return 0;
+
+    if (sizeScale)
+        return sizeScale;
+
+    const maxWidth = maxHeight * 2;
+    return Math.min(1.0, maxWidth / width, maxHeight / height);
+}
+
+/**
+ * Compute the label max-width for a preview item.
+ *
+ * @param {number} maxHeight - maximum preview height in pixels
+ * @returns {number} label max-width in pixels
+ */
+export function computeLabelMaxWidth(maxHeight) {
+    return maxHeight * 2;
+}
 
 export class WindowPreviewMenu extends PopupMenu.PopupMenu {
     constructor(source) {
@@ -226,9 +258,10 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
         this.cancelOpen();
         this.cancelClose();
 
+        const enterTimeout = Settings.get('preview-hover-enter-timeout');
         this._hoverOpenTimeoutId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT,
-            Docking.DockManager.settings.previewHoverEnterTimeout,
+            enterTimeout,
             () => {
                 this.hoverOpen();
                 return GLib.SOURCE_REMOVE;
@@ -244,9 +277,10 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
         if (this._source.has_pointer)
             return;
 
+        const leaveTimeout = Settings.get('preview-hover-leave-timeout');
         this._hoverCloseTimeoutId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT,
-            Docking.DockManager.settings.previewHoverLeaveTimeout,
+            leaveTimeout,
             () => {
                 this.hoverClose();
                 return GLib.SOURCE_REMOVE;
@@ -314,9 +348,10 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
         if (this._hoverCloseTimeoutId)
             return;
 
+        const leaveTimeout = Settings.get('preview-hover-leave-timeout');
         this._hoverCloseTimeoutId = GLib.timeout_add(
             GLib.PRIORITY_DEFAULT,
-            Docking.DockManager.settings.previewHoverLeaveTimeout,
+            leaveTimeout,
             () => {
                 this.hoverClose();
                 return GLib.SOURCE_REMOVE;
@@ -660,7 +695,7 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         this.remove_child(this._ornamentIcon);
         this.add_style_class_name('dashtodock-app-well-preview-menu-item');
         this.add_style_class_name(Theming.PositionStyleClass[position]);
-        if (Docking.DockManager.settings.customThemeShrink)
+        if (Settings.get('custom-theme-shrink'))
             this.add_style_class_name('shrink');
 
         // Now we don't have to set fixed preview max width/height as
@@ -695,7 +730,8 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
             text: window.get_title(),
             style_class: 'window-preview-label',
         });
-        label.set_style(`max-width: ${Docking.DockManager.settings.previewMaxHeight * 2}px`);
+        const previewMaxHeight = Settings.get('preview-max-height');
+        label.set_style(`max-width: ${computeLabelMaxWidth(previewMaxHeight)}px`);
         const labelBin = new St.Bin({
             child: label,
             x_align: Clutter.ActorAlign.CENTER,
@@ -752,11 +788,9 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         if (!width || !height)
             return emptySize;
 
-        let {previewSizeScale: scale} = Docking.DockManager.settings;
-        if (!scale) {
-            const maxWidth = Docking.DockManager.settings.previewMaxHeight * 2;
-            scale = Math.min(1.0, maxWidth / width, Docking.DockManager.settings.previewMaxHeight / height);
-        }
+        const sizeScale = Settings.get('preview-size-scale');
+        const maxHeight = Settings.get('preview-max-height');
+        let scale = computePreviewScale(width, height, sizeScale, maxHeight);
 
         // NOTE: global scaleFactor; per-monitor scale not yet used here.
         scale *= St.ThemeContext.get_for_stage(global.stage).scaleFactor;
@@ -924,6 +958,9 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         if (targetIndex === -1)
             return;
 
+        const peekOpacity = Settings.get('aero-peek-opacity');
+        const peekDuration = Settings.get('aero-peek-duration');
+
         allWindows.slice(0, targetIndex).forEach(win => {
             const actor = win.get_compositor_private();
             if (actor && !win.minimized) {
@@ -933,8 +970,8 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
                 this._peekingWindows.push(actor);
 
                 actor.ease({
-                    opacity: Docking.DockManager.settings.aeroPeekOpacity,
-                    duration: Docking.DockManager.settings.aeroPeekDuration,
+                    opacity: peekOpacity,
+                    duration: peekDuration,
                     mode: Clutter.AnimationMode.EASE_OUT_QUAD,
                 });
             }
@@ -942,12 +979,14 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
     }
 
     _endAeroPeek() {
+        const peekDuration = Settings.get('aero-peek-duration');
+
         this._peekingWindows.forEach(actor => {
             if (actor && !actor.is_destroyed()) {
                 const originalOpacity = actor._originalOpacity || 255;
                 actor.ease({
                     opacity: originalOpacity,
-                    duration: Docking.DockManager.settings.aeroPeekDuration,
+                    duration: peekDuration,
                     mode: Clutter.AnimationMode.EASE_OUT_QUAD,
                     onComplete: () => {
                         delete actor._originalOpacity;
@@ -998,7 +1037,7 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         this.opacity = 0;
         this.set_width(0);
 
-        const time = animate ? Docking.DockManager.settings.previewAnimationDuration : 0;
+        const time = animate ? Settings.get('preview-animation-duration') : 0;
         this.remove_all_transitions();
         this.ease({
             opacity: 255,
@@ -1009,17 +1048,19 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
     }
 
     _animateOutAndDestroy() {
+        const animDuration = Settings.get('preview-animation-duration');
+
         this.remove_all_transitions();
         this.ease({
             opacity: 0,
-            duration: Docking.DockManager.settings.previewAnimationDuration,
+            duration: animDuration,
         });
 
         this.ease({
             width: 0,
             height: 0,
-            duration: Docking.DockManager.settings.previewAnimationDuration,
-            delay: Docking.DockManager.settings.previewAnimationDuration,
+            duration: animDuration,
+            delay: animDuration,
             onComplete: () => this.destroy(),
         });
     }
