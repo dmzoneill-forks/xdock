@@ -8,6 +8,7 @@ export default {
         '^(\\.\\.?/)*dependencies/shell/extensions/extension\\.js$':
             '<rootDir>/test/__mocks__/shell-extension.js',
         '^(\\.\\.?/)*imports\\.js$': '<rootDir>/test/__mocks__/imports.js',
+        '^(\\.\\.?/)*platform/(.+)$': '<rootDir>/test/__mocks__/platform/$2',
         '^resource:///.*$': '<rootDir>/test/__mocks__/shell-ui.js',
         '^gi://.*$': '<rootDir>/test/__mocks__/gi.js',
     },
