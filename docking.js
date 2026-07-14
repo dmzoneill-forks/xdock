@@ -2132,15 +2132,15 @@ const KeyboardShortcuts = class DashToDockKeyboardShortcuts {
             this._enableExtraShortcut();
 
         this._signalsHandler.add([
-            settings,
+            Settings.getGSettings(),
             'changed::hot-keys',
             this._checkHotkeysOptions.bind(this),
         ], [
-            settings,
+            Settings.getGSettings(),
             'changed::hotkeys-overlay',
             this._checkHotkeysOptions.bind(this),
         ], [
-            settings,
+            Settings.getGSettings(),
             'changed::hotkeys-show-dock',
             this._checkHotkeysOptions.bind(this),
         ]);

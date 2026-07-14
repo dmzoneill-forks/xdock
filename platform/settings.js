@@ -2,7 +2,6 @@
 // Production: wraps Gio.Settings
 // Tests: mock this module to control all settings without GI.
 
-import Gio from 'gi://Gio';
 
 let _instance = null;
 
