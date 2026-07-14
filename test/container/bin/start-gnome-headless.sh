@@ -8,10 +8,20 @@ RESOLUTION="${1:-1920x1080}"
 
 export LIBGL_ALWAYS_SOFTWARE=1
 export MUTTER_DEBUG_DUMMY_MODE_SPECS="${RESOLUTION}"
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/tmp/runtime-$(id -u)}"
+mkdir -p "$XDG_RUNTIME_DIR"
 
 # Launch gnome-shell with its own D-Bus session
 dbus-run-session -- bash -c '
     echo "HEADLESS_DBUS=${DBUS_SESSION_BUS_ADDRESS}" > /tmp/gnome-headless-env
+
+    # Enable development tools (Shell.Eval D-Bus method) and requested extensions
+    # before gnome-shell starts — it caches these at init time.
+    dconf write /org/gnome/shell/development-tools true 2>/dev/null || true
+    if [ -n "${XDOCK_ENABLE_EXTENSIONS:-}" ]; then
+        dconf write /org/gnome/shell/enabled-extensions "[\"${XDOCK_ENABLE_EXTENSIONS}\"]" 2>/dev/null || true
+    fi
+
     gnome-shell --headless --no-x11 --virtual-monitor "'"${RESOLUTION}"'" &
     SHELL_PID=$!
     echo "gnome-shell headless started (PID ${SHELL_PID}, '"${RESOLUTION}"')"

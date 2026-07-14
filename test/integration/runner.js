@@ -203,6 +203,8 @@ export function run(_argv) {
         if (!ext || ext.state !== 1) {
             log(`FAIL: Extension state=${ext?.state} after 30s wait, expected 1 (ENABLED)`);
             log(`Available extensions: ${manager.getUuids?.()?.join(', ') ?? 'unknown'}`);
+            if (ext?.error)
+                log(`Extension error: ${ext.error}`);
             return;
         }
     }

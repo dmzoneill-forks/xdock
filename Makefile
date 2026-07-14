@@ -156,11 +156,13 @@ _build: all
 	cp $(BASE_MODULES) $(EXTRA_MODULES) _build
 	cp -a dependencies _build
 	cp -a indicators _build
+	cp -a platform _build
 	cp stylesheet.css _build
 	mkdir -p _build/media
 	cd media ; cp $(EXTRA_MEDIA) ../_build/media/
 	mkdir -p _build/schemas
 	cp schemas/*.gschema.xml _build/schemas/
+	cp schemas/gschemas.compiled _build/schemas/ 2>/dev/null || glib-compile-schemas _build/schemas/
 	mkdir -p _build/locale
 	for l in $(MSGSRC:.po=.mo) ; do \
 		lf=_build/locale/`basename $$l .mo`; \
