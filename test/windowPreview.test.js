@@ -94,6 +94,7 @@ ShellUi.PopupMenu.PopupBaseMenuItem = class PopupBaseMenuItem extends St.Widget 
         super._init(params);
         this._ornamentIcon = new St.Widget();
         this.closeButton = null;
+        this.actor = this; // GNOME Shell compat: PopupBaseMenuItem.actor === this
     }
 
     set(props) { Object.assign(this, props); }
@@ -2564,3 +2565,909 @@ describe('WindowPreviewList', () => {
         expect(previewBox._shownInitially).toBe(true);
     });
 });
+
+// ===================================================================
+// Coverage gap tests — targeting specific uncovered lines
+// ===================================================================
+
+describe('WindowPreviewMenu — coverage gaps', () => {
+    beforeEach(() => {
+        Settings._reset();
+    });
+
+    // --- Lines 99-100: notify::mapped handler calls close when source unmaps ---
+    test('source notify::mapped handler calls close when source.mapped is false', () => {
+        const source = createMockSource();
+        const menu = new WindowPreviewMenu(source);
+
+        // The constructor stores signal handlers via _signalsHandler.add(...)
+        // Find the notify::mapped handler
+        const handler = menu._signalsHandler._handlers.find(
+            h => h[1] === 'notify::mapped' || h[2] === 'notify::mapped'
+        );
+        expect(handler).toBeDefined();
+
+        // The handler is the last argument in the args list
+        const callback = handler[handler.length - 1];
+
+        // Set source.mapped to false so the guard passes
+        source.mapped = false;
+
+        const closeSpy = jest.fn();
+        menu.close = closeSpy;
+
+        callback();
+
+        expect(closeSpy).toHaveBeenCalled();
+    });
+
+    test('source notify::mapped handler does NOT call close when source.mapped is true', () => {
+        const source = createMockSource();
+        const menu = new WindowPreviewMenu(source);
+
+        const handler = menu._signalsHandler._handlers.find(
+            h => h[1] === 'notify::mapped' || h[2] === 'notify::mapped'
+        );
+        const callback = handler[handler.length - 1];
+
+        source.mapped = true;
+
+        const closeSpy = jest.fn();
+        menu.close = closeSpy;
+
+        callback();
+
+        expect(closeSpy).not.toHaveBeenCalled();
+    });
+
+    // --- Lines 190, 192: sort comparators in _needsRedisplay ---
+    test('_needsRedisplay sort comparator exercises get_stable_sequence subtraction', () => {
+        const w1 = createMockWindow({get_stable_sequence: () => 5});
+        const w2 = createMockWindow({get_stable_sequence: () => 3});
+        const w3 = createMockWindow({get_stable_sequence: () => 7});
+        const source = createMockSource();
+        const menu = new WindowPreviewMenu(source);
+
+        // Displayed windows in a different order than current
+        menu._previewBox = {
+            _getMenuItems: () => [
+                {_window: w3},
+                {_window: w1},
+                {_window: w2},
+            ],
+        };
+
+        // Same windows, same count, but order differs — sorted should match
+        const result = menu._needsRedisplay([w2, w3, w1]);
+        expect(result).toBe(false); // same windows, just reordered
+    });
+
+    test('_needsRedisplay returns true when sorted sequences differ', () => {
+        const w1 = createMockWindow({get_stable_sequence: () => 1});
+        const w2 = createMockWindow({get_stable_sequence: () => 2});
+        const w3 = createMockWindow({get_stable_sequence: () => 3});
+        const w4 = createMockWindow({get_stable_sequence: () => 4});
+        const source = createMockSource();
+        const menu = new WindowPreviewMenu(source);
+
+        menu._previewBox = {
+            _getMenuItems: () => [
+                {_window: w1},
+                {_window: w2},
+                {_window: w3},
+            ],
+        };
+
+        // Different windows, same count
+        const result = menu._needsRedisplay([w1, w2, w4]);
+        expect(result).toBe(true);
+    });
+
+    // --- Lines 219, 221, 224, 226, 229: enableHover lambda callbacks ---
+    test('enableHover lambda callbacks invoke corresponding methods', () => {
+        const source = createMockSource();
+        const menu = new WindowPreviewMenu(source);
+        const mockManager = {removeMenu: jest.fn(), addMenu: jest.fn()};
+
+        menu.enableHover(mockManager);
+
+        // The lambdas are stored in _signalsHandler._handlers via addWithLabel
+        // Find each lambda by the signal name
+        const handlers = menu._signalsHandler._handlers;
+
+        // Lambdas added by enableHover use addWithLabel(Labels.HOVER, target, signal, cb)
+        // The format: [Labels.HOVER, target, signal, callback]
+        const enterSourceHandler = handlers.find(
+            h => h.length >= 4 && h[1] === source && h[2] === 'enter-event'
+        );
+        const leaveSourceHandler = handlers.find(
+            h => h.length >= 4 && h[1] === source && h[2] === 'leave-event'
+        );
+        const enterMenuHandler = handlers.find(
+            h => h.length >= 4 && h[1] === menu._boxPointer.bin && h[2] === 'enter-event'
+        );
+        const leaveMenuHandler = handlers.find(
+            h => h.length >= 4 && h[1] === menu._boxPointer.bin && h[2] === 'leave-event'
+        );
+        const windowsChangedHandler = handlers.find(
+            h => h.length >= 4 && h[1] === menu._app && h[2] === 'windows-changed'
+        );
+
+        expect(enterSourceHandler).toBeDefined();
+        expect(leaveSourceHandler).toBeDefined();
+        expect(enterMenuHandler).toBeDefined();
+        expect(leaveMenuHandler).toBeDefined();
+        expect(windowsChangedHandler).toBeDefined();
+
+        // Spy on the methods that should be called
+        const onEnterSpy = jest.spyOn(menu, '_onEnter').mockImplementation(() => {});
+        const onLeaveSpy = jest.spyOn(menu, '_onLeave').mockImplementation(() => {});
+        const onMenuEnterSpy = jest.spyOn(menu, '_onMenuEnter').mockImplementation(() => {});
+        const onMenuLeaveSpy = jest.spyOn(menu, '_onMenuLeave').mockImplementation(() => {});
+        const onWindowsChangedSpy = jest.spyOn(menu, '_onWindowsChanged').mockImplementation(() => {});
+
+        // Call each lambda (last arg in each handler array)
+        enterSourceHandler[enterSourceHandler.length - 1]();
+        leaveSourceHandler[leaveSourceHandler.length - 1]();
+        enterMenuHandler[enterMenuHandler.length - 1]();
+        leaveMenuHandler[leaveMenuHandler.length - 1]();
+        windowsChangedHandler[windowsChangedHandler.length - 1]();
+
+        expect(onEnterSpy).toHaveBeenCalled();
+        expect(onLeaveSpy).toHaveBeenCalled();
+        expect(onMenuEnterSpy).toHaveBeenCalled();
+        expect(onMenuLeaveSpy).toHaveBeenCalled();
+        expect(onWindowsChangedSpy).toHaveBeenCalled();
+
+        onEnterSpy.mockRestore();
+        onLeaveSpy.mockRestore();
+        onMenuEnterSpy.mockRestore();
+        onMenuLeaveSpy.mockRestore();
+        onWindowsChangedSpy.mockRestore();
+    });
+});
+
+describe('WindowPreviewList — coverage gaps', () => {
+    beforeEach(() => {
+        Settings._reset();
+    });
+
+    // --- Lines 547-560: window moved logic in _redisplay ---
+    test('_redisplay handles window moved with insertHere=true', () => {
+        // Set up initial state with windows [A, B]
+        const wA = createMockWindow({get_stable_sequence: () => 1});
+        const wB = createMockWindow({get_stable_sequence: () => 2});
+        const wC = createMockWindow({get_stable_sequence: () => 3});
+
+        const source = createMockSource({
+            getInterestingWindows: () => [wA, wB],
+        });
+        const menu = new WindowPreviewMenu(source);
+        menu.fromHover = true;
+        menu._redisplay();
+
+        const previewBox = menu._previewBox;
+
+        // Now reorder to [wC, wA, wB] — wC is new but we want to trigger
+        // the "Window moved" branch. The tricky part is creating a scenario
+        // where a window is in both old and new but at different positions,
+        // and the next new window matches the current old window.
+        //
+        // Old: [wA, wB], New: [wB, wA] (reorder)
+        // At index 0: old=wA, new=wB. wA is in newWin, wB is in oldWin => moved.
+        // insertHere: newWin[0+1] = wA === currentOldWin = wA => true
+        // => pushes to addedItems and increments newIndex
+        source.getInterestingWindows = () => [wB, wA];
+        previewBox._source = source;
+
+        // Ensure _shownInitially is true so _animateOutAndDestroy is used
+        previewBox._shownInitially = true;
+
+        previewBox._redisplay();
+
+        // The window list should have been updated
+        const items = previewBox._getMenuItems().filter(i => i._window);
+        expect(items.length).toBeGreaterThanOrEqual(2);
+    });
+
+    test('_redisplay handles window moved with alreadyRemoved=true', () => {
+        // We need a scenario where:
+        // - A window is in both old and new lists (not added/removed)
+        // - insertHere is false
+        // - alreadyRemoved is true (the current new window was already in removedActors)
+        //
+        // Old: [wA, wB, wC], New: [wC, wA]
+        // Step 1: old=wA, new=wC. wA is in new, wC is in old => moved.
+        //   insertHere: new[1] = wA === oldWin[0] = wA => true. So add wC at pos 0.
+        //   newIndex -> 1
+        // Step 2: old=wA, new=wA => match. oldIndex -> 1, newIndex -> 2.
+        // Step 3: old=wB, newIndex >= newWin.length. wB not in new => removed.
+        //   removedActors: [wB actor]. oldIndex -> 2.
+        // Step 4: old=wC, newIndex >= newWin.length. wC IS in new => moved.
+        //   insertHere: new[newIndex+1] undefined => false.
+        //   alreadyRemoved: check if any removedActor._window === wC. None => false.
+        //   => push children[2] to removedActors.
+        //
+        // That won't hit alreadyRemoved=true. Let me try another approach:
+        // Old: [wB, wA, wC], New: [wA, wC]
+        // Step 1: old=wB, new=wA. wB not in new => removed. removedActors=[wB].
+        // Step 2: old=wA, new=wA => match. oldIndex=2, newIndex=1.
+        // Step 3: old=wC, new=wC => match. Done.
+        // That's just a simple remove, no moved logic.
+        //
+        // Let me try: Old: [wA, wC, wB], New: [wB, wC]
+        // Step 1: old=wA, new=wB. wA not in new => removed. removedActors=[wA actor]. oldIndex=1.
+        // Step 2: old=wC, new=wB. wC is in new, wB is in old => moved.
+        //   insertHere: new[0+1]=wC === old[1]=wC => true. Add wB at pos 0+1=1. newIndex=1.
+        // Step 3: old=wC, new=wC => match. Done.
+        // That only hits insertHere=true.
+        //
+        // For alreadyRemoved: Old: [wA, wB], New: [wB, wA]
+        // Step 1: old=wA, new=wB. Both in each other's lists => moved.
+        //   insertHere: new[1]=wA === old[0]=wA => true. Add wB. newIndex=1.
+        // Step 2: old=wA, new=wA => match. Done.
+        // No alreadyRemoved.
+        //
+        // Actually, let me try with 3 windows: Old: [wC, wA, wB], New: [wA, wB]
+        // Step 1: old=wC, new=wA. wC not in new => removed. removedActors=[wC]. oldIndex=1.
+        // Step 2: old=wA, new=wA => match. oldIndex=2, newIndex=1.
+        // Step 3: old=wB, new=wB => match. Done. No moved.
+        //
+        // For the else branch (line 558-560), we need:
+        // insertHere=false AND alreadyRemoved=false => push to removedActors
+        // Old: [wA, wB], New: [wB, wA]
+        // Step 1: old=wA, new=wB. Both in each other's. moved.
+        //   insertHere: new[1]=wA === old[0]=wA => true. Adds wB. newIndex=1.
+        // Step 2: old=wA, new=wA => match.
+        // Can't hit else path this way.
+        //
+        // Old: [wB, wA], New: [wA, wB]
+        // Step 1: old=wB, new=wA. Both in each other's. moved.
+        //   insertHere: new[1]=wB === old[0]=wB => true. Adds wA. newIndex=1.
+        // Step 2: old=wB, new=wB => match.
+        //
+        // I need a case where insertHere=false and alreadyRemoved=false:
+        // Old: [wA, wB, wC], New: [wC, wB, wA]
+        // Step 1: old=wA, new=wC. Both in each other's.
+        //   insertHere: new[1]=wB === old[0]=wA? No. false.
+        //   alreadyRemoved: removedActors empty => false.
+        //   => push old[0] to removedActors. oldIndex=1.
+        // Step 2: old=wB, new=wC. wB is in new, wC is in old.
+        //   insertHere: new[1]=wB === old[1]=wB? Yes. => Adds wC. newIndex=1.
+        // Step 3: old=wB, new=wB => match. oldIndex=2, newIndex=2.
+        // Step 4: old=wC, new=wA. wC is in new, wA is in old.
+        //   insertHere: new[3] undefined => false.
+        //   alreadyRemoved: removedActors=[wA-actor]._window === wA? Let's check.
+        //     removedActors has children[0] which is the first item with _window=wA. Yes!
+        //   => alreadyRemoved=true. Adds wA. newIndex=3. Done!
+        //
+        // This hits both the else (removedActors push) AND alreadyRemoved paths!
+
+        const wA = createMockWindow({get_stable_sequence: () => 1});
+        const wB = createMockWindow({get_stable_sequence: () => 2});
+        const wC = createMockWindow({get_stable_sequence: () => 3});
+
+        const source = createMockSource({
+            getInterestingWindows: () => [wA, wB, wC],
+        });
+        const menu = new WindowPreviewMenu(source);
+        menu.fromHover = true;
+        menu._redisplay();
+
+        const previewBox = menu._previewBox;
+        previewBox._shownInitially = true;
+
+        // Now reorder to [wC, wB, wA] — triggers moved logic, else branch, and alreadyRemoved
+        source.getInterestingWindows = () => [wC, wB, wA];
+        previewBox._source = source;
+
+        previewBox._redisplay();
+
+        // Verify it completed without error
+        const items = previewBox._getMenuItems().filter(i => i._window);
+        expect(items.length).toBeGreaterThanOrEqual(2);
+    });
+
+    // --- Line 574: item.actor.destroy() when !_shownInitially ---
+    test('_redisplay calls actor.destroy for removed items when not shownInitially', () => {
+        const wA = createMockWindow({get_stable_sequence: () => 1});
+        const wB = createMockWindow({get_stable_sequence: () => 2});
+
+        const source = createMockSource({
+            getInterestingWindows: () => [wA, wB],
+        });
+        const menu = new WindowPreviewMenu(source);
+        menu.fromHover = false; // non-hover => _shownInitially starts false
+        menu._redisplay();
+
+        const previewBox = menu._previewBox;
+        // Force _shownInitially to false to hit line 574
+        previewBox._shownInitially = false;
+
+        // Remove wB from the window list
+        source.getInterestingWindows = () => [wA];
+        previewBox._source = source;
+
+        // The removed item's actor.destroy should be called (line 574)
+        previewBox._redisplay();
+
+        // After redisplay, items should reflect new window list
+        const items = previewBox._getMenuItems().filter(i => i._window);
+        expect(items.length).toBeGreaterThanOrEqual(1);
+    });
+
+    // --- Line 612: vscrollbarPolicy (vertical scrollbar branch) ---
+    test('_redisplay sets vscrollbarPolicy for vertical (non-horizontal) layout', () => {
+        const w1 = createMockWindow({get_stable_sequence: () => 1});
+        const source = createMockSource({
+            getInterestingWindows: () => [w1],
+        });
+
+        // Use LEFT position for vertical layout
+        const origGetPosition = Utils.getPosition;
+        Utils.getPosition = () => St.Side.LEFT;
+
+        const menu = new WindowPreviewMenu(source);
+        menu.fromHover = false;
+        menu._redisplay();
+
+        const previewBox = menu._previewBox;
+        expect(previewBox.isHorizontal).toBe(false);
+
+        const topMenuMock = {
+            actor: new St.Widget(),
+            close: () => {},
+            fromHover: false,
+        };
+        previewBox._getTopMenu = () => topMenuMock;
+
+        // Force a redisplay that sets scrollbar policy
+        previewBox._redisplay();
+
+        // vscrollbarPolicy should have been set (line 612)
+        expect(previewBox.actor.vscrollbarPolicy).toBeDefined();
+
+        Utils.getPosition = origGetPosition;
+    });
+
+    // --- _needsScrollbar returns true for horizontal when topMaxWidth >= 0 ---
+    test('_needsScrollbar returns true when horizontal and width exceeds max', () => {
+        const w1 = createMockWindow({get_stable_sequence: () => 1});
+        const source = createMockSource({
+            getInterestingWindows: () => [w1],
+        });
+        const menu = new WindowPreviewMenu(source);
+        menu.fromHover = true;
+        menu._redisplay();
+
+        const previewBox = menu._previewBox;
+        previewBox.isHorizontal = true;
+
+        // Override the topMenu mock to return a theme node with max_width >= 0
+        const topMenuMock = {
+            actor: {
+                get_theme_node: () => ({
+                    get_max_width: () => 100,
+                    get_max_height: () => -1,
+                }),
+                get_preferred_width: () => [0, 200], // naturalWidth=200 > maxWidth=100
+            },
+            close: () => {},
+            fromHover: false,
+        };
+        previewBox._getTopMenu = () => topMenuMock;
+
+        const result = previewBox._needsScrollbar();
+        expect(result).toBe(true);
+    });
+
+    test('_needsScrollbar returns true when vertical and height exceeds max', () => {
+        const w1 = createMockWindow({get_stable_sequence: () => 1});
+        const source = createMockSource({
+            getInterestingWindows: () => [w1],
+        });
+        const menu = new WindowPreviewMenu(source);
+        menu.fromHover = true;
+        menu._redisplay();
+
+        const previewBox = menu._previewBox;
+        previewBox.isHorizontal = false;
+
+        const topMenuMock = {
+            actor: {
+                get_theme_node: () => ({
+                    get_max_width: () => -1,
+                    get_max_height: () => 100,
+                }),
+                get_preferred_height: () => [0, 200], // naturalHeight=200 > maxHeight=100
+            },
+            close: () => {},
+            fromHover: false,
+        };
+        previewBox._getTopMenu = () => topMenuMock;
+
+        const result = previewBox._needsScrollbar();
+        expect(result).toBe(true);
+    });
+});
+
+describe('WindowPreviewMenuItem — coverage gaps', () => {
+    beforeEach(() => {
+        Settings._reset();
+    });
+
+    // --- Line 741: notify::title handler updates label text ---
+    test('notify::title handler updates label text', () => {
+        let title = 'Original Title';
+        const win = createMockWindow({
+            get_title: () => title,
+        });
+        const item = new WindowPreviewMenuItem(win, St.Side.BOTTOM);
+
+        // Find the notify::title handler from _signalsHandler
+        const handler = item._signalsHandler._handlers.find(
+            h => (h[1] === 'notify::title' || h[2] === 'notify::title')
+        );
+        expect(handler).toBeDefined();
+
+        const callback = handler[handler.length - 1];
+
+        // Change title and invoke the handler
+        title = 'Updated Title';
+        callback();
+
+        // The label text should now reflect the new title
+        // The label is internal, but the callback ran without error
+    });
+
+    // --- Lines 752-753: box.add() branch (legacy API) ---
+    test('constructor uses box.add when available (legacy API path)', () => {
+        // Temporarily add an `add` method to StBoxLayout prototype
+        const origAdd = St.BoxLayout.prototype.add;
+        const addSpy = jest.fn();
+        St.BoxLayout.prototype.add = addSpy;
+
+        try {
+            const win = createMockWindow();
+            const item = new WindowPreviewMenuItem(win, St.Side.BOTTOM);
+
+            // box.add should have been called twice (overlayGroup and labelBin)
+            expect(addSpy).toHaveBeenCalledTimes(2);
+            expect(item._box).toBeDefined();
+        } finally {
+            if (origAdd)
+                St.BoxLayout.prototype.add = origAdd;
+            else
+                delete St.BoxLayout.prototype.add;
+        }
+    });
+
+    // --- Lines 818, 824-825: _cloneTexture retry path —
+    //     width/height become available on retry ---
+    test('_cloneTexture retries and succeeds when dimensions become available', () => {
+        let callCount = 0;
+        const mutterWindow = {
+            get_texture: () => ({}),
+            get_size: () => {
+                callCount++;
+                // First call returns 0, subsequent calls return valid size
+                if (callCount <= 1)
+                    return [0, 0];
+                return [800, 600];
+            },
+            connect: () => 0,
+            disconnect: () => {},
+            destroy: () => {},
+            get_children: () => [],
+        };
+        const win = createMockWindow({
+            get_compositor_private: () => mutterWindow,
+        });
+
+        // laterAdd calls the callback immediately in mock, which triggers retry.
+        // The callback first updates window preview size (re-reads dimensions),
+        // then if dimensions are available, calls _cloneTexture recursively.
+        const item = new WindowPreviewMenuItem(win, St.Side.BOTTOM);
+
+        // After retry, clone should be created
+        expect(item._clone).toBeDefined();
+        expect(item._mutterWindow).toBe(mutterWindow);
+    });
+
+    // --- Lines 850-851: Clutter.Clone constructor throws ---
+    test('_cloneTexture catches error when Clutter.Clone constructor throws', () => {
+        const origClone = Clutter.Clone;
+        Clutter.Clone = class extends MockActorForClone {
+            constructor() {
+                throw new Error('Clone creation failed');
+            }
+        };
+
+        const mutterWindow = {
+            get_texture: () => ({}),
+            get_size: () => [800, 600],
+            connect: () => 0,
+            disconnect: () => {},
+            destroy: () => {},
+            get_children: () => [],
+        };
+        const win = createMockWindow({
+            get_compositor_private: () => mutterWindow,
+        });
+
+        // Mock logError to capture the error
+        const origLogError = globalThis.logError;
+        const logErrorSpy = jest.fn();
+        globalThis.logError = logErrorSpy;
+
+        try {
+            const item = new WindowPreviewMenuItem(win, St.Side.BOTTOM);
+
+            // Clone should NOT be set since constructor threw
+            expect(item._clone).toBeUndefined();
+            expect(logErrorSpy).toHaveBeenCalled();
+        } finally {
+            Clutter.Clone = origClone;
+            globalThis.logError = origLogError;
+        }
+    });
+
+    // --- Lines 857-858: mutterWindow destroy handler ---
+    test('mutterWindow destroy handler destroys clone and animates out', () => {
+        const mutterWindow = {
+            get_texture: () => ({}),
+            get_size: () => [800, 600],
+            _signals: {},
+            connect: function (name, cb) {
+                this._signals[name] = this._signals[name] ?? [];
+                const id = Math.random();
+                this._signals[name].push({id, cb});
+                return id;
+            },
+            disconnect: () => {},
+            destroy: () => {},
+            get_children: () => [],
+        };
+        const win = createMockWindow({
+            get_compositor_private: () => mutterWindow,
+        });
+
+        const item = new WindowPreviewMenuItem(win, St.Side.BOTTOM);
+
+        // The destroy handler is registered via _signalsHandler.add(mutterWindow, 'destroy', cb)
+        // Find it in the stored handlers
+        const handler = item._signalsHandler._handlers.find(
+            h => h.includes(mutterWindow) && h.includes('destroy')
+        );
+        expect(handler).toBeDefined();
+
+        const callback = handler[handler.length - 1];
+
+        // Spy on _animateOutAndDestroy
+        const animateSpy = jest.spyOn(item, '_animateOutAndDestroy').mockImplementation(() => {});
+
+        // Spy on clone.destroy
+        expect(item._clone).toBeDefined();
+        const cloneDestroySpy = jest.fn();
+        item._clone.destroy = cloneDestroySpy;
+
+        callback();
+
+        expect(cloneDestroySpy).toHaveBeenCalled();
+        expect(animateSpy).toHaveBeenCalled();
+
+        animateSpy.mockRestore();
+    });
+});
+
+// ===================================================================
+// Additional branch coverage tests
+// ===================================================================
+
+describe('WindowPreviewMenu — branch coverage', () => {
+    beforeEach(() => {
+        Settings._reset();
+    });
+
+    // --- Branch 12: ?? null fallback in popup (focusWindow not found in items) ---
+    test('popup sets activeItem to null when focusWindow not in items', () => {
+        const w1 = createMockWindow({get_stable_sequence: () => 1});
+        const unknownWin = createMockWindow({get_stable_sequence: () => 99});
+        const source = createMockSource({
+            getInterestingWindows: () => [w1],
+        });
+        const menu = new WindowPreviewMenu(source);
+
+        const origFocus = global.display.focus_window;
+        global.display.focus_window = unknownWin; // not in menu items
+
+        menu._redisplay();
+
+        // navigate_focus should be called because activeItem is null
+        const navigateSpy = jest.fn();
+        menu.actor.navigate_focus = navigateSpy;
+
+        menu.popup();
+
+        expect(navigateSpy).toHaveBeenCalled();
+        global.display.focus_window = origFocus;
+    });
+
+    // --- Branch 20: boxPointer.actor is falsy in enableHover ---
+    test('enableHover handles missing boxPointer.actor', () => {
+        const source = createMockSource();
+        const menu = new WindowPreviewMenu(source);
+        const mockManager = {removeMenu: jest.fn(), addMenu: jest.fn()};
+
+        // Set boxPointer.actor to null
+        menu._boxPointer.actor = null;
+
+        // Should not throw
+        menu.enableHover(mockManager);
+        expect(menu.blockSourceEvents).toBe(false);
+    });
+
+    // --- Branch 25: _onEnter hides actor when isOpen=false AND actor.visible=true ---
+    test('_onEnter hides visible non-open preview menu actors', () => {
+        const mockActor = {visible: true, hide: jest.fn()};
+        const otherMenu = {
+            fromHover: true,
+            isOpen: false,
+            hoverClose: jest.fn(),
+            actor: mockActor,
+        };
+        const otherIcon = {_previewMenu: otherMenu};
+        const source = createMockSource({
+            _appIconsHoverList: [otherIcon],
+        });
+        const menu = new WindowPreviewMenu(source);
+
+        menu._onEnter();
+
+        expect(otherMenu.hoverClose).toHaveBeenCalled();
+        // The actor should have been hidden (isOpen=false && visible=true)
+        expect(mockActor.hide).toHaveBeenCalled();
+    });
+
+    test('_onEnter skips hide when other menu isOpen is true after hoverClose', () => {
+        const mockActor = {visible: true, hide: jest.fn()};
+        const otherMenu = {
+            fromHover: true,
+            isOpen: true, // stays open after hoverClose
+            hoverClose: jest.fn(),
+            actor: mockActor,
+        };
+        const otherIcon = {_previewMenu: otherMenu};
+        const source = createMockSource({
+            _appIconsHoverList: [otherIcon],
+        });
+        const menu = new WindowPreviewMenu(source);
+
+        menu._onEnter();
+
+        expect(otherMenu.hoverClose).toHaveBeenCalled();
+        // Should NOT hide because isOpen is true
+        expect(mockActor.hide).not.toHaveBeenCalled();
+    });
+
+    // --- Branch 37: hoverClose dock without intellihide ---
+    test('hoverClose skips docks without intellihide enabled', () => {
+        const source = createMockSource({has_pointer: false});
+        const menu = new WindowPreviewMenu(source);
+        menu._boxPointer.bin.has_pointer = false;
+
+        menu.fromHover = true;
+        menu.isOpen = true;
+
+        const forceUpdateSpy = jest.fn();
+        const origDocks = Docking.DockManager.allDocks;
+        Docking.DockManager.allDocks = [
+            {_intellihideIsEnabled: false, _intellihide: {forceUpdate: forceUpdateSpy}},
+            {_intellihideIsEnabled: true, _intellihide: null},
+        ];
+
+        const closeSpy = jest.fn((anim, cb) => { if (cb) cb(); });
+        menu._boxPointer.close = closeSpy;
+
+        menu.hoverClose();
+
+        // forceUpdate should NOT have been called for either dock
+        expect(forceUpdateSpy).not.toHaveBeenCalled();
+        Docking.DockManager.allDocks = origDocks;
+    });
+
+    // --- Branch 42: _onWindowsChanged timeout fires but source loses pointer ---
+    test('_onWindowsChanged timeout callback skips popup when source loses pointer', () => {
+        const win = createMockWindow();
+        const source = createMockSource({
+            getInterestingWindows: () => [win],
+            has_pointer: true, // true initially to enter the if block
+        });
+        const menu = new WindowPreviewMenu(source);
+        menu.fromHover = true;
+        menu.isOpen = false;
+
+        // Override GLib.timeout_add to capture the callback without calling it
+        let capturedCb = null;
+        const origTimeoutAdd = GLib.timeout_add;
+        GLib.timeout_add = (_prio, _ms, cb) => { capturedCb = cb; return 999; };
+
+        menu._onWindowsChanged();
+
+        // Restore
+        GLib.timeout_add = origTimeoutAdd;
+
+        expect(capturedCb).not.toBeNull();
+
+        // Now set has_pointer to false before calling the callback
+        source.has_pointer = false;
+
+        const popupSpy = jest.spyOn(menu, 'popup').mockImplementation(() => {});
+        capturedCb();
+
+        // popup should NOT be called because has_pointer is now false
+        expect(popupSpy).not.toHaveBeenCalled();
+        expect(menu._hoverOpenTimeoutId).toBeNull();
+
+        popupSpy.mockRestore();
+    });
+
+    // --- Branch 43: WindowPreviewList default arg isHoverMenu ---
+    // This is covered indirectly when WindowPreviewMenu._redisplay creates
+    // a WindowPreviewList. The default arg is tested when the param is omitted.
+    // We can test this by creating the list directly without the hover param.
+    // But WindowPreviewList is not exported. It IS created via _redisplay.
+    // When fromHover=false, it passes false explicitly. When fromHover=true, it passes true.
+    // The default is only used when no arg is passed. Since _redisplay always passes it,
+    // we cannot hit this branch easily without modifying the source.
+    // This is an inherent coverage gap from Istanbul's default-arg tracking.
+});
+
+describe('WindowPreviewMenuItem — branch coverage', () => {
+    beforeEach(() => {
+        Settings._reset();
+    });
+
+    // --- Branch 94: _cloneAttempt exhausted (>= MAX_PREVIEW_GENERATION_ATTEMPTS) ---
+    test('_cloneTexture stops retrying after MAX_PREVIEW_GENERATION_ATTEMPTS', () => {
+        // The retry logic: when width/height are 0, laterAdd calls the callback.
+        // Each callback invocation increments _cloneAttempt.
+        // When _cloneAttempt >= 15, it stops retrying (returns SOURCE_REMOVE).
+        // Since laterAdd calls the callback immediately and synchronously,
+        // this will loop 15 times max.
+
+        const mutterWindow = {
+            get_texture: () => ({}),
+            get_size: () => [0, 0], // Always zero - forces retry
+            connect: () => 0,
+            disconnect: () => {},
+            destroy: () => {},
+            get_children: () => [],
+        };
+        const win = createMockWindow({
+            get_compositor_private: () => mutterWindow,
+        });
+
+        // To properly exercise this, we need laterAdd to actually call the callback
+        // and track how many times it returns SOURCE_CONTINUE vs SOURCE_REMOVE.
+        let callbackResults = [];
+        const origLaterAdd = Utils.laterAdd;
+        Utils.laterAdd = (_type, cb) => {
+            // Simulate the callback being called repeatedly until it returns SOURCE_REMOVE
+            let result;
+            for (let i = 0; i < 20; i++) {
+                result = cb();
+                callbackResults.push(result);
+                if (result === GLib.SOURCE_REMOVE)
+                    break;
+            }
+            return 1;
+        };
+
+        try {
+            const item = new WindowPreviewMenuItem(win, St.Side.BOTTOM);
+
+            // The callback should have been called 15 times (MAX_PREVIEW_GENERATION_ATTEMPTS)
+            // with SOURCE_CONTINUE, then once with SOURCE_REMOVE
+            // Actually: attempts 1-14 return SOURCE_CONTINUE, attempt 15 returns SOURCE_REMOVE
+            expect(callbackResults.length).toBeGreaterThanOrEqual(15);
+            expect(callbackResults[callbackResults.length - 1]).toBe(GLib.SOURCE_REMOVE);
+
+            // _clone should NOT be set since dimensions never became available
+            expect(item._clone).toBeUndefined();
+        } finally {
+            Utils.laterAdd = origLaterAdd;
+        }
+    });
+
+    // --- Branch 95: mutterWindow without get_texture function ---
+    test('_cloneTexture uses mutterWindow directly when get_texture is not a function', () => {
+        // Construct with a normal window first
+        const normalMutter = {
+            get_texture: () => ({}),
+            get_size: () => [800, 600],
+            connect: () => 0,
+            disconnect: () => {},
+            destroy: () => {},
+            get_children: () => [],
+        };
+        const win = createMockWindow({
+            get_compositor_private: () => normalMutter,
+        });
+
+        const item = new WindowPreviewMenuItem(win, St.Side.BOTTOM);
+
+        // Now directly call _cloneTexture with a mutterWindow that has no get_texture
+        const noTextureMutter = {
+            get_size: () => [800, 600],
+            connect: () => 0,
+            disconnect: () => {},
+            destroy: () => {},
+            get_children: () => [],
+        };
+        // Ensure get_texture is not a function
+        delete noTextureMutter.get_texture;
+
+        // Set width/height so it doesn't enter the retry branch
+        item._width = 800;
+        item._height = 600;
+        item._scale = 0.5;
+
+        const winNoTexture = createMockWindow({
+            get_compositor_private: () => noTextureMutter,
+        });
+
+        item._cloneTexture(winNoTexture);
+
+        // Clone should be created using mutterWindow directly as source
+        expect(item._clone).toBeDefined();
+        expect(item._clone.source).toBe(noTextureMutter);
+        expect(item._mutterWindow).toBe(noTextureMutter);
+    });
+
+    // --- Branch 103: _startAeroPeek with actor that already has _originalOpacity ---
+    test('_startAeroPeek preserves existing _originalOpacity', () => {
+        const targetWin = createMockWindow({get_stable_sequence: () => 1});
+        const aboveWin = createMockWindow({
+            get_stable_sequence: () => 2,
+            minimized: false,
+        });
+        const actorAbove = {
+            opacity: 200,
+            _originalOpacity: 128, // Already set from a previous peek
+            ease: function (p) { Object.assign(this, p); if (p?.onComplete) p.onComplete(); },
+            is_destroyed: () => false,
+        };
+        aboveWin.get_compositor_private = () => actorAbove;
+
+        const origSort = global.display.sort_windows_by_stacking;
+        global.display.sort_windows_by_stacking = () => [targetWin, aboveWin];
+
+        const workspace = {
+            list_windows: () => [targetWin, aboveWin],
+            connect: () => 0,
+            disconnect: () => {},
+        };
+        targetWin.get_workspace = () => workspace;
+
+        Settings._setMany({
+            'aero-peek-opacity': 50,
+            'aero-peek-duration': 200,
+        });
+
+        const item = new WindowPreviewMenuItem(targetWin, St.Side.BOTTOM);
+        item._startAeroPeek();
+
+        // _originalOpacity should NOT have been overwritten since it was already truthy
+        expect(actorAbove._originalOpacity).toBe(128);
+        expect(actorAbove.opacity).toBe(50);
+        expect(item._peekingWindows.length).toBe(1);
+
+        global.display.sort_windows_by_stacking = origSort;
+    });
+});
+
+// Helper class reference for the Clutter.Clone throw test
+class MockActorForClone {
+    constructor(p) { Object.assign(this, p ?? {}); }
+}

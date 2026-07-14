@@ -298,7 +298,7 @@ export const DND = {
 
 export const PopupMenu = {
     PopupMenu: class {
-        constructor() { this.actor = _mockActor(); this.box = _mockActor(); this._signals = {}; }
+        constructor(source) { this.actor = _mockActor(); this.box = _mockActor(); this._signals = {}; if (source && typeof source === 'object') this._sourceActor = source; }
         addMenuItem() {}
         removeAll() {}
         open() {}

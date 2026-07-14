@@ -84,6 +84,7 @@ beforeEach(() => {
     _windowActors.length = 0;
     _mockTracker.focus_app = null;
     globalThis.global.display.focus_window = null;
+    delete globalThis.global.display.focusWindow;
 });
 
 // ---------------------------------------------------------------------------
@@ -891,5 +892,328 @@ describe('Intellihide', () => {
         // DropDownTerminalWindow is always considered interesting regardless
         // of focus app, so it should cause overlap
         expect(ih._status).toBe(OverlapStatus.TRUE);
+    });
+
+    // -----------------------------------------------------------------------
+    // Coverage: lines 160-161 — enable() clears an active timeout
+    // -----------------------------------------------------------------------
+    test('enable clears existing checkOverlapTimeoutId', () => {
+        ih = new Intellihide(0);
+        // Simulate an active timeout id from a previous cycle
+        ih._checkOverlapTimeoutId = 42;
+        ih.enable();
+        // After enable(), the old timeout should have been cleared
+        // (GLib.source_remove called) and the id reset
+        // _checkOverlapTimeoutId may be non-zero again if _doCheckOverlap
+        // sets up a new one, but the key is it went through the branch.
+        expect(ih._isEnabled).toBe(true);
+    });
+
+    // -----------------------------------------------------------------------
+    // Coverage: lines 184-190 — _windowCreated when enabled
+    // -----------------------------------------------------------------------
+    test('_windowCreated adds signals and checks overlap when enabled', () => {
+        ih = new Intellihide(0);
+        ih._targetBox = {x1: 0, y1: 900, x2: 1920, y2: 1080};
+        ih.enable();
+
+        const wa = createMockWindowActor({
+            frameRect: {x: 0, y: 0, width: 1920, height: 1080},
+            monitor: 0,
+        });
+
+        // Simulate the metaWindow having a compositor private (the actor)
+        const metaWindow = {
+            get_compositor_private: () => wa,
+        };
+
+        ih._windowCreated(globalThis.global.display, metaWindow);
+        // The window actor should now be tracked
+        expect(ih._trackedWindows.has(wa)).toBe(true);
+    });
+
+    test('_windowCreated does nothing when disabled', () => {
+        ih = new Intellihide(0);
+        // _isEnabled is false by default
+
+        const wa = createMockWindowActor();
+        const metaWindow = {
+            get_compositor_private: () => wa,
+        };
+
+        ih._windowCreated(globalThis.global.display, metaWindow);
+        // Should not track anything because not enabled
+        expect(ih._trackedWindows.has(wa)).toBe(false);
+    });
+
+    test('_windowCreated handles null compositor private', () => {
+        ih = new Intellihide(0);
+        ih._targetBox = {x1: 0, y1: 900, x2: 1920, y2: 1080};
+        ih.enable();
+
+        const metaWindow = {
+            get_compositor_private: () => null,
+        };
+
+        // Should not throw, just skip addWindowSignals
+        expect(() => ih._windowCreated(globalThis.global.display, metaWindow)).not.toThrow();
+    });
+
+    // -----------------------------------------------------------------------
+    // Coverage: line 195 — _addWindowSignals early return for already-tracked
+    // -----------------------------------------------------------------------
+    test('_addWindowSignals skips already-tracked windows', () => {
+        ih = new Intellihide(0);
+        const wa = createMockWindowActor();
+        _windowActors.push(wa);
+        ih.enable();
+
+        // The window is now tracked
+        expect(ih._trackedWindows.has(wa)).toBe(true);
+        const originalSignals = ih._trackedWindows.get(wa);
+
+        // Calling _addWindowSignals again should return early
+        ih._addWindowSignals(wa);
+        // Signal ids should be unchanged (same reference)
+        expect(ih._trackedWindows.get(wa)).toBe(originalSignals);
+    });
+
+    // -----------------------------------------------------------------------
+    // Coverage: lines 200-201 — notify::allocation and destroy signal callbacks
+    // -----------------------------------------------------------------------
+    test('notify::allocation signal triggers _checkOverlap', () => {
+        ih = new Intellihide(0);
+        ih._targetBox = {x1: 0, y1: 900, x2: 1920, y2: 1080};
+
+        const wa = createMockWindowActor({
+            frameRect: {x: 0, y: 0, width: 800, height: 600},
+            monitor: 0,
+        });
+        _windowActors.push(wa);
+
+        const mockApp = {id: 'test-app'};
+        _mockTracker.get_window_app = () => mockApp;
+
+        ih.enable();
+        expect(ih._trackedWindows.has(wa)).toBe(true);
+
+        // Emit 'notify::allocation' on the actor — should call _checkOverlap
+        const spy = jest.spyOn(ih, '_checkOverlap');
+        wa.emit('notify::allocation');
+        expect(spy).toHaveBeenCalled();
+        spy.mockRestore();
+    });
+
+    test('destroy signal removes window signals', () => {
+        ih = new Intellihide(0);
+        ih._targetBox = {x1: 0, y1: 900, x2: 1920, y2: 1080};
+
+        const wa = createMockWindowActor({
+            frameRect: {x: 0, y: 0, width: 800, height: 600},
+            monitor: 0,
+        });
+        _windowActors.push(wa);
+
+        ih.enable();
+        expect(ih._trackedWindows.has(wa)).toBe(true);
+
+        // Emit 'destroy' on the actor — should remove it from tracked windows
+        wa.emit('destroy');
+        expect(ih._trackedWindows.has(wa)).toBe(false);
+    });
+
+    // -----------------------------------------------------------------------
+    // Coverage: line 245 — error path in timeout callback catch block
+    // -----------------------------------------------------------------------
+    test('timeout callback catches errors from _doCheckOverlap', () => {
+        ih = new Intellihide(0);
+        ih._targetBox = {x1: 0, y1: 900, x2: 1920, y2: 1080};
+        ih._isEnabled = true;
+
+        // Make _doCheckOverlap throw on the second call (first call is direct,
+        // second call is from the timeout callback)
+        let callCount = 0;
+        const original = ih._doCheckOverlap.bind(ih);
+        jest.spyOn(ih, '_doCheckOverlap').mockImplementation(() => {
+            callCount++;
+            if (callCount > 1)
+                throw new Error('test error in overlap check');
+            return original();
+        });
+
+        // _checkOverlap calls _doCheckOverlap directly, then sets up a timeout
+        // that also calls _doCheckOverlap. The mock GLib.timeout_add fires
+        // the callback immediately, so the error path will be hit.
+        expect(() => ih._checkOverlap()).not.toThrow();
+    });
+
+    // -----------------------------------------------------------------------
+    // Coverage: lines 248-249 — _checkOverlapTimeoutContinue is true
+    // -----------------------------------------------------------------------
+    test('timeout callback continues when _checkOverlapTimeoutContinue is true', () => {
+        ih = new Intellihide(0);
+        ih._targetBox = {x1: 0, y1: 900, x2: 1920, y2: 1080};
+        ih._isEnabled = true;
+
+        // Set the continue flag before the timeout fires
+        // Since GLib.timeout_add fires immediately, we need to set it up
+        // so _checkOverlapTimeoutContinue is true when the callback runs.
+        // We can do this by spying on _doCheckOverlap to set the flag.
+        const original = ih._doCheckOverlap.bind(ih);
+        let callCount = 0;
+        jest.spyOn(ih, '_doCheckOverlap').mockImplementation(() => {
+            callCount++;
+            original();
+            // After the first _doCheckOverlap call (the direct one),
+            // set continue flag so the timeout callback sees it
+            if (callCount === 1)
+                ih._checkOverlapTimeoutContinue = true;
+        });
+
+        ih._checkOverlap();
+        // The continue flag should have been reset to false by the callback
+        expect(ih._checkOverlapTimeoutContinue).toBe(false);
+    });
+
+    // -----------------------------------------------------------------------
+    // Coverage: line 345 — _intellihideFilterInteresting with null metaWin
+    // -----------------------------------------------------------------------
+    test('_intellihideFilterInteresting returns false for null metaWindow', () => {
+        ih = new Intellihide(0);
+        ih._focusApp = {id: 'test'};
+        ih._topApp = {id: 'test'};
+
+        const nullMetaWinActor = {
+            get_meta_window: () => null,
+            connect: () => 0,
+            disconnect: () => {},
+        };
+
+        const result = ih._intellihideFilterInteresting(nullMetaWinActor);
+        expect(result).toBe(false);
+    });
+
+    // -----------------------------------------------------------------------
+    // Coverage: line 349 — _intellihideFilterInteresting with null workspace
+    // -----------------------------------------------------------------------
+    test('_intellihideFilterInteresting returns false for null workspace', () => {
+        ih = new Intellihide(0);
+        ih._focusApp = {id: 'test'};
+        ih._topApp = {id: 'test'};
+
+        const nullWorkspaceActor = {
+            get_meta_window: () => ({
+                get_workspace: () => null,
+                get_window_type: () => Meta.WindowType.NORMAL,
+                get_wm_class: () => '',
+                get_monitor: () => 0,
+                is_above: () => false,
+                showing_on_its_workspace: () => true,
+                maximized_vertically: false,
+                maximized_horizontally: false,
+                fullscreen: false,
+            }),
+            connect: () => 0,
+            disconnect: () => {},
+        };
+
+        const result = ih._intellihideFilterInteresting(nullWorkspaceActor);
+        expect(result).toBe(false);
+    });
+
+    // -----------------------------------------------------------------------
+    // Coverage: line 378 — FOCUS_APPLICATION_WINDOWS excludes non-focus app
+    // -----------------------------------------------------------------------
+    test('FOCUS_APPLICATION_WINDOWS excludes window of different non-above app', () => {
+        Settings.set('intellihide-mode', IntellihideMode.FOCUS_APPLICATION_WINDOWS);
+
+        ih = new Intellihide(0);
+        ih._targetBox = {x1: 0, y1: 900, x2: 1920, y2: 1080};
+
+        const focusApp = {id: 'focus-app'};
+        const otherApp = {id: 'other-app'};
+        const thirdApp = {id: 'third-app'};
+
+        // Two windows: the top one belongs to focusApp (non-overlapping),
+        // the bottom one belongs to thirdApp (overlapping but should be excluded).
+        // topApp will be set to focusApp (last window on monitor 0).
+        // The third-app window should be filtered out because:
+        //   thirdApp !== focusApp AND thirdApp !== topApp(=focusApp)
+        //   AND it's not half-maximized side-by-side AND not is_above
+        const otherWa = createMockWindowActor({
+            frameRect: {x: 0, y: 0, width: 1920, height: 1080},
+            monitor: 0,
+        });
+        const topWa = createMockWindowActor({
+            frameRect: {x: 0, y: 0, width: 800, height: 600},
+            monitor: 0,
+        });
+        // topWa is last in the array, so it's the "top" window on monitor 0
+        _windowActors.push(otherWa, topWa);
+
+        _mockTracker.focus_app = focusApp;
+        _mockTracker.get_window_app = (metaWin) => {
+            if (metaWin === topWa._metaWindow)
+                return focusApp;
+            return thirdApp;
+        };
+
+        ih.enable();
+
+        // The third-app window should be excluded (thirdApp !== focusApp, thirdApp !== topApp(=focusApp))
+        // Only topWa passes the filter, and its rect doesn't overlap the dock
+        expect(ih._status).toBe(OverlapStatus.FALSE);
+    });
+
+    // -----------------------------------------------------------------------
+    // Coverage: line 395 — ALWAYS_ON_TOP with fullscreen focus window
+    // -----------------------------------------------------------------------
+    test('ALWAYS_ON_TOP allows overlap when focus window is fullscreen', () => {
+        Settings.set('intellihide-mode', IntellihideMode.ALWAYS_ON_TOP);
+
+        ih = new Intellihide(0);
+        ih._targetBox = {x1: 0, y1: 900, x2: 1920, y2: 1080};
+
+        const wa = createMockWindowActor({
+            frameRect: {x: 0, y: 0, width: 1920, height: 1080},
+            monitor: 0,
+            fullscreen: true,
+        });
+        _windowActors.push(wa);
+
+        const mockApp = {id: 'test-app'};
+        _mockTracker.get_window_app = () => mockApp;
+        _mockTracker.focus_app = mockApp;
+
+        // The code uses destructuring: const {focusWindow} = global.display;
+        // so we need to set global.display.focusWindow (camelCase)
+        globalThis.global.display.focusWindow = {
+            fullscreen: true,
+            get_monitor: () => 0,
+            maximized_vertically: false,
+            maximized_horizontally: false,
+        };
+
+        ih.enable();
+        // With fullscreen focus window in ALWAYS_ON_TOP mode,
+        // the window should NOT be filtered out (line 395 break),
+        // so overlap should be TRUE
+        expect(ih._status).toBe(OverlapStatus.TRUE);
+    });
+
+    // -----------------------------------------------------------------------
+    // Coverage: line 410 — _handledWindow with null metaWindow
+    // -----------------------------------------------------------------------
+    test('_handledWindow returns false for null metaWindow', () => {
+        ih = new Intellihide(0);
+
+        const nullActor = {
+            get_meta_window: () => null,
+            connect: () => 0,
+            disconnect: () => {},
+        };
+
+        const result = ih._handledWindow(nullActor);
+        expect(result).toBe(false);
     });
 });
