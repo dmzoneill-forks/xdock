@@ -236,15 +236,14 @@ jobs:
           echo "=== Container contents ==="
           podman exec "${POD}" ls -la /home/gnomeshell/${UUID}.zip /home/gnomeshell/test-integration/runner.js 2>&1 || true
 
-          # Run integration tests headless
+          # Run integration tests headless via set-env.sh (provides D-Bus session)
           echo "=== Starting integration tests ==="
-          RESULT=$(podman exec --user gnomeshell "${POD}" bash -c '
-            export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
+          RESULT=$(do_in_pod bash -c '
             export LIBGL_ALWAYS_SOFTWARE=1
             export XDOCK_TEST_HOLD=0
             export XDOCK_TEST_SCREENSHOTS=1
             rm -f /run/user/$(id -u)/gnome-shell-disable-extensions
-            dbus-run-session -- gnome-shell-test-tool --headless \
+            gnome-shell-test-tool --headless \
               --extension '"${UUID}"'.zip \
               /home/gnomeshell/test-integration/runner.js 2>&1
           ' 2>&1 || true)
