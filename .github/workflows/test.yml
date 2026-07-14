@@ -236,29 +236,44 @@ jobs:
           echo "=== Container contents ==="
           podman exec "${POD}" ls -la /home/gnomeshell/${UUID}.zip /home/gnomeshell/test-integration/runner.js 2>&1 || true
 
-          # Run gnome-shell-test-tool with extension and automation script.
-          # The tool creates a clean XDG environment, installs the extension,
-          # then starts gnome-shell --headless --automation-script which runs
-          # the test runner inside the gnome-shell process.
-          echo "=== Starting integration tests ==="
-          RESULT=$(do_in_pod env \
-            LIBGL_ALWAYS_SOFTWARE=1 \
-            XDOCK_TEST_HOLD=0 \
-            XDOCK_TEST_SCREENSHOTS=1 \
-            SHELL_DEBUG=backtrace-warnings \
-            timeout 120 \
-            gnome-shell-test-tool --headless --disable-animations \
-              --extension "${UUID}.zip" \
-              /home/gnomeshell/test-integration/runner.js 2>&1 || true)
+          # Install and enable extension (same as smoke test)
+          do_in_pod gnome-extensions install "${UUID}.zip" || true
+
+          # Start gnome-shell headless with automation script as a background process.
+          # We use the container's systemd D-Bus session (not gnome-shell-test-tool's
+          # temporary keyfile backend which causes gnome-shell to crash).
+          echo "=== Starting GNOME Shell with automation script ==="
+          podman exec -d --user gnomeshell "${POD}" bash -c '
+            export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
+            export LIBGL_ALWAYS_SOFTWARE=1
+            export XDOCK_TEST_HOLD=0
+            export XDOCK_TEST_SCREENSHOTS=1
+            gnome-shell --headless --virtual-monitor 1920x1080 \
+              --automation-script /home/gnomeshell/test-integration/runner.js \
+              > /tmp/xdock-integration-output.txt 2>&1
+          '
+
+          # Wait for gnome-shell to start, load extension, run tests, and exit.
+          # The automation script causes gnome-shell to exit when done.
+          echo "Waiting for tests to complete (up to 120s)..."
+          for i in $(seq 1 60); do
+            # Check if gnome-shell is still running
+            if ! podman exec "${POD}" pgrep -u gnomeshell gnome-shell >/dev/null 2>&1; then
+              echo "gnome-shell exited after ${i}x2s"
+              break
+            fi
+            sleep 2
+          done
+
+          # Enable extension if it wasn't auto-enabled
+          do_in_pod gnome-extensions enable "${UUID}" 2>/dev/null || true
+          sleep 5
+
+          # Capture output
+          RESULT=$(podman exec "${POD}" cat /tmp/xdock-integration-output.txt 2>/dev/null || true)
 
           echo "=== Raw output (last 120 lines) ==="
           echo "$RESULT" | tail -120
-
-          # Also check journal for gnome-shell crash info
-          echo "=== Journal (gnome-shell entries) ==="
-          podman exec "${POD}" journalctl --user -b --no-pager 2>/dev/null \
-            | grep -iE "gnome-shell|gjs|segfault|abort|coredump|xdock|automation" \
-            | tail -30 || true
 
           # Filter to XDOCK-TEST lines for parsing
           FILTERED=$(echo "$RESULT" | grep "XDOCK-TEST" || true)
