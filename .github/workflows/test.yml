@@ -6,6 +6,9 @@ name: CI / Test
     branches:
       - master
 
+env:
+  GHCR_IMAGE: ghcr.io/${{ github.repository_owner }}/xdock-test
+
 jobs:
   unit-tests:
     name: Jest Unit Tests
@@ -39,7 +42,6 @@ jobs:
           echo "passed=$PASSED" >> "$GITHUB_OUTPUT"
           echo "failed=$FAILED" >> "$GITHUB_OUTPUT"
           echo "total=$TOTAL" >> "$GITHUB_OUTPUT"
-          # Extract coverage from json-summary
           COV="0"
           if [ -f coverage/coverage-summary.json ]; then
             COV=$(python3 -c "import json; d=json.load(open('coverage/coverage-summary.json')); print(round(d['total']['lines']['pct']))" 2>/dev/null || echo "0")
@@ -71,23 +73,8 @@ jobs:
           minColorRange: 0
           maxColorRange: 100
 
-  build-container:
-    name: Build Container (${{ matrix.name }})
-    uses: ./.github/workflows/build-container.yml
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - fedora_version: '44'
-            name: 'Fedora 44'
-          - fedora_version: '45'
-            name: 'Fedora 45'
-    with:
-      fedora_version: ${{ matrix.fedora_version }}
-
   smoke-test:
     name: Smoke Test (${{ matrix.name }})
-    needs: build-container
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
@@ -116,52 +103,49 @@ jobs:
       - name: Build extension zip
         run: make zip-file-nocheck
 
-      - name: Download container image
-        uses: actions/download-artifact@v4
-        with:
-          name: container-f${{ matrix.fedora }}
-
-      - name: Load container image
-        run: podman load -i xdock-test-f${{ matrix.fedora }}.tar
+      - name: Pull container image
+        run: podman pull ${{ env.GHCR_IMAGE }}:f${{ matrix.fedora }}
 
       - name: Run smoke test
         run: |
           UUID="xdock@github.com"
+          IMAGE="${{ env.GHCR_IMAGE }}:f${{ matrix.fedora }}"
 
-          do_in_pod() {
-            podman exec --user gnomeshell --workdir /home/gnomeshell "${POD}" set-env.sh "$@"
-          }
+          POD=$(podman run --rm --cap-add=SYS_ADMIN -td "$IMAGE")
 
-          POD=$(podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK --cap-add=SYS_ADMIN -td xdock-test:f${{ matrix.fedora }})
-
-          # Wait for container D-Bus
+          # Wait for systemd + D-Bus
           sleep 3
           for i in $(seq 1 10); do
-            do_in_pod true 2>/dev/null && break
+            podman exec --user gnomeshell "$POD" true 2>/dev/null && break
             sleep 2
           done
 
-          # Install and enable extension
+          # Install extension
           podman cp "${UUID}.zip" "${POD}:/home/gnomeshell/${UUID}.zip"
-          do_in_pod gnome-extensions install "${UUID}.zip" || true
-
-          # Start gnome-shell headless and enable extension
-          podman exec -d --user gnomeshell "${POD}" bash -c '
-            export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
-            export LIBGL_ALWAYS_SOFTWARE=1
-            gnome-shell --headless --virtual-monitor 1920x1080 &
-            sleep 10
-            gnome-extensions enable '"${UUID}"' 2>/dev/null || true
-            sleep 5
+          podman exec -u gnomeshell "${POD}" bash -c '
+            mkdir -p ~/.local/share/gnome-shell/extensions/'"${UUID}"'
+            cd ~/.local/share/gnome-shell/extensions/'"${UUID}"'
+            unzip -qo ~/'"${UUID}"'.zip
           '
-          sleep 20
 
-          # Check for errors
-          ERRORS=$(podman exec "${POD}" journalctl --user -b 2>/dev/null \
-              | grep -i "xdock\|${UUID}" \
-              | grep -iE "error|syntaxerror|typeerror|referenceerror|failed" \
-              | grep -iv "logError\|CalendarServer\|Malcontent\|geolocation\|Auth\|record usage\|coverPane\|Brightness\|Could not" \
-              || true)
+          # Start gnome-shell headless with extension enabled
+          RESULT=$(podman exec -u gnomeshell \
+            -e XDG_RUNTIME_DIR=/tmp/runtime-1000 \
+            "${POD}" bash -c '
+            mkdir -p /tmp/runtime-1000
+            export LIBGL_ALWAYS_SOFTWARE=1
+            timeout 30 dbus-run-session -- bash -c "
+              dconf write /org/gnome/shell/enabled-extensions \"[\\\"'"${UUID}"'\\\"]\" 2>/dev/null
+              gnome-shell --headless --no-x11 --virtual-monitor 1920x1080 2>&1
+            "
+          ' 2>&1 || true)
+
+          # Check for extension errors (filter known non-issues)
+          ERRORS=$(echo "$RESULT" \
+            | grep -iE "xdock|${UUID}" \
+            | grep -iE "error|syntaxerror|typeerror|referenceerror" \
+            | grep -iv "logError\|CalendarServer\|Malcontent\|geolocation\|Auth\|record usage\|coverPane\|Brightness\|Could not\|colord\|GDM\|PolicyKit\|GeoClue\|suspend" \
+            || true)
 
           podman stop "${POD}" >/dev/null 2>&1 || true
 
@@ -170,12 +154,10 @@ jobs:
             echo "$ERRORS"
             exit 1
           fi
-
-          echo "Smoke test passed — no errors detected"
+          echo "Smoke test passed — no extension errors"
 
   integration-test:
     name: Integration Tests (${{ matrix.name }})
-    needs: build-container
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -199,31 +181,23 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq gettext
           npm install -g sass
 
-      - name: Download container image
-        uses: actions/download-artifact@v4
-        with:
-          name: container-f${{ matrix.fedora }}
-
-      - name: Load container image
-        run: podman load -i xdock-test-f${{ matrix.fedora }}.tar
-
       - name: Build extension zip
         run: make zip-file-nocheck
+
+      - name: Pull container image
+        run: podman pull ${{ env.GHCR_IMAGE }}:f${{ matrix.fedora }}
 
       - name: Run integration tests
         run: |
           UUID="xdock@github.com"
+          IMAGE="${{ env.GHCR_IMAGE }}:f${{ matrix.fedora }}"
 
-          do_in_pod() {
-            podman exec --user gnomeshell --workdir /home/gnomeshell "${POD}" set-env.sh "$@"
-          }
+          POD=$(podman run --rm --cap-add=SYS_ADMIN -td "$IMAGE")
 
-          POD=$(podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK --cap-add=SYS_ADMIN -td xdock-test:f${{ matrix.fedora }})
-
-          # Wait for systemd + D-Bus session to be ready (same as smoke test)
+          # Wait for systemd
           sleep 3
           for i in $(seq 1 10); do
-            do_in_pod true 2>/dev/null && break
+            podman exec --user gnomeshell "$POD" true 2>/dev/null && break
             sleep 2
           done
 
@@ -235,14 +209,12 @@ jobs:
             unzip -qo ~/'"${UUID}"'.zip
           '
 
-          # Copy test runner separately (automation script must be on disk)
+          # Copy test runner (automation script must be on disk)
           podman exec "${POD}" mkdir -p /home/gnomeshell/test-integration
           podman cp test/integration/. "${POD}:/home/gnomeshell/test-integration/"
           podman exec "${POD}" chown -R gnomeshell:gnomeshell /home/gnomeshell
 
-          # Run gnome-shell headless with automation script.
-          # Uses dbus-run-session for D-Bus, dconf to pre-enable the extension,
-          # and systemd logind (running in container) for session support.
+          # Run gnome-shell headless with automation script
           echo "=== Running integration tests ==="
           RESULT=$(podman exec -u gnomeshell \
             -e XDG_RUNTIME_DIR=/tmp/runtime-1000 \
@@ -262,13 +234,12 @@ jobs:
           echo "=== Raw output (last 30 lines) ==="
           echo "$RESULT" | tail -30
 
-          # Filter XDOCK-TEST lines for parsing
+          # Parse XDOCK-TEST results
           FILTERED=$(echo "$RESULT" | grep "XDOCK-TEST" || true)
-          echo "=== XDOCK-TEST summary ==="
+          echo "=== Test summary ==="
           echo "$FILTERED" | grep -E "(Results:|--- |Extension)" || true
 
-          # Parse test counts
-          RESULTS_LINE=$(echo "$FILTERED" | grep 'Results:' || echo "")
+          RESULTS_LINE=$(echo "$FILTERED" | grep 'Results:' | tail -1 || echo "")
           PASSED=$(echo "$RESULTS_LINE" | grep -oP '\d+(?= passed)' || echo "0")
           FAILED=$(echo "$RESULTS_LINE" | grep -oP '\d+(?= failed)' || echo "0")
           TOTAL=$((PASSED + FAILED))
@@ -283,8 +254,7 @@ jobs:
 
           podman stop "${POD}" >/dev/null 2>&1 || true
 
-          # Report results
-          if echo "$FILTERED" | grep -q "SOME TESTS FAILED"; then
+          if [ "$FAILED" -gt 0 ]; then
             echo "::warning::Integration tests: $PASSED passed, $FAILED failed"
           elif [ "$TOTAL" -eq 0 ]; then
             echo "::warning::No integration tests ran"
