@@ -3148,8 +3148,10 @@ export class DockManager {
 
 
         const monitorManager = Utils.getMonitorManager();
-        this._preferredMonitorIndex = monitorManager.get_monitor_for_connector(
-            Settings.get('preferred-monitor-by-connector'));
+        const preferredConnector = Settings.get('preferred-monitor-by-connector');
+        this._preferredMonitorIndex = preferredConnector
+            ? monitorManager.get_monitor_for_connector(preferredConnector)
+            : -1;
 
         // In case of multi-monitor, we consider the dock on the primary monitor
         // to be the preferred (main) one regardless of the settings the dock
