@@ -1,27 +1,30 @@
-# XDock test container — runs GNOME Shell headless for CI testing.
-# Wayland only (GNOME 49+, Fedora 43+).
+# XDock test container — GNOME Shell headless for CI testing.
+# Uses systemd as PID 1 (required for logind which gnome-shell needs).
+# gnome-shell runs via dbus-run-session, not a full GNOME session.
 #
 # Build: podman build --build-arg=fedora_version=44 -t xdock-test:f44 test/container/
-# Run:   podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK -td xdock-test:f44
+# Run:   podman run --rm --cap-add=SYS_ADMIN -td xdock-test:f44
+# Test:  podman exec -u gnomeshell $POD start-gnome-headless.sh
 
 ARG fedora_version=44
-FROM registry.fedoraproject.org/fedora:${fedora_version}
+FROM registry.fedoraproject.org/fedora-minimal:${fedora_version}
 
-RUN dnf update -y && \
-    dnf --nodocs install -y \
-        gnome-shell gnome-session gnome-extensions-app \
-        gnome-session-wayland-session gnome-terminal \
-        dbus dbus-daemon dbus-tools sudo \
-        mesa-dri-drivers ImageMagick bc && \
-    dnf clean all -y && \
-    rm -rf /var/cache/dnf /tmp/* /var/tmp/*
-
-COPY etc /etc
-COPY bin /usr/local/bin
-
-RUN systemctl unmask systemd-logind.service console-getty.service getty.target && \
+RUN microdnf install -y --nodocs \
+        gnome-shell gnome-extensions-app \
+        dbus-daemon systemd procps-ng unzip \
+        mesa-dri-drivers \
+        ImageMagick bc && \
+    microdnf clean all && \
+    rm -rf /var/cache/* /tmp/* /var/tmp/* && \
     systemctl set-default multi-user.target && \
-    adduser -m -U -G users,adm gnomeshell && \
-    echo "gnomeshell     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+    mkdir -p /etc/systemd/system/systemd-logind.service.d && \
+    printf '[Service]\nProtectHostname=no\nPrivateDevices=no\nProtectClock=no\nProtectKernelTunables=no\nProtectKernelModules=no\nProtectKernelLogs=no\nRestrictNamespaces=no\nProtectControlGroups=no\n' \
+      > /etc/systemd/system/systemd-logind.service.d/container.conf && \
+    adduser -m gnomeshell && \
+    mkdir -p /var/lib/systemd/linger && \
+    touch /var/lib/systemd/linger/gnomeshell
 
-CMD [ "/usr/sbin/init", "systemd.unified_cgroup_hierarchy=0" ]
+COPY bin/start-gnome-headless.sh bin/take-screenshot.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/start-gnome-headless.sh /usr/local/bin/take-screenshot.sh
+
+CMD ["/usr/sbin/init"]
