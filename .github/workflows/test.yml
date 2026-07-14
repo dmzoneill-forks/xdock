@@ -220,6 +220,7 @@ jobs:
 
           POD=$(podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK --cap-add=SYS_ADMIN -td xdock-test:f${{ matrix.fedora }})
 
+          # Wait for systemd + D-Bus session to be ready (same as smoke test)
           sleep 3
           for i in $(seq 1 10); do
             do_in_pod true 2>/dev/null && break
@@ -232,24 +233,25 @@ jobs:
           podman cp test/integration/. "${POD}:/home/gnomeshell/test-integration/"
           podman exec "${POD}" chown -R gnomeshell:gnomeshell /home/gnomeshell/test-integration
 
-          # Verify files exist in container
           echo "=== Container contents ==="
           podman exec "${POD}" ls -la /home/gnomeshell/${UUID}.zip /home/gnomeshell/test-integration/runner.js 2>&1 || true
 
-          # Run integration tests headless (dbus-run-session provides session bus)
+          # Verify D-Bus is available
+          echo "=== D-Bus check ==="
+          do_in_pod dbus-send --session --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.ListNames 2>&1 | head -5 || echo "D-Bus not responding"
+
+          # Run gnome-shell-test-tool through the systemd session (do_in_pod provides D-Bus)
           echo "=== Starting integration tests ==="
-          RESULT=$(podman exec --user gnomeshell --workdir /home/gnomeshell \
-            -e LIBGL_ALWAYS_SOFTWARE=1 \
-            -e XDOCK_TEST_HOLD=0 \
-            -e XDOCK_TEST_SCREENSHOTS=1 \
-            "${POD}" \
-            dbus-run-session -- \
+          RESULT=$(do_in_pod env \
+            LIBGL_ALWAYS_SOFTWARE=1 \
+            XDOCK_TEST_HOLD=0 \
+            XDOCK_TEST_SCREENSHOTS=1 \
             gnome-shell-test-tool --headless \
               --extension "${UUID}.zip" \
               /home/gnomeshell/test-integration/runner.js 2>&1 || true)
 
-          echo "=== Raw output (last 50 lines) ==="
-          echo "$RESULT" | tail -50
+          echo "=== Raw output (last 80 lines) ==="
+          echo "$RESULT" | tail -80
 
           # Filter to XDOCK-TEST lines for parsing
           FILTERED=$(echo "$RESULT" | grep "XDOCK-TEST" || true)
@@ -257,8 +259,7 @@ jobs:
           echo "$FILTERED"
 
           # Parse test counts from "Results: X passed, Y failed"
-          RESULT="$FILTERED"
-          RESULTS_LINE=$(echo "$RESULT" | grep 'Results:' || echo "")
+          RESULTS_LINE=$(echo "$FILTERED" | grep 'Results:' || echo "")
           PASSED=$(echo "$RESULTS_LINE" | grep -oP '\d+(?= passed)' || echo "0")
           FAILED=$(echo "$RESULTS_LINE" | grep -oP '\d+(?= failed)' || echo "0")
           TOTAL=$((PASSED + FAILED))
@@ -274,13 +275,12 @@ jobs:
           podman stop "${POD}" >/dev/null 2>&1 || true
 
           # Check for test failures
-          if echo "$RESULT" | grep -q "SOME TESTS FAILED"; then
+          if echo "$FILTERED" | grep -q "SOME TESTS FAILED"; then
             echo "::error::Integration tests failed"
-            echo "$RESULT" | grep "FAIL:"
+            echo "$FILTERED" | grep "FAIL:"
             exit 1
           elif [ "$TOTAL" -eq 0 ]; then
-            echo "::warning::No integration tests ran — GNOME Shell did not fully initialize in container"
-            echo "::warning::Integration tests require a complete GNOME session (run locally with: make integration-test)"
+            echo "::warning::No integration tests ran — check raw output above"
           else
             echo "Integration tests passed: $PASSED/$TOTAL"
           fi
