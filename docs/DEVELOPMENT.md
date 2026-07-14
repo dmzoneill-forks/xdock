@@ -156,15 +156,34 @@ xdock/
   docking.js            # DockManager, DockedDash, DashSlideContainer
   dash.js               # DockDash (fork of GNOME Shell Dash)
   imports.js            # Re-export hub for all modules
+  appIcons.js           # DockAppIcon (per-app icon)
+  appIconIndicators.js  # Running/notification dot indicators
+  intellihide.js        # Auto-hide when windows overlap
   utils.js              # Signal handlers, injections, color math
   theming.js            # ThemeManager, transparency, shelf rendering
+  springAnimation.js    # Damped-spring physics animation driver
   prefs.js              # Preferences window (GTK4)
   Settings.ui           # Preferences dialog layout (GTK4 Builder XML)
   _stylesheet.scss      # SCSS source for the extension stylesheet
   stylesheet.css        # Compiled CSS (generated)
+  features/             # Feature modules
+    appIconsDecorator.js, appSpread.js, bounceAnimation.js,
+    desktopIconsIntegration.js, dockProfiles.js, dockTiling.js,
+    liveThumbnails.js, locations.js, locationsWorker.js,
+    pinnedCommands.js, recentFilesMenu.js, windowPreview.js
+  services/             # D-Bus and background service modules
+    dbusmenuUtils.js, fileManager1API.js, launcherAPI.js,
+    mprisMonitor.js, notificationsMonitor.js, screencastMonitor.js,
+    wallpaperColorExtractor.js
+  widgets/              # Dock UI widget modules
+    commandPalette.js, mediaControls.js, quickSettings.js,
+    volumeControl.js, volumeMenuItem.js, workspaceMinimap.js
   schemas/              # GSettings schema XML
   media/                # SVG icons and assets
   dependencies/         # GI module re-exports for compatibility
+  indicators/           # Indicator rendering
+  platform/             # Platform abstraction layer
+  ui/                   # UI helpers
   po/                   # Translation files
   test/                 # All test code (see Testing Guide)
   docs/                 # This documentation
