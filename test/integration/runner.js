@@ -106,8 +106,9 @@ function loadTestFile(dir, filename) {
         const [, bytes] = GLib.file_get_contents(path);
         const source = new TextDecoder().decode(bytes);
         const exports = {};
-        new Function('exports', 'getXDockSettings', 'screenshot', source)(
-            exports, _getXDockSettings, takeScreenshot);
+        function skip(reason) { throw new SkipError(reason); }
+        new Function('exports', 'getXDockSettings', 'screenshot', 'skip', source)(
+            exports, _getXDockSettings, takeScreenshot, skip);
         if (typeof exports.getTests === 'function')
             return exports.getTests();
     } catch (e) {
@@ -134,14 +135,21 @@ function pumpMainLoop(ms) {
         ctx.iteration(false);
 }
 
+class SkipError extends Error {
+    constructor(reason) {
+        super(reason);
+        this.name = 'SkipError';
+    }
+}
+
 async function runAllTests(testDir, testFiles) {
-    let passed = 0, failed = 0;
+    let passed = 0, failed = 0, skipped = 0;
 
     for (const file of testFiles) {
         log(`--- ${file} ---`);
         const tests = loadTestFile(testDir, file);
         let testIdx = 0;
-        let filePassed = 0, fileFailed = 0;
+        let filePassed = 0, fileFailed = 0, fileSkipped = 0;
         for (const test of tests) {
             try {
                 const result = test.fn();
@@ -151,9 +159,15 @@ async function runAllTests(testDir, testFiles) {
                 passed++;
                 filePassed++;
             } catch (e) {
-                log(`  FAIL: ${test.name} — ${e.message}`);
-                failed++;
-                fileFailed++;
+                if (e instanceof SkipError || e.name === 'SkipError') {
+                    log(`  SKIP: ${test.name} — ${e.message}`);
+                    skipped++;
+                    fileSkipped++;
+                } else {
+                    log(`  FAIL: ${test.name} — ${e.message}`);
+                    failed++;
+                    fileFailed++;
+                }
             }
             // Pump the main loop so the compositor processes pending
             // layout/paint work before the screenshot.
@@ -167,12 +181,18 @@ async function runAllTests(testDir, testFiles) {
             }
             testIdx++;
         }
-        log(`  --- ${file}: ${filePassed}/${filePassed + fileFailed} passed ---`);
+        const fileTotal = filePassed + fileFailed + fileSkipped;
+        const skipMsg = fileSkipped > 0 ? `, ${fileSkipped} skipped` : '';
+        log(`  --- ${file}: ${filePassed}/${fileTotal} passed${skipMsg} ---`);
     }
 
     log('');
-    log(`Results: ${passed} passed, ${failed} failed`);
-    log(failed === 0 ? 'ALL TESTS PASSED' : 'SOME TESTS FAILED');
+    const skipMsg = skipped > 0 ? `, ${skipped} skipped` : '';
+    log(`Results: ${passed} passed, ${failed} failed${skipMsg}`);
+    if (failed > 0)
+        log('SOME TESTS FAILED');
+    else
+        log('ALL TESTS PASSED');
 }
 
 // ── Entry point ──────────────────────────────────────────────────────

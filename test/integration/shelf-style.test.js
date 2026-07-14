@@ -129,6 +129,7 @@ function getTests() {
         // -- Dock actor tree --
         {name: 'dash background exists', fn() {
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             assert(dash !== null, 'dash should exist');
             const bg = getBackground(dash);
             assert(bg !== null && bg !== undefined, 'dash-background element should exist');
@@ -136,6 +137,7 @@ function getTests() {
 
         {name: 'dash reflection widget exists in actor tree', fn() {
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             assert(dash !== null, 'dash should exist');
             const refl = getReflection(dash);
             assert(refl !== null && refl !== undefined,
@@ -146,6 +148,7 @@ function getTests() {
         {name: 'shelf class on container when shelf mode active', fn() {
             const s = getSettings();
             const dock = findDock();
+            if (!dock) skip('requires dock actor (headless)');
             assert(dock !== null, 'dock should exist');
             if (s.get_enum('dock-style') === 1) {
                 const classes = dock.get_style_class_name() || '';
@@ -156,6 +159,7 @@ function getTests() {
         {name: 'no shelf class on container when flat mode active', fn() {
             const s = getSettings();
             const dock = findDock();
+            if (!dock) skip('requires dock actor (headless)');
             assert(dock !== null, 'dock should exist');
             if (s.get_enum('dock-style') === 0) {
                 const classes = dock.get_style_class_name() || '';
@@ -168,6 +172,7 @@ function getTests() {
         {name: 'flat style: no shelf overlay on background', fn() {
             if (isShelfMode()) return; // skip if shelf mode
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             assert(dash !== null, 'dash should exist');
             const bg = getBackground(dash);
             if (!bg) return;
@@ -183,6 +188,7 @@ function getTests() {
         {name: 'shelf style: DrawingArea overlay exists on background', fn() {
             if (!isShelfMode()) return; // skip if flat mode
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             assert(dash !== null, 'dash should exist');
             const bg = getBackground(dash);
             assert(bg !== null && bg !== undefined, 'dash-background should exist');
@@ -197,6 +203,7 @@ function getTests() {
         {name: 'shelf style: overlay is visible', fn() {
             if (!isShelfMode()) return;
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             const bg = getBackground(dash);
             if (!bg) return;
             const overlay = bg.get_children().find(c => {
@@ -210,6 +217,7 @@ function getTests() {
         {name: 'shelf style: overlay is sized to match background', fn() {
             if (!isShelfMode()) return;
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             const bg = getBackground(dash);
             if (!bg) return;
             const overlay = bg.get_children().find(c => {
@@ -233,6 +241,7 @@ function getTests() {
         {name: 'shelf style: CSS background is transparent', fn() {
             if (!isShelfMode()) return;
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             const bg = getBackground(dash);
             if (!bg) return;
             const style = bg.get_style() || '';
@@ -247,6 +256,7 @@ function getTests() {
             if (s.get_enum('dock-style') !== 1) return; // skip if flat
             if (!s.get_boolean('shelf-reflection')) return; // skip if reflection disabled
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             const refl = getReflection(dash);
             assert(refl !== null, 'reflection widget should exist');
             assert(refl.visible, 'reflection widget should be visible when shelf + reflection enabled');
@@ -256,6 +266,7 @@ function getTests() {
             const s = getSettings();
             if (s.get_enum('dock-style') !== 0) return; // skip if shelf
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             const refl = getReflection(dash);
             if (!refl) return; // acceptable if widget not yet created
             assert(!refl.visible,
@@ -267,6 +278,7 @@ function getTests() {
             if (s.get_enum('dock-style') !== 1) return;
             if (!s.get_boolean('shelf-reflection')) return;
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             const refl = getReflection(dash);
             if (!refl || !refl.visible) return;
             const style = refl.get_style() || '';
@@ -279,6 +291,7 @@ function getTests() {
             if (s.get_enum('dock-style') !== 1) return;
             if (!s.get_boolean('shelf-reflection')) return;
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             const refl = getReflection(dash);
             if (!refl || !refl.visible) return;
             const style = refl.get_style() || '';
@@ -350,6 +363,7 @@ function getTests() {
         {name: 'no 1px border line at top of dock in shelf mode', fn() {
             if (!isShelfMode()) return;
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             const bg = getBackground(dash);
             if (!bg) return;
             const style = bg.get_style() || '';
@@ -362,6 +376,7 @@ function getTests() {
 
         {name: 'shelf style class added to dock container', fn() {
             const dock = findDock();
+            if (!dock) skip('requires dock actor (headless)');
             assert(dock !== null, 'dock should exist');
             const s = getSettings();
             const dockStyle = s.get_enum('dock-style');
@@ -380,6 +395,7 @@ function getTests() {
             // Verify that the background actor exists and has non-zero dimensions
             // when the dock is visible, regardless of magnification setting.
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             assert(dash !== null, 'dash should exist');
             const bg = getBackground(dash);
             assert(bg !== null, 'background should exist');

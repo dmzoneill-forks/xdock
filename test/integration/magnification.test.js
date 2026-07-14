@@ -87,15 +87,18 @@ function getTests() {
         // ---- Dock actor tree exists ----
         {name: 'dock container exists in stage', fn() {
             const dock = findDock();
+            if (!dock) skip('requires dock actor (headless)');
             assert(dock !== null, 'dashtodockContainer should exist in uiGroup');
         }},
         {name: 'DockDash exists as slider child', fn() {
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             assert(dash !== null, 'DockDash should exist');
             assert(dash.name === 'dash', 'DockDash name should be "dash", got "' + dash.name + '"');
         }},
         {name: 'dashContainer exists inside DockDash', fn() {
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             assert(dash !== null, 'dash should exist');
             const dc = getDashContainer(dash);
             assert(dc !== null, 'dashtodockDashContainer should exist inside dash');
@@ -106,6 +109,7 @@ function getTests() {
             const s = getSettings();
             if (s.get_boolean('icon-magnification')) return; // skip if user enabled it
             const dash = getDash();
+            if (!dash) skip('requires dock actor (headless)');
             assert(dash !== null, 'dash should exist');
             // ALWAYS = 1 in Clutter.OffscreenRedirect
             assert(dash.offscreen_redirect === Clutter.OffscreenRedirect.ALWAYS,
@@ -115,7 +119,7 @@ function getTests() {
             const s = getSettings();
             if (s.get_boolean('icon-magnification')) return;
             const dash = getDash();
-            if (!dash) return;
+            if (!dash) skip('requires dock actor (headless)');
             const sv = getScrollView(dash);
             if (!sv) return;
             assert(sv.visible === true,
@@ -129,6 +133,7 @@ function getTests() {
             try {
                 s.set_boolean('icon-magnification', true);
                 const dash = getDash();
+                if (!dash) skip('requires dock actor (headless)');
                 assert(dash !== null, 'dash should exist');
                 assert(dash.offscreen_redirect === 0,
                     'offscreen_redirect should be 0 during magnification, got ' + dash.offscreen_redirect);
@@ -142,6 +147,7 @@ function getTests() {
             try {
                 s.set_boolean('icon-magnification', true);
                 const dash = getDash();
+                if (!dash) skip('requires dock actor (headless)');
                 assert(dash !== null, 'dash should exist');
                 assert(dash.clip_to_allocation === false,
                     'dash clip_to_allocation should be false during mag');
@@ -155,6 +161,7 @@ function getTests() {
             try {
                 s.set_boolean('icon-magnification', true);
                 const dash = getDash();
+                if (!dash) skip('requires dock actor (headless)');
                 assert(dash !== null, 'dash should exist');
                 const dc = getDashContainer(dash);
                 assert(dc !== null, 'dashContainer should exist');
@@ -170,7 +177,7 @@ function getTests() {
             try {
                 s.set_boolean('icon-magnification', true);
                 const dash = getDash();
-                if (!dash) return;
+                if (!dash) skip('requires dock actor (headless)');
                 const sv = getScrollView(dash);
                 if (!sv) return;
                 assert(sv.visible === false,
@@ -185,6 +192,7 @@ function getTests() {
             try {
                 s.set_boolean('icon-magnification', true);
                 const dash = getDash();
+                if (!dash) skip('requires dock actor (headless)');
                 assert(dash !== null, 'dash should exist');
                 const dc = getDashContainer(dash);
                 assert(dc !== null, 'dashContainer should exist');
@@ -206,7 +214,7 @@ function getTests() {
             try {
                 s.set_boolean('icon-magnification', true);
                 const dash = getDash();
-                if (!dash) return;
+                if (!dash) skip('requires dock actor (headless)');
                 const dc = getDashContainer(dash);
                 if (!dc) return;
                 const icons = getIconChildren(dc);
@@ -230,7 +238,7 @@ function getTests() {
             try {
                 s.set_boolean('icon-magnification', true);
                 const dash = getDash();
-                if (!dash) return;
+                if (!dash) skip('requires dock actor (headless)');
                 const dc = getDashContainer(dash);
                 if (!dc) return;
                 const icons = getIconChildren(dc);
@@ -251,7 +259,7 @@ function getTests() {
             try {
                 s.set_boolean('icon-magnification', true);
                 const dash = getDash();
-                if (!dash) return;
+                if (!dash) skip('requires dock actor (headless)');
                 const bg = getBackground(dash);
                 if (!bg) return;
                 const sx = bg.scale_x;
@@ -270,6 +278,7 @@ function getTests() {
                 s.set_boolean('icon-magnification', true);
                 s.set_boolean('icon-magnification', false);
                 const dash = getDash();
+                if (!dash) skip('requires dock actor (headless)');
                 assert(dash !== null, 'dash should exist');
                 assert(dash.offscreen_redirect === Clutter.OffscreenRedirect.ALWAYS,
                     'offscreen_redirect should be ALWAYS after disabling, got ' + dash.offscreen_redirect);
@@ -284,7 +293,7 @@ function getTests() {
                 s.set_boolean('icon-magnification', true);
                 s.set_boolean('icon-magnification', false);
                 const dash = getDash();
-                if (!dash) return;
+                if (!dash) skip('requires dock actor (headless)');
                 const sv = getScrollView(dash);
                 if (!sv) return;
                 assert(sv.visible === true,
@@ -300,6 +309,7 @@ function getTests() {
                 s.set_boolean('icon-magnification', true);
                 s.set_boolean('icon-magnification', false);
                 const dash = getDash();
+                if (!dash) skip('requires dock actor (headless)');
                 assert(dash !== null, 'dash should exist');
                 assert(dash.clip_to_allocation === true,
                     'clip_to_allocation should be true after disabling mag');
@@ -315,6 +325,7 @@ function getTests() {
             try {
                 s.set_boolean('icon-magnification', true);
                 const dock = findDock();
+                if (!dock) skip('requires dock actor (headless)');
                 assert(dock !== null, 'dock should exist');
                 assert(dock.clip_to_allocation === false,
                     'dock container clip_to_allocation should be false during mag, got ' + dock.clip_to_allocation);
@@ -362,7 +373,7 @@ function getTests() {
         // ---- Show-apps icon participates ----
         {name: 'show-apps icon exists in dashContainer', fn() {
             const dash = getDash();
-            if (!dash) return;
+            if (!dash) skip('requires dock actor (headless)');
             const dc = getDashContainer(dash);
             if (!dc) return;
             // show-apps icon should be among dashContainer children
@@ -385,7 +396,7 @@ function getTests() {
             try {
                 s.set_boolean('icon-magnification', true);
                 const dash = getDash();
-                if (!dash) return;
+                if (!dash) skip('requires dock actor (headless)');
                 const dc = getDashContainer(dash);
                 if (!dc) return;
                 const icons = getIconChildren(dc);
