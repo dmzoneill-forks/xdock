@@ -8,42 +8,17 @@ BASE_MODULES = extension.js \
                $(NULL)
 
 EXTRA_MODULES = \
-                appSpread.js \
-                bounceAnimation.js \
-                commandPalette.js \
                 dash.js \
-                dbusmenuUtils.js \
-                desktopIconsIntegration.js \
-                dockProfiles.js \
                 docking.js \
-                dockTiling.js \
                 appIcons.js \
-                appIconsDecorator.js \
                 appIconIndicators.js \
                 dockStruts.js \
-                fileManager1API.js \
                 imports.js \
                 intellihide.js \
-                launcherAPI.js \
-                liveThumbnails.js \
-                locations.js \
-                locationsWorker.js \
-                mediaControls.js \
-                mprisMonitor.js \
-                notificationsMonitor.js \
-                pinnedCommands.js \
                 prefs.js \
-                quickSettings.js \
-                recentFilesMenu.js \
-                screencastMonitor.js \
                 springAnimation.js \
                 theming.js \
                 utils.js \
-                volumeControl.js \
-                volumeMenuItem.js \
-                wallpaperColorExtractor.js \
-                windowPreview.js \
-                workspaceMinimap.js \
                 Settings.ui \
                 $(NULL)
 
@@ -161,6 +136,9 @@ _build: all
 	cp -a dependencies _build
 	cp -a indicators _build
 	cp -a platform _build
+	cp -a widgets _build
+	cp -a services _build
+	cp -a features _build
 	cp stylesheet.css _build
 	mkdir -p _build/media
 	cd media ; cp $(EXTRA_MEDIA) ../_build/media/
