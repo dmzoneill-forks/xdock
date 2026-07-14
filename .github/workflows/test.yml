@@ -226,11 +226,17 @@ jobs:
             sleep 2
           done
 
-          # Copy and install extension (test files are included in the zip)
+          # Copy extension zip and test runner into container
           podman cp "${UUID}.zip" "${POD}:/home/gnomeshell/${UUID}.zip"
-          do_in_pod gnome-extensions install "${UUID}.zip" || true
+          podman cp test/integration/ "${POD}:/home/gnomeshell/test-integration/"
+          podman exec "${POD}" chown -R gnomeshell:gnomeshell /home/gnomeshell/test-integration/
+
+          # Verify files exist in container
+          echo "=== Container contents ==="
+          podman exec "${POD}" ls -la /home/gnomeshell/${UUID}.zip /home/gnomeshell/test-integration/runner.js 2>&1 || true
 
           # Run integration tests headless
+          echo "=== Starting integration tests ==="
           RESULT=$(podman exec --user gnomeshell "${POD}" bash -c '
             export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
             export LIBGL_ALWAYS_SOFTWARE=1
@@ -238,14 +244,20 @@ jobs:
             export XDOCK_TEST_SCREENSHOTS=1
             rm -f /run/user/$(id -u)/gnome-shell-disable-extensions
             dbus-run-session -- gnome-shell-test-tool --headless \
-              --extension xdock@github.com.zip \
-              /home/gnomeshell/test/integration/runner.js 2>&1 \
-              | grep "XDOCK-TEST"
+              --extension '"${UUID}"'.zip \
+              /home/gnomeshell/test-integration/runner.js 2>&1
           ' 2>&1 || true)
 
-          echo "$RESULT"
+          echo "=== Raw output (last 50 lines) ==="
+          echo "$RESULT" | tail -50
+
+          # Filter to XDOCK-TEST lines for parsing
+          FILTERED=$(echo "$RESULT" | grep "XDOCK-TEST" || true)
+          echo "=== XDOCK-TEST lines ==="
+          echo "$FILTERED"
 
           # Parse test counts from "Results: X passed, Y failed"
+          RESULT="$FILTERED"
           RESULTS_LINE=$(echo "$RESULT" | grep 'Results:' || echo "")
           PASSED=$(echo "$RESULTS_LINE" | grep -oP '\d+(?= passed)' || echo "0")
           FAILED=$(echo "$RESULTS_LINE" | grep -oP '\d+(?= failed)' || echo "0")
@@ -266,9 +278,11 @@ jobs:
             echo "::error::Integration tests failed"
             echo "$RESULT" | grep "FAIL:"
             exit 1
+          elif [ "$TOTAL" -eq 0 ]; then
+            echo "::warning::No integration tests ran — check gnome-shell-test-tool output above"
+          else
+            echo "Integration tests passed: $PASSED/$TOTAL"
           fi
-
-          echo "Integration tests passed"
         id: integration
 
       - name: Update integration test badge
