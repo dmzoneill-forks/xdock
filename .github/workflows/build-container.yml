@@ -1,41 +1,50 @@
 ---
 name: Build Test Container
 'on':
-  workflow_call:
+  push:
+    branches: [master]
+    paths:
+      - 'test/container/**'
+  workflow_dispatch:
     inputs:
       fedora_version:
-        required: true
-        type: string
-    outputs:
-      image_name:
-        description: Container image tag
-        value: ${{ jobs.build.outputs.image_name }}
+        description: 'Fedora version to build'
+        required: false
+        default: '44'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_BASE: ghcr.io/${{ github.repository_owner }}/xdock-test
+
+permissions:
+  packages: write
 
 jobs:
   build:
-    name: Build Container (Fedora ${{ inputs.fedora_version }})
+    name: Build & Push (${{ matrix.fedora_version }})
     runs-on: ubuntu-latest
-    outputs:
-      image_name: xdock-test:f${{ inputs.fedora_version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        fedora_version: ['44', '45']
     steps:
       - name: Check out the codebase
         uses: actions/checkout@v4
 
-      - name: Build container (with cache)
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build container
         run: |
           podman build \
-            --build-arg=fedora_version=${{ inputs.fedora_version }} \
-            -t xdock-test:f${{ inputs.fedora_version }} \
+            --build-arg=fedora_version=${{ matrix.fedora_version }} \
+            -t ${{ env.IMAGE_BASE }}:f${{ matrix.fedora_version }} \
             test/container/
 
-      - name: Save container image
+      - name: Push to GHCR
         run: |
-          podman save xdock-test:f${{ inputs.fedora_version }} \
-            -o /tmp/xdock-test-f${{ inputs.fedora_version }}.tar
-
-      - name: Upload container image
-        uses: actions/upload-artifact@v4
-        with:
-          name: container-f${{ inputs.fedora_version }}
-          path: /tmp/xdock-test-f${{ inputs.fedora_version }}.tar
-          retention-days: 1
+          podman push ${{ env.IMAGE_BASE }}:f${{ matrix.fedora_version }}
