@@ -314,6 +314,7 @@ git commit -m "Update visual baselines"
 
 ## Related Docs
 
+- [Integration Test Plan](INTEGRATION_TEST_PLAN.md) -- test specifications, event injection, visual testing
 - [Development Guide](DEVELOPMENT.md) -- building, make targets, devkit
 - [Architecture](ARCHITECTURE.md) -- source file overview, actor tree
 - [Contributing](CONTRIBUTING.md) -- PR requirements, code style

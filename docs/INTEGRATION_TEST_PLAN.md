@@ -220,3 +220,10 @@ Updated when visual changes are intentional.
 6. **auto-hide** — existing feature, complex interactions
 7. **window-previews** — timing-dependent
 8. **visual tests** — screenshot baselines
+
+## Related Docs
+
+- [Development Guide](DEVELOPMENT.md) -- building, make targets, devkit
+- [Testing Guide](TESTING.md) -- test tiers, platform layer, CI pipeline
+- [Architecture](ARCHITECTURE.md) -- source file overview, actor tree
+- [Contributing](CONTRIBUTING.md) -- PR requirements, code style
