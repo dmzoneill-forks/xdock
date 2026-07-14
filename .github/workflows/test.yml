@@ -244,12 +244,14 @@ jobs:
           podman exec -d --user gnomeshell "${POD}" bash -c '
             export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
             export LIBGL_ALWAYS_SOFTWARE=1
-            gnome-shell --headless --virtual-monitor 1920x1080 &
-            sleep 10
-            gnome-extensions enable '"${UUID}"' 2>/dev/null || true
-            sleep 5
+            rm -f /run/user/$(id -u)/gnome-shell-disable-extensions
+            exec gnome-shell --headless --virtual-monitor 1920x1080
           '
-          sleep 20
+          sleep 12
+
+          # Enable extension after gnome-shell has initialized
+          do_in_pod gnome-extensions enable "${UUID}" 2>/dev/null || true
+          sleep 5
 
           # Verify gnome-shell is running and extension is enabled
           echo "=== Extension status ==="
