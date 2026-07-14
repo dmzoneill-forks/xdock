@@ -279,7 +279,8 @@ jobs:
             echo "$RESULT" | grep "FAIL:"
             exit 1
           elif [ "$TOTAL" -eq 0 ]; then
-            echo "::warning::No integration tests ran — check gnome-shell-test-tool output above"
+            echo "::warning::No integration tests ran — GNOME Shell did not fully initialize in container"
+            echo "::warning::Integration tests require a complete GNOME session (run locally with: make integration-test)"
           else
             echo "Integration tests passed: $PASSED/$TOTAL"
           fi
@@ -293,8 +294,8 @@ jobs:
           gistID: ${{ vars.BADGE_GIST_ID }}
           filename: xdock-integration-tests.json
           label: integration tests
-          message: "${{ steps.integration.outputs.passed }}/${{ steps.integration.outputs.total }} passed"
-          color: ${{ steps.integration.outputs.failed == '0' && 'brightgreen' || 'red' }}
+          message: "${{ steps.integration.outputs.total == '0' && 'CI N/A (run locally)' || format('{0}/{1} passed', steps.integration.outputs.passed, steps.integration.outputs.total) }}"
+          color: "${{ steps.integration.outputs.total == '0' && 'lightgrey' || (steps.integration.outputs.failed == '0' && 'brightgreen' || 'red') }}"
 
       - name: Visual regression comparison
         if: always()
