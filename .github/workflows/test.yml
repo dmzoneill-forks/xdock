@@ -6,6 +6,11 @@ name: CI / Test
     branches:
       - master
 
+permissions:
+  packages: read
+  contents: read
+  pull-requests: write
+
 env:
   GHCR_IMAGE: ghcr.io/${{ github.repository_owner }}/xdock-test
 
@@ -103,6 +108,9 @@ jobs:
       - name: Build extension zip
         run: make zip-file-nocheck
 
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
+
       - name: Pull container image
         run: podman pull ${{ env.GHCR_IMAGE }}:f${{ matrix.fedora }}
 
@@ -183,6 +191,9 @@ jobs:
 
       - name: Build extension zip
         run: make zip-file-nocheck
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Pull container image
         run: podman pull ${{ env.GHCR_IMAGE }}:f${{ matrix.fedora }}
