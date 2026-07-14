@@ -9,7 +9,6 @@ import {
 } from './dependencies/gi.js';
 
 import {
-    Docking,
     Utils,
 } from './imports.js';
 
