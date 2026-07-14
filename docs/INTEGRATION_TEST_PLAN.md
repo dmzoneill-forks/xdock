@@ -2,31 +2,45 @@
 
 ## Architecture
 
+Source files are organized into subdirectories by role:
+
 ```
-test/
-├── __mocks__/           # Existing Jest GI mocks
-├── smoke/
-│   └── load-extension.js   # Existing: verify extension loads
-├── integration/
-│   ├── runner.js            # GJS test runner (discovers + runs test files)
-│   ├── helpers.js           # Shared utilities (get dock, wait, assert)
-│   ├── dock-basics.test.js
-│   ├── magnification.test.js
-│   ├── shelf-style.test.js
-│   ├── auto-hide.test.js
-│   ├── window-previews.test.js
-│   ├── settings-binding.test.js
-│   ├── per-monitor.test.js
-│   ├── spring-animation.test.js
-│   ├── icon-indicators.test.js
-│   └── preferences-ui.test.js
-├── visual/
-│   ├── capture.sh           # Screenshot via D-Bus
-│   ├── compare.sh           # ImageMagick diff against baseline
-│   └── baselines/           # Reference screenshots
-├── container/               # Existing: Containerfile, helper scripts
-├── dash-math.test.js        # Existing Jest tests
-└── utils.test.js            # Existing Jest tests
+xdock/
+├── extension.js, docking.js, dash.js, imports.js   # Core (root)
+├── appIcons.js, appIconIndicators.js, intellihide.js,
+│   theming.js, springAnimation.js, utils.js, prefs.js  # Root modules
+├── features/            # Feature modules (windowPreview, dockProfiles, etc.)
+├── services/            # D-Bus and background services (mprisMonitor, etc.)
+├── widgets/             # Dock UI widgets (commandPalette, mediaControls, etc.)
+├── dependencies/        # GI module re-exports
+├── indicators/          # Indicator rendering
+├── platform/            # Platform abstraction layer
+├── schemas/             # GSettings schema XML
+├── ui/                  # UI helpers
+└── test/
+    ├── __mocks__/           # Jest GI mocks
+    ├── smoke/
+    │   └── load-extension.js   # Verify extension loads
+    ├── integration/
+    │   ├── runner.js            # GJS test runner (discovers + runs test files)
+    │   ├── helpers.js           # Shared utilities (get dock, wait, assert)
+    │   ├── dock-basics.test.js
+    │   ├── magnification.test.js
+    │   ├── shelf-style.test.js
+    │   ├── auto-hide.test.js
+    │   ├── window-previews.test.js
+    │   ├── settings-binding.test.js
+    │   ├── per-monitor.test.js
+    │   ├── spring-animation.test.js
+    │   ├── icon-indicators.test.js
+    │   └── preferences-ui.test.js
+    ├── visual/
+    │   ├── capture.sh           # Screenshot via D-Bus
+    │   ├── compare.sh           # ImageMagick diff against baseline
+    │   └── baselines/           # Reference screenshots
+    ├── container/               # Containerfile, helper scripts
+    ├── dash-math.test.js        # Jest tests
+    └── utils.test.js            # Jest tests
 ```
 
 ## Execution
