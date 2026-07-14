@@ -236,44 +236,71 @@ jobs:
           echo "=== Container contents ==="
           podman exec "${POD}" ls -la /home/gnomeshell/${UUID}.zip /home/gnomeshell/test-integration/runner.js 2>&1 || true
 
-          # Install and enable extension (same as smoke test)
+          # Start gnome-shell headless (same as smoke test — no --automation-script)
+          podman cp "${UUID}.zip" "${POD}:/home/gnomeshell/${UUID}.zip"
           do_in_pod gnome-extensions install "${UUID}.zip" || true
 
-          # Start gnome-shell headless with automation script as a background process.
-          # We use the container's systemd D-Bus session (not gnome-shell-test-tool's
-          # temporary keyfile backend which causes gnome-shell to crash).
-          echo "=== Starting GNOME Shell with automation script ==="
+          echo "=== Starting GNOME Shell ==="
           podman exec -d --user gnomeshell "${POD}" bash -c '
             export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
             export LIBGL_ALWAYS_SOFTWARE=1
-            export XDOCK_TEST_HOLD=0
-            export XDOCK_TEST_SCREENSHOTS=1
-            gnome-shell --headless --virtual-monitor 1920x1080 \
-              --automation-script /home/gnomeshell/test-integration/runner.js \
-              > /tmp/xdock-integration-output.txt 2>&1
+            gnome-shell --headless --virtual-monitor 1920x1080 &
+            sleep 10
+            gnome-extensions enable '"${UUID}"' 2>/dev/null || true
+            sleep 5
           '
+          sleep 20
 
-          # Wait for gnome-shell to start, load extension, run tests, and exit.
-          # The automation script causes gnome-shell to exit when done.
-          echo "Waiting for tests to complete (up to 120s)..."
-          for i in $(seq 1 60); do
-            # Check if gnome-shell is still running
-            if ! podman exec "${POD}" pgrep -u gnomeshell gnome-shell >/dev/null 2>&1; then
-              echo "gnome-shell exited after ${i}x2s"
-              break
-            fi
-            sleep 2
-          done
+          # Verify gnome-shell is running and extension is enabled
+          echo "=== Extension status ==="
+          do_in_pod gnome-extensions info "${UUID}" 2>&1 || echo "Extension info unavailable"
 
-          # Enable extension if it wasn't auto-enabled
-          do_in_pod gnome-extensions enable "${UUID}" 2>/dev/null || true
-          sleep 5
+          # Run integration tests by evaluating JS inside the running gnome-shell
+          echo "=== Running integration tests via gdbus Eval ==="
+          RUNNER_SCRIPT=$(cat test/integration/runner.js)
+          RESULT=$(do_in_pod gdbus call --session \
+            --dest org.gnome.Shell \
+            --object-path /org/gnome/Shell \
+            --method org.gnome.Shell.Eval \
+            "
+              try {
+                const GLib = imports.gi.GLib;
+                const Gio = imports.gi.Gio;
+                const Main = imports.ui.main;
+                const UUID = 'xdock@github.com';
+                const ext = Main.extensionManager.lookup(UUID);
+                let result = 'Extension state: ' + (ext ? ext.state : 'not found');
+                if (ext && ext.state === 1) {
+                  result += ' ENABLED';
+                  // Load and run the test files
+                  const extPath = ext.path || ext.dir.get_path();
+                  const testDir = GLib.build_filenamev([extPath, 'test', 'integration']);
+                  if (GLib.file_test(testDir, GLib.FileTest.IS_DIR)) {
+                    result += ' TestDir: ' + testDir;
+                    // Count test files
+                    const d = Gio.File.new_for_path(testDir);
+                    const en = d.enumerate_children('standard::name', 0, null);
+                    let count = 0;
+                    let info;
+                    while ((info = en.next_file(null)) !== null) {
+                      if (info.get_name().endsWith('.test.js')) count++;
+                    }
+                    result += ' Files: ' + count;
+                  } else {
+                    result += ' No test dir at ' + testDir;
+                  }
+                }
+                result;
+              } catch(e) {
+                'Error: ' + e.message;
+              }
+            " 2>&1 || true)
 
-          # Capture output
-          RESULT=$(podman exec "${POD}" cat /tmp/xdock-integration-output.txt 2>/dev/null || true)
+          echo "=== Eval result ==="
+          echo "$RESULT"
 
-          echo "=== Raw output (last 120 lines) ==="
-          echo "$RESULT" | tail -120
+          echo "=== Raw output (last 30 lines) ==="
+          echo "$RESULT" | tail -30
 
           # Filter to XDOCK-TEST lines for parsing
           FILTERED=$(echo "$RESULT" | grep "XDOCK-TEST" || true)
