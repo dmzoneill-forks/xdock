@@ -236,22 +236,21 @@ jobs:
           echo "=== Container contents ==="
           podman exec "${POD}" ls -la /home/gnomeshell/${UUID}.zip /home/gnomeshell/test-integration/runner.js 2>&1 || true
 
-          # Verify D-Bus is available
-          echo "=== D-Bus check ==="
-          do_in_pod dbus-send --session --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.ListNames 2>&1 | head -5 || echo "D-Bus not responding"
-
-          # Run gnome-shell-test-tool through the systemd session (do_in_pod provides D-Bus)
+          # Run gnome-shell-test-tool with extension loading
+          # The tool starts gnome-shell, loads the extension via --extension,
+          # then runs the automation script inside the gnome-shell process.
           echo "=== Starting integration tests ==="
           RESULT=$(do_in_pod env \
             LIBGL_ALWAYS_SOFTWARE=1 \
             XDOCK_TEST_HOLD=0 \
             XDOCK_TEST_SCREENSHOTS=1 \
-            gnome-shell-test-tool --headless \
+            timeout 120 \
+            gnome-shell-test-tool --headless --disable-animations \
               --extension "${UUID}.zip" \
               /home/gnomeshell/test-integration/runner.js 2>&1 || true)
 
-          echo "=== Raw output (last 80 lines) ==="
-          echo "$RESULT" | tail -80
+          echo "=== Raw output (last 100 lines) ==="
+          echo "$RESULT" | tail -100
 
           # Filter to XDOCK-TEST lines for parsing
           FILTERED=$(echo "$RESULT" | grep "XDOCK-TEST" || true)
