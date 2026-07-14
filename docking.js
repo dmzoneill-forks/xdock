@@ -2316,6 +2316,7 @@ export class DockManager {
             'org.gnome.shell.extensions.xdock');
         this._appSwitcherSettings = new Gio.Settings({schema_id: 'org.gnome.shell.app-switcher'});
         this._mapSettingsValues();
+        Settings.init(this.settings);
 
         this._iconTheme = new St.IconTheme();
 
@@ -3816,6 +3817,7 @@ export class DockManager {
 
         this._desktopIconsUsableArea?.destroy();
         this._desktopIconsUsableArea = null;
+        Settings.destroy();
         this._extension = null;
         DockManager._singleton = null;
     }
