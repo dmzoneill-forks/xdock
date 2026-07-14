@@ -60,7 +60,7 @@ Log out and back in, then enable via GNOME Extensions.
 | **[Testing Guide](docs/TESTING.md)** | Test suites, visual regression, CI pipeline |
 | **[Architecture](docs/ARCHITECTURE.md)** | Code structure, actor tree, settings system |
 | **[Contributing](docs/CONTRIBUTING.md)** | How to contribute, code style, PR process |
-| **[Integration Test Plan](test/INTEGRATION_TEST_PLAN.md)** | Test specifications and coverage |
+| **[Integration Test Plan](docs/INTEGRATION_TEST_PLAN.md)** | Test specifications and coverage |
 
 ## Want to help?
 
