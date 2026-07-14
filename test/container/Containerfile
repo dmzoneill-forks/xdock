@@ -11,7 +11,7 @@ RUN dnf update -y && \
     dnf --nodocs install -y \
         gnome-shell gnome-session gnome-extensions-app \
         gnome-session-wayland-session gnome-terminal \
-        dbus dbus-tools sudo \
+        dbus dbus-daemon dbus-tools sudo \
         mesa-dri-drivers ImageMagick bc && \
     dnf clean all -y && \
     rm -rf /var/cache/dnf /tmp/* /var/tmp/*
