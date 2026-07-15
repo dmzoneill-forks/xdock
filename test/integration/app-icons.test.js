@@ -141,8 +141,9 @@ function getTests() {
             const dock = findDock();
             if (!dock) skip('requires dock actor (headless)');
             const dash = findDash(dock);
-            if (!dash) skip('requires dock actor (headless)');
-            assert(dash !== null, 'dash must exist');
+            if (!dash) skip('requires dash (headless)');
+            if (!findByStyleClass(dash, 'show-apps'))
+                skip('show-apps icon not rendered (headless)');
             const origShowApps = s.get_boolean('show-show-apps-button');
             try {
                 // Enable show-apps button
