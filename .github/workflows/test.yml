@@ -247,6 +247,8 @@ jobs:
 
           # Parse XDOCK-TEST results
           FILTERED=$(echo "$RESULT" | grep "XDOCK-TEST" || true)
+          echo "=== Failures ==="
+          echo "$FILTERED" | grep "FAIL:" || echo "(none)"
           echo "=== Test summary ==="
           echo "$FILTERED" | grep -E "(Results:|--- |Extension)" || true
 
