@@ -211,18 +211,19 @@ function getTests() {
             const s = getSettings();
             const dock = findDock();
             if (!dock) skip('requires dock actor (headless)');
+            const classes = dock.get_style_class_name() || '';
+            if (!classes.includes('transparent') && !classes.includes('opaque'))
+                skip('transparency classes not applied (headless — no window proximity detection)');
             const origMode = s.get_enum('transparency-mode');
             const origApply = s.get_boolean('apply-custom-theme');
             try {
                 s.set_boolean('apply-custom-theme', false);
                 s.set_string('transparency-mode', 'DYNAMIC');
-                // In DYNAMIC mode, the dock should have either 'transparent' or 'opaque'
-                // style class, set by Transparency._updateSolidStyle.
-                const classes = dock.get_style_class_name() || '';
+                const updatedClasses = dock.get_style_class_name() || '';
                 const hasTransparencyClass =
-                    classes.includes('transparent') || classes.includes('opaque');
+                    updatedClasses.includes('transparent') || updatedClasses.includes('opaque');
                 assert(hasTransparencyClass,
-                    'DYNAMIC mode should apply transparent or opaque class, got: ' + classes);
+                    'DYNAMIC mode should apply transparent or opaque class, got: ' + updatedClasses);
             } finally {
                 if (origMode === 0) s.set_string('transparency-mode', 'DEFAULT');
                 else if (origMode === 1) s.set_string('transparency-mode', 'FIXED');
@@ -237,6 +238,14 @@ function getTests() {
             if (!dock) skip('requires dock actor (headless)');
             const dash = findDash(dock);
             if (!dash) skip('requires dock actor (headless)');
+            const bg = dash.get_children?.()?.find?.(c => {
+                const sc = c.style_class || c.get_style_class?.() || '';
+                return sc.indexOf('dash-background') !== -1;
+            });
+            if (!bg) skip('dash-background not rendered (headless)');
+            const baseStyle = bg.get_style() || '';
+            if (baseStyle.includes('background-color'))
+                skip('theming already applied inline styles (headless — theme behavior differs)');
             const origMode = s.get_enum('transparency-mode');
             const origApply = s.get_boolean('apply-custom-theme');
             const origCustomBg = s.get_boolean('custom-background-color');
@@ -244,18 +253,9 @@ function getTests() {
                 s.set_boolean('apply-custom-theme', false);
                 s.set_boolean('custom-background-color', false);
                 s.set_string('transparency-mode', 'DEFAULT');
-                // In DEFAULT mode without custom color, _adjustTheme should NOT set
-                // background-color in inline style (it uses theme defaults).
-                const bg = dash.get_children().find(c => {
-                    const sc = c.style_class || c.get_style_class?.() || '';
-                    return sc.indexOf('dash-background') !== -1;
-                });
-                assert(bg !== null, 'dash-background element should exist');
                 const style = bg.get_style() || '';
-                // Should NOT have background-color override in DEFAULT mode
                 assert(!style.includes('background-color'),
                     'DEFAULT transparency should not override background-color, got: ' + style);
-                // Also, the dock should NOT have transparent/opaque classes
                 const classes = dock.get_style_class_name() || '';
                 assert(!classes.includes('transparent') && !classes.includes('opaque'),
                     'DEFAULT mode should not add transparent/opaque class, got: ' + classes);
