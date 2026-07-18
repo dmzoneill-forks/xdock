@@ -1694,8 +1694,8 @@ class DockCommandAppIconMenu extends PopupMenu.PopupMenu {
         delete this._signalsHandler;
     }
 
-    popup(_activatingButton) {
-        this._rebuildMenu();
+    async popup(_activatingButton) {
+        await this._rebuildMenu();
         this.open(BoxPointer.PopupAnimation.FULL);
     }
 
@@ -1829,8 +1829,8 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
         return item;
     }
 
-    popup(_activatingButton) {
-        this._rebuildMenu();
+    async popup(_activatingButton) {
+        await this._rebuildMenu();
         this.open(BoxPointer.PopupAnimation.FULL);
     }
 
