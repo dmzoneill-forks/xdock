@@ -39,38 +39,73 @@ const ToggleSwitch = GObject.registerClass({
     Signals: {
         'toggled': {},
     },
-}, class QuickSettingsToggleSwitch extends St.Button {
+}, class QuickSettingsToggleSwitch extends St.Widget {
     _init(active = false) {
         super._init({
             style_class: 'quick-settings-toggle',
-            toggle_mode: true,
+            reactive: true,
             can_focus: true,
+            track_hover: true,
             x_align: Clutter.ActorAlign.END,
             y_align: Clutter.ActorAlign.CENTER,
-            checked: active,
         });
 
         this._handle = new St.Widget({
             style_class: 'quick-settings-toggle-handle',
-            y_align: Clutter.ActorAlign.CENTER,
         });
-        this.set_child(this._handle);
+        this.add_child(this._handle);
 
-        this.connect('notify::checked', () => {
-            this.active = this.checked;
-            this._updateStyle();
-            this.emit('toggled');
+        this.connect('button-release-event', () => {
+            this.active = !this.active;
+            return Clutter.EVENT_STOP;
         });
 
+        this._active = false;
         this.active = active;
-        this._updateStyle();
     }
 
-    _updateStyle() {
-        if (this.checked)
+    vfunc_allocate(box) {
+        super.vfunc_allocate(box);
+
+        const themeNode = this.get_theme_node();
+        const contentBox = themeNode.get_content_box(box);
+        const [, , handleW, handleH] = this._handle.get_preferred_size();
+        const innerW = contentBox.x2 - contentBox.x1;
+        const innerH = contentBox.y2 - contentBox.y1;
+        const handleY = contentBox.y1 + (innerH - handleH) / 2;
+        const handleX = this._active
+            ? contentBox.x2 - handleW
+            : contentBox.x1;
+        const childBox = new Clutter.ActorBox();
+        childBox.set_origin(handleX, handleY);
+        childBox.set_size(handleW, handleH);
+        this._handle.allocate(childBox);
+    }
+
+    set active(val) {
+        val = !!val;
+        if (this._active === val)
+            return;
+        this._active = val;
+        if (val)
             this.add_style_pseudo_class('checked');
         else
             this.remove_style_pseudo_class('checked');
+        this.queue_relayout();
+        this.notify('active');
+        this.emit('toggled');
+    }
+
+    get active() {
+        return this._active;
+    }
+
+    set checked(val) {
+        this.active = val;
+    }
+
+    get checked() {
+        return this.active;
     }
 });
 
@@ -387,6 +422,10 @@ class QuickSettingsPanel extends St.BoxLayout {
             GLib.source_remove(this._brightnessResetId);
             this._brightnessResetId = 0;
         }
+        if (this._focusAppId) {
+            global.display.disconnect(this._focusAppId);
+            this._focusAppId = 0;
+        }
         if (this._clickOutsideId) {
             global.stage.disconnect(this._clickOutsideId);
             this._clickOutsideId = 0;
@@ -421,6 +460,13 @@ class QuickSettingsPanel extends St.BoxLayout {
 
         this.grab_key_focus();
 
+        // Dismiss when a window gets focused (user clicked on a window)
+        this._focusAppId = global.display.connect('notify::focus-window',
+            () => {
+                if (this._isOpen && global.display.focus_window)
+                    this.close();
+            });
+
         // Dismiss on click outside
         this._clickOutsideId = global.stage.connect('button-press-event',
             (_actor, event) => {
@@ -449,6 +495,11 @@ class QuickSettingsPanel extends St.BoxLayout {
         if (!this._isOpen)
             return;
         this._isOpen = false;
+
+        if (this._focusAppId) {
+            global.display.disconnect(this._focusAppId);
+            this._focusAppId = 0;
+        }
 
         if (this._clickOutsideId) {
             global.stage.disconnect(this._clickOutsideId);
