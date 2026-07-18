@@ -2397,7 +2397,7 @@ describe('DockAbstractAppIcon with mprisMonitor', () => {
         dm.mprisMonitor = null;
     });
 
-    test('_onMediaHoverLeave clears recentFiles references', () => {
+    test('_onMediaHoverLeave schedules hide without clearing recentFiles references', () => {
         const dm = Docking.DockManager.getDefault();
         dm.mprisMonitor = {
             enabled: true,
@@ -2414,8 +2414,10 @@ describe('DockAbstractAppIcon with mprisMonitor', () => {
         icon._recentFilesMenuManager = {};
         icon._recentFilesMenuInstance = {};
         icon._onMediaHoverLeave();
-        expect(icon._recentFilesMenuManager).toBeNull();
-        expect(icon._recentFilesMenuInstance).toBeNull();
+        expect(icon._mediaControlsOverlay.scheduleHide).toHaveBeenCalled();
+        // recentFiles references are no longer cleared in _onMediaHoverLeave
+        expect(icon._recentFilesMenuManager).toBeDefined();
+        expect(icon._recentFilesMenuInstance).toBeDefined();
         dm.mprisMonitor = null;
     });
 });

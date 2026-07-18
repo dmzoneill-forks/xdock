@@ -375,12 +375,14 @@ describe('DockDash._resetMagnification', () => {
             child: {
                 icon: {
                     _iconBin: {
+                        remove_all_transitions: jest.fn(),
                         set_easing_duration: jest.fn(),
                         set_easing_mode: jest.fn(),
                         set_scale: jest.fn(),
                     },
                 },
             },
+            remove_all_transitions: jest.fn(),
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
             translation_x: 5,
@@ -400,6 +402,7 @@ describe('DockDash._resetMagnification', () => {
             _workspaceMinimapContainer: null,
             _quickSettingsButton: null,
             _background: {
+                remove_all_transitions: jest.fn(),
                 set_easing_duration: jest.fn(),
                 set_easing_mode: jest.fn(),
                 set_scale: jest.fn(),
@@ -413,6 +416,7 @@ describe('DockDash._resetMagnification', () => {
     test('resets background scale to 1.0', () => {
         const {ctx} = makeMagnificationContext();
         ctx._scrollView = {__scrollView: true};
+        ctx._forceResetAllScales = DockDash.prototype._forceResetAllScales.bind(ctx);
         ctx._resetUtilityElement = DockDash.prototype._resetUtilityElement.bind(ctx);
         ctx._getUtilityScalableActor = DockDash.prototype._getUtilityScalableActor.bind(ctx);
         DockDash.prototype._resetMagnification.call(ctx, false);
@@ -422,6 +426,7 @@ describe('DockDash._resetMagnification', () => {
     test('animated reset uses 200ms duration', () => {
         const {ctx} = makeMagnificationContext();
         ctx._scrollView = {__scrollView: true};
+        ctx._forceResetAllScales = DockDash.prototype._forceResetAllScales.bind(ctx);
         ctx._resetUtilityElement = DockDash.prototype._resetUtilityElement.bind(ctx);
         ctx._getUtilityScalableActor = DockDash.prototype._getUtilityScalableActor.bind(ctx);
         DockDash.prototype._resetMagnification.call(ctx, true);
@@ -431,6 +436,7 @@ describe('DockDash._resetMagnification', () => {
     test('non-animated reset uses 0ms duration', () => {
         const {ctx} = makeMagnificationContext();
         ctx._scrollView = {__scrollView: true};
+        ctx._forceResetAllScales = DockDash.prototype._forceResetAllScales.bind(ctx);
         ctx._resetUtilityElement = DockDash.prototype._resetUtilityElement.bind(ctx);
         ctx._getUtilityScalableActor = DockDash.prototype._getUtilityScalableActor.bind(ctx);
         DockDash.prototype._resetMagnification.call(ctx, false);
@@ -442,12 +448,14 @@ describe('DockDash._resetMagnification', () => {
         ctx._scrollView = {__scrollView: true};
         const mockShowApps = {
             visible: true,
+            remove_all_transitions: jest.fn(),
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
             translation_x: 5,
             translation_y: 5,
             icon: {
                 _iconBin: {
+                    remove_all_transitions: jest.fn(),
                     set_easing_duration: jest.fn(),
                     set_easing_mode: jest.fn(),
                     set_scale: jest.fn(),
@@ -457,6 +465,7 @@ describe('DockDash._resetMagnification', () => {
         ctx._showAppsIcon = mockShowApps;
         ctx._workspaceMinimapContainer = null;
         ctx._quickSettingsButton = null;
+        ctx._forceResetAllScales = DockDash.prototype._forceResetAllScales.bind(ctx);
         ctx._resetUtilityElement = DockDash.prototype._resetUtilityElement.bind(ctx);
         ctx._getUtilityScalableActor = DockDash.prototype._getUtilityScalableActor.bind(ctx);
         DockDash.prototype._resetMagnification.call(ctx, true);
@@ -467,12 +476,14 @@ describe('DockDash._resetMagnification', () => {
 
     test('resets child icon scales in _dashContainer', () => {
         const iconBin = {
+            remove_all_transitions: jest.fn(),
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
             set_scale: jest.fn(),
         };
         const mockChild = {
             child: {icon: {_iconBin: iconBin}},
+            remove_all_transitions: jest.fn(),
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
             translation_x: 10,
@@ -492,6 +503,7 @@ describe('DockDash._resetMagnification', () => {
             _workspaceMinimapContainer: null,
             _quickSettingsButton: null,
             _background: {
+                remove_all_transitions: jest.fn(),
                 set_easing_duration: jest.fn(),
                 set_easing_mode: jest.fn(),
                 set_scale: jest.fn(),
@@ -499,6 +511,7 @@ describe('DockDash._resetMagnification', () => {
         });
         // Assign _box so it can be compared with dc === this._box
         ctx._box = mockBox;
+        ctx._forceResetAllScales = DockDash.prototype._forceResetAllScales.bind(ctx);
         ctx._resetUtilityElement = DockDash.prototype._resetUtilityElement.bind(ctx);
         ctx._getUtilityScalableActor = DockDash.prototype._getUtilityScalableActor.bind(ctx);
         DockDash.prototype._resetMagnification.call(ctx, false);
@@ -560,6 +573,7 @@ describe('DockDash._resetUtilityElement', () => {
 
     test('resets icon scale to 1.0', () => {
         const icon = {
+            remove_all_transitions: jest.fn(),
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
             set_scale: jest.fn(),
@@ -573,6 +587,7 @@ describe('DockDash._resetUtilityElement', () => {
 
     test('no animation when animate is false', () => {
         const icon = {
+            remove_all_transitions: jest.fn(),
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
             set_scale: jest.fn(),
@@ -590,6 +605,7 @@ describe('DockDash._resetUtilityElement', () => {
 
     test('handles element with only child (no icon)', () => {
         const child = {
+            remove_all_transitions: jest.fn(),
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
             set_scale: jest.fn(),
@@ -631,7 +647,7 @@ describe('DockDash._magnifyUtilityElement', () => {
             visible: true,
             get_stage: () => ({}),
             get_transformed_position: () => [50, 50],
-            get_transformed_size: () => [48, 48],
+            get_allocation_box: () => ({x1: 0, y1: 0, x2: 48, y2: 48}),
             icon: {_iconBin: icon},
         };
         const ctx = makeDashContext({_isHorizontal: true});
@@ -660,7 +676,7 @@ describe('DockDash._magnifyUtilityElement', () => {
             visible: true,
             get_stage: () => ({}),
             get_transformed_position: () => [50, 100],
-            get_transformed_size: () => [48, 48],
+            get_allocation_box: () => ({x1: 0, y1: 0, x2: 48, y2: 48}),
             icon: {_iconBin: icon},
         };
         const ctx = makeDashContext({_isHorizontal: false});
@@ -998,6 +1014,7 @@ describe('DockDash._disableMagnification', () => {
             _workspaceMinimapContainer: null,
             _quickSettingsButton: null,
             _background: {
+                remove_all_transitions: jest.fn(),
                 set_easing_duration: jest.fn(),
                 set_easing_mode: jest.fn(),
                 set_scale: jest.fn(),
@@ -1007,6 +1024,7 @@ describe('DockDash._disableMagnification', () => {
             add_child() {},
             _children: [],
         };
+        ctx._forceResetAllScales = DockDash.prototype._forceResetAllScales.bind(ctx);
         ctx._resetMagnification = DockDash.prototype._resetMagnification.bind(ctx);
         ctx._resetUtilityElement = DockDash.prototype._resetUtilityElement.bind(ctx);
         ctx._getUtilityScalableActor = DockDash.prototype._getUtilityScalableActor.bind(ctx);
@@ -1858,7 +1876,7 @@ describe('DockDash._onMagnificationMotion', () => {
             child: {icon: {_iconBin: iconBin}},
             get_stage: () => ({}),
             get_transformed_position: () => [50, 0],
-            get_transformed_size: () => [48, 48],
+            get_allocation_box: () => ({x1: 0, y1: 0, x2: 48, y2: 48}),
             animatingOut: false,
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
@@ -1874,6 +1892,7 @@ describe('DockDash._onMagnificationMotion', () => {
         };
         const ctx = makeDashContext({
             _isHorizontal: true,
+            _magnificationResetId: 0,
             _box: mockBox,
             _dashContainer: {
                 _children: [mockBox],
@@ -1917,7 +1936,7 @@ describe('DockDash._onMagnificationMotion', () => {
             visible: true,
             get_stage: () => ({}),
             get_transformed_position: () => [200, 0],
-            get_transformed_size: () => [48, 48],
+            get_allocation_box: () => ({x1: 0, y1: 0, x2: 48, y2: 48}),
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
             set_z_position: jest.fn(),
@@ -1934,6 +1953,7 @@ describe('DockDash._onMagnificationMotion', () => {
         };
         const ctx = makeDashContext({
             _isHorizontal: true,
+            _magnificationResetId: 0,
             _box: mockBox,
             _dashContainer: {
                 _children: [mockBox, showAppsIcon],
@@ -1980,7 +2000,7 @@ describe('DockDash._onMagnificationMotion', () => {
             child: {icon: {_iconBin: iconBin}},
             get_stage: () => ({}),
             get_transformed_position: () => [50, 0],
-            get_transformed_size: () => [48, 48],
+            get_allocation_box: () => ({x1: 0, y1: 0, x2: 48, y2: 48}),
             animatingOut: false,
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
@@ -2002,6 +2022,7 @@ describe('DockDash._onMagnificationMotion', () => {
         };
         const ctx = makeDashContext({
             _isHorizontal: true,
+            _magnificationResetId: 0,
             _box: mockBox,
             _dashContainer: {
                 _children: [mockBox],
@@ -2040,7 +2061,7 @@ describe('DockDash._onMagnificationMotion', () => {
             child: {icon: {_iconBin: iconBin}},
             get_stage: () => ({}),
             get_transformed_position: () => [0, 50],
-            get_transformed_size: () => [48, 48],
+            get_allocation_box: () => ({x1: 0, y1: 0, x2: 48, y2: 48}),
             animatingOut: false,
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
@@ -2062,6 +2083,7 @@ describe('DockDash._onMagnificationMotion', () => {
         };
         const ctx = makeDashContext({
             _isHorizontal: false,
+            _magnificationResetId: 0,
             _position: St.Side.LEFT,
             _box: mockBox,
             _dashContainer: {
@@ -2539,6 +2561,7 @@ describe('DockDash._disableMagnification (reparent)', () => {
         ctx._dashContainer.remove_child = jest.fn();
         ctx._boxContainer.add_child = jest.fn();
         ctx._background = {
+            remove_all_transitions: jest.fn(),
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
             set_scale: jest.fn(),
@@ -2546,6 +2569,7 @@ describe('DockDash._disableMagnification (reparent)', () => {
         ctx._showAppsIcon = null;
         ctx._workspaceMinimapContainer = null;
         ctx._quickSettingsButton = null;
+        ctx._forceResetAllScales = DockDash.prototype._forceResetAllScales.bind(ctx);
         ctx._resetMagnification = DockDash.prototype._resetMagnification.bind(ctx);
         ctx._resetUtilityElement = DockDash.prototype._resetUtilityElement.bind(ctx);
         ctx._getUtilityScalableActor = DockDash.prototype._getUtilityScalableActor.bind(ctx);
@@ -2581,6 +2605,7 @@ describe('DockDash._disableMagnification (reparent)', () => {
         ctx._dashContainer.remove_child = jest.fn();
         ctx._boxContainer.add_child = jest.fn();
         ctx._background = {
+            remove_all_transitions: jest.fn(),
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
             set_scale: jest.fn(),
@@ -2588,6 +2613,7 @@ describe('DockDash._disableMagnification (reparent)', () => {
         ctx._showAppsIcon = null;
         ctx._workspaceMinimapContainer = null;
         ctx._quickSettingsButton = null;
+        ctx._forceResetAllScales = DockDash.prototype._forceResetAllScales.bind(ctx);
         ctx._resetMagnification = DockDash.prototype._resetMagnification.bind(ctx);
         ctx._resetUtilityElement = DockDash.prototype._resetUtilityElement.bind(ctx);
         ctx._getUtilityScalableActor = DockDash.prototype._getUtilityScalableActor.bind(ctx);
@@ -2612,6 +2638,7 @@ describe('DockDash._disableMagnification (reparent)', () => {
         ctx._box = mockBox;
         ctx._dashContainer.remove_child = jest.fn();
         ctx._background = {
+            remove_all_transitions: jest.fn(),
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
             set_scale: jest.fn(),
@@ -2619,6 +2646,7 @@ describe('DockDash._disableMagnification (reparent)', () => {
         ctx._showAppsIcon = null;
         ctx._workspaceMinimapContainer = null;
         ctx._quickSettingsButton = null;
+        ctx._forceResetAllScales = DockDash.prototype._forceResetAllScales.bind(ctx);
         ctx._resetMagnification = DockDash.prototype._resetMagnification.bind(ctx);
         ctx._resetUtilityElement = DockDash.prototype._resetUtilityElement.bind(ctx);
         ctx._getUtilityScalableActor = DockDash.prototype._getUtilityScalableActor.bind(ctx);
@@ -5002,7 +5030,7 @@ describe('DockDash._onMagnificationMotion (non-interactive children)', () => {
             visible: true,
             get_stage: () => ({}),
             get_transformed_position: () => [200, 0],
-            get_transformed_size: () => [48, 48],
+            get_allocation_box: () => ({x1: 0, y1: 0, x2: 48, y2: 48}),
             set_easing_duration: jest.fn(),
             set_easing_mode: jest.fn(),
             set_z_position: jest.fn(),
@@ -5024,6 +5052,7 @@ describe('DockDash._onMagnificationMotion (non-interactive children)', () => {
         };
         const ctx = makeDashContext({
             _isHorizontal: true,
+            _magnificationResetId: 0,
             _box: mockBox,
             _dashContainer: {
                 _children: [mockBox, showAppsIcon],
@@ -5721,10 +5750,10 @@ describe('DockDash._redisplay (surviving icon refresh)', () => {
         const oldParent = {remove_child: jest.fn(), __old: true};
         const qsButton = {get_parent: () => oldParent};
         const ctx = makeDashContext({_quickSettingsButton: qsButton});
-        ctx._dashContainer.insert_child_above = jest.fn();
+        ctx._dashContainer.insert_child_below = jest.fn();
         DockDash.prototype._updateQuickSettingsButton.call(ctx);
         expect(oldParent.remove_child).toHaveBeenCalledWith(qsButton);
-        expect(ctx._dashContainer.insert_child_above).toHaveBeenCalled();
+        expect(ctx._dashContainer.insert_child_below).toHaveBeenCalled();
 
         dockManagerSettings.showQuickSettings = origShowQS;
         dockManagerSettings.showAppsAlwaysInTheEdge = origEdge;
