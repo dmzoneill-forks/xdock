@@ -359,6 +359,38 @@ $dock_style_modes: null, shrink, extended, extended-shrink;
     border-radius: 0px;
 }
 
+#dashtodockContainer.extended.dock-margin #dash .dash-background {
+    border-radius: $dash_border_radius;
+}
+
+#dashtodockContainer.extended.shrink.dock-margin #dash .dash-background {
+    border-radius: shrink_light($dash_border_radius);
+}
+
+/* Glass dock style: translucent frosted overlay */
+#dashtodockContainer.glass {
+    #dash .dash-background {
+        border-radius: 14px;
+        transition-duration: 250ms;
+    }
+}
+
+/* Pill dock style: fully rounded ends */
+#dashtodockContainer.pill {
+    #dash .dash-background {
+        border-radius: 999px;
+        transition-duration: 250ms;
+    }
+}
+
+/* Floating dock style: detached with shadow */
+#dashtodockContainer.floating {
+    #dash .dash-background {
+        border-radius: 14px;
+        transition-duration: 250ms;
+    }
+}
+
 /* Scrollview style */
 .bottom #dashtodockDashScrollview,
 .top #dashtodockDashScrollview {

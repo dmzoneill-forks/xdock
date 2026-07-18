@@ -50,6 +50,9 @@ const TransparencyMode = {
 const DockStyle = {
     FLAT:  0,
     SHELF: 1,
+    GLASS: 2,
+    PILL: 3,
+    FLOATING: 4,
 };
 
 const Labels = Object.freeze({
@@ -324,6 +327,21 @@ export class ThemeManager {
             this._actor.add_style_class_name('shelf');
         else
             this._actor.remove_style_class_name('shelf');
+
+        if (dockStyle === DockStyle.GLASS)
+            this._actor.add_style_class_name('glass');
+        else
+            this._actor.remove_style_class_name('glass');
+
+        if (dockStyle === DockStyle.PILL)
+            this._actor.add_style_class_name('pill');
+        else
+            this._actor.remove_style_class_name('pill');
+
+        if (dockStyle === DockStyle.FLOATING)
+            this._actor.add_style_class_name('floating');
+        else
+            this._actor.remove_style_class_name('floating');
     }
 
     updateCustomTheme() {
@@ -334,6 +352,7 @@ export class ThemeManager {
         this._updateDashColor();
         this._adjustTheme();
         this._updateShelfOverlay();
+        this._updateSeparatorStyle();
         this.emit('updated');
     }
 
@@ -345,6 +364,40 @@ export class ThemeManager {
         // The shelf uses a Cairo-drawn trapezoid overlay, so hide the
         // CSS rectangular background and border-radius.
         return 'background-color: transparent; border-radius: 0; ';
+    }
+
+    _buildGlassStyle() {
+        const dockStyle = Settings.get('dock-style');
+        if (dockStyle !== DockStyle.GLASS)
+            return '';
+        const tintColor = Settings.get('glass-tint-color');
+        const tintOpacity = Settings.get('glass-tint-opacity');
+        const {Color} = Cogl;
+        const [, c] = Color.from_string(tintColor);
+        const r = c ? c.red : 255;
+        const g = c ? c.green : 255;
+        const b = c ? c.blue : 255;
+        return `background-color: rgba(${r},${g},${b},${tintOpacity}); ` +
+               'border: 1px solid rgba(255,255,255,0.15); ' +
+               'border-radius: 14px; ';
+    }
+
+    _buildPillStyle() {
+        const dockStyle = Settings.get('dock-style');
+        if (dockStyle !== DockStyle.PILL)
+            return '';
+        return 'border-radius: 999px; ';
+    }
+
+    _buildFloatingStyle() {
+        const dockStyle = Settings.get('dock-style');
+        if (dockStyle !== DockStyle.FLOATING)
+            return '';
+        const shadowColor = Settings.get('floating-shadow-color');
+        const spread = Settings.get('floating-shadow-spread');
+        const blur = Settings.get('floating-shadow-blur');
+        return `border-radius: 14px; ` +
+               `box-shadow: 0 2px ${blur}px ${spread}px ${shadowColor}; `;
     }
 
     _updateShelfOverlay() {
@@ -375,6 +428,28 @@ export class ThemeManager {
         this._shelfOverlay.queue_repaint();
     }
 
+    _updateSeparatorStyle() {
+        const color = Settings.get('separator-color');
+        const thickness = Settings.get('separator-thickness');
+        let style = null;
+        if (color || thickness >= 0) {
+            const parts = [];
+            if (color)
+                parts.push(`background-color: ${color}`);
+            if (thickness >= 0)
+                parts.push(`width: ${thickness}px; height: ${thickness}px`);
+            style = parts.join('; ');
+        }
+        // Apply to all separator children in the dash
+        const box = this._dash?._box;
+        if (box) {
+            for (const child of box.get_children()) {
+                if (child.style_class?.includes('dash-separator'))
+                    child.set_style(style);
+            }
+        }
+    }
+
     _paintShelf(area) {
         const cr = area.get_context();
         const [w, h] = area.get_surface_size();
@@ -391,6 +466,23 @@ export class ThemeManager {
         const shelfAngleFrac = Settings.get('shelf-angle');
         const rt = Settings.get('shelf-corner-radius-top');
         const rb = Settings.get('shelf-corner-radius-bottom');
+        const gradTopColorStr = Settings.get('shelf-gradient-top-color');
+        const gradBotColorStr = Settings.get('shelf-gradient-bottom-color');
+        const hlColorStr = Settings.get('shelf-highlight-color');
+        const shColorStr = Settings.get('shelf-shadow-color');
+        const shadowScale = Settings.get('shelf-shadow-scale');
+        const hlWidth = Settings.get('shelf-highlight-width');
+        const shWidth = Settings.get('shelf-shadow-width');
+
+        const {Color} = Cogl;
+        const parseColor = str => {
+            const [, c] = Color.from_string(str);
+            return c ? [c.red / 255, c.green / 255, c.blue / 255] : [1, 1, 1];
+        };
+        const [topR, topG, topB] = parseColor(gradTopColorStr);
+        const [botR, botG, botB] = parseColor(gradBotColorStr);
+        const [hlR, hlG, hlB] = parseColor(hlColorStr);
+        const [shR, shG, shB] = parseColor(shColorStr);
 
         // Clear
         cr.save();
@@ -421,21 +513,21 @@ export class ThemeManager {
 
         // Fill with gradient
         const grad = new Cairo.LinearGradient(0, 0, 0, shelfH);
-        grad.addColorStopRGBA(0, 1, 1, 1, topOp);
-        grad.addColorStopRGBA(1, 0, 0, 0, botOp);
+        grad.addColorStopRGBA(0, topR, topG, topB, topOp);
+        grad.addColorStopRGBA(1, botR, botG, botB, botOp);
         cr.setSource(grad);
         cr.fill();
 
         // Top highlight along the shelf edge
-        cr.setSourceRGBA(1, 1, 1, hlOp);
-        cr.setLineWidth(1);
+        cr.setSourceRGBA(hlR, hlG, hlB, hlOp);
+        cr.setLineWidth(hlWidth);
         cr.moveTo(inset + rt, 0.5);
         cr.lineTo(w - inset - rt, 0.5);
         cr.stroke();
 
         // Bottom shadow
-        cr.setSourceRGBA(0, 0, 0, brOp * 0.4);
-        cr.setLineWidth(1);
+        cr.setSourceRGBA(shR, shG, shB, brOp * shadowScale);
+        cr.setLineWidth(shWidth);
         cr.moveTo(rb, shelfH - 0.5);
         cr.lineTo(w - rb, shelfH - 0.5);
         cr.stroke();
@@ -453,13 +545,17 @@ export class ThemeManager {
         const customBorderRadius = Settings.get('custom-border-radius');
         const transparencyMode = Settings.get('transparency-mode');
         const customBackgroundColor = Settings.get('custom-background-color');
+        const dockStyle = Settings.get('dock-style');
 
         this._transparency.disable();
 
         // If built-in theme is enabled, just clear any leftover inline style
         if (applyCustomTheme) {
-            const shelfStyle = this._buildShelfStyle(Utils.getPosition());
-            this._dash._background.set_style(shelfStyle || null);
+            let newStyle = this._buildShelfStyle(Utils.getPosition());
+            newStyle += this._buildGlassStyle();
+            newStyle += this._buildPillStyle();
+            newStyle += this._buildFloatingStyle();
+            this._dash._background.set_style(newStyle || null);
             return;
         }
 
@@ -495,8 +591,28 @@ export class ThemeManager {
         if (customBorderRadius >= 0)
             newStyle = `${newStyle}border-radius: ${customBorderRadius}px; `;
 
+        const flatBorderColor = Settings.get('flat-border-color');
+        const flatBorderWidth = Settings.get('flat-border-width');
+        if (dockStyle === DockStyle.FLAT && flatBorderWidth >= 0 && flatBorderColor)
+            newStyle += `border: ${flatBorderWidth}px solid ${flatBorderColor}; `;
+
+        const flatBoxShadow = Settings.get('flat-box-shadow');
+        if (dockStyle === DockStyle.FLAT && flatBoxShadow) {
+            const bsColor = Settings.get('flat-box-shadow-color');
+            const bsSpread = Settings.get('flat-box-shadow-spread');
+            const bsBlur = Settings.get('flat-box-shadow-blur');
+            newStyle += `box-shadow: 0 0 ${bsBlur}px ${bsSpread}px ${bsColor}; `;
+        }
+
+        const innerPadding = Settings.get('dock-inner-padding');
+        if (innerPadding >= 0)
+            newStyle += `padding: ${innerPadding}px; `;
+
         // Append shelf gradient overlay if active
         newStyle += this._buildShelfStyle(position);
+        newStyle += this._buildGlassStyle();
+        newStyle += this._buildPillStyle();
+        newStyle += this._buildFloatingStyle();
 
         // Customize background
         const fixedTransparency = transparencyMode === TransparencyMode.FIXED;
@@ -535,7 +651,12 @@ export class ThemeManager {
             'icon-magnification',
             'magnification-hover-highlight',
             'dock-style',
-            'shelf-reflection'];
+            'shelf-reflection',
+            'flat-border-color', 'flat-border-width', 'flat-box-shadow',
+            'flat-box-shadow-color', 'flat-box-shadow-spread', 'flat-box-shadow-blur',
+            'glass-tint-color', 'glass-tint-opacity',
+            'floating-shadow-color', 'floating-shadow-spread', 'floating-shadow-blur',
+            'dock-inner-padding', 'separator-color', 'separator-thickness'];
 
         this._signalsHandler.addWithLabel(Labels.THEME_CHANGED, ...keys.map(key => [
             Docking.DockManager.settings,
@@ -553,6 +674,9 @@ export class ThemeManager {
             'shelf-corner-radius-top',
             'shelf-corner-radius-bottom',
             'shelf-reflection-opacity',
+            'shelf-gradient-top-color', 'shelf-gradient-bottom-color',
+            'shelf-highlight-color', 'shelf-shadow-color',
+            'shelf-shadow-scale', 'shelf-highlight-width', 'shelf-shadow-width',
         ];
 
         this._signalsHandler.addWithLabel(Labels.THEME_CHANGED, ...styleOnlyKeys.map(key => [

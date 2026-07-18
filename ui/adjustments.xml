@@ -721,3 +721,70 @@
     <property name="step_increment">0.01</property>
     <property name="page_increment">0.1</property>
   </object>
+  <!-- New style-specific adjustments -->
+  <object class="GtkAdjustment" id="shelf_shadow_scale_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">1</property>
+    <property name="step_increment">0.05</property>
+    <property name="page_increment">0.1</property>
+  </object>
+  <object class="GtkAdjustment" id="shelf_highlight_width_adjustment">
+    <property name="lower">0.5</property>
+    <property name="upper">4</property>
+    <property name="step_increment">0.5</property>
+    <property name="page_increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="shelf_shadow_width_adjustment">
+    <property name="lower">0.5</property>
+    <property name="upper">4</property>
+    <property name="step_increment">0.5</property>
+    <property name="page_increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="glass_tint_opacity_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">0.5</property>
+    <property name="step_increment">0.01</property>
+    <property name="page_increment">0.05</property>
+  </object>
+  <object class="GtkAdjustment" id="floating_shadow_spread_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">20</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
+  </object>
+  <object class="GtkAdjustment" id="floating_shadow_blur_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">30</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
+  </object>
+  <object class="GtkAdjustment" id="flat_border_width_adjustment">
+    <property name="lower">-1</property>
+    <property name="upper">5</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="flat_shadow_spread_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">20</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
+  </object>
+  <object class="GtkAdjustment" id="flat_shadow_blur_adjustment">
+    <property name="lower">0</property>
+    <property name="upper">30</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
+  </object>
+  <object class="GtkAdjustment" id="dock_inner_padding_adjustment">
+    <property name="lower">-1</property>
+    <property name="upper">24</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">4</property>
+  </object>
+  <object class="GtkAdjustment" id="separator_thickness_adjustment">
+    <property name="lower">-1</property>
+    <property name="upper">6</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">1</property>
+  </object>
