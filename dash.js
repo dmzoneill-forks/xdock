@@ -2781,7 +2781,7 @@ export const DockDash = GObject.registerClass({
             this._quickSettingsButton.get_parent()?.remove_child(this._quickSettingsButton);
             // Always place after the show-apps button (at the extreme end)
             if (settings.showAppsAtTop)
-                container.insert_child_above(this._quickSettingsButton, null);
+                container.insert_child_below(this._quickSettingsButton, null);
             else
                 container.insert_child_above(this._quickSettingsButton, null);
         }
