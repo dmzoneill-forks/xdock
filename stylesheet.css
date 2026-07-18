@@ -1828,6 +1828,24 @@
   border-radius: 18px;
 }
 
+/* Glass dock style: translucent frosted overlay */
+#dashtodockContainer.glass #dash .dash-background {
+  border-radius: 14px;
+  transition-duration: 250ms;
+}
+
+/* Pill dock style: fully rounded ends */
+#dashtodockContainer.pill #dash .dash-background {
+  border-radius: 999px;
+  transition-duration: 250ms;
+}
+
+/* Floating dock style: detached with shadow */
+#dashtodockContainer.floating #dash .dash-background {
+  border-radius: 14px;
+  transition-duration: 250ms;
+}
+
 /* Scrollview style */
 .bottom #dashtodockDashScrollview,
 .top #dashtodockDashScrollview {
@@ -1840,7 +1858,7 @@
 }
 
 #dashtodockContainer.dashtodock #dash .dash-background {
-  background: rgb(48, 48, 48);
+  background: rgb(47.65, 47.65, 47.65);
 }
 
 #dashtodockContainer.dashtodock .progress-bar,
@@ -2131,9 +2149,9 @@
 }
 
 .quick-settings-slider {
-  height: 20px;
-  -slider-handle-radius: 8px;
-  -slider-height: 4px;
+  height: 16px;
+  -slider-handle-radius: 6px;
+  -slider-height: 6px;
 }
 
 .quick-settings-slider-row {
@@ -2291,18 +2309,4 @@
   border-radius: 6px;
   background-color: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Disable hover highlight when magnification is active */
-#dashtodockContainer.no-hover-highlight .dash-item-container .overview-tile:hover .overview-icon,
-#dashtodockContainer.no-hover-highlight .dash-item-container .overview-tile.focused .overview-icon,
-#dashtodockContainer.no-hover-highlight .dash-item-container .show-apps:hover .overview-icon,
-#dashtodockContainer.no-hover-highlight .dash-item-container .app-well-app.focused .overview-icon {
-  background-color: transparent;
-}
-
-/* Shelf dock style — extra bottom padding gives 3D depth */
-#dashtodockContainer.shelf .dash-background {
-  padding-top: 4px;
-  padding-bottom: 12px;
 }

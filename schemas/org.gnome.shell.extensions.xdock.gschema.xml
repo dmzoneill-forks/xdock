@@ -55,6 +55,9 @@
   <enum id='org.gnome.shell.extensions.xdock.dock-style'>
     <value value='0' nick='FLAT'/>
     <value value='1' nick='SHELF'/>
+    <value value='2' nick='GLASS'/>
+    <value value='3' nick='PILL'/>
+    <value value='4' nick='FLOATING'/>
   </enum>
   <schema path="/org/gnome/shell/extensions/xdock/" id="org.gnome.shell.extensions.xdock">
     <key name="dock-position" enum="org.gnome.shell.extensions.xdock.position">
@@ -989,6 +992,111 @@
       <default>12</default>
       <summary>Bottom corner radius for the shelf trapezoid</summary>
       <description>Corner radius in pixels for the bottom (wider) edge of the shelf (0-30).</description>
+    </key>
+    <key type="s" name="shelf-gradient-top-color">
+      <default>'#ffffff'</default>
+      <summary>Shelf gradient top color</summary>
+      <description>Color at the top of the shelf gradient.</description>
+    </key>
+    <key type="s" name="shelf-gradient-bottom-color">
+      <default>'#000000'</default>
+      <summary>Shelf gradient bottom color</summary>
+      <description>Color at the bottom of the shelf gradient.</description>
+    </key>
+    <key type="s" name="shelf-highlight-color">
+      <default>'#ffffff'</default>
+      <summary>Shelf highlight line color</summary>
+      <description>Color of the highlight line at the top edge of the shelf.</description>
+    </key>
+    <key type="s" name="shelf-shadow-color">
+      <default>'#000000'</default>
+      <summary>Shelf shadow line color</summary>
+      <description>Color of the shadow line at the bottom edge of the shelf.</description>
+    </key>
+    <key type="d" name="shelf-shadow-scale">
+      <default>0.4</default>
+      <summary>Shelf shadow opacity multiplier</summary>
+      <description>Multiplier applied to the shelf shadow opacity (0.0 to 1.0).</description>
+    </key>
+    <key type="d" name="shelf-highlight-width">
+      <default>1.0</default>
+      <summary>Shelf highlight line width</summary>
+      <description>Width of the shelf highlight line in pixels (0.5 to 4.0).</description>
+    </key>
+    <key type="d" name="shelf-shadow-width">
+      <default>1.0</default>
+      <summary>Shelf shadow line width</summary>
+      <description>Width of the shelf shadow line in pixels (0.5 to 4.0).</description>
+    </key>
+    <key type="s" name="flat-border-color">
+      <default>''</default>
+      <summary>Flat style border color</summary>
+      <description>Custom border color for flat dock style. Empty string uses theme default.</description>
+    </key>
+    <key type="i" name="flat-border-width">
+      <default>-1</default>
+      <summary>Flat style border width</summary>
+      <description>Border width in pixels for flat dock style. -1 uses theme default.</description>
+    </key>
+    <key type="b" name="flat-box-shadow">
+      <default>false</default>
+      <summary>Enable box shadow for flat style</summary>
+      <description>Add a box shadow around the dock in flat style.</description>
+    </key>
+    <key type="s" name="flat-box-shadow-color">
+      <default>'rgba(0,0,0,0.4)'</default>
+      <summary>Flat style box shadow color</summary>
+      <description>Color of the box shadow for flat dock style.</description>
+    </key>
+    <key type="i" name="flat-box-shadow-spread">
+      <default>4</default>
+      <summary>Flat style box shadow spread</summary>
+      <description>Spread of the box shadow in pixels (0 to 20).</description>
+    </key>
+    <key type="i" name="flat-box-shadow-blur">
+      <default>8</default>
+      <summary>Flat style box shadow blur</summary>
+      <description>Blur radius of the box shadow in pixels (0 to 30).</description>
+    </key>
+    <key type="s" name="glass-tint-color">
+      <default>'#ffffff'</default>
+      <summary>Glass tint color</summary>
+      <description>Tint overlay color for glass dock style.</description>
+    </key>
+    <key type="d" name="glass-tint-opacity">
+      <default>0.08</default>
+      <summary>Glass tint opacity</summary>
+      <description>Opacity of the glass tint overlay (0.0 to 0.5).</description>
+    </key>
+    <key type="s" name="floating-shadow-color">
+      <default>'rgba(0,0,0,0.5)'</default>
+      <summary>Floating shadow color</summary>
+      <description>Shadow color for floating dock style.</description>
+    </key>
+    <key type="i" name="floating-shadow-spread">
+      <default>6</default>
+      <summary>Floating shadow spread</summary>
+      <description>Shadow spread for floating dock style in pixels (0 to 20).</description>
+    </key>
+    <key type="i" name="floating-shadow-blur">
+      <default>10</default>
+      <summary>Floating shadow blur</summary>
+      <description>Shadow blur for floating dock style in pixels (0 to 30).</description>
+    </key>
+    <key type="i" name="dock-inner-padding">
+      <default>-1</default>
+      <summary>Dock inner padding</summary>
+      <description>Inner padding around dock icons in pixels. -1 uses default.</description>
+    </key>
+    <key type="s" name="separator-color">
+      <default>''</default>
+      <summary>Separator color</summary>
+      <description>Custom color for dock separators. Empty string uses theme default.</description>
+    </key>
+    <key type="i" name="separator-thickness">
+      <default>-1</default>
+      <summary>Separator thickness</summary>
+      <description>Thickness of dock separators in pixels. -1 uses default.</description>
     </key>
     <key type="i" name="reflection-size">
       <default>20</default>

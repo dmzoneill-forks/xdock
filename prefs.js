@@ -1372,20 +1372,46 @@ const DockSettings = GObject.registerClass({
                 this._settings.get_enum('dock-style'));
         });
 
-        // Shelf sub-controls: sensitive only when dock-style is SHELF (1)
-        const updateShelfSensitivity = () => {
-            const isShelf = this._settings.get_enum('dock-style') === 1;
+        // Style sub-controls: visibility toggled by dock-style
+        const updateStyleSectionVisibility = () => {
+            const style = this._settings.get_enum('dock-style');
+            const isFlat = style === 0;
+            const isShelf = style === 1;
+            const isGlass = style === 2;
+            const isFloating = style === 4;
+
+            // Shelf rows
             for (const id of ['shelf_gradient_top_row', 'shelf_gradient_bottom_row',
                 'shelf_highlight_row', 'shelf_border_row',
-                'shelf_angle_row', 'shelf_height_row', 'shelf_reflection_row'])
-                this._builder.get_object(id).set_sensitive(isShelf);
-            this._builder.get_object('shelf_reflection_opacity_row').set_sensitive(
+                'shelf_angle_row', 'shelf_height_row', 'shelf_reflection_row',
+                'shelf_gradient_top_color_row', 'shelf_gradient_bottom_color_row',
+                'shelf_highlight_color_row', 'shelf_shadow_color_row',
+                'shelf_shadow_scale_row', 'shelf_highlight_width_row',
+                'shelf_shadow_width_row'])
+                this._builder.get_object(id)?.set_visible(isShelf);
+            this._builder.get_object('shelf_reflection_opacity_row')?.set_visible(
                 isShelf && this._settings.get_boolean('shelf-reflection'));
-        };
-        updateShelfSensitivity();
-        this._settings.connect('changed::dock-style', updateShelfSensitivity);
-        this._settings.connect('changed::shelf-reflection', updateShelfSensitivity);
 
+            // Flat rows
+            for (const id of ['flat_border_color_row', 'flat_border_width_row',
+                'flat_box_shadow_row', 'flat_box_shadow_color_row',
+                'flat_box_shadow_spread_row', 'flat_box_shadow_blur_row'])
+                this._builder.get_object(id)?.set_visible(isFlat);
+
+            // Glass rows
+            for (const id of ['glass_tint_color_row', 'glass_tint_opacity_row'])
+                this._builder.get_object(id)?.set_visible(isGlass);
+
+            // Floating rows
+            for (const id of ['floating_shadow_color_row', 'floating_shadow_spread_row',
+                'floating_shadow_blur_row'])
+                this._builder.get_object(id)?.set_visible(isFloating);
+        };
+        updateStyleSectionVisibility();
+        this._settings.connect('changed::dock-style', updateStyleSectionVisibility);
+        this._settings.connect('changed::shelf-reflection', updateStyleSectionVisibility);
+
+        // Shelf bindings (existing)
         this._settings.bind('shelf-gradient-top-opacity',
             this._builder.get_object('shelf_gradient_top_scale').get_adjustment(),
             'value', Gio.SettingsBindFlags.DEFAULT);
@@ -1416,6 +1442,110 @@ const DockSettings = GObject.registerClass({
         this._settings.bind('shelf-corner-radius-bottom',
             this._builder.get_object('shelf_corner_radius_bottom_scale').get_adjustment(),
             'value', Gio.SettingsBindFlags.DEFAULT);
+
+        // New shelf color bindings
+        {
+            const shelfColorBindings = [
+                ['shelf-gradient-top-color', 'shelf_gradient_top_color_button'],
+                ['shelf-gradient-bottom-color', 'shelf_gradient_bottom_color_button'],
+                ['shelf-highlight-color', 'shelf_highlight_color_button'],
+                ['shelf-shadow-color', 'shelf_shadow_color_button'],
+            ];
+            for (const [key, widgetId] of shelfColorBindings) {
+                const colorRgba = new Gdk.RGBA();
+                colorRgba.parse(this._settings.get_string(key));
+                this._builder.get_object(widgetId).set_rgba(colorRgba);
+                this._builder.get_object(widgetId).connect('notify::rgba', button => {
+                    this._settings.set_string(key, button.rgba.to_string());
+                });
+            }
+        }
+
+        // New shelf scale bindings
+        this._settings.bind('shelf-shadow-scale',
+            this._builder.get_object('shelf_shadow_scale_ctrl').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('shelf-highlight-width',
+            this._builder.get_object('shelf_highlight_width_ctrl').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('shelf-shadow-width',
+            this._builder.get_object('shelf_shadow_width_ctrl').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+
+        // Flat style bindings
+        {
+            const flatColorBindings = [
+                ['flat-border-color', 'flat_border_color_button'],
+                ['flat-box-shadow-color', 'flat_box_shadow_color_button'],
+            ];
+            for (const [key, widgetId] of flatColorBindings) {
+                const colorRgba = new Gdk.RGBA();
+                colorRgba.parse(this._settings.get_string(key));
+                this._builder.get_object(widgetId).set_rgba(colorRgba);
+                this._builder.get_object(widgetId).connect('notify::rgba', button => {
+                    this._settings.set_string(key, button.rgba.to_string());
+                });
+            }
+        }
+        this._settings.bind('flat-border-width',
+            this._builder.get_object('flat_border_width_spin'),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('flat-box-shadow',
+            this._builder.get_object('flat_box_shadow_switch'),
+            'active', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('flat-box-shadow-spread',
+            this._builder.get_object('flat_box_shadow_spread_spin'),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('flat-box-shadow-blur',
+            this._builder.get_object('flat_box_shadow_blur_spin'),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+
+        // Glass style bindings
+        {
+            const glassColorRgba = new Gdk.RGBA();
+            glassColorRgba.parse(this._settings.get_string('glass-tint-color'));
+            this._builder.get_object('glass_tint_color_button').set_rgba(glassColorRgba);
+            this._builder.get_object('glass_tint_color_button').connect('notify::rgba', button => {
+                this._settings.set_string('glass-tint-color', button.rgba.to_string());
+            });
+        }
+        this._settings.bind('glass-tint-opacity',
+            this._builder.get_object('glass_tint_opacity_ctrl').get_adjustment(),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+
+        // Floating style bindings
+        {
+            const floatingColorRgba = new Gdk.RGBA();
+            floatingColorRgba.parse(this._settings.get_string('floating-shadow-color'));
+            this._builder.get_object('floating_shadow_color_button').set_rgba(floatingColorRgba);
+            this._builder.get_object('floating_shadow_color_button').connect('notify::rgba', button => {
+                this._settings.set_string('floating-shadow-color', button.rgba.to_string());
+            });
+        }
+        this._settings.bind('floating-shadow-spread',
+            this._builder.get_object('floating_shadow_spread_spin'),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('floating-shadow-blur',
+            this._builder.get_object('floating_shadow_blur_spin'),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+
+        // Padding & Separators bindings
+        this._settings.bind('dock-inner-padding',
+            this._builder.get_object('dock_inner_padding_spin'),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+        {
+            const separatorColorRgba = new Gdk.RGBA();
+            separatorColorRgba.parse(this._settings.get_string('separator-color'));
+            this._builder.get_object('separator_color_button').set_rgba(separatorColorRgba);
+            this._builder.get_object('separator_color_button').connect('notify::rgba', button => {
+                this._settings.set_string('separator-color', button.rgba.to_string());
+            });
+        }
+        this._settings.bind('separator-thickness',
+            this._builder.get_object('separator_thickness_spin'),
+            'value', Gio.SettingsBindFlags.DEFAULT);
+
+        // Remaining appearance bindings
         this._settings.bind('reflection-size',
             this._builder.get_object('reflection_size_scale').get_adjustment(),
             'value', Gio.SettingsBindFlags.DEFAULT);
@@ -1624,6 +1754,14 @@ const DockSettings = GObject.registerClass({
                 'show-apps-always-in-the-edge', 'hide-tooltip', 'show-previews-hover',
                 'scroll-to-focused-application', 'isolate-locations',
                 'show-mounts-only-mounted', 'show-mounts-network', 'bolt-support',
+                'shelf-gradient-top-color', 'shelf-gradient-bottom-color',
+                'shelf-highlight-color', 'shelf-shadow-color',
+                'shelf-shadow-scale', 'shelf-highlight-width', 'shelf-shadow-width',
+                'flat-border-color', 'flat-border-width', 'flat-box-shadow',
+                'flat-box-shadow-color', 'flat-box-shadow-spread', 'flat-box-shadow-blur',
+                'glass-tint-color', 'glass-tint-opacity',
+                'floating-shadow-color', 'floating-shadow-spread', 'floating-shadow-blur',
+                'dock-inner-padding', 'separator-color', 'separator-thickness',
             ];
 
             const {settings: snapshot} = profile;
@@ -1745,6 +1883,14 @@ const DockSettings = GObject.registerClass({
             'show-apps-always-in-the-edge', 'hide-tooltip', 'show-previews-hover',
             'scroll-to-focused-application', 'isolate-locations',
             'show-mounts-only-mounted', 'show-mounts-network', 'bolt-support',
+            'shelf-gradient-top-color', 'shelf-gradient-bottom-color',
+            'shelf-highlight-color', 'shelf-shadow-color',
+            'shelf-shadow-scale', 'shelf-highlight-width', 'shelf-shadow-width',
+            'flat-border-color', 'flat-border-width', 'flat-box-shadow',
+            'flat-box-shadow-color', 'flat-box-shadow-spread', 'flat-box-shadow-blur',
+            'glass-tint-color', 'glass-tint-opacity',
+            'floating-shadow-color', 'floating-shadow-spread', 'floating-shadow-blur',
+            'dock-inner-padding', 'separator-color', 'separator-thickness',
         ];
 
         const snapshot = {};
