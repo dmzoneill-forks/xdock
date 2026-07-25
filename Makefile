@@ -60,7 +60,7 @@ dev: ./schemas/gschemas.compiled Settings.ui
 	dbus-run-session -- bash -c '\
 		rm -f /run/user/$$(id -u)/gnome-shell-disable-extensions; \
 		gsettings set org.gnome.shell enabled-extensions "[\"$(UUID)\"]"; \
-		exec gnome-shell --wayland --no-x11 --devkit'
+		exec gnome-shell --wayland --no-x11 --devkit --virtual-monitor 3840x2160'
 
 dev-no-ext: ./schemas/gschemas.compiled
 	@echo "Launching devkit without extensions (baseline test)"

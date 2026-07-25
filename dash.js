@@ -504,13 +504,20 @@ export const DockDash = GObject.registerClass({
         this._workspaceMinimapContainer.setChild(this._workspaceMinimap);
         this._workspaceMinimapContainer.show(false);
 
-        const container = settings.showAppsAlwaysInTheEdge || !settings.dockExtended
-            ? this._dashContainer : this._boxContainer;
+        this._repositionWorkspaceMinimap();
+    }
+
+    _repositionWorkspaceMinimap() {
+        if (!this._workspaceMinimapContainer)
+            return;
+        const {settings} = Docking.DockManager;
         const atStart = settings.workspaceMinimapPosition === 'start';
+        if (this._workspaceMinimapContainer.get_parent())
+            this._workspaceMinimapContainer.get_parent().remove_child(this._workspaceMinimapContainer);
         if (atStart)
-            container.insert_child_below(this._workspaceMinimapContainer, null);
+            this._dashContainer.insert_child_below(this._workspaceMinimapContainer, null);
         else
-            container.insert_child_above(this._workspaceMinimapContainer, null);
+            this._dashContainer.insert_child_above(this._workspaceMinimapContainer, this._scrollView);
     }
 
     _onDestroy() {
@@ -665,8 +672,6 @@ export const DockDash = GObject.registerClass({
 
         const app = source?.app ?? source?._delegate?.app;
         if (!app) {
-            // External drag (e.g. file from Nautilus) — check if hovering
-            // over an app icon and focus its window after a short delay.
             this._handleExternalDragOver(x, y);
             return DND.DragMotionResult.NO_DROP;
         }
@@ -681,9 +686,6 @@ export const DockDash = GObject.registerClass({
         if (!isCustom && !inCategoryId) {
             if (app.is_window_backed())
                 return DND.DragMotionResult.NO_DROP;
-            // Only require writable favorite-apps for apps that would be
-            // pinned.  Running (non-favorite) apps can always be reordered
-            // visually via dock-order without touching favorites (#2475).
             const srcIsFav = app.get_id?.() in
                 AppFavorites.getAppFavorites().getFavoriteMap();
             if (srcIsFav && !global.settings.is_writable('favorite-apps'))
@@ -857,12 +859,17 @@ export const DockDash = GObject.registerClass({
         }
 
         // Keep the icons adjacent to the placeholder visible in the scroll view.
-        const curr = this._box.get_children();
-        const phIdx = curr.indexOf(this._dragPlaceholder);
-        if (phIdx > 0)
-            ensureActorVisibleInScrollView(this._scrollView, curr[phIdx - 1]);
-        if (phIdx >= 0 && phIdx < curr.length - 1)
-            ensureActorVisibleInScrollView(this._scrollView, curr[phIdx + 1]);
+        // Skip when magnification reparented _box outside the scroll view.
+        if (this._scrollView.visible && this._box.get_parent() !== this._dashContainer) {
+            const curr = this._box.get_children();
+            const phIdx = curr.indexOf(this._dragPlaceholder);
+            try {
+                if (phIdx > 0)
+                    ensureActorVisibleInScrollView(this._scrollView, curr[phIdx - 1]);
+                if (phIdx >= 0 && phIdx < curr.length - 1)
+                    ensureActorVisibleInScrollView(this._scrollView, curr[phIdx + 1]);
+            } catch { /* actor not in scroll view during magnification */ }
+        }
 
         if (isCustom)
             return DND.DragMotionResult.MOVE_DROP;
@@ -1240,7 +1247,9 @@ export const DockDash = GObject.registerClass({
                     this._ensureActorVisibilityTimeoutId = 0;
                     this._ensureVisibilityDestroyId = 0;
                     this._ensureVisibilityActor = null;
-                    ensureActorVisibleInScrollView(this._scrollView, actor);
+                    try {
+                        ensureActorVisibleInScrollView(this._scrollView, actor);
+                    } catch { /* actor not in scroll view during magnification */ }
                     return GLib.SOURCE_REMOVE;
                 });
         }
@@ -1273,11 +1282,16 @@ export const DockDash = GObject.registerClass({
 
         appIcon.connectObject('notify::hover', a => this._ensureItemVisibility(a), this);
         appIcon.connectObject('clicked', actor => {
-            ensureActorVisibleInScrollView(this._scrollView, actor);
+            try {
+                ensureActorVisibleInScrollView(this._scrollView, actor);
+            } catch { /* magnification reparent */ }
         }, this);
 
         appIcon.connectObject('key-focus-in', actor => {
-            const [xShift, yShift] = ensureActorVisibleInScrollView(this._scrollView, actor);
+            let xShift = 0, yShift = 0;
+            try {
+                [xShift, yShift] = ensureActorVisibleInScrollView(this._scrollView, actor);
+            } catch { /* magnification reparent */ }
 
             // This signal is triggered also by mouse click. The popup menu is opened at the original
             // coordinates. Thus correct for the shift which is going to be applied to the scrollview.
@@ -1886,7 +1900,6 @@ export const DockDash = GObject.registerClass({
         const [, , buttonWidth, buttonHeight] = firstButton.get_preferred_size();
 
         if (this._isHorizontal) {
-            // Subtract icon padding and box spacing from the available width
             availSpace -= iconChildren.length * (buttonWidth - iconWidth) +
                            (iconChildren.length - 1) * spacing;
 
@@ -1900,7 +1913,6 @@ export const DockDash = GObject.registerClass({
                 availSpace -= separatorWidth + spacing;
             }
         } else {
-            // Subtract icon padding and box spacing from the available height
             availSpace -= iconChildren.length * (buttonHeight - iconHeight) +
                            (iconChildren.length - 1) * spacing;
 
@@ -2154,58 +2166,52 @@ export const DockDash = GObject.registerClass({
                 _pushApp(ci.getApp());
         }
 
-        // ── Phase 3: Running non-categorized apps ───────────────────────
-        // Use dock-order to persist user-defined running app positions
-        // (#2475).  Apps not yet in dock-order are appended at the end.
+        // ── Phase 3: Running apps + Locations + Trash ─────────────────
+        // All non-favorite items use dock-order for position persistence.
+        // Items not in dock-order are appended at the end.
         const runningCat = []; // categorized -> Phase 5
 
+        // Collect all orderable items into a single map keyed by app ID.
+        const orderableById = new Map();
+
         if (settings.showRunning) {
-            // Build a map of eligible running apps (non-categorized,
-            // non-favorite) keyed by app ID for quick lookup.
-            const runningById = new Map();
             for (const app of running) {
                 const appId = app.get_id();
                 if (categorizedAppIds.has(appId))
                     runningCat.push(app);
                 else if (!showFavorites || !(appId in favorites))
-                    runningById.set(appId, app);
+                    orderableById.set(appId, app);
             }
-
-            // First pass: add running apps that appear in dock-order,
-            // preserving their stored sequence.
-            for (const id of dockOrder) {
-                if (runningById.has(id)) {
-                    _pushApp(runningById.get(id));
-                    runningById.delete(id);
-                }
-            }
-
-            // Second pass: append any remaining running apps not in
-            // dock-order (newly launched since last reorder).
-            for (const app of runningById.values())
-                _pushApp(app);
         }
 
-        // ── Phase 4: Removables / Trash ───────────────────────────────
-        // Location apps are placed right after favorites/categories so
-        // they maintain a stable position regardless of running app
-        // changes (issue #2443).
-        // ── Phase 3: Removables / Trash ──────────────────────────────
+        // Add location apps (removables, trash) to the same orderable pool.
         this._signalsHandler.removeWithLabel(Labels.SHOW_MOUNTS);
         if (dockManager.removables) {
             this._signalsHandler.addWithLabel(Labels.SHOW_MOUNTS,
                 dockManager.removables, 'changed', this._queueRedisplay.bind(this));
             dockManager.removables.getApps().forEach(removable => {
                 if (!newAppsSet.has(removable))
-                    _pushApp(removable);
+                    orderableById.set(removable.get_id(), removable);
             });
         }
 
         if (dockManager.trash) {
             const trashApp = dockManager.trash.getApp();
             if (!newAppsSet.has(trashApp))
-                _pushApp(trashApp);
+                orderableById.set(trashApp.get_id(), trashApp);
         }
+
+        // First pass: items in dock-order keep their stored sequence.
+        for (const id of dockOrder) {
+            if (orderableById.has(id)) {
+                _pushApp(orderableById.get(id));
+                orderableById.delete(id);
+            }
+        }
+
+        // Second pass: append remaining items not yet in dock-order.
+        for (const app of orderableById.values())
+            _pushApp(app);
 
         // ── Phase 4b: Pinned Commands ────────────────────────────
         if (dockManager.pinnedCommandsManager) {
@@ -2392,29 +2398,15 @@ export const DockDash = GObject.registerClass({
             this._separatorFavorites = null;
         }
 
-        /* Update separator for locations — placed between location apps
-         * and running apps. Location apps sit right after favorites so
-         * they keep a stable position (issue #2443). */
-
-        // Count location and pinned-command apps among expected items
-        const nLocationApps = expectedItems.filter(item =>
-            this._isLocationApp(item.app) || this._isPinnedCommandApp(item.app)).length;
-        const nRunning = expectedItems.filter(item =>
-            !item.isFavorite && !this._isLocationApp(item.app) &&
-            !this._isPinnedCommandApp(item.app)).length;
-        // Location apps are after favorites, so separator goes after both.
-        // Account for the favorites separator already in the box.
-        const posLocations = nFavorites + nLocationApps +
-            (this._separatorFavorites ? 1 : 0);
-        const isRedudantSeparator = nRunning <= 0;
-        if (nLocationApps > 0 && nLocationApps < nIcons && !isRedudantSeparator) {
-            this._separatorLocations =
-                this._ensureSeparator(this._separatorLocations, posLocations);
-        } else if (this._separatorLocations) {
+        // Location separator removed — locations (trash, mounts) now flow
+        // with dock-order like all other icons, so users can drag them
+        // to any position.
+        if (this._separatorLocations) {
             this._separatorLocations.destroy();
             this._separatorLocations = null;
         }
 
+        this._repositionWorkspaceMinimap();
         this._adjustIconSize();
 
         // Skip animations on first run when adding the initial set

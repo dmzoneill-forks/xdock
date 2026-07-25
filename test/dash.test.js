@@ -3479,6 +3479,7 @@ describe('DockDash._redisplay (full path)', () => {
         ctx._ensureSeparator = DockDash.prototype._ensureSeparator.bind(ctx);
         ctx._ensureItemVisibility = jest.fn();
         ctx._queueRedisplay = jest.fn();
+        ctx._repositionWorkspaceMinimap = jest.fn();
         return {ctx, dockManager};
     }
 
@@ -4206,6 +4207,7 @@ describe('DockDash.handleDragOver (placeholder & drop target)', () => {
                 get_children() { return [...this._children]; },
                 contains: () => false,
                 insert_child_at_index: jest.fn(),
+                get_parent: () => null,
             },
         });
 
@@ -4240,6 +4242,7 @@ describe('DockDash.handleDragOver (placeholder & drop target)', () => {
                 get_children() { return [...this._children]; },
                 contains: () => false,
                 insert_child_at_index: jest.fn(),
+                get_parent: () => null,
             },
             _isHorizontal: true,
         });
@@ -4266,6 +4269,7 @@ describe('DockDash.handleDragOver (placeholder & drop target)', () => {
                 get_children() { return []; },
                 contains: () => false,
                 insert_child_at_index: jest.fn(),
+                get_parent: () => null,
             },
         });
         const source = {
@@ -4287,6 +4291,7 @@ describe('DockDash.handleDragOver (placeholder & drop target)', () => {
                 get_children() { return []; },
                 contains: () => false,
                 insert_child_at_index: jest.fn(),
+                get_parent: () => null,
             },
         });
         const origIsWritable = globalThis.global.settings.is_writable;
@@ -4311,6 +4316,7 @@ describe('DockDash.handleDragOver (placeholder & drop target)', () => {
                 get_children() { return []; },
                 contains: () => false,
                 insert_child_at_index: jest.fn(),
+                get_parent: () => null,
             },
         });
         const source = {
@@ -4912,6 +4918,7 @@ describe('DockDash._redisplay (location separator)', () => {
         ctx._ensureSeparator = DockDash.prototype._ensureSeparator.bind(ctx);
         ctx._ensureItemVisibility = jest.fn();
         ctx._queueRedisplay = jest.fn();
+        ctx._repositionWorkspaceMinimap = jest.fn();
 
         DockDash.prototype._redisplay.call(ctx);
         // Should have created items for fav, trash, and run
@@ -5146,6 +5153,7 @@ describe('DockDash._redisplay (surviving icon refresh)', () => {
         ctx._ensureSeparator = DockDash.prototype._ensureSeparator.bind(ctx);
         ctx._ensureItemVisibility = jest.fn();
         ctx._queueRedisplay = jest.fn();
+        ctx._repositionWorkspaceMinimap = jest.fn();
 
         DockDash.prototype._redisplay.call(ctx);
         // groupApps=false but no windows, so should create 1 item
@@ -5215,6 +5223,7 @@ describe('DockDash._redisplay (surviving icon refresh)', () => {
         ctx._ensureSeparator = DockDash.prototype._ensureSeparator.bind(ctx);
         ctx._ensureItemVisibility = jest.fn();
         ctx._queueRedisplay = jest.fn();
+        ctx._repositionWorkspaceMinimap = jest.fn();
 
         DockDash.prototype._redisplay.call(ctx);
         // Even with showFavorites=false, categories appear via the !showFavorites branch
@@ -5292,6 +5301,7 @@ describe('DockDash._redisplay (surviving icon refresh)', () => {
         ctx._ensureItemVisibility = jest.fn();
         ctx._queueRedisplay = jest.fn();
         ctx._hookUpLabel = jest.fn();
+        ctx._repositionWorkspaceMinimap = jest.fn();
 
         DockDash.prototype._redisplay.call(ctx);
         // The existing icon survives, so _updateWindows should be called
@@ -5361,6 +5371,7 @@ describe('DockDash._redisplay (surviving icon refresh)', () => {
         ctx._ensureItemVisibility = jest.fn();
         ctx._queueRedisplay = jest.fn();
         ctx._hookUpLabel = jest.fn();
+        ctx._repositionWorkspaceMinimap = jest.fn();
 
         DockDash.prototype._redisplay.call(ctx);
         // During overview animation, destroy() is called instead of animateOutAndDestroy
@@ -5424,6 +5435,7 @@ describe('DockDash._redisplay (surviving icon refresh)', () => {
         ctx._ensureItemVisibility = jest.fn();
         ctx._queueRedisplay = jest.fn();
         ctx._hookUpLabel = jest.fn();
+        ctx._repositionWorkspaceMinimap = jest.fn();
 
         DockDash.prototype._redisplay.call(ctx);
         // Separator should be destroyed (no location apps, no running)
@@ -5585,6 +5597,7 @@ describe('DockDash._redisplay (surviving icon refresh)', () => {
         ctx._ensureSeparator = DockDash.prototype._ensureSeparator.bind(ctx);
         ctx._ensureItemVisibility = jest.fn();
         ctx._queueRedisplay = jest.fn();
+        ctx._repositionWorkspaceMinimap = jest.fn();
 
         DockDash.prototype._redisplay.call(ctx);
         // The transient app's draggable should be destroyed
@@ -5665,6 +5678,7 @@ describe('DockDash._redisplay (surviving icon refresh)', () => {
         ctx._ensureSeparator = DockDash.prototype._ensureSeparator.bind(ctx);
         ctx._ensureItemVisibility = jest.fn();
         ctx._queueRedisplay = jest.fn();
+        ctx._repositionWorkspaceMinimap = jest.fn();
 
         DockDash.prototype._redisplay.call(ctx);
         // Items should be reordered, no new items created
@@ -6750,6 +6764,7 @@ describe('DockDash._redisplay (split-window with windows)', () => {
         ctx._ensureSeparator = DockDash.prototype._ensureSeparator.bind(ctx);
         ctx._ensureItemVisibility = jest.fn();
         ctx._queueRedisplay = jest.fn();
+        ctx._repositionWorkspaceMinimap = jest.fn();
 
         DockDash.prototype._redisplay.call(ctx);
         // Should create 2 items (one per window)
@@ -7243,6 +7258,7 @@ describe('DockDash._redisplay (transient icon without draggable)', () => {
         ctx._ensureSeparator = DockDash.prototype._ensureSeparator.bind(ctx);
         ctx._ensureItemVisibility = jest.fn();
         ctx._queueRedisplay = jest.fn();
+        ctx._repositionWorkspaceMinimap = jest.fn();
 
         DockDash.prototype._redisplay.call(ctx);
         // The item's delegate should be marked as transient
