@@ -207,7 +207,7 @@ const DockSettings = GObject.registerClass({
         // Set a reasonable initial window size
         this.page.connect('realize', () => {
             const rootWindow = this.page.get_root();
-            rootWindow.set_default_size(700, 850);
+            rootWindow.set_default_size(900, 850);
             rootWindow.connect('close-request', () => this._onWindowsClosed());
         });
 
