@@ -1,9 +1,9 @@
     <child>
       <object class="GtkStackPage">
-        <property name="name">appearance</property>
-        <property name="title" translatable="yes">Appearance</property>
+        <property name="name">dock_style</property>
+        <property name="title" translatable="yes">Dock Style</property>
         <property name="child">
-          <object class="GtkBox" id="appearance">
+          <object class="GtkBox" id="dock_style_page">
             <property name="can_focus">0</property>
             <property name="margin_start">24</property>
             <property name="margin_end">24</property>
@@ -11,13 +11,7 @@
             <property name="margin_bottom">24</property>
             <property name="orientation">vertical</property>
             <property name="spacing">24</property>
-            <!-- Dock Style section -->
             <child>
-              <object class="GtkExpander">
-                <property name="label" translatable="yes">Dock Style</property>
-                <property name="expanded">1</property>
-                <property name="margin_bottom">12</property>
-                <child>
               <object class="GtkFrame">
                 <property name="can_focus">0</property>
                 <property name="child">
@@ -931,16 +925,25 @@
                   </object>
                 </property>
               </object>
-                </child>
-              </object>
             </child>
-
+          </object>
+        </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkStackPage">
+        <property name="name">layout</property>
+        <property name="title" translatable="yes">Layout</property>
+        <property name="child">
+          <object class="GtkBox" id="layout_page">
+            <property name="can_focus">0</property>
+            <property name="margin_start">24</property>
+            <property name="margin_end">24</property>
+            <property name="margin_top">24</property>
+            <property name="margin_bottom">24</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">24</property>
             <child>
-              <object class="GtkExpander">
-                <property name="label" translatable="yes">Layout</property>
-                <property name="expanded">0</property>
-                <property name="margin_bottom">12</property>
-                <child>
               <object class="GtkFrame" id="built_in_theme_frame">
                 <property name="can_focus">0</property>
 
@@ -1303,15 +1306,25 @@
                   <placeholder/>
                 </child>
               </object>
-                </child>
-              </object>
             </child>
+          </object>
+        </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkStackPage">
+        <property name="name">theme_indicators</property>
+        <property name="title" translatable="yes">Theme &amp; Indicators</property>
+        <property name="child">
+          <object class="GtkBox" id="theme_indicators_page">
+            <property name="can_focus">0</property>
+            <property name="margin_start">24</property>
+            <property name="margin_end">24</property>
+            <property name="margin_top">24</property>
+            <property name="margin_bottom">24</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">24</property>
             <child>
-              <object class="GtkExpander">
-                <property name="label" translatable="yes">Theme &amp; Indicators</property>
-                <property name="expanded">0</property>
-                <property name="margin_bottom">12</property>
-                <child>
               <object class="GtkFrame">
                 <property name="can_focus">0</property>
 
@@ -1649,15 +1662,25 @@
                   <placeholder/>
                 </child>
               </object>
-                </child>
-              </object>
             </child>
+          </object>
+        </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkStackPage">
+        <property name="name">colors_transparency</property>
+        <property name="title" translatable="yes">Colors &amp; Opacity</property>
+        <property name="child">
+          <object class="GtkBox" id="colors_transparency_page">
+            <property name="can_focus">0</property>
+            <property name="margin_start">24</property>
+            <property name="margin_end">24</property>
+            <property name="margin_top">24</property>
+            <property name="margin_bottom">24</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">24</property>
             <child>
-              <object class="GtkExpander">
-                <property name="label" translatable="yes">Colors &amp; Transparency</property>
-                <property name="expanded">0</property>
-                <property name="margin_bottom">12</property>
-                <child>
               <object class="GtkFrame">
                 <property name="can_focus">0</property>
                 <property name="child">
@@ -1728,16 +1751,25 @@
                   </object>
                 </property>
               </object>
-                </child>
-              </object>
             </child>
-            <!-- Icon Overlays section (moved from Applications) -->
+          </object>
+        </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkStackPage">
+        <property name="name">emblems_badges</property>
+        <property name="title" translatable="yes">Emblems &amp; Badges</property>
+        <property name="child">
+          <object class="GtkBox" id="emblems_badges_page">
+            <property name="can_focus">0</property>
+            <property name="margin_start">24</property>
+            <property name="margin_end">24</property>
+            <property name="margin_top">24</property>
+            <property name="margin_bottom">24</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">24</property>
             <child>
-              <object class="GtkExpander">
-                <property name="label" translatable="yes">Emblems &amp; Badges</property>
-                <property name="expanded">0</property>
-                <property name="margin_bottom">12</property>
-                <child>
               <object class="GtkFrame">
                 <property name="can_focus">0</property>
                 <property name="child">
@@ -1859,8 +1891,6 @@
 
                   </object>
                 </property>
-              </object>
-                </child>
               </object>
             </child>
           </object>
