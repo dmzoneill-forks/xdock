@@ -500,6 +500,7 @@ export const DockDash = GObject.registerClass({
             return;
 
         this._workspaceMinimap = new WorkspaceMinimap.WorkspaceMinimap();
+        this._workspaceMinimap.setIconSize(this.iconSize);
         this._workspaceMinimapContainer = new DockDashItemContainer(this._position);
         this._workspaceMinimapContainer.setChild(this._workspaceMinimap);
         this._workspaceMinimapContainer.show(false);
@@ -1972,6 +1973,7 @@ export const DockDash = GObject.registerClass({
         const oldIconSize = this.iconSize;
         this.iconSize = newIconSize;
         this.emit('icon-size-changed');
+        this._workspaceMinimap?.setIconSize(newIconSize);
 
         const scale = oldIconSize / newIconSize;
         for (let i = 0; i < iconChildren.length; i++) {

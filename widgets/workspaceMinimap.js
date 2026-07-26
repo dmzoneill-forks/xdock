@@ -35,6 +35,7 @@ class WorkspaceMinimap extends St.BoxLayout {
         });
 
         this._isHorizontal = isHorizontal;
+        this._iconSize = 48;
         this._indicators = [];
         this._signalsHandler = new Utils.GlobalSignalsHandler(this);
 
@@ -82,6 +83,22 @@ class WorkspaceMinimap extends St.BoxLayout {
 
             this.add_child(btn);
             this._indicators.push(btn);
+        }
+        this._applyIndicatorSize();
+    }
+
+    setIconSize(size) {
+        if (this._iconSize === size)
+            return;
+        this._iconSize = size;
+        this._applyIndicatorSize();
+    }
+
+    _applyIndicatorSize() {
+        const h = Math.round(this._iconSize * 0.7);
+        const w = Math.round(h * 1.4);
+        for (const btn of this._indicators) {
+            btn.set_style(`min-width: ${w}px; min-height: ${h}px;`);
         }
     }
 
