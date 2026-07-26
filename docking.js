@@ -451,7 +451,8 @@ const DockedDash = GObject.registerClass({
             const {panelBox} = Main.layoutManager;
             if (panelBox) {
                 this._signalsHandler.add(panelBox, 'notify::visible', () => {
-                    if (!panelBox.visible && !Main.overview.visibleTarget) {
+                    if (!panelBox.visible && !Main.overview.visibleTarget &&
+                        !this._isAnyWindowFullscreen()) {
                         panelBox.visible = true;
                         panelBox.show();
                     }
@@ -953,11 +954,16 @@ const DockedDash = GObject.registerClass({
      * autohide
      * overview visibility
      */
+    _isAnyWindowFullscreen() {
+        return this._monitor?.inFullscreen ||
+            global.display.get_monitor_in_fullscreen?.(this.monitorIndex);
+    }
+
     _updateDashVisibility() {
         // GNOME 50: Chrome actors with affectsStruts can be hidden by the
         // Shell during struts recalculation (overview, minimize, restack).
         const {panelBox} = Main.layoutManager;
-        if (panelBox && !panelBox.visible) {
+        if (panelBox && !panelBox.visible && !this._isAnyWindowFullscreen()) {
             panelBox.visible = true;
             panelBox.show();
         }
