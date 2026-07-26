@@ -1,6 +1,7 @@
     <child>
-      <object class="GtkNotebookPage">
-        <property name="position">3</property>
+      <object class="GtkStackPage">
+        <property name="name">appearance</property>
+        <property name="title" translatable="yes">Appearance</property>
         <property name="child">
           <object class="GtkBox" id="appearance">
             <property name="can_focus">0</property>
@@ -12,6 +13,11 @@
             <property name="spacing">24</property>
             <!-- Dock Style section -->
             <child>
+              <object class="GtkExpander">
+                <property name="label" translatable="yes">Dock Style</property>
+                <property name="expanded">1</property>
+                <property name="margin_bottom">12</property>
+                <child>
               <object class="GtkFrame">
                 <property name="can_focus">0</property>
                 <property name="child">
@@ -925,9 +931,16 @@
                   </object>
                 </property>
               </object>
+                </child>
+              </object>
             </child>
 
             <child>
+              <object class="GtkExpander">
+                <property name="label" translatable="yes">Layout</property>
+                <property name="expanded">0</property>
+                <property name="margin_bottom">12</property>
+                <child>
               <object class="GtkFrame" id="built_in_theme_frame">
                 <property name="can_focus">0</property>
 
@@ -1290,8 +1303,15 @@
                   <placeholder/>
                 </child>
               </object>
+                </child>
+              </object>
             </child>
             <child>
+              <object class="GtkExpander">
+                <property name="label" translatable="yes">Theme &amp; Indicators</property>
+                <property name="expanded">0</property>
+                <property name="margin_bottom">12</property>
+                <child>
               <object class="GtkFrame">
                 <property name="can_focus">0</property>
 
@@ -1629,8 +1649,15 @@
                   <placeholder/>
                 </child>
               </object>
+                </child>
+              </object>
             </child>
             <child>
+              <object class="GtkExpander">
+                <property name="label" translatable="yes">Colors &amp; Transparency</property>
+                <property name="expanded">0</property>
+                <property name="margin_bottom">12</property>
+                <child>
               <object class="GtkFrame">
                 <property name="can_focus">0</property>
                 <property name="child">
@@ -1701,9 +1728,16 @@
                   </object>
                 </property>
               </object>
+                </child>
+              </object>
             </child>
             <!-- Icon Overlays section (moved from Applications) -->
             <child>
+              <object class="GtkExpander">
+                <property name="label" translatable="yes">Emblems &amp; Badges</property>
+                <property name="expanded">0</property>
+                <property name="margin_bottom">12</property>
+                <child>
               <object class="GtkFrame">
                 <property name="can_focus">0</property>
                 <property name="child">
@@ -1826,13 +1860,9 @@
                   </object>
                 </property>
               </object>
+                </child>
+              </object>
             </child>
-          </object>
-        </property>
-        <property name="tab">
-          <object class="GtkLabel" id="appearance_label">
-            <property name="can_focus">0</property>
-            <property name="label" translatable="yes">Appearance</property>
           </object>
         </property>
       </object>

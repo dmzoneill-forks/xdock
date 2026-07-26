@@ -1,6 +1,7 @@
     <child>
-      <object class="GtkNotebookPage">
-        <property name="position">4</property>
+      <object class="GtkStackPage">
+        <property name="name">features</property>
+        <property name="title" translatable="yes">Features</property>
         <property name="child">
           <object class="GtkBox" id="features_box">
             <property name="can_focus">0</property>
@@ -13,6 +14,11 @@
 
             <!-- Visual Effects section -->
             <child>
+              <object class="GtkExpander">
+                <property name="label" translatable="yes">Visual Effects</property>
+                <property name="expanded">1</property>
+                <property name="margin_bottom">12</property>
+                <child>
               <object class="GtkFrame">
                 <property name="can_focus">0</property>
                 <property name="child">
@@ -449,10 +455,17 @@
                 </property>
 
               </object>
+                </child>
+              </object>
             </child>
 
             <!-- Productivity section -->
             <child>
+              <object class="GtkExpander">
+                <property name="label" translatable="yes">Productivity</property>
+                <property name="expanded">0</property>
+                <property name="margin_bottom">12</property>
+                <child>
               <object class="GtkFrame">
                 <property name="can_focus">0</property>
                 <property name="child">
@@ -744,10 +757,17 @@
                 </property>
                 
               </object>
+                </child>
+              </object>
             </child>
 
             <!-- System Integration section -->
             <child>
+              <object class="GtkExpander">
+                <property name="label" translatable="yes">Startup &amp; Behavior</property>
+                <property name="expanded">0</property>
+                <property name="margin_bottom">12</property>
+                <child>
               <object class="GtkFrame">
                 <property name="can_focus">0</property>
                 <property name="child">
@@ -867,14 +887,10 @@
                 </property>
                 
               </object>
+                </child>
+              </object>
             </child>
 
-          </object>
-        </property>
-        <property name="tab">
-          <object class="GtkLabel" id="features_label">
-            <property name="can_focus">0</property>
-            <property name="label" translatable="yes">Features</property>
           </object>
         </property>
       </object>

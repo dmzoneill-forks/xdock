@@ -4,33 +4,27 @@
   <!-- Adjustments and shared objects -->
   <xi:include href="adjustments.xml" />
 
-  <object class="GtkNotebook" id="settings_notebook">
-    <property name="margin_start">6</property>
-    <property name="margin_end">6</property>
-    <property name="margin_top">6</property>
-    <property name="margin_bottom">6</property>
-
-    <!-- Position and size tab -->
-    <xi:include href="tab-position.xml" />
-
-    <!-- Applications tab -->
-    <xi:include href="tab-applications.xml" />
-
-    <!-- Behavior tab -->
-    <xi:include href="tab-behavior.xml" />
-
-    <!-- Appearance tab -->
-    <xi:include href="tab-appearance.xml" />
-
-    <!-- Features tab -->
-    <xi:include href="tab-features.xml" />
-
-    <!-- Profiles tab -->
-    <xi:include href="tab-profiles.xml" />
-
-    <!-- About tab -->
-    <xi:include href="tab-about.xml" />
-
+  <object class="GtkBox" id="settings_root">
+    <property name="orientation">horizontal</property>
+    <child>
+      <object class="GtkStackSidebar">
+        <property name="stack">settings_stack</property>
+        <property name="width_request">180</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkScrolledWindow">
+        <property name="hexpand">1</property>
+        <property name="vexpand">1</property>
+        <property name="hscrollbar_policy">never</property>
+        <child>
+          <object class="GtkStack" id="settings_stack">
+            <property name="transition_type">crossfade</property>
+            <!-- tab pages inserted here by build-settings-ui.sh -->
+          </object>
+        </child>
+      </object>
+    </child>
   </object>
 
   <!-- Dialog frames (transparency, overlay shortcut, autohide advanced) -->

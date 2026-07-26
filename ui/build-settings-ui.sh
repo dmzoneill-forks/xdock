@@ -4,13 +4,13 @@
 #
 # Parts:
 #   adjustments.xml       — GtkAdjustment + dialog frame objects
-#   tab-position.xml      — Position and size tab
-#   tab-applications.xml  — Applications tab
-#   tab-behavior.xml      — Behavior tab
-#   tab-appearance.xml    — Appearance tab
-#   tab-features.xml      — Features tab
-#   tab-profiles.xml      — Profiles tab
-#   tab-about.xml         — About tab
+#   tab-position.xml      — Position and size page
+#   tab-applications.xml  — Applications page
+#   tab-behavior.xml      — Behavior page
+#   tab-appearance.xml    — Appearance page
+#   tab-features.xml      — Features page
+#   tab-profiles.xml      — Profiles page
+#   tab-about.xml         — About page
 #   dialogs.xml           — Popup dialog frames
 
 set -euo pipefail
@@ -23,19 +23,36 @@ HEADER
 
 cat "$DIR/adjustments.xml"
 
-cat << 'NOTEBOOK'
-  <object class="GtkNotebook" id="settings_notebook">
-    <property name="margin_start">6</property>
-    <property name="margin_end">6</property>
-    <property name="margin_top">6</property>
-    <property name="margin_bottom">6</property>
-NOTEBOOK
+cat << 'STACK_OPEN'
+  <object class="GtkBox" id="settings_root">
+    <property name="orientation">horizontal</property>
+    <child>
+      <object class="GtkStackSidebar">
+        <property name="stack">settings_stack</property>
+        <property name="width_request">180</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkScrolledWindow">
+        <property name="hexpand">1</property>
+        <property name="vexpand">1</property>
+        <property name="hscrollbar_policy">never</property>
+        <child>
+          <object class="GtkStack" id="settings_stack">
+            <property name="transition_type">crossfade</property>
+STACK_OPEN
 
 for tab in position applications behavior appearance features profiles about; do
     cat "$DIR/tab-${tab}.xml"
 done
 
-echo '  </object>'
+cat << 'STACK_CLOSE'
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+STACK_CLOSE
 
 cat "$DIR/dialogs.xml"
 

@@ -198,9 +198,9 @@ const DockSettings = GObject.registerClass({
             extensionPreferences.metadata['gettext-domain']);
         this._builder.add_from_file(`${extensionPreferences.path}/Settings.ui`);
 
-        const notebook = this._builder.get_object('settings_notebook');
+        const widget = this._builder.get_object('settings_root');
         const group = new Adw.PreferencesGroup();
-        group.add(notebook);
+        group.add(widget);
         this.page = new Adw.PreferencesPage();
         this.page.add(group);
 

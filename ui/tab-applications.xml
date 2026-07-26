@@ -1,6 +1,7 @@
     <child>
-      <object class="GtkNotebookPage">
-        <property name="position">1</property>
+      <object class="GtkStackPage">
+        <property name="name">applications</property>
+        <property name="title" translatable="yes">Applications</property>
         <property name="child">
           <object class="GtkBox" id="apps">
             <property name="can_focus">0</property>
@@ -873,12 +874,6 @@
                 </child>
               </object>
             </child>
-          </object>
-        </property>
-        <property name="tab">
-          <object class="GtkLabel" id="launchers_label">
-            <property name="can_focus">0</property>
-            <property name="label" translatable="yes">Applications</property>
           </object>
         </property>
       </object>
