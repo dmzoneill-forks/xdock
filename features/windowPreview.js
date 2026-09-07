@@ -786,6 +786,9 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
             x_align: Clutter.ActorAlign.CENTER,
         });
 
+        if (box.orientation !== undefined)
+            box.orientation = Clutter.Orientation.VERTICAL;
+
         if (box.add) {
             box.add(overlayGroup);
             box.add(labelBin);

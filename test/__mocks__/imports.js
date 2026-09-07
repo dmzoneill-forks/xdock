@@ -392,6 +392,10 @@ export const Utils = {
         connect: () => _nextSigId++,
         disconnect: () => {},
     }),
+    getCursorTracker: () => ({
+        connect: () => _nextSigId++,
+        disconnect: () => {},
+    }),
     shellAppCompare: (a, b) => 0,
     SignalsHandlerFlags: {CONNECT_AFTER: 1},
     InjectionsHandler: class {
