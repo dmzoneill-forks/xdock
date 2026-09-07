@@ -260,6 +260,9 @@ export class UnityIndicator extends IndicatorBase {
     _updateNotificationsBadge(text) {
         if (this._notificationBadgeBin) {
             this._notificationBadgeBin.child.text = text;
+            this._notificationBadgeBin.accessible_name = `${text} notifications`;
+            if (this._notificationBadgeBin.child)
+                this._notificationBadgeBin.child.accessible_name = `${text} notifications`;
             return;
         }
 
@@ -267,7 +270,9 @@ export class UnityIndicator extends IndicatorBase {
             child: new St.Label({
                 styleClass: 'notification-badge',
                 text,
+                accessibleName: `${text} notifications`,
             }),
+            accessibleName: `${text} notifications`,
             xAlign: Clutter.ActorAlign.END,
             yAlign: Clutter.ActorAlign.START,
             xExpand: true,
