@@ -3339,7 +3339,7 @@ describe('DockManager full instantiation', () => {
             'group-apps', 'always-center-icons',
             'isolate-locations', 'intellihide-mode', 'spring-animations',
             'spring-stiffness', 'spring-damping', 'spring-overshoot-clamp',
-            'preferred-monitor-by-connector', 'monitor-positions',
+            'preferred-monitor-by-connector', 'hide-missing-preferred-monitor', 'monitor-positions',
             'secondary-dock-enabled', 'secondary-dock-position',
             'show-icons-emblems', 'user-categories', 'dock-order',
             'shortcut', 'shortcut-timeout', 'dock-tiling-enabled',
@@ -4129,7 +4129,7 @@ describe('DockManager full instantiation', () => {
 // ===========================================================================
 
 // Shared mock extension factory for coverage tests
-function _createCoverageMockExtension() {
+function _createCoverageMockExtension(overrides = {}) {
     const settingsKeys = [
         'dock-position', 'dock-fixed', 'autohide', 'intellihide',
         'extend-height', 'height-fraction', 'animation-time',
@@ -4146,7 +4146,7 @@ function _createCoverageMockExtension() {
         'group-apps', 'always-center-icons',
         'isolate-locations', 'intellihide-mode', 'spring-animations',
         'spring-stiffness', 'spring-damping', 'spring-overshoot-clamp',
-        'preferred-monitor-by-connector', 'monitor-positions',
+        'preferred-monitor-by-connector', 'hide-missing-preferred-monitor', 'monitor-positions',
         'secondary-dock-enabled', 'secondary-dock-position',
         'show-icons-emblems', 'user-categories', 'dock-order',
         'shortcut', 'shortcut-timeout', 'dock-tiling-enabled',
@@ -4158,10 +4158,11 @@ function _createCoverageMockExtension() {
         'scroll-workspace-deadtime', 'dock-edge-dwell-width',
         'dock-dwell-check-interval', 'pressure-show-timeout',
     ];
+    const booleanStore = Object.assign({}, overrides.booleans || {});
+    const stringStore = Object.assign({'user-categories': '[]'}, overrides.strings || {});
+    const strvStore = Object.assign({'dock-order': []}, overrides.strvs || {});
     const createSettings = () => {
         const signals = {};
-        const stringStore = {'user-categories': '[]'};
-        const strvStore = {'dock-order': []};
         return {
             settingsSchema: {
                 list_keys: () => settingsKeys,
@@ -4182,7 +4183,8 @@ function _createCoverageMockExtension() {
             set_strv: (key, val) => { strvStore[key] = val; },
             get_string: (key) => stringStore[key] ?? '',
             set_string: (key, val) => { stringStore[key] = val; },
-            get_boolean: () => false,
+            get_boolean: (key) => booleanStore[key] ?? false,
+            set_boolean: (key, val) => { booleanStore[key] = val; },
             get_int: () => 0,
             get_double: () => 0.0,
             bind: () => {},
@@ -8762,6 +8764,24 @@ describe('Coverage boost phase 2', () => {
         const ext = _createCoverageMockExtension();
         manager = new DockManager(ext);
         expect(DockManager.settings).toBe(manager.settings);
+    });
+
+    // --- hide-missing-preferred-monitor tests ---
+
+    test('_initDocks returns early when preferred monitor is unavailable and hide-missing-preferred-monitor is true', () => {
+        _setDefaultCoverageSettings();
+        Settings._setMany({
+            'preferred-monitor-by-connector': 'DP-99',
+            'hide-missing-preferred-monitor': true,
+            'multi-monitor': false,
+        });
+        const ext = _createCoverageMockExtension({
+            strings: {'preferred-monitor-by-connector': 'DP-99'},
+            booleans: {'hide-missing-preferred-monitor': true},
+        });
+        manager = new DockManager(ext);
+        // Should not create docks because preferred monitor DP-99 is not connected
+        expect(manager._allDocks.length).toBe(0);
     });
 });
 

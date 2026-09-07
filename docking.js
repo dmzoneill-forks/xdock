@@ -3080,6 +3080,10 @@ export class DockManager {
             this._toggle.bind(this),
         ], [
             this._settings,
+            'changed::hide-missing-preferred-monitor',
+            this._toggle.bind(this),
+        ], [
+            this._settings,
             'changed::dock-position',
             this._toggle.bind(this),
         ], [
@@ -3173,9 +3177,17 @@ export class DockManager {
 
         const monitorManager = Utils.getMonitorManager();
         const preferredConnector = Settings.get('preferred-monitor-by-connector');
+        const isExplicitConnector = preferredConnector && preferredConnector !== 'primary';
         this._preferredMonitorIndex = preferredConnector
             ? monitorManager.get_monitor_for_connector(preferredConnector)
             : -1;
+
+        if (!Settings.get('multi-monitor') && isExplicitConnector &&
+            this._preferredMonitorIndex < 0 &&
+            Settings.get('hide-missing-preferred-monitor')) {
+            // Preferred monitor is disconnected and user opted to hide the dock
+            return;
+        }
 
         // In case of multi-monitor, we consider the dock on the primary monitor
         // to be the preferred (main) one regardless of the settings the dock
@@ -3463,7 +3475,8 @@ export class DockManager {
         function workspaceBoxOriginFixer(originalFunction, state, workAreaBox, ...args) {
             /* eslint-disable no-invalid-this */
             const workspaceBox = originalFunction.call(this, state, workAreaBox, ...args);
-            workspaceBox.set_origin(workAreaBox.x1, workspaceBox.y1);
+            if (workspaceBox.x1 === 0 && workAreaBox.x1 > 0)
+                workspaceBox.set_origin(workAreaBox.x1, workspaceBox.y1);
             return workspaceBox;
             /* eslint-enable no-invalid-this */
         }
@@ -3531,8 +3544,6 @@ export class DockManager {
                     const fullWidth = appDisplayBox.get_width() + preferredWidth;
                     appDisplayBox.set_origin(0, appDisplayBox.y1);
                     appDisplayBox.set_size(fullWidth, appDisplayBox.get_height());
-                } else {
-                    appDisplayBox.set_origin(box.x1, appDisplayBox.y1);
                 }
 
                 return appDisplayBox;
