@@ -275,6 +275,11 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
     }
 
     _onEnter() {
+        // Ignore spurious enter events (e.g. wake from sleep, actor restack)
+        // where the pointer is not actually over the icon.
+        if (!this._source.has_pointer)
+            return;
+
         if (this._source._appIconsHoverList) {
             this._source._appIconsHoverList.forEach(appIcon => {
                 if (appIcon !== this._source && appIcon._previewMenu &&
@@ -335,6 +340,8 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
 
     hoverOpen() {
         this._hoverOpenTimeoutId = null;
+        if (!this._source.has_pointer)
+            return;
         this.fromHover = true;
         if (!this.isOpen)
             this.popup();

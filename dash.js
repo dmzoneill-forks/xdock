@@ -1574,6 +1574,47 @@ export const DockDash = GObject.registerClass({
         }
     }
 
+    _getIconDockEdgePivot(icon, container) {
+        const iconAlloc = icon.get_allocation_box();
+        const iconH = iconAlloc.y2 - iconAlloc.y1;
+        const iconW = iconAlloc.x2 - iconAlloc.x1;
+        if (iconH <= 0 || iconW <= 0)
+            return this._getMagnificationPivot();
+
+        let paddingBefore = 0;
+        let paddingAfter = 0;
+        const isVertical = this._position === St.Side.TOP ||
+                           this._position === St.Side.BOTTOM;
+        const sideBefore = isVertical ? St.Side.TOP : St.Side.LEFT;
+        const sideAfter = isVertical ? St.Side.BOTTOM : St.Side.RIGHT;
+
+        let actor = icon.get_parent();
+        while (actor && actor !== container) {
+            try {
+                const tn = actor.get_theme_node?.();
+                if (tn) {
+                    paddingBefore += tn.get_padding(sideBefore);
+                    paddingAfter += tn.get_padding(sideAfter);
+                }
+            } catch { /* not an St widget */ }
+            actor = actor.get_parent();
+        }
+
+        const size = isVertical ? iconH : iconW;
+        switch (this._position) {
+        case St.Side.BOTTOM:
+            return [0.5, (size + paddingAfter) / size];
+        case St.Side.TOP:
+            return [0.5, -paddingBefore / size];
+        case St.Side.LEFT:
+            return [-paddingBefore / size, 0.5];
+        case St.Side.RIGHT:
+            return [(size + paddingAfter) / size, 0.5];
+        default:
+            return [0.5, (size + paddingAfter) / size];
+        }
+    }
+
     _getUtilityScalableActor(element) {
         if (!element)
             return null;
@@ -1718,7 +1759,9 @@ export const DockDash = GObject.registerClass({
                     const icon = data.child.child?.icon?._iconBin ??
                                  data.child.child?.icon ?? data.child.child;
                     if (icon) {
-                        icon.set_pivot_point(pivotX, pivotY);
+                        const [edgePivotX, edgePivotY] =
+                            this._getIconDockEdgePivot?.(icon, data.child) ?? [pivotX, pivotY];
+                        icon.set_pivot_point(edgePivotX, edgePivotY);
                         icon.set_easing_duration(easingDuration);
                         icon.set_easing_mode(Clutter.AnimationMode.EASE_OUT_QUAD);
                         icon.set_scale(data.scale, data.scale);
@@ -1777,7 +1820,17 @@ export const DockDash = GObject.registerClass({
                 if (child.child?.icon) {
                     const icon = child.child.icon._iconBin ??
                                  child.child.icon ?? child.child;
-                    icon.remove_all_transitions();
+                    // Only remove scale transitions — preserve any active
+                    // bounce animation running on translation_y.
+                    const hasBounce = child.child?._delegate?._bounceHandle?.isActive;
+                    if (hasBounce) {
+                        icon.remove_transition('@scale-x');
+                        icon.remove_transition('@scale-y');
+                        icon.remove_transition('scale-x');
+                        icon.remove_transition('scale-y');
+                    } else {
+                        icon.remove_all_transitions();
+                    }
                     icon.set_easing_duration(dur);
                     icon.set_easing_mode(Clutter.AnimationMode.EASE_OUT_QUAD);
                     icon.set_scale(1.0, 1.0);

@@ -263,6 +263,130 @@ describe('DockDash._getMagnificationPivot', () => {
 });
 
 // ---------------------------------------------------------------------------
+// _getIconDockEdgePivot
+// ---------------------------------------------------------------------------
+describe('DockDash._getIconDockEdgePivot', () => {
+    test('returns magnification pivot when icon allocation is zero', () => {
+        const ctx = makeDashContext({
+            _position: St.Side.BOTTOM,
+            _getMagnificationPivot: () => [0.5, 1.0],
+        });
+        const icon = {
+            get_allocation_box: () => ({x1: 0, y1: 0, x2: 0, y2: 0}),
+            get_parent: () => null,
+        };
+        const container = {};
+        const pivot = DockDash.prototype._getIconDockEdgePivot.call(ctx, icon, container);
+        expect(pivot).toEqual([0.5, 1.0]);
+    });
+
+    test('BOTTOM position computes edge pivot with padding', () => {
+        const ctx = makeDashContext({
+            _position: St.Side.BOTTOM,
+            _getMagnificationPivot: () => [0.5, 1.0],
+        });
+        const parentNode = {
+            get_padding: (side) => (side === St.Side.BOTTOM ? 12 : 0),
+        };
+        const parentActor = {
+            get_theme_node: () => parentNode,
+            get_parent: () => null,
+        };
+        const container = {};
+        parentActor.get_parent = () => container;
+        const icon = {
+            get_allocation_box: () => ({x1: 0, y1: 0, x2: 48, y2: 48}),
+            get_parent: () => parentActor,
+        };
+        const pivot = DockDash.prototype._getIconDockEdgePivot.call(ctx, icon, container);
+        expect(pivot).toEqual([0.5, (48 + 12) / 48]);
+    });
+
+    test('TOP position computes edge pivot with padding', () => {
+        const ctx = makeDashContext({
+            _position: St.Side.TOP,
+            _getMagnificationPivot: () => [0.5, 0.0],
+        });
+        const parentNode = {
+            get_padding: (side) => (side === St.Side.TOP ? 8 : 0),
+        };
+        const container = {};
+        const parentActor = {
+            get_theme_node: () => parentNode,
+            get_parent: () => container,
+        };
+        const icon = {
+            get_allocation_box: () => ({x1: 0, y1: 0, x2: 48, y2: 48}),
+            get_parent: () => parentActor,
+        };
+        const pivot = DockDash.prototype._getIconDockEdgePivot.call(ctx, icon, container);
+        expect(pivot).toEqual([0.5, -8 / 48]);
+    });
+
+    test('LEFT position computes edge pivot with padding', () => {
+        const ctx = makeDashContext({
+            _position: St.Side.LEFT,
+            _getMagnificationPivot: () => [0.0, 0.5],
+        });
+        const parentNode = {
+            get_padding: (side) => (side === St.Side.LEFT ? 6 : 0),
+        };
+        const container = {};
+        const parentActor = {
+            get_theme_node: () => parentNode,
+            get_parent: () => container,
+        };
+        const icon = {
+            get_allocation_box: () => ({x1: 0, y1: 0, x2: 48, y2: 48}),
+            get_parent: () => parentActor,
+        };
+        const pivot = DockDash.prototype._getIconDockEdgePivot.call(ctx, icon, container);
+        expect(pivot).toEqual([-6 / 48, 0.5]);
+    });
+
+    test('RIGHT position computes edge pivot with padding', () => {
+        const ctx = makeDashContext({
+            _position: St.Side.RIGHT,
+            _getMagnificationPivot: () => [1.0, 0.5],
+        });
+        const parentNode = {
+            get_padding: (side) => (side === St.Side.RIGHT ? 10 : 0),
+        };
+        const container = {};
+        const parentActor = {
+            get_theme_node: () => parentNode,
+            get_parent: () => container,
+        };
+        const icon = {
+            get_allocation_box: () => ({x1: 0, y1: 0, x2: 48, y2: 48}),
+            get_parent: () => parentActor,
+        };
+        const pivot = DockDash.prototype._getIconDockEdgePivot.call(ctx, icon, container);
+        expect(pivot).toEqual([(48 + 10) / 48, 0.5]);
+    });
+
+    test('handles non-St widgets throwing error gracefully', () => {
+        const ctx = makeDashContext({
+            _position: St.Side.BOTTOM,
+            _getMagnificationPivot: () => [0.5, 1.0],
+        });
+        const container = {};
+        const parentActor = {
+            get_theme_node: () => {
+                throw new Error('Not an St widget');
+            },
+            get_parent: () => container,
+        };
+        const icon = {
+            get_allocation_box: () => ({x1: 0, y1: 0, x2: 48, y2: 48}),
+            get_parent: () => parentActor,
+        };
+        const pivot = DockDash.prototype._getIconDockEdgePivot.call(ctx, icon, container);
+        expect(pivot).toEqual([0.5, 1.0]);
+    });
+});
+
+// ---------------------------------------------------------------------------
 // _toggleMagnification
 // ---------------------------------------------------------------------------
 describe('DockDash._toggleMagnification', () => {

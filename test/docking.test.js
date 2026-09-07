@@ -4422,15 +4422,15 @@ describe('Coverage boost — real instance exercises', () => {
         expect(dock._dockState === State.SHOWING || dock._dockState === State.SHOWN).toBe(true);
     });
 
-    test('_updateDashVisibility default (neither autohide nor intellihide)', () => {
+    test('_updateDashVisibility default (neither autohide nor intellihide) shows dock', () => {
         const ext = _createCoverageMockExtension();
         manager = new DockManager(ext);
         const dock = manager.mainDock;
         dock._autohideIsEnabled = false;
         dock._intellihideIsEnabled = false;
-        dock._dockState = State.SHOWN;
+        dock._dockState = State.HIDDEN;
         dock._updateDashVisibility();
-        expect(dock._dockState === State.HIDING || dock._dockState === State.HIDDEN).toBe(true);
+        expect(dock._dockState === State.SHOWING || dock._dockState === State.SHOWN).toBe(true);
     });
 
     // --- _hoverChanged branches ---
@@ -6528,12 +6528,26 @@ describe('Coverage boost phase 2', () => {
         const ext = _createCoverageMockExtension();
         manager = new DockManager(ext);
         const dock = manager.mainDock;
-        dock._ignoreHover = true;
+        dock._ignoreHover = false;
         dock._oldIgnoreHover = true;
         dock._box.get_stage = () => ({});
         dock._box.sync_hover = jest.fn();
+        dock._updateDashVisibility = jest.fn();
         dock._onDragEnd();
         expect(dock._ignoreHover).toBe(true);
+    });
+
+    test('_onDragEnd restores false oldIgnoreHover', () => {
+        const ext = _createCoverageMockExtension();
+        manager = new DockManager(ext);
+        const dock = manager.mainDock;
+        dock._ignoreHover = true;
+        dock._oldIgnoreHover = false;
+        dock._box.get_stage = () => ({});
+        dock._box.sync_hover = jest.fn();
+        dock._updateDashVisibility = jest.fn();
+        dock._onDragEnd();
+        expect(dock._ignoreHover).toBe(false);
     });
 
     // --- _startScreencastPulse (lines 1787-1811) ---

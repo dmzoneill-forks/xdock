@@ -907,22 +907,41 @@ const DockSettings = GObject.registerClass({
             clearNotificationsOnFocusCheck, 'sensitive',
             GObject.BindingFlags.SYNC_CREATE);
 
+        const showProgressCheck = this._builder.get_object('show_icons_progress_check');
+        this._settings.bind('show-icons-progress-indicator',
+            showProgressCheck,
+            'active',
+            Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('show-icons-emblems',
+            showProgressCheck,
+            'sensitive',
+            Gio.SettingsBindFlags.GET);
+
         const progressStyleCombo =
             this._builder.get_object('progress_indicator_style_combo');
+        const progressStyleLabel =
+            this._builder.get_object('progress_indicator_style_label');
         progressStyleCombo.set_active_id(
             this._settings.get_string('progress-indicator-style'));
         progressStyleCombo.connect('changed', () => {
-            this._settings.set_string('progress-indicator-style',
-                progressStyleCombo.get_active_id());
+            const activeId = progressStyleCombo.get_active_id();
+            if (activeId) {
+                this._settings.set_string('progress-indicator-style', activeId);
+            }
         });
         this._settings.connect('changed::progress-indicator-style', () => {
             progressStyleCombo.set_active_id(
                 this._settings.get_string('progress-indicator-style'));
         });
-        this._settings.bind('show-icons-emblems',
-            progressStyleCombo,
-            'sensitive',
-            Gio.SettingsBindFlags.GET);
+        const updateProgressStyleSensitivity = () => {
+            const enabled = this._settings.get_boolean('show-icons-emblems') &&
+                            this._settings.get_boolean('show-icons-progress-indicator');
+            progressStyleCombo.sensitive = enabled;
+            progressStyleLabel.sensitive = enabled;
+        };
+        this._settings.connect('changed::show-icons-emblems', updateProgressStyleSensitivity);
+        this._settings.connect('changed::show-icons-progress-indicator', updateProgressStyleSensitivity);
+        updateProgressStyleSensitivity();
 
         this._settings.bind('show-show-apps-button',
             this._builder.get_object('show_applications_button_switch'),
@@ -1773,7 +1792,8 @@ const DockSettings = GObject.registerClass({
                 'unity-backlit-items', 'force-straight-corner', 'custom-border-radius',
                 'isolate-workspaces', 'isolate-monitors', 'group-apps',
                 'show-windows-preview', 'dance-urgent-applications', 'bounce-icons',
-                'show-icons-emblems', 'show-icons-notifications-counter', 'hot-keys',
+                'show-icons-emblems', 'show-icons-notifications-counter',
+                'show-icons-progress-indicator', 'hot-keys',
                 'disable-overview-on-startup', 'always-center-icons',
                 'show-apps-always-in-the-edge', 'hide-tooltip', 'show-previews-hover',
                 'scroll-to-focused-application', 'isolate-locations',
@@ -1902,7 +1922,8 @@ const DockSettings = GObject.registerClass({
             'unity-backlit-items', 'force-straight-corner', 'custom-border-radius',
             'isolate-workspaces', 'isolate-monitors', 'group-apps',
             'show-windows-preview', 'dance-urgent-applications', 'bounce-icons',
-            'show-icons-emblems', 'show-icons-notifications-counter', 'hot-keys',
+            'show-icons-emblems', 'show-icons-notifications-counter',
+            'show-icons-progress-indicator', 'hot-keys',
             'disable-overview-on-startup', 'always-center-icons',
             'show-apps-always-in-the-edge', 'hide-tooltip', 'show-previews-hover',
             'scroll-to-focused-application', 'isolate-locations',

@@ -686,6 +686,11 @@
       <summary>Show application icons emblems</summary>
       <description>Show application icons emblems such as notification counters an progress bars.</description>
     </key>
+    <key name="show-icons-progress-indicator" type="b">
+      <default>true</default>
+      <summary>Show progress indicators in icons</summary>
+      <description>Show progress indicators (bar or circular arc) for applications reporting progress.</description>
+    </key>
     <key name="progress-indicator-style" type="s">
       <default>'bar'</default>
       <summary>Progress indicator style</summary>

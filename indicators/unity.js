@@ -138,6 +138,10 @@ export class UnityIndicator extends IndicatorBase {
             Docking.DockManager.settings,
             'changed::progress-indicator-style',
             () => this._onProgressStyleChanged(),
+        ], [
+            Docking.DockManager.settings,
+            'changed::show-icons-progress-indicator',
+            () => this._onProgressStyleChanged(),
         ]);
 
         this._updateNotificationsCount();
@@ -499,6 +503,13 @@ export class UnityIndicator extends IndicatorBase {
         if (this._progress === undefined || this._progress < 0)
             return;
 
+        const showProgress = Docking.DockManager.settings.showIconsProgressIndicator ?? true;
+        if (!showProgress) {
+            this._hideProgressOverlay();
+            this._hideProgressArc();
+            return;
+        }
+
         // Switching styles: tear down the old one and show the new one
         if (this._isArcStyle()) {
             this._hideProgressOverlay();
@@ -510,7 +521,8 @@ export class UnityIndicator extends IndicatorBase {
     }
 
     setProgress(progress) {
-        if (progress < 0) {
+        const showProgress = Docking.DockManager.settings.showIconsProgressIndicator ?? true;
+        if (progress < 0 || !showProgress) {
             this._hideProgressOverlay();
             this._hideProgressArc();
         } else {
