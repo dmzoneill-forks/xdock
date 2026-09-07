@@ -514,6 +514,7 @@ describe('WindowPreviewMenu', () => {
     test('hoverOpen sets fromHover and calls popup', () => {
         const win = createMockWindow();
         const source = createMockSource({
+            has_pointer: true,
             getInterestingWindows: () => [win],
         });
         const menu = new WindowPreviewMenu(source);
@@ -526,6 +527,7 @@ describe('WindowPreviewMenu', () => {
     test('hoverOpen does nothing if already open', () => {
         const win = createMockWindow();
         const source = createMockSource({
+            has_pointer: true,
             getInterestingWindows: () => [win],
         });
         const menu = new WindowPreviewMenu(source);
@@ -534,6 +536,18 @@ describe('WindowPreviewMenu', () => {
 
         expect(menu.fromHover).toBe(true);
         expect(menu._hoverOpenTimeoutId).toBeNull();
+    });
+
+    test('hoverOpen does nothing when pointer not over source', () => {
+        const win = createMockWindow();
+        const source = createMockSource({
+            has_pointer: false,
+            getInterestingWindows: () => [win],
+        });
+        const menu = new WindowPreviewMenu(source);
+        menu.hoverOpen();
+        expect(menu.fromHover).toBe(false);
+        expect(menu.isOpen).toBe(false);
     });
 
     test('cancelOpen clears hover open timeout', () => {
@@ -677,7 +691,7 @@ describe('WindowPreviewMenu', () => {
 
     // --- _onEnter ---
     test('_onEnter sets up hover open timeout', () => {
-        const source = createMockSource();
+        const source = createMockSource({has_pointer: true});
         const menu = new WindowPreviewMenu(source);
 
         Settings.set('preview-hover-enter-timeout', 300);
@@ -697,6 +711,7 @@ describe('WindowPreviewMenu', () => {
             _previewMenu: otherMenu,
         };
         const source = createMockSource({
+            has_pointer: true,
             _appIconsHoverList: [otherIcon],
         });
         const menu = new WindowPreviewMenu(source);
@@ -709,7 +724,7 @@ describe('WindowPreviewMenu', () => {
     });
 
     test('_onEnter skips self in appIconsHoverList', () => {
-        const source = createMockSource();
+        const source = createMockSource({has_pointer: true});
         source._appIconsHoverList = [source];
         const menu = new WindowPreviewMenu(source);
 
@@ -719,7 +734,7 @@ describe('WindowPreviewMenu', () => {
     });
 
     test('_onEnter cancels existing open and close', () => {
-        const source = createMockSource();
+        const source = createMockSource({has_pointer: true});
         const menu = new WindowPreviewMenu(source);
         menu._hoverOpenTimeoutId = 99;
         menu._hoverCloseTimeoutId = 88;
@@ -729,6 +744,13 @@ describe('WindowPreviewMenu', () => {
         // cancelOpen should have cleared the old one
         // but then a new open timeout was set
         expect(menu._hoverOpenTimeoutId).not.toBe(99);
+    });
+
+    test('_onEnter ignores spurious enter when pointer not over source', () => {
+        const source = createMockSource({has_pointer: false});
+        const menu = new WindowPreviewMenu(source);
+        menu._onEnter();
+        expect(menu._hoverOpenTimeoutId).toBeNull();
     });
 
     // --- _onLeave ---
@@ -3218,6 +3240,7 @@ describe('WindowPreviewMenu — branch coverage', () => {
         };
         const otherIcon = {_previewMenu: otherMenu};
         const source = createMockSource({
+            has_pointer: true,
             _appIconsHoverList: [otherIcon],
         });
         const menu = new WindowPreviewMenu(source);
@@ -3239,6 +3262,7 @@ describe('WindowPreviewMenu — branch coverage', () => {
         };
         const otherIcon = {_previewMenu: otherMenu};
         const source = createMockSource({
+            has_pointer: true,
             _appIconsHoverList: [otherIcon],
         });
         const menu = new WindowPreviewMenu(source);

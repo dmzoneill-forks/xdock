@@ -853,7 +853,10 @@ const DockedDash = GObject.registerClass({
         ], [
             settings,
             'changed::autohide-in-fullscreen',
-            this._updateBarrier.bind(this),
+            () => {
+                this._updateBarrier();
+                this._updateDashVisibility();
+            },
         ], [
             settings,
             'changed::show-dock-urgent-notify',
@@ -968,12 +971,14 @@ const DockedDash = GObject.registerClass({
             panelBox.show();
         }
 
-        [this, this._slider, this._box, this.dash].forEach(actor => {
-            if (actor && !actor.visible) {
-                actor.visible = true;
-                actor.show();
-            }
-        });
+        if (!this._isAnyWindowFullscreen()) {
+            [this, this._slider, this._box, this.dash].forEach(actor => {
+                if (actor && !actor.visible) {
+                    actor.visible = true;
+                    actor.show();
+                }
+            });
+        }
 
         if (Settings.get('manualhide')) {
             this._ignoreHover = true;
@@ -986,28 +991,35 @@ const DockedDash = GObject.registerClass({
             return;
 
         const animationTime = Settings.get('animation-time');
-        const autohideInFullscreen = Settings.get('autohide-in-fullscreen');
+
+        if (Settings.get('dock-fixed')) {
+            // Fixed mode: dock must be fully visible at all times,
+            // regardless of fullscreen state or other hide triggers.
+            this._removeAnimations();
+            this._slider.slideX = 1.0;
+            this._dockState = State.SHOWN;
+            this.dash.iconAnimator.start();
+            return;
+        }
 
         // When autohide-in-fullscreen is enabled and this monitor is in
         // fullscreen, force-hide the dock.  Some apps (notably Firefox)
         // use client-side fullscreen which may not be detected by the
         // Chrome tracking layer, so we check explicitly here.
-        if (autohideInFullscreen && this._monitor.inFullscreen) {
+        if (Settings.get('autohide-in-fullscreen') && this._monitor.inFullscreen) {
             this._ignoreHover = false;
             this._animateOut(animationTime, 0);
             return;
         }
 
-        if (Settings.get('dock-fixed')) {
-            // In fixed mode the dock must be fully visible at all times.
-            // Set slideX directly instead of animating to avoid any
-            // residual offset caused by interrupted animations or
-            // spring-overshoot clamping (issue #2576).
+        if (this._monitor.inFullscreen) {
+            this._ignoreHover = true;
             this._removeAnimations();
-            this._slider.slideX = 1.0;
-            this._dockState = State.SHOWN;
-            this.dash.iconAnimator.start();
-        } else if (this._intellihideIsEnabled) {
+            this._animateOut(0, 0);
+            return;
+        }
+
+        if (this._intellihideIsEnabled) {
             if (!this.dash.requiresVisibility && this._intellihide.getOverlapStatus()) {
                 this._ignoreHover = false;
                 // Do not hide if autohide is enabled and mouse is hover
@@ -1026,7 +1038,9 @@ const DockedDash = GObject.registerClass({
             else
                 this._animateOut(animationTime, 0);
         } else {
-            this._animateOut(animationTime, 0);
+            // Neither intellihide nor autohide enabled — show the dock.
+            this._removeAnimations();
+            this._animateIn(animationTime, 0);
         }
     }
 
@@ -1593,7 +1607,7 @@ const DockedDash = GObject.registerClass({
                 direction = Meta.BarrierDirection.NEGATIVE_Y;
             }
 
-            if (this._pressureBarrier && this._dockState === State.HIDDEN) {
+            if (this._pressureBarrier && (this._dockState === State.HIDDEN || this._dockState === State.HIDING)) {
                 this._barrier = new Meta.Barrier({
                     backend: global.backend,
                     x1,
@@ -1749,7 +1763,7 @@ const DockedDash = GObject.registerClass({
     }
 
     _onDragEnd() {
-        if (this._oldIgnoreHover !== undefined)
+        if (typeof this._oldIgnoreHover === 'boolean')
             this._ignoreHover = this._oldIgnoreHover;
         this._oldIgnoreHover = null;
         if (this._box?.get_stage())

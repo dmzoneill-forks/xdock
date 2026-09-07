@@ -1842,13 +1842,24 @@
                               </object>
                             </child>
                             <child>
+                              <object class="GtkCheckButton" id="show_icons_progress_check">
+                                <property name="label" translatable="yes">Show progress indicator</property>
+                                <property name="halign">start</property>
+                                <layout>
+                                  <property name="column">0</property>
+                                  <property name="row">4</property>
+                                  <property name="column-span">2</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
                               <object class="GtkLabel" id="progress_indicator_style_label">
                                 <property name="hexpand">1</property>
                                 <property name="halign">start</property>
                                 <property name="label" translatable="yes">Progress indicator style</property>
                                 <layout>
                                   <property name="column">0</property>
-                                  <property name="row">4</property>
+                                  <property name="row">5</property>
                                 </layout>
                               </object>
                             </child>
@@ -1857,12 +1868,12 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <items>
-                                  <item translatable="yes">Horizontal bar</item>
-                                  <item translatable="yes">Circular arc</item>
+                                  <item id="bar" translatable="yes">Horizontal bar</item>
+                                  <item id="arc" translatable="yes">Circular arc</item>
                                 </items>
                                 <layout>
                                   <property name="column">1</property>
-                                  <property name="row">4</property>
+                                  <property name="row">5</property>
                                 </layout>
                               </object>
                             </child>
