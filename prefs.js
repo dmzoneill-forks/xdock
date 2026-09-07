@@ -787,6 +787,10 @@ const DockSettings = GObject.registerClass({
             this._builder.get_object('multi_monitor_button'),
             'active',
             Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('hide-missing-preferred-monitor',
+            this._builder.get_object('hide_missing_preferred_monitor_button'),
+            'active',
+            Gio.SettingsBindFlags.DEFAULT);
         this._settings.bind('show-favorites',
             this._builder.get_object('show_favorite_switch'),
             'active',

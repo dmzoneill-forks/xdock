@@ -388,7 +388,7 @@ export const Utils = {
     laterAdd: (_type, cb) => { if (cb) cb(); return 1; },
     laterRemove: () => {},
     getMonitorManager: () => ({
-        get_monitor_for_connector: () => 0,
+        get_monitor_for_connector: (conn) => (conn === 'DP-99' || conn === 'disconnected' ? -1 : 0),
         connect: () => _nextSigId++,
         disconnect: () => {},
     }),
