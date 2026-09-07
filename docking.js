@@ -693,7 +693,10 @@ const DockedDash = GObject.registerClass({
 
         // Remove pointer watcher
         if (this._dockWatch) {
-            PointerWatcher.getPointerWatcher()._removeWatch(this._dockWatch);
+            if (typeof this._dockWatch === 'number')
+                Utils.getCursorTracker()?.disconnect?.(this._dockWatch);
+            else
+                PointerWatcher.getPointerWatcher?.()._removeWatch?.(this._dockWatch);
             this._dockWatch = null;
         }
 
@@ -709,7 +712,10 @@ const DockedDash = GObject.registerClass({
     _updateAutoHideBarriers() {
         // Remove pointer watcher
         if (this._dockWatch) {
-            PointerWatcher.getPointerWatcher()._removeWatch(this._dockWatch);
+            if (typeof this._dockWatch === 'number')
+                Utils.getCursorTracker()?.disconnect?.(this._dockWatch);
+            else
+                PointerWatcher.getPointerWatcher?.()._removeWatch?.(this._dockWatch);
             this._dockWatch = null;
         }
 
@@ -1353,10 +1359,16 @@ const DockedDash = GObject.registerClass({
         if (this._autohideIsEnabled &&
             (!Utils.supportsExtendedBarriers() ||
              !Settings.get('require-pressure-to-show'))) {
-            const pointerWatcher = PointerWatcher.getPointerWatcher();
-            this._dockWatch = pointerWatcher.addWatch(
-                Settings.get('dock-dwell-check-interval') ?? DOCK_DWELL_CHECK_INTERVAL,
-                this._checkDockDwell.bind(this));
+            const pointerWatcher = PointerWatcher.getPointerWatcher?.();
+            if (pointerWatcher && typeof pointerWatcher.addWatch === 'function') {
+                this._dockWatch = pointerWatcher.addWatch(
+                    Settings.get('dock-dwell-check-interval') ?? DOCK_DWELL_CHECK_INTERVAL,
+                    this._checkDockDwell.bind(this));
+            } else {
+                this._dockWatch = Utils.getCursorTracker()?.connect?.(
+                    'position-invalidated',
+                    () => this._checkDockDwell(...global.get_pointer()));
+            }
             this._dockDwelling = false;
             this._dockDwellUserTime = 0;
         }

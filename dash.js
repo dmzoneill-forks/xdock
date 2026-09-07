@@ -232,6 +232,15 @@ export const DockDash = GObject.registerClass({
             y_expand: !this._isHorizontal,
             x_expand: this._isHorizontal,
         });
+
+        if (this._dashContainer.orientation !== undefined) {
+            this._dashContainer.orientation =
+                this._boxContainer.orientation =
+                this._box.orientation = this._isHorizontal
+                    ? Clutter.Orientation.HORIZONTAL
+                    : Clutter.Orientation.VERTICAL;
+        }
+
         this._box._delegate = this;
         this._boxContainer.add_child(this._box);
         Utils.addActor(this._scrollView, this._boxContainer);
