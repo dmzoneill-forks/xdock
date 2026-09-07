@@ -8,7 +8,34 @@ export * as Layout from 'resource:///org/gnome/shell/ui/layout.js';
 export * as Main from 'resource:///org/gnome/shell/ui/main.js';
 export * as Overview from 'resource:///org/gnome/shell/ui/overview.js';
 export * as OverviewControls from 'resource:///org/gnome/shell/ui/overviewControls.js';
-export * as PointerWatcher from 'resource:///org/gnome/shell/ui/pointerWatcher.js';
+import {GLib} from '../gi.js';
+
+let PointerWatcherModule;
+try {
+    PointerWatcherModule = await import('resource:///org/gnome/shell/ui/pointerWatcher.js');
+} catch {
+    PointerWatcherModule = {
+        getPointerWatcher() {
+            return {
+                addWatch(interval, callback) {
+                    const id = GLib.timeout_add(GLib.PRIORITY_DEFAULT, interval, () => {
+                        const [x, y] = global.get_pointer();
+                        callback(x, y);
+                        return GLib.SOURCE_CONTINUE;
+                    });
+                    return {id};
+                },
+                _removeWatch(watch) {
+                    if (watch?.id) {
+                        GLib.source_remove(watch.id);
+                        watch.id = 0;
+                    }
+                },
+            };
+        },
+    };
+}
+export {PointerWatcherModule as PointerWatcher};
 export * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 export * as SearchController from 'resource:///org/gnome/shell/ui/searchController.js';
 export * as ShellMountOperation from 'resource:///org/gnome/shell/ui/shellMountOperation.js';
