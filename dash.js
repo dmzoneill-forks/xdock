@@ -282,7 +282,7 @@ export const DockDash = GObject.registerClass({
         this._boxContainer.add_child(this._box);
         Utils.addActor(this._scrollView, this._boxContainer);
         this._dashContainer.add_child(this._scrollView);
-        this._updateScrollViewAlignment();
+        this._updateScrollViewAlignment?.();
 
         this._showAppsIcon = new AppIcons.DockShowAppsIcon(this._position);
         this._showAppsIcon.show(false);
@@ -2216,7 +2216,19 @@ export const DockDash = GObject.registerClass({
 
         let running = this._appSystem.get_running();
 
-        this._updateScrollViewAlignment();
+        this._scrollView.set({
+            xAlign: Clutter.ActorAlign.FILL,
+            yAlign: Clutter.ActorAlign.FILL,
+        });
+        if (dockManager.settings.dockExtended) {
+            if (!this._isHorizontal) {
+                this._scrollView.yAlign = dockManager.settings.alwaysCenterIcons
+                    ? Clutter.ActorAlign.CENTER : Clutter.ActorAlign.START;
+            } else {
+                this._scrollView.xAlign = dockManager.settings.alwaysCenterIcons
+                    ? Clutter.ActorAlign.CENTER : Clutter.ActorAlign.START;
+            }
+        }
 
         if (settings.isolateWorkspaces ||
             settings.isolateMonitors) {
@@ -2576,7 +2588,19 @@ export const DockDash = GObject.registerClass({
         const favorites = AppFavorites.getAppFavorites().getFavoriteMap();
         let running = this._appSystem.get_running();
 
-        this._updateScrollViewAlignment();
+        this._scrollView.set({
+            xAlign: Clutter.ActorAlign.FILL,
+            yAlign: Clutter.ActorAlign.FILL,
+        });
+        if (dockManager.settings.dockExtended) {
+            if (!this._isHorizontal) {
+                this._scrollView.yAlign = dockManager.settings.alwaysCenterIcons
+                    ? Clutter.ActorAlign.CENTER : Clutter.ActorAlign.START;
+            } else {
+                this._scrollView.xAlign = dockManager.settings.alwaysCenterIcons
+                    ? Clutter.ActorAlign.CENTER : Clutter.ActorAlign.START;
+            }
+        }
 
         if (settings.isolateWorkspaces ||
             settings.isolateMonitors) {
