@@ -428,9 +428,10 @@ const DockSettings = GObject.registerClass({
 
             this._monitors.push(monitor);
 
-            if (!multiMonitor && preferredMonitorByConnector === monitor.connector)
+            if (!multiMonitor && preferredMonitorByConnector === monitor.connector) {
                 dockMonitorCombo.set_active(
                     DockMonitorEntry.FIRST_MONITOR + this._monitors.length - 1);
+            }
         }
 
         if (dockMonitorCombo.get_active() < 0)
@@ -569,6 +570,10 @@ const DockSettings = GObject.registerClass({
             this._builder.get_object('require_pressure_checkbutton'),
             'active',
             Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('restrict-pressure-to-dock',
+            this._builder.get_object('restrict_pressure_to_dock_checkbutton'),
+            'active',
+            Gio.SettingsBindFlags.DEFAULT);
         this._settings.bind('intellihide',
             this._builder.get_object('intellihide_switch'),
             'active',
@@ -637,6 +642,11 @@ const DockSettings = GObject.registerClass({
                 'sensitive',
                 Gio.SettingsBindFlags.GET);
 
+            this._settings.bind('autohide',
+                this._builder.get_object('restrict_pressure_to_dock_checkbutton'),
+                'sensitive',
+                Gio.SettingsBindFlags.GET);
+
             this._settings.bind('require-pressure-to-show',
                 this._builder.get_object('show_timeout_spinbutton'),
                 'sensitive',
@@ -660,7 +670,8 @@ const DockSettings = GObject.registerClass({
                     const keys = ['intellihide', 'autohide', 'intellihide-mode',
                         'autohide-in-fullscreen', 'show-dock-urgent-notify',
                         'require-pressure-to-show', 'animation-time',
-                        'show-delay', 'hide-delay', 'pressure-threshold'];
+                        'show-delay', 'hide-delay', 'pressure-threshold',
+                        'restrict-pressure-to-dock'];
                     keys.forEach(function (val) {
                         this._settings.set_value(val, this._settings.get_default_value(val));
                     }, this);
