@@ -573,7 +573,8 @@ const DockedDash = GObject.registerClass({
             'notify::visible',
             () => {
                 if (!this.visible && !Main.overview.visibleTarget &&
-                    !Settings.get('manualhide')) {
+                    !Settings.get('manualhide') &&
+                    !this._isAnyWindowFullscreen()) {
                     this.visible = true;
                     this.show();
                 }

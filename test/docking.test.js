@@ -8329,6 +8329,22 @@ describe('Coverage boost phase 2', () => {
         expect(Main.layoutManager.panelBox.visible).toBe(true);
     });
 
+    test('dock visibility handler does not restore during fullscreen', () => {
+        const ext = _createCoverageMockExtension();
+        manager = new DockManager(ext);
+        const dock = manager.mainDock;
+        const getMonitorInFullscreen = global.display.get_monitor_in_fullscreen;
+        global.display.get_monitor_in_fullscreen = jest.fn(() => true);
+        try {
+            dock._monitor = {inFullscreen: false, index: 0};
+            dock.visible = false;
+            dock.emit('notify::visible');
+            expect(dock.visible).toBe(false);
+        } finally {
+            global.display.get_monitor_in_fullscreen = getMonitorInFullscreen;
+        }
+    });
+
     // --- Theme update handler skips first, fires on second (lines 466-470) ---
     // These are connected via _signalsHandler.add to _themeManager
     // The _themeManager mock's connect/emit pattern may not work
