@@ -4,7 +4,6 @@
         <property name="title" translatable="yes">About</property>
         <property name="child">
           <object class="GtkBox" id="about">
-            <property name="visible">0</property>
             <property name="can_focus">0</property>
             <property name="margin_top">24</property>
             <property name="margin_bottom">24</property>
