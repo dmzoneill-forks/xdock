@@ -688,6 +688,14 @@ const DockSettings = GObject.registerClass({
             'value',
             Gio.SettingsBindFlags.DEFAULT
         );
+        const dockEdgeMarginScale = this._builder.get_object('dock_edge_margin_scale');
+        dockEdgeMarginScale.set_format_value_func((_, value) => `${value} px`);
+        this._settings.bind(
+            'dock-edge-margin',
+            this._builder.get_object('dock_edge_margin_adjustment'),
+            'value',
+            Gio.SettingsBindFlags.DEFAULT
+        );
         this._settings.bind('dock-edge-dwell-width',
             this._builder.get_object('dock_dwell_width_scale').get_adjustment(),
             'value', Gio.SettingsBindFlags.DEFAULT);
@@ -1792,7 +1800,7 @@ const DockSettings = GObject.registerClass({
             const PROFILE_SETTINGS_KEYS = [
                 'dock-position', 'dash-max-icon-size', 'dock-fixed', 'autohide',
                 'intellihide', 'extend-height', 'height-fraction', 'icon-size-fixed',
-                'multi-monitor', 'dock-margin-size', 'show-favorites', 'show-running',
+                'multi-monitor', 'dock-margin-size', 'dock-edge-margin', 'show-favorites', 'show-running',
                 'show-trash', 'show-mounts', 'click-action', 'scroll-action',
                 'transparency-mode', 'background-opacity', 'custom-background-color',
                 'background-color', 'autohide-in-fullscreen', 'intellihide-mode',
@@ -1922,7 +1930,7 @@ const DockSettings = GObject.registerClass({
         const PROFILE_SETTINGS_KEYS = [
             'dock-position', 'dash-max-icon-size', 'dock-fixed', 'autohide',
             'intellihide', 'extend-height', 'height-fraction', 'icon-size-fixed',
-            'multi-monitor', 'dock-margin-size', 'show-favorites', 'show-running',
+            'multi-monitor', 'dock-margin-size', 'dock-edge-margin', 'show-favorites', 'show-running',
             'show-trash', 'show-mounts', 'click-action', 'scroll-action',
             'transparency-mode', 'background-opacity', 'custom-background-color',
             'background-color', 'autohide-in-fullscreen', 'intellihide-mode',

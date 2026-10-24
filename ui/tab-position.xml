@@ -363,6 +363,47 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkListBoxRow" id="dock_edge_margin_listboxrow">
+                        <property name="child">
+                          <object class="GtkGrid" id="dock_edge_margin_grid">
+                            <property name="can_focus">0</property>
+                            <property name="margin_start">12</property>
+                            <property name="margin_end">12</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
+                            <property name="column_spacing">32</property>
+                            <child>
+                              <object class="GtkLabel" id="dock_edge_margin_label">
+                                <property name="can_focus">0</property>
+                                <property name="hexpand">1</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">Extra edge spacing</property>
+                                <layout>
+                                  <property name="column">0</property>
+                                  <property name="row">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkScale" id="dock_edge_margin_scale">
+                                <property name="draw-value">1</property>
+                                <property name="valign">baseline</property>
+                                <property name="hexpand">1</property>
+                                <property name="adjustment">dock_edge_margin_adjustment</property>
+                                <property name="round_digits">0</property>
+                                <property name="digits">0</property>
+                                <property name="value_pos">right</property>
+                                <layout>
+                                  <property name="column">1</property>
+                                  <property name="row">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkListBoxRow" id="icon_size_listboxrow">
                         <property name="child">
                           <object class="GtkGrid" id="icon_size_grid">

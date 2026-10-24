@@ -326,6 +326,12 @@
       <summary>Dock margin size</summary>
       <description>The margin size around the dock in pixels.</description>
     </key>
+    <key name="dock-edge-margin" type="i">
+      <default>0</default>
+      <range min="0" max="128"/>
+      <summary>Extra edge spacing</summary>
+      <description>Additional space between the dock and the screen edge in pixels.</description>
+    </key>
     <key type="s" name="preferred-monitor-by-connector">
       <default>"primary"</default>
       <summary>Monitor on which putting the dock (by connector)</summary>

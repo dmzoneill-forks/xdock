@@ -512,6 +512,10 @@ const DockedDash = GObject.registerClass({
             this._isHorizontal ? 'notify::x' : 'notify::y',
             this._updateStaticBox.bind(this),
         ], [
+            this._box,
+            'notify::allocation',
+            this._updateStaticBox.bind(this),
+        ], [
             this._slider,
             'notify::slide-x',
             scheduleRegionUpdate,
@@ -878,6 +882,10 @@ const DockedDash = GObject.registerClass({
         ], [
             settings,
             'changed::height-fraction',
+            this._resetPosition.bind(this),
+        ], [
+            settings,
+            'changed::dock-edge-margin',
             this._resetPosition.bind(this),
         ], [
             settings,
@@ -1652,6 +1660,10 @@ const DockedDash = GObject.registerClass({
         const fixedIsEnabled = Settings.get('dock-fixed');
         const extendHeight = Settings.get('extend-height');
         const margin = Settings.get('dock-margin-size');
+        const edgeMargin = Settings.get('dock-edge-margin');
+
+        const side = Theming.PositionStyleClass[this._position];
+        this._box.set_style(edgeMargin ? `padding-${side}: ${edgeMargin}px;` : null);
 
         if (fixedIsEnabled)
             this.add_style_class_name('fixed');
