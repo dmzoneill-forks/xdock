@@ -68,6 +68,11 @@ class DockDashItemContainer extends Dash.DashItemContainer {
         this.label?.add_style_class_name(Theming.PositionStyleClass[position]);
         if (Settings.get('custom-theme-shrink'))
             this.label?.add_style_class_name('shrink');
+
+        // Keep panel-mode icons fully allocated so scale animations do not
+        // shift neighboring icons.
+        if (Docking.DockManager.settings?.dockExtended)
+            this.set({scale_x: 1, scale_y: 1});
     }
 
     showLabel() {
@@ -81,6 +86,9 @@ class DockDashItemContainer extends Dash.DashItemContainer {
     show(animate) {
         if (this.child === null || this.child === undefined)
             return;
+
+        if (Docking.DockManager.settings?.dockExtended)
+            this.set({scale_x: 1, scale_y: 1});
 
         this.ease({
             scale_x: 1,
@@ -97,6 +105,29 @@ class DockDashItemContainer extends Dash.DashItemContainer {
                 this.set_hover(true);
                 this.set_hover(false);
             },
+        });
+    }
+
+    animateOutAndDestroy() {
+        if (!Docking.DockManager.settings?.dockExtended) {
+            super.animateOutAndDestroy();
+            return;
+        }
+
+        this.label?.hide();
+        if (this.child === null || this.child === undefined) {
+            this.destroy();
+            return;
+        }
+
+        // Fade in place. The base animation scales the actor and shifts
+        // neighboring icons in panel mode.
+        this.animatingOut = true;
+        this.ease({
+            opacity: 0,
+            duration: DASH_ANIMATION_TIME,
+            mode: Clutter.AnimationMode.EASE_OUT_QUAD,
+            onComplete: () => this.destroy(),
         });
     }
 });
@@ -251,6 +282,7 @@ export const DockDash = GObject.registerClass({
         this._boxContainer.add_child(this._box);
         Utils.addActor(this._scrollView, this._boxContainer);
         this._dashContainer.add_child(this._scrollView);
+        this._updateScrollViewAlignment();
 
         this._showAppsIcon = new AppIcons.DockShowAppsIcon(this._position);
         this._showAppsIcon.show(false);
@@ -414,6 +446,14 @@ export const DockDash = GObject.registerClass({
             Docking.DockManager.settings,
             'changed::icon-magnification-all',
             () => this._resetMagnification(true),
+        ], [
+            Docking.DockManager.settings,
+            'changed::extend-height',
+            this._updateScrollViewAlignment.bind(this),
+        ], [
+            Docking.DockManager.settings,
+            'changed::always-center-icons',
+            this._updateScrollViewAlignment.bind(this),
         ]);
 
         this._signalsHandler.add([
@@ -2108,6 +2148,28 @@ export const DockDash = GObject.registerClass({
         return app && app.isPinnedCommand;
     }
 
+    _updateScrollViewAlignment() {
+        const {settings} = Docking.DockManager;
+        let xAlign = Clutter.ActorAlign.FILL;
+        let yAlign = Clutter.ActorAlign.FILL;
+
+        if (settings.dockExtended) {
+            if (this._isHorizontal) {
+                xAlign = settings.alwaysCenterIcons
+                    ? Clutter.ActorAlign.CENTER : Clutter.ActorAlign.START;
+            } else {
+                yAlign = settings.alwaysCenterIcons
+                    ? Clutter.ActorAlign.CENTER : Clutter.ActorAlign.START;
+            }
+        }
+
+        if (this._scrollView.xAlign === xAlign &&
+            this._scrollView.yAlign === yAlign)
+            return;
+
+        this._scrollView.set({xAlign, yAlign});
+    }
+
     _ensureSeparator(separator, pos) {
         if (!separator) {
             separator = new St.Widget({
@@ -2154,19 +2216,7 @@ export const DockDash = GObject.registerClass({
 
         let running = this._appSystem.get_running();
 
-        this._scrollView.set({
-            xAlign: Clutter.ActorAlign.FILL,
-            yAlign: Clutter.ActorAlign.FILL,
-        });
-        if (dockManager.settings.dockExtended) {
-            if (!this._isHorizontal) {
-                this._scrollView.yAlign = dockManager.settings.alwaysCenterIcons
-                    ? Clutter.ActorAlign.CENTER : Clutter.ActorAlign.START;
-            } else {
-                this._scrollView.xAlign = dockManager.settings.alwaysCenterIcons
-                    ? Clutter.ActorAlign.CENTER : Clutter.ActorAlign.START;
-            }
-        }
+        this._updateScrollViewAlignment();
 
         if (settings.isolateWorkspaces ||
             settings.isolateMonitors) {
@@ -2526,19 +2576,7 @@ export const DockDash = GObject.registerClass({
         const favorites = AppFavorites.getAppFavorites().getFavoriteMap();
         let running = this._appSystem.get_running();
 
-        this._scrollView.set({
-            xAlign: Clutter.ActorAlign.FILL,
-            yAlign: Clutter.ActorAlign.FILL,
-        });
-        if (dockManager.settings.dockExtended) {
-            if (!this._isHorizontal) {
-                this._scrollView.yAlign = dockManager.settings.alwaysCenterIcons
-                    ? Clutter.ActorAlign.CENTER : Clutter.ActorAlign.START;
-            } else {
-                this._scrollView.xAlign = dockManager.settings.alwaysCenterIcons
-                    ? Clutter.ActorAlign.CENTER : Clutter.ActorAlign.START;
-            }
-        }
+        this._updateScrollViewAlignment();
 
         if (settings.isolateWorkspaces ||
             settings.isolateMonitors) {
