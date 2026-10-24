@@ -761,6 +761,9 @@ class Transparency {
 
         this._signalsHandler = new Utils.GlobalSignalsHandler();
         this._trackedWindows = new Map();
+
+        this._destroyed = false;
+        dock.connect('destroy', () => (this._destroyed = true));
     }
 
     enable() {
@@ -793,7 +796,7 @@ class Transparency {
         ], [
             global.window_manager,
             'switch-workspace',
-            this._updateSolidStyle.bind(this),
+            this._selfDisconnecting(global.window_manager),
         ], [
             Main.overview,
             'hiding',
@@ -839,12 +842,23 @@ class Transparency {
     }
 
     destroy() {
+        this._destroyed = true;
         this.disable();
         if (this._solidStyleUpdateId) {
             GLib.source_remove(this._solidStyleUpdateId);
             this._solidStyleUpdateId = 0;
         }
         this._signalsHandler.destroy();
+    }
+
+    _selfDisconnecting(instance) {
+        const handler = () => {
+            if (this._destroyed)
+                GObject.signal_handlers_disconnect_by_func(instance, handler);
+            else
+                this._updateSolidStyle();
+        };
+        return handler;
     }
 
     _onWindowActorAdded(container, metaWindowActor) {
@@ -867,6 +881,9 @@ class Transparency {
     }
 
     _updateSolidStyle() {
+        if (this._destroyed)
+            return;
+
         // Debounce: rapid window allocation changes (e.g. from wallpaper
         // changers like Variety) can fire hundreds of notify::allocation
         // signals per second.  Coalesce them into a single idle callback
