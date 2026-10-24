@@ -386,8 +386,8 @@ const DockedDash = GObject.registerClass({
             global.display,
             'in-fullscreen-changed',
             () => {
+                this._resetPosition();
                 this._updateBarrier();
-                this._updateDashVisibility();
             },
         ], [
             // Monitor windows overlapping
@@ -1357,6 +1357,10 @@ const DockedDash = GObject.registerClass({
     }
 
     _animateIn(time, delay) {
+        if (this._dockState === State.SHOWING &&
+            this._slider.get_transition?.('slide-x'))
+            return;
+
         this._updateUnredirect();
         this._dockState = State.SHOWING;
         this.dash.iconAnimator.start();
@@ -1420,6 +1424,10 @@ const DockedDash = GObject.registerClass({
 
     _animateOut(time, delay) {
         if (this._dockState === State.HIDDEN && this._slider.slideX === 0)
+            return;
+
+        if (this._dockState === State.HIDING &&
+            this._slider.get_transition?.('slide-x'))
             return;
 
         this._dockState = State.HIDING;
@@ -1821,7 +1829,9 @@ const DockedDash = GObject.registerClass({
         // Note: do not use the workarea coordinates in the direction on which the dock is placed,
         // to avoid a loop [position change -> workArea change -> position change] with
         // fixed dock.
-        const workArea = Main.layoutManager.getWorkAreaForMonitor(this.monitorIndex);
+        const workArea = this._monitor.inFullscreen
+            ? this._monitor
+            : Main.layoutManager.getWorkAreaForMonitor(this.monitorIndex);
 
         let fraction = Settings.get('height-fraction');
         if (extendHeight)

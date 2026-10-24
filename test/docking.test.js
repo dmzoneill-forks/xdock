@@ -3727,6 +3727,35 @@ describe('DockManager full instantiation', () => {
         expect(dock._width !== undefined || dock._height !== undefined).toBe(true);
     });
 
+    test('dock _resetPosition uses full monitor geometry in fullscreen', () => {
+        const ext = createMockExtension();
+        manager = new DockManager(ext);
+        const dock = manager.mainDock;
+        const getWorkArea = Main.layoutManager.getWorkAreaForMonitor;
+
+        dock._monitor = {
+            x: 100,
+            y: 50,
+            width: 1920,
+            height: 1080,
+            inFullscreen: true,
+        };
+        Main.layoutManager.getWorkAreaForMonitor = jest.fn(() => ({
+            x: 100,
+            y: 100,
+            width: 1920,
+            height: 980,
+        }));
+
+        dock._resetPosition();
+
+        expect(Main.layoutManager.getWorkAreaForMonitor).not.toHaveBeenCalled();
+        expect(dock.width).toBe(Math.round(0.95 * 1920));
+        expect(dock.x).toBe(100 + Math.round(0.025 * 1920));
+        expect(dock.y).toBe(50);
+        Main.layoutManager.getWorkAreaForMonitor = getWorkArea;
+    });
+
     test('dock _disableUnredirect and _restoreUnredirect', () => {
         const ext = createMockExtension();
         manager = new DockManager(ext);
