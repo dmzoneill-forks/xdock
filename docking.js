@@ -377,6 +377,15 @@ const DockedDash = GObject.registerClass({
             'notify::hover',
             this._hoverChanged.bind(this),
         ], [
+            // Minimize/unminimize and native Wayland surface commits can only
+            // become visible to the compositor after a restack.  Reconcile
+            // unredirect state here so a surface restored after minimize is
+            // composited again (notably Blender's native Wayland OpenGL
+            // window, #920; upstream dash-to-dock #2722).
+            global.display,
+            'restacked',
+            this._onWindowsRestacked.bind(this),
+        ], [
             // update when workarea changes, for instance if  other extensions modify the struts
             // (like moving th panel at the bottom)
             global.display,
@@ -1005,6 +1014,10 @@ const DockedDash = GObject.registerClass({
             this._disableUnredirect();
         else
             this._restoreUnredirect();
+    }
+
+    _onWindowsRestacked() {
+        this._updateUnredirect();
     }
 
     /**

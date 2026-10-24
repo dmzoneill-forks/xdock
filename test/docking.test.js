@@ -5694,6 +5694,17 @@ describe('Coverage boost — real instance exercises', () => {
         delete Meta.enable_unredirect_for_display;
     });
 
+    test('_onWindowsRestacked refreshes unredirect state', () => {
+        const ext = _createCoverageMockExtension();
+        manager = new DockManager(ext);
+        const dock = manager.mainDock;
+        dock._updateUnredirect = jest.fn();
+
+        dock._onWindowsRestacked();
+
+        expect(dock._updateUnredirect).toHaveBeenCalledTimes(1);
+    });
+
     // --- _onPressureSensed shouldHide branches (lines 1461-1504) ---
 
     test('_onPressureSensed pointer check for LEFT position', () => {
