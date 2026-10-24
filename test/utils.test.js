@@ -7,6 +7,7 @@ import {
     drawRoundedLine, cairoSetSourceColor, addActor,
     getMonitorManager, laterAdd, laterRemove, supportsExtendedBarriers,
     getWindowsByObjectPath, CancellableChild,
+    sortAppsByWindowCoordinates,
 } from '../utils.js';
 import {Clutter, Gio, GLib, GObject, Meta, Shell, St} from '../dependencies/gi.js';
 import {Docking} from '../imports.js';
@@ -496,6 +497,42 @@ describe('shellAppCompare', () => {
         const a = mockApp(RUNNING, []);
         const b = mockApp(RUNNING, [mockWindow(false, 200)]);
         expect(shellAppCompare(a, b)).toBe(1);
+    });
+});
+
+describe('sortAppsByWindowCoordinates', () => {
+    const app = (id, windows) => ({get_id: () => id, get_windows: () => windows});
+    const win = (x, y) => ({get_frame_rect: () => ({x, y})});
+
+    test('sorts horizontally by x, then y, with deterministic ID tie-break', () => {
+        const apps = [
+            app('z.desktop', [win(200, 10)]),
+            app('a.desktop', [win(100, 20)]),
+            app('b.desktop', [win(100, 20)]),
+        ];
+        expect(sortAppsByWindowCoordinates(apps, true).map(a => a.get_id()))
+            .toEqual(['a.desktop', 'b.desktop', 'z.desktop']);
+    });
+
+    test('sorts vertically by y, then x', () => {
+        const apps = [app('right.desktop', [win(20, 100)]), app('top.desktop', [win(200, 10)])];
+        expect(sortAppsByWindowCoordinates(apps, false).map(a => a.get_id()))
+            .toEqual(['top.desktop', 'right.desktop']);
+    });
+
+    test('uses leading window coordinate across multiple windows', () => {
+        const apps = [
+            app('multi.desktop', [win(500, 500), win(50, 50)]),
+            app('middle.desktop', [win(100, 100)]),
+        ];
+        expect(sortAppsByWindowCoordinates(apps, true).map(a => a.get_id()))
+            .toEqual(['multi.desktop', 'middle.desktop']);
+    });
+
+    test('keeps apps without frame rectangles last and stable', () => {
+        const apps = [app('no-rect.desktop', [{}]), app('placed.desktop', [win(1, 1)])];
+        expect(sortAppsByWindowCoordinates(apps, true).map(a => a.get_id()))
+            .toEqual(['placed.desktop', 'no-rect.desktop']);
     });
 });
 

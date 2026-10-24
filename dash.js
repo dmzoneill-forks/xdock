@@ -2344,8 +2344,12 @@ export const DockDash = GObject.registerClass({
             }
         }
 
-        // Second pass: append remaining items not yet in dock-order.
-        for (const app of orderableById.values())
+        // Second pass: append remaining items not yet in dock-order. In
+        // coordinate mode, running apps are ordered by their window position.
+        const remainingApps = settings.appOrder === 1
+            ? Utils.sortAppsByWindowCoordinates([...orderableById.values()], this._isHorizontal)
+            : [...orderableById.values()];
+        for (const app of remainingApps)
             _pushApp(app);
 
         // ── Phase 4b: Pinned Commands ────────────────────────────

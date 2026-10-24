@@ -192,6 +192,36 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkListBoxRow">
+                        <property name="child">
+                          <object class="GtkGrid">
+                            <property name="margin_start">12</property>
+                            <property name="margin_end">12</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">12</property>
+                            <property name="column_spacing">32</property>
+                            <child>
+                              <object class="GtkLabel" id="app_order_label">
+                                <property name="label" translatable="yes">Running application icon order</property>
+                                <property name="halign">start</property>
+                                <layout><property name="column">0</property><property name="row">0</property></layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkComboBoxText" id="app_order_combo">
+                                <property name="halign">end</property>
+                                <items>
+                                  <item id="stable" translatable="yes">Dock order</item>
+                                  <item id="coordinates" translatable="yes">Window coordinates</item>
+                                </items>
+                                <layout><property name="column">1</property><property name="row">0</property></layout>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkListBoxRow" id="listboxrow17">
                         <property name="child">
                           <object class="GtkGrid" id="shrink_dash3">

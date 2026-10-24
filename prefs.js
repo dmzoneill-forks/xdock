@@ -782,6 +782,17 @@ const DockSettings = GObject.registerClass({
             this._builder.get_object('show_running_switch'),
             'active',
             Gio.SettingsBindFlags.DEFAULT);
+        const appOrderCombo = this._builder.get_object('app_order_combo');
+        appOrderCombo.set_active_id(this._settings.get_enum('app-order') === 1
+            ? 'coordinates' : 'stable');
+        appOrderCombo.connect('changed', () => {
+            const activeId = appOrderCombo.get_active_id();
+            if (activeId)
+                this._settings.set_enum('app-order', activeId === 'coordinates' ? 1 : 0);
+        });
+        this._settings.connect('changed::app-order', () =>
+            appOrderCombo.set_active_id(this._settings.get_enum('app-order') === 1
+                ? 'coordinates' : 'stable'));
         const applicationButtonIsolationButton =
             this._builder.get_object('application_button_isolation_button');
         const applicationButtonIsolationLabel =

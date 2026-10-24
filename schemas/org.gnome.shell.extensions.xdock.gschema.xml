@@ -20,6 +20,10 @@
     <value value='1' nick='cycle-windows'/>
     <value value='2' nick='switch-workspace'/>
   </enum>
+  <enum id='org.gnome.shell.extensions.xdock.app-order'>
+    <value value='0' nick='stable'/>
+    <value value='1' nick='coordinates'/>
+  </enum>
   <!-- this is mean to Match StSide. LEFT and RIGHT actual position in reversed in
        rtl languages -->
   <enum id='org.gnome.shell.extensions.xdock.position'>
@@ -229,6 +233,11 @@
       <default>true</default>
       <summary>Show running apps</summary>
       <description>Show or hide running applications icons in the dash</description>
+    </key>
+    <key name="app-order" enum="org.gnome.shell.extensions.xdock.app-order">
+      <default>'stable'</default>
+      <summary>Application icon ordering</summary>
+      <description>Order non-favorite running application icons by window coordinates along the dock, or preserve the current dock order.</description>
     </key>
     <key type="b" name="isolate-workspaces">
       <default>false</default>

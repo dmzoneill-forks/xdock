@@ -3571,6 +3571,10 @@ export class DockManager {
             },
         ], [
             this._settings,
+            'changed::app-order',
+            () => DockManager.allDocks.forEach(dock => dock.dash._queueRedisplay()),
+        ], [
+            this._settings,
             'changed::dock-tiling-enabled',
             () => this._ensureDockTiling(),
         ]);

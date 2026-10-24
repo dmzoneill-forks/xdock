@@ -773,6 +773,54 @@ export function shellWindowsCompare(winA, winB) {
     return winB.get_user_time() - winA.get_user_time();
 }
 
+/**
+ * Sort applications by the top-left coordinate of their open windows.
+ *
+ * The first window in each app is selected by the dock axis, then the other
+ * coordinate breaks ties. App IDs provide a deterministic final tie-breaker.
+ * Apps without usable windows remain after apps with windows.
+ *
+ * @param {Array} apps
+ * @param {boolean} horizontal
+ * @returns {Array}
+ */
+export function sortAppsByWindowCoordinates(apps, horizontal) {
+    const coordinate = app => {
+        const windows = app.get_windows?.() ?? [];
+        const points = windows.map(window => {
+            const rect = window.get_frame_rect?.();
+            if (!rect || !Number.isFinite(rect.x) || !Number.isFinite(rect.y))
+                return null;
+            return {x: rect.x, y: rect.y};
+        }).filter(Boolean);
+        if (!points.length)
+            return null;
+        return points.sort((a, b) => {
+            const primary = horizontal ? a.x - b.x : a.y - b.y;
+            return primary || (horizontal ? a.y - b.y : a.x - b.x);
+        })[0];
+    };
+
+    return apps.map((app, index) => ({app, index, point: coordinate(app)}))
+        .sort((a, b) => {
+            if (!a.point && !b.point)
+                return a.index - b.index;
+            if (!a.point)
+                return 1;
+            if (!b.point)
+                return -1;
+            const primary = horizontal
+                ? a.point.x - b.point.x : a.point.y - b.point.y;
+            const secondary = horizontal
+                ? a.point.y - b.point.y : a.point.x - b.point.x;
+            if (primary || secondary)
+                return primary || secondary;
+            const idA = a.app.get_id?.() ?? '';
+            const idB = b.app.get_id?.() ?? '';
+            return idA.localeCompare(idB) || a.index - b.index;
+        }).map(({app}) => app);
+}
+
 export const CancellableChild = GObject.registerClass({
     Properties: {
         'parent': GObject.ParamSpec.object(
