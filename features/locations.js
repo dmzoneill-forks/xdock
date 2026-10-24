@@ -1338,7 +1338,12 @@ export function wrapFileManagerApp() {
 
     fileManagerApp._updateWindows = function () {
         const locationWindows = new Set();
-        getRunningApps().forEach(a => a.get_windows().forEach(w => locationWindows.add(w)));
+        // Mountable volume apps mirror Nautilus windows for removable-volume
+        // icons, but must not remove those windows from the Files app. The
+        // window's desktop app identity remains Nautilus while browsing a
+        // mounted location.
+        getRunningApps().filter(a => !a.isMountableVolume)
+            .forEach(a => a.get_windows().forEach(w => locationWindows.add(w)));
         const windows = originalGetWindows.call(this).filter(w =>
             !locationWindows.has(w));
 
