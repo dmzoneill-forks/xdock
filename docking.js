@@ -75,6 +75,7 @@ const {signals: Signals} = imports;
 // Defaults kept as fallbacks; live values come from DockManager.settings
 const DOCK_DWELL_EDGE_PX = 2;
 const DOCK_DWELL_CHECK_INTERVAL = 100;
+const POINTER_LEAVE_CHECK_INTERVAL = 100;
 const ICON_ANIMATOR_DURATION = 3000;
 const STARTUP_ANIMATION_TIME = 500;
 
@@ -310,6 +311,10 @@ const DockedDash = GObject.registerClass({
         // This variable marks if _disableUnredirect() is called
         // to help restore the original state when intelihide is disabled.
         this._unredirectDisabled = false;
+
+        // A leave event can arrive while the pointer is still over the dock
+        // as the dock slides over a covering window.
+        this._pointerLeaveCheckId = 0;
 
         // Create intellihide object to monitor windows overlapping
         this._intellihide = new Intellihide.Intellihide(this.monitorIndex);
@@ -693,6 +698,8 @@ const DockedDash = GObject.registerClass({
             GLib.source_remove(this._hoverCheckId);
             this._hoverCheckId = 0;
         }
+
+        this._cancelPointerLeaveCheck();
 
         this._restoreUnredirect();
 
@@ -1252,6 +1259,9 @@ const DockedDash = GObject.registerClass({
 
             // Skip if dock is not in autohide mode for instance because it is shown
             // by intellihide.
+            if (this._box.hover || Main.overview.visible)
+                this._cancelPointerLeaveCheck();
+
             if (this._autohideIsEnabled) {
                 if (this._box.hover || Main.overview.visible) {
                     this._show();
@@ -1270,10 +1280,45 @@ const DockedDash = GObject.registerClass({
                                 this._box.sync_hover();
                             return GLib.SOURCE_REMOVE;
                         });
+                } else if (this._isPointerOverDock()) {
+                    this._checkPointerLeaveLater();
                 } else {
                     this._hide();
                 }
             }
+        }
+    }
+
+    _isPointerOverDock() {
+        if (this._dockState === State.HIDDEN)
+            return false;
+
+        const [x, y] = global.get_pointer?.() ?? [0, 0];
+        return typeof this._staticBox?.contains === 'function' &&
+            this._staticBox.contains(x, y);
+    }
+
+    _checkPointerLeaveLater() {
+        if (this._pointerLeaveCheckId)
+            return;
+
+        this._pointerLeaveCheckId = GLib.timeout_add(
+            GLib.PRIORITY_DEFAULT, POINTER_LEAVE_CHECK_INTERVAL, () => {
+                if (this._isPointerOverDock())
+                    return GLib.SOURCE_CONTINUE;
+
+                this._pointerLeaveCheckId = 0;
+                this._hoverChanged();
+                return GLib.SOURCE_REMOVE;
+            });
+        GLib.Source.set_name_by_id?.(this._pointerLeaveCheckId,
+            '[xdock] this._checkPointerLeaveLater');
+    }
+
+    _cancelPointerLeaveCheck() {
+        if (this._pointerLeaveCheckId) {
+            GLib.source_remove(this._pointerLeaveCheckId);
+            this._pointerLeaveCheckId = 0;
         }
     }
 
