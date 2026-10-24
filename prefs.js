@@ -40,6 +40,12 @@ const RunningIndicatorStyle = Object.freeze({
     NONE: 10,
 });
 
+const DockMonitorEntry = Object.freeze({
+    PRIMARY: 0,
+    ALL: 1,
+    FIRST_MONITOR: 2,
+});
+
 const MonitorsConfig = GObject.registerClass({
     Signals: {
         'updated': {},
@@ -263,10 +269,18 @@ const DockSettings = GObject.registerClass({
         if (!this._monitors?.length || this._updatingSettings)
             return;
 
-        const preferredMonitor = this._monitors[combo.get_active()].connector;
+        const active = combo.get_active();
 
         this._updatingSettings = true;
-        this._settings.set_string('preferred-monitor-by-connector', preferredMonitor);
+        if (active === DockMonitorEntry.ALL) {
+            this._settings.set_boolean('multi-monitor', true);
+        } else {
+            const preferredMonitor = active === DockMonitorEntry.PRIMARY
+                ? 'primary'
+                : this._monitors[active - DockMonitorEntry.FIRST_MONITOR].connector;
+            this._settings.set_string('preferred-monitor-by-connector', preferredMonitor);
+            this._settings.set_boolean('multi-monitor', false);
+        }
         this._updatingSettings = false;
     }
 
@@ -384,12 +398,16 @@ const DockSettings = GObject.registerClass({
 
     _updateMonitorsSettings() {
         // Monitor options
+        const multiMonitor = this._settings.get_boolean('multi-monitor');
         const preferredMonitorByConnector = this._settings.get_string('preferred-monitor-by-connector');
         const dockMonitorCombo = this._builder.get_object('dock_monitor_combo');
 
         this._monitors = [];
         dockMonitorCombo.remove_all();
-        let primaryIndex = -1;
+        dockMonitorCombo.append_text(__('Primary monitor'));
+        dockMonitorCombo.append_text(__('All monitors'));
+        if (multiMonitor)
+            dockMonitorCombo.set_active(DockMonitorEntry.ALL);
 
         // Add connected monitors
         for (const monitor of this._monitorsConfig.monitors) {
@@ -401,7 +419,6 @@ const DockSettings = GObject.registerClass({
                     /* TRANSLATORS: This will be followed by Display Name - Connector. */
                     `${__('Primary monitor: ') + monitor.displayName} - ${
                         monitor.connector}`);
-                primaryIndex = this._monitors.length;
             } else {
                 dockMonitorCombo.append_text(
                     /* TRANSLATORS: Followed by monitor index, Display Name - Connector. */
@@ -411,12 +428,13 @@ const DockSettings = GObject.registerClass({
 
             this._monitors.push(monitor);
 
-            if (preferredMonitorByConnector === monitor.connector)
-                dockMonitorCombo.set_active(this._monitors.length - 1);
+            if (!multiMonitor && preferredMonitorByConnector === monitor.connector)
+                dockMonitorCombo.set_active(
+                    DockMonitorEntry.FIRST_MONITOR + this._monitors.length - 1);
         }
 
-        if (dockMonitorCombo.get_active() < 0 && primaryIndex >= 0)
-            dockMonitorCombo.set_active(primaryIndex);
+        if (dockMonitorCombo.get_active() < 0)
+            dockMonitorCombo.set_active(DockMonitorEntry.PRIMARY);
     }
 
     _updateMonitorPositionRows() {
@@ -498,6 +516,8 @@ const DockSettings = GObject.registerClass({
             this._updateMonitorPositionRows();
         });
         this._settings.connect('changed::preferred-monitor-by-connector',
+            () => this._updateMonitorsSettings());
+        this._settings.connect('changed::multi-monitor',
             () => this._updateMonitorsSettings());
 
         // Position option
@@ -745,12 +765,6 @@ const DockSettings = GObject.registerClass({
             'sensitive',
             Gio.SettingsBindFlags.DEFAULT);
 
-        this._settings.bind('multi-monitor',
-            this._builder.get_object('dock_monitor_combo'),
-            'sensitive',
-            Gio.SettingsBindFlags.INVERT_BOOLEAN);
-
-
         // Apps panel
 
         this._settings.bind('show-running',
@@ -802,10 +816,6 @@ const DockSettings = GObject.registerClass({
             Gio.SettingsBindFlags.DEFAULT);
         this._settings.bind('show-windows-preview',
             this._builder.get_object('windows_preview_button'),
-            'active',
-            Gio.SettingsBindFlags.DEFAULT);
-        this._settings.bind('multi-monitor',
-            this._builder.get_object('multi_monitor_button'),
             'active',
             Gio.SettingsBindFlags.DEFAULT);
         this._settings.bind('hide-missing-preferred-monitor',
