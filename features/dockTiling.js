@@ -4,7 +4,6 @@
 
 import {
     Clutter,
-    Meta,
     St,
 } from '../dependencies/gi.js';
 
@@ -183,8 +182,8 @@ export class DockTiling {
         const workArea = Main.layoutManager.getWorkAreaForMonitor(monitorIndex);
 
         // Unmaximize first so move_resize_frame works correctly
-        if (window.get_maximized())
-            window.unmaximize(Meta.MaximizeFlags.BOTH);
+        if (window.is_maximized())
+            window.unmaximize();
 
         // Activate the window first to bring it to front
         Main.activateWindow(window);
