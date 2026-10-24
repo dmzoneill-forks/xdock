@@ -40,6 +40,7 @@ cat << 'STACK_OPEN'
         <child>
           <object class="GtkStack" id="settings_stack">
             <property name="transition_type">crossfade</property>
+            <property name="vhomogeneous">0</property>
 STACK_OPEN
 
 for tab in position applications behavior appearance features profiles about; do
