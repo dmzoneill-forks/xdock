@@ -78,7 +78,7 @@ class CommandPaletteResult extends St.Button {
         this._app = app;
 
         const box = new St.BoxLayout({
-            vertical: false,
+            orientation: Clutter.Orientation.HORIZONTAL,
             x_expand: true,
         });
 
@@ -89,7 +89,7 @@ class CommandPaletteResult extends St.Button {
 
         // Text column
         const textBox = new St.BoxLayout({
-            vertical: true,
+            orientation: Clutter.Orientation.VERTICAL,
             x_expand: true,
             y_align: Clutter.ActorAlign.CENTER,
         });
@@ -135,7 +135,7 @@ export const CommandPalette = GObject.registerClass({
     _init() {
         super._init({
             style_class: 'command-palette',
-            vertical: true,
+            orientation: Clutter.Orientation.VERTICAL,
             visible: false,
             reactive: true,
             can_focus: true,
@@ -164,7 +164,7 @@ export const CommandPalette = GObject.registerClass({
         });
 
         this._resultsBox = new St.BoxLayout({
-            vertical: true,
+            orientation: Clutter.Orientation.VERTICAL,
             x_expand: true,
         });
 

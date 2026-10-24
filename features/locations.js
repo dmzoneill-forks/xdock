@@ -1455,11 +1455,11 @@ class CategoryCompositeIcon extends St.Widget {
 
         const subSize = Math.floor((size - 2) / 2);
         const rows = apps.length <= 2 ? 1 : 2;
-        const grid = new St.BoxLayout({vertical: true});
+        const grid = new St.BoxLayout({orientation: Clutter.Orientation.VERTICAL});
         grid.style = 'spacing: 2px;';
 
         for (let r = 0; r < rows; r++) {
-            const row = new St.BoxLayout({vertical: false});
+            const row = new St.BoxLayout({orientation: Clutter.Orientation.HORIZONTAL});
             row.style = 'spacing: 2px;';
             for (let i = r * 2; i < Math.min(r * 2 + 2, apps.length); i++)
                 row.add_child(apps[i].create_icon_texture(subSize));
@@ -1508,7 +1508,7 @@ class CategoryPanel {
             name: 'dashtodockDashContainer',
             x_align: Clutter.ActorAlign.CENTER,
             y_align: Clutter.ActorAlign.CENTER,
-            vertical: true,
+            orientation: Clutter.Orientation.VERTICAL,
             x_expand: true,
             y_expand: true,
         });
@@ -1518,7 +1518,7 @@ class CategoryPanel {
             name: 'dashtodockBoxContainer',
             x_align: Clutter.ActorAlign.FILL,
             y_align: Clutter.ActorAlign.FILL,
-            vertical: true,
+            orientation: Clutter.Orientation.VERTICAL,
         });
         this._boxContainer.add_style_class_name(Theming.PositionStyleClass[this._position]);
 
@@ -1568,7 +1568,7 @@ class CategoryPanel {
 
         for (let r = 0; r < rows; r++) {
             const rowBox = new St.BoxLayout({
-                vertical: false,
+                orientation: Clutter.Orientation.HORIZONTAL,
                 style_class: 'app-grid-row',
             });
 

@@ -31,7 +31,7 @@ class MediaControlsOverlay extends St.BoxLayout {
     _init(sourceIcon) {
         super._init({
             style_class: 'media-controls-popup',
-            vertical: false,
+            orientation: Clutter.Orientation.HORIZONTAL,
             reactive: true,
             track_hover: true,
             visible: false,

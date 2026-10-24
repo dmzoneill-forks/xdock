@@ -27,7 +27,9 @@ class WorkspaceMinimap extends St.BoxLayout {
 
         super._init({
             style_class: 'workspace-minimap',
-            vertical: !isHorizontal,
+            orientation: isHorizontal
+                ? Clutter.Orientation.HORIZONTAL
+                : Clutter.Orientation.VERTICAL,
             reactive: true,
             track_hover: true,
             x_align: Clutter.ActorAlign.CENTER,

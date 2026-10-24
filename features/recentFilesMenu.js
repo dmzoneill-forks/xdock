@@ -214,7 +214,7 @@ class RecentFileMenuItem extends PopupMenu.PopupBaseMenuItem {
         this.remove_child(this._ornamentIcon);
 
         const box = new St.BoxLayout({
-            vertical: false,
+            orientation: Clutter.Orientation.HORIZONTAL,
             x_expand: true,
             style_class: 'recent-file-item-box',
         });

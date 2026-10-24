@@ -198,7 +198,7 @@ class QuickSettingsPanel extends St.BoxLayout {
     _init(sourceActor) {
         super._init({
             style_class: 'quick-settings-panel',
-            vertical: true,
+            orientation: Clutter.Orientation.VERTICAL,
             reactive: true,
             track_hover: true,
             visible: false,

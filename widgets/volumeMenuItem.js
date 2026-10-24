@@ -49,7 +49,7 @@ export const VolumeMenuItem = GObject.registerClass({
         const box = new St.BoxLayout({
             style_class: 'dock-volume-box',
             x_expand: true,
-            vertical: false,
+            orientation: Clutter.Orientation.HORIZONTAL,
             x_align: Clutter.ActorAlign.FILL,
         });
         this.add_child(box);
