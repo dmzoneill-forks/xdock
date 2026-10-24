@@ -197,10 +197,12 @@ export const DockDash = GObject.registerClass({
         this._isSecondary = isSecondary;
         this._maxWidth = -1;
         this._maxHeight = -1;
-        this.iconSize = Settings.get('dash-max-icon-size');
+        this._scaleFactor = Utils.getMonitorScaleAdjustment(monitorIndex);
+        const maxIconSize = Settings.get('dash-max-icon-size');
+        this.iconSize = maxIconSize * this._scaleFactor;
         this._availableIconSizes = baseIconSizes;
         this._shownInitially = false;
-        this._initializeIconSize(this.iconSize);
+        this._initializeIconSize(maxIconSize);
         this._signalsHandler = new Utils.GlobalSignalsHandler(this);
 
         this._separatorFavorites = null;
@@ -2770,12 +2772,16 @@ export const DockDash = GObject.registerClass({
 
     _initializeIconSize(maxSize) {
         const maxAllowed = baseIconSizes[baseIconSizes.length - 1];
+        const scaleFactor = this._scaleFactor ?? 1;
         maxSize = Math.min(maxSize, maxAllowed);
+        maxSize *= scaleFactor;
+        const availableIconSizes = baseIconSizes.map(size =>
+            size * scaleFactor);
 
         if (Settings.get('icon-size-fixed')) {
             this._availableIconSizes = [maxSize];
         } else {
-            this._availableIconSizes = baseIconSizes.filter(val => {
+            this._availableIconSizes = availableIconSizes.filter(val => {
                 return val < maxSize;
             });
             this._availableIconSizes.push(maxSize);

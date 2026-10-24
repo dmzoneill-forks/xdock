@@ -370,6 +370,9 @@ export const Utils = {
     addActor: (parent, child) => { if (parent?.add_child) parent.add_child(child); },
     getPosition: () => 2, // St.Side.BOTTOM
     getSecondaryPosition: () => 3, // St.Side.TOP
+    getMonitorScale: () => 1,
+    getMonitorScaleAdjustment: () => 1,
+    getMonitorScaleClass: () => 'dashtodock-scale-1-1',
     magnificationFalloff: (distance, spread) => {
         if (spread <= 0)
             return 0.0;

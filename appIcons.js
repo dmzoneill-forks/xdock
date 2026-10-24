@@ -2598,6 +2598,15 @@ export function itemShowLabel() {
     this.label.opacity = 0;
     this.label.show();
 
+    const monitorIndex = Main.layoutManager.findIndexForActor(this);
+    const scaleClass = Utils.getMonitorScaleClass(monitorIndex);
+    if (this._monitorScaleClass !== scaleClass) {
+        if (this._monitorScaleClass && this.label.remove_style_class_name)
+            this.label.remove_style_class_name(this._monitorScaleClass);
+        this.label.add_style_class_name?.(scaleClass);
+        this._monitorScaleClass = scaleClass;
+    }
+
     const [stageX, stageY] = this.get_transformed_position();
     const node = this.label.get_theme_node();
 
@@ -2625,7 +2634,7 @@ export function itemShowLabel() {
         yOffset = Math.floor((itemHeight - labelHeight) / 2);
         y = stageY + yOffset;
         xOffset = labelOffset;
-        x = stageX + this.get_width() + xOffset;
+        x = stageX + itemWidth + xOffset;
         break;
     case St.Side.RIGHT:
         yOffset = Math.floor((itemHeight - labelHeight) / 2);
@@ -2649,7 +2658,7 @@ export function itemShowLabel() {
     // keep the label inside the screen border
 
     // Leave a few pixel gap
-    const gap = 5;
+    const gap = 5 * Utils.getMonitorScale(monitorIndex);
     if (x - monitor.x < gap)
         x += monitor.x - x + labelOffset;
     else if (x + labelWidth > monitor.x + monitor.width - gap)
