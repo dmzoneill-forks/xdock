@@ -951,6 +951,55 @@ const DockedDash = GObject.registerClass({
         }
     }
 
+    _monitorMayBeScannedOut() {
+        if (!this._monitor)
+            return false;
+
+        if (this._monitor.inFullscreen)
+            return true;
+
+        const {x, y, width, height} = this._monitor;
+        const windowActors = global.get_window_actors?.() ?? [];
+
+        for (let i = windowActors.length - 1; i >= 0; i--) {
+            const windowActor = windowActors[i];
+            const metaWindow = windowActor.get_meta_window?.();
+
+            if (!windowActor.visible || !metaWindow)
+                continue;
+
+            const rect = metaWindow.get_buffer_rect?.();
+            if (!rect)
+                continue;
+
+            const overlapsMonitor = rect.x < x + width &&
+                rect.x + rect.width > x &&
+                rect.y < y + height &&
+                rect.y + rect.height > y;
+            if (!overlapsMonitor)
+                continue;
+
+            return rect.x <= x &&
+                rect.x + rect.width >= x + width &&
+                rect.y <= y &&
+                rect.y + rect.height >= y + height;
+        }
+
+        return false;
+    }
+
+    _updateUnredirect() {
+        if (!this.visible || this._isAnyWindowFullscreen()) {
+            this._restoreUnredirect();
+            return;
+        }
+
+        if (this._monitorMayBeScannedOut())
+            this._disableUnredirect();
+        else
+            this._restoreUnredirect();
+    }
+
     /**
      * This is call when visibility settings change
      */
@@ -976,8 +1025,7 @@ const DockedDash = GObject.registerClass({
         } else {
             this._intellihide.disable();
             // Autohide also needs compositing while the dock is visible.
-            if (!this._autohideIsEnabled)
-                this._restoreUnredirect();
+            this._updateUnredirect();
         }
 
         this._updateDashVisibility();
@@ -1264,8 +1312,7 @@ const DockedDash = GObject.registerClass({
     }
 
     _animateIn(time, delay) {
-        if (this._intellihideIsEnabled || this._autohideIsEnabled)
-            this._disableUnredirect();
+        this._updateUnredirect();
         this._dockState = State.SHOWING;
         this.dash.iconAnimator.start();
         this._delayedHide = false;
@@ -2685,7 +2732,29 @@ export class DockManager {
 
         /* Array of all the docks created */
         this._allDocks = [];
+        this._signalsHandler.add([
+            global.display,
+            'in-fullscreen-changed',
+            () => this._updateUnredirect(),
+        ], [
+            global.display,
+            'restacked',
+            () => this._updateUnredirect(),
+        ], [
+            global.display,
+            'window-entered-monitor',
+            () => this._updateUnredirect(),
+        ], [
+            global.window_manager,
+            'size-changed',
+            () => this._updateUnredirect(),
+        ], [
+            global.window_manager,
+            'unminimize',
+            () => this._updateUnredirect(),
+        ]);
         this._createDocks();
+        this._updateUnredirect();
 
         this._overrideAppMenus();
 
@@ -2700,6 +2769,10 @@ export class DockManager {
         this._commandPalette = null;
         this._commandPaletteShortcutBound = false;
         this._setupCommandPalette();
+    }
+
+    _updateUnredirect() {
+        this._allDocks.forEach(dock => dock._updateUnredirect());
     }
 
     static getDefault() {
