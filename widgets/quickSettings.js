@@ -70,7 +70,6 @@ const ToggleSwitch = GObject.registerClass({
         const themeNode = this.get_theme_node();
         const contentBox = themeNode.get_content_box(box);
         const [, , handleW, handleH] = this._handle.get_preferred_size();
-        const innerW = contentBox.x2 - contentBox.x1;
         const innerH = contentBox.y2 - contentBox.y1;
         const handleY = contentBox.y1 + (innerH - handleH) / 2;
         const handleX = this._active

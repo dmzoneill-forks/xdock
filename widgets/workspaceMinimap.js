@@ -97,9 +97,8 @@ class WorkspaceMinimap extends St.BoxLayout {
     _applyIndicatorSize() {
         const h = Math.round(this._iconSize * 0.7);
         const w = Math.round(h * 1.4);
-        for (const btn of this._indicators) {
+        for (const btn of this._indicators)
             btn.set_style(`min-width: ${w}px; min-height: ${h}px;`);
-        }
     }
 
     /**

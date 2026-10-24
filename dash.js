@@ -651,7 +651,7 @@ export const DockDash = GObject.registerClass({
         // visible icon flash/flicker described in #2485.
         if (this._redisplayDebounceId) {
             // Already scheduled — the pending call will pick up the latest state.
-            return;
+            return undefined;
         }
 
         this._redisplayDebounceId = GLib.timeout_add(
@@ -660,6 +660,7 @@ export const DockDash = GObject.registerClass({
                 Dash.Dash.prototype._queueRedisplay.call(this, ...args);
                 return GLib.SOURCE_REMOVE;
             });
+        return undefined;
     }
 
     _hookUpLabel(...args) {
@@ -2176,7 +2177,7 @@ export const DockDash = GObject.registerClass({
                    actor.child._delegate.app;
         });
         const oldItems = children.map(actor => actor.child._delegate);
-        const oldApps = [];
+        let oldApps = [];
         oldItems.forEach(({app}) => {
             if (!oldApps.includes(app))
                 oldApps.push(app);

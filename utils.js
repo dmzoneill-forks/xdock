@@ -651,12 +651,21 @@ export function splitHandler(handler) {
  */
 export function getWindowsByObjectPath() {
     const windowsByObjectPath = new Map();
-
-    global.display.list_all_windows().forEach(w => {
+    const addWindow = w => {
         const path = w.get_gtk_window_object_path();
         if (path)
             windowsByObjectPath.set(path, w);
-    });
+    };
+
+    if (global.display?.list_all_windows) {
+        global.display.list_all_windows().forEach(addWindow);
+    } else {
+        const workspaceManager = global.workspace_manager ?? global.workspaceManager;
+        const nWorkspaces = workspaceManager?.nWorkspaces ??
+            workspaceManager?.get_n_workspaces?.() ?? 0;
+        for (let i = 0; i < nWorkspaces; i++)
+            workspaceManager.get_workspace_by_index(i)?.list_windows?.().forEach(addWindow);
+    }
 
     return windowsByObjectPath;
 }

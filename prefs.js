@@ -933,9 +933,8 @@ const DockSettings = GObject.registerClass({
             this._settings.get_string('progress-indicator-style'));
         progressStyleCombo.connect('changed', () => {
             const activeId = progressStyleCombo.get_active_id();
-            if (activeId) {
+            if (activeId)
                 this._settings.set_string('progress-indicator-style', activeId);
-            }
         });
         this._settings.connect('changed::progress-indicator-style', () => {
             progressStyleCombo.set_active_id(
@@ -1662,9 +1661,11 @@ const DockSettings = GObject.registerClass({
 
         // Workspace minimap position combo (string: 'start' or 'end')
         const minimapPosCombo = this._builder.get_object('workspace_minimap_position_combo');
-        minimapPosCombo.set_active(this._settings.get_string('workspace-minimap-position') === 'start' ? 0 : 1);
+        minimapPosCombo.set_active(
+            this._settings.get_string('workspace-minimap-position') === 'start' ? 0 : 1);
         minimapPosCombo.connect('changed', combo => {
-            this._settings.set_string('workspace-minimap-position', combo.get_active() === 0 ? 'start' : 'end');
+            this._settings.set_string(
+                'workspace-minimap-position', combo.get_active() === 0 ? 'start' : 'end');
         });
         this._settings.bind('show-workspace-minimap',
             minimapPosCombo,

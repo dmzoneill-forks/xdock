@@ -396,7 +396,7 @@ export class ThemeManager {
         const shadowColor = Settings.get('floating-shadow-color');
         const spread = Settings.get('floating-shadow-spread');
         const blur = Settings.get('floating-shadow-blur');
-        return `border-radius: 14px; ` +
+        return 'border-radius: 14px; ' +
                `box-shadow: 0 2px ${blur}px ${spread}px ${shadowColor}; `;
     }
 

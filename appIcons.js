@@ -1523,7 +1523,6 @@ export const DockAbstractAppIcon = GObject.registerClass({
         const window = recentlyClickedAppWindows[index];
 
         if (window === 'MINIMIZE') {
-            const [w] = recentlyClickedAppWindows;
             this._minimizeWindow(false);
         } else {
             Main.activateWindow(window);

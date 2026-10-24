@@ -1620,7 +1620,8 @@ const DockedDash = GObject.registerClass({
                 direction = Meta.BarrierDirection.NEGATIVE_Y;
             }
 
-            if (this._pressureBarrier && (this._dockState === State.HIDDEN || this._dockState === State.HIDING)) {
+            if (this._pressureBarrier &&
+                (this._dockState === State.HIDDEN || this._dockState === State.HIDING)) {
                 this._barrier = new Meta.Barrier({
                     backend: global.backend,
                     x1,
