@@ -1237,7 +1237,7 @@ const DockedDash = GObject.registerClass({
     }
 
     _animateIn(time, delay) {
-        if (this._intellihideIsEnabled)
+        if (this._intellihideIsEnabled || this._autohideIsEnabled)
             this._disableUnredirect();
         this._dockState = State.SHOWING;
         this.dash.iconAnimator.start();
@@ -1304,7 +1304,7 @@ const DockedDash = GObject.registerClass({
 
         const onComplete = () => {
             this._dockState = State.HIDDEN;
-            if (this._intellihideIsEnabled)
+            if (this._intellihideIsEnabled || this._autohideIsEnabled)
                 this._restoreUnredirect();
             // Remove queued barrier removal timeout if any
             if (this._removeBarrierTimeoutId > 0)
