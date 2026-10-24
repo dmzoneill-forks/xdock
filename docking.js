@@ -950,7 +950,9 @@ const DockedDash = GObject.registerClass({
             this._intellihide.enable();
         } else {
             this._intellihide.disable();
-            this._restoreUnredirect();
+            // Autohide also needs compositing while the dock is visible.
+            if (!this._autohideIsEnabled)
+                this._restoreUnredirect();
         }
 
         this._updateDashVisibility();
@@ -1304,8 +1306,8 @@ const DockedDash = GObject.registerClass({
 
         const onComplete = () => {
             this._dockState = State.HIDDEN;
-            if (this._intellihideIsEnabled || this._autohideIsEnabled)
-                this._restoreUnredirect();
+            // Release hold even if visibility mode changed while hiding.
+            this._restoreUnredirect();
             // Remove queued barrier removal timeout if any
             if (this._removeBarrierTimeoutId > 0)
                 GLib.source_remove(this._removeBarrierTimeoutId);
