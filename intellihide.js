@@ -55,9 +55,9 @@ const ignoreApps = ['com.rastersoft.ding', 'com.desktop.ding'];
  */
 export function rectsOverlap(rect, targetBox) {
     return (rect.x < targetBox.x2) &&
-           (rect.x + rect.width >= targetBox.x1) &&
+           (rect.x + rect.width > targetBox.x1) &&
            (rect.y < targetBox.y2) &&
-           (rect.y + rect.height >= targetBox.y1);
+           (rect.y + rect.height > targetBox.y1);
 }
 
 /**

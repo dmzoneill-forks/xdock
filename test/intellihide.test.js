@@ -149,9 +149,9 @@ describe('rectsOverlap', () => {
         expect(rectsOverlap(rect, dockBox)).toBe(false);
     });
 
-    test('window touching dock left edge exactly returns true', () => {
+    test('window touching dock left edge exactly returns false', () => {
         const rect = {x: 50, y: 900, width: 50, height: 180};
-        expect(rectsOverlap(rect, dockBox)).toBe(true);
+        expect(rectsOverlap(rect, dockBox)).toBe(false);
     });
 
     test('window one pixel short of dock left edge returns false', () => {
@@ -159,9 +159,9 @@ describe('rectsOverlap', () => {
         expect(rectsOverlap(rect, dockBox)).toBe(false);
     });
 
-    test('window touching dock top edge exactly returns true', () => {
+    test('window touching dock top edge exactly returns false', () => {
         const rect = {x: 100, y: 800, width: 100, height: 100};
-        expect(rectsOverlap(rect, dockBox)).toBe(true);
+        expect(rectsOverlap(rect, dockBox)).toBe(false);
     });
 
     test('window one pixel short of dock top returns false', () => {
@@ -174,9 +174,9 @@ describe('rectsOverlap', () => {
         expect(rectsOverlap(rect, dockBox)).toBe(true);
     });
 
-    test('zero-size window at dock origin returns true', () => {
+    test('zero-size window at dock origin returns false', () => {
         const rect = {x: 100, y: 900, width: 0, height: 0};
-        expect(rectsOverlap(rect, dockBox)).toBe(true);
+        expect(rectsOverlap(rect, dockBox)).toBe(false);
     });
 
     test('left-side dock (vertical)', () => {
