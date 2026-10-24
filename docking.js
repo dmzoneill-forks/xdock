@@ -1302,7 +1302,11 @@ const DockedDash = GObject.registerClass({
     }
 
     _animateOut(time, delay) {
+        if (this._dockState === State.HIDDEN && this._slider.slideX === 0)
+            return;
+
         this._dockState = State.HIDING;
+        const animate = this.opacity > 0;
 
         const onComplete = () => {
             this._dockState = State.HIDDEN;
@@ -1345,8 +1349,8 @@ const DockedDash = GObject.registerClass({
             this._activeSpringAnimation.start();
         } else {
             this._slider.ease_property('slide-x', 0, {
-                duration: time * 1000,
-                delay: delay * 1000,
+                duration: animate ? time * 1000 : 0,
+                delay: animate ? delay * 1000 : 0,
                 mode: Clutter.AnimationMode.EASE_OUT_QUAD,
                 onComplete,
             });
