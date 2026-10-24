@@ -217,15 +217,17 @@ export class UnityIndicator extends IndicatorBase {
     }
 
     _updateNotificationsCount() {
+        this.setNotificationCount(this.notificationsCount);
+    }
+
+    get notificationsCount() {
         const appId = this._source.app?.id;
         const badgeOverride = appId ? getBadgeOverride(appId) : null;
 
         // If badge is explicitly disabled via per-app override, show nothing
         if (badgeOverride &&
-            (badgeOverride.enabled === false || badgeOverride.source === 'none')) {
-            this.setNotificationCount(0);
-            return;
-        }
+            (badgeOverride.enabled === false || badgeOverride.source === 'none'))
+            return 0;
 
         const badgeSource = badgeOverride?.source ?? 'auto';
 
@@ -233,28 +235,22 @@ export class UnityIndicator extends IndicatorBase {
             ? this._remoteEntry.count ?? 0 : 0;
 
         // Per-app source override
-        if (badgeSource === 'app-counter') {
-            this.setNotificationCount(remoteCount);
-            return;
-        }
+        if (badgeSource === 'app-counter')
+            return remoteCount;
 
         const {notificationsMonitor} = Docking.DockManager.getDefault() ?? {};
         const notificationsCount = notificationsMonitor?.getAppNotificationsCount(
             this._source.app.id) ?? 0;
 
-        if (badgeSource === 'notifications') {
-            this.setNotificationCount(notificationsCount);
-            return;
-        }
+        if (badgeSource === 'notifications')
+            return notificationsCount;
 
         // Default 'auto' behavior — same as original logic
         if (remoteCount > 0 &&
-            Docking.DockManager.settings.applicationCounterOverridesNotifications) {
-            this.setNotificationCount(remoteCount);
-            return;
-        }
+            Docking.DockManager.settings.applicationCounterOverridesNotifications)
+            return remoteCount;
 
-        this.setNotificationCount(remoteCount + notificationsCount);
+        return remoteCount + notificationsCount;
     }
 
     _updateNotificationsBadge(text) {
@@ -310,6 +306,12 @@ export class UnityIndicator extends IndicatorBase {
             this._notificationBadgeBin.destroy();
             this._notificationBadgeBin = null;
         }
+
+        this._updateAccessibleName(count);
+    }
+
+    _updateAccessibleName() {
+        this._source._updateAccessibleName?.();
     }
 
     _showProgressOverlay() {
@@ -540,6 +542,12 @@ export class UnityIndicator extends IndicatorBase {
                 this._showProgressOverlay();
             }
         }
+
+        this._updateAccessibleName();
+    }
+
+    get progress() {
+        return this._progressOverlayArea || this._progressArcArea ? this._progress : -1;
     }
 
     setUrgent(urgent) {
@@ -550,6 +558,8 @@ export class UnityIndicator extends IndicatorBase {
             this._isUrgent = urgent;
         else
             delete this._isUrgent;
+
+        this._updateAccessibleName();
     }
 
     setUpdating(updating) {

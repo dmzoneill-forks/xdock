@@ -148,6 +148,16 @@ export class AppIconIndicator {
         this._indicators.push(runningIndicator);
     }
 
+    get notificationsCount() {
+        return this._indicators.reduce((count, indicator) =>
+            count + (indicator.notificationsCount ?? 0), 0);
+    }
+
+    get progress() {
+        return this._indicators.reduce((progress, indicator) =>
+            Math.max(progress, indicator.progress ?? -1), -1);
+    }
+
     update() {
         for (let i = 0; i < this._indicators.length; i++) {
             const indicator = this._indicators[i];

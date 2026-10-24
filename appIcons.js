@@ -226,6 +226,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         this._signalsHandler.add(this, 'notify::urgent', () => {
             const icon = this.icon._iconBin;
             this._signalsHandler.removeWithLabel(Labels.URGENT_WINDOWS);
+            this._updateAccessibleName();
             if (this.urgent) {
                 if (Settings.get('dance-urgent-applications') &&
                     notificationsMonitor.enabled) {
@@ -282,6 +283,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
 
         this._updateState();
         this._numberOverlay();
+        this._updateAccessibleName();
 
         // Live window thumbnails: replace static icon with a live clone
         // of the most-recent window when enabled.
@@ -340,6 +342,10 @@ export const DockAbstractAppIcon = GObject.registerClass({
             if (dockManager2.wiggleMode)
                 this._onWiggleModeChanged(true);
         }
+    }
+
+    get iconContainer() {
+        return this._iconContainer;
     }
 
     _setupMediaControls() {
@@ -1349,6 +1355,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
     setNumberOverlay(number) {
         this._numberOverlayOrder = number;
         this._numberOverlayLabel.set_text(number.toString());
+        this._updateAccessibleName();
     }
 
     toggleNumberOverlay(activate) {
@@ -1358,6 +1365,24 @@ export const DockAbstractAppIcon = GObject.registerClass({
         } else {
             this._numberOverlayBin.hide();
         }
+
+        this._updateAccessibleName();
+    }
+
+    get overlayNumber() {
+        if (!this._numberOverlayBin?.visible)
+            return -1;
+
+        return this._numberOverlayOrder;
+    }
+
+    _updateAccessibleName() {
+        updateIconAccessibleName({
+            icon: this,
+            overlayNumber: this.overlayNumber,
+            indicatorCount: this._indicator?.notificationsCount,
+            progress: this._indicator?.progress,
+        });
     }
 
     _minimizeWindow(param) {
@@ -2643,4 +2668,39 @@ export function itemShowLabel() {
         mode: Clutter.AnimationMode.EASE_OUT_QUAD,
     });
     /* eslint-enable no-invalid-this */
+}
+
+export function updateIconAccessibleName({
+    icon,
+    overlayNumber = -1,
+    indicatorCount = 0,
+    progress = -1,
+    urgent = icon?.urgent,
+}) {
+    let accessibleName = icon?.app?.get_name();
+    if (!accessibleName)
+        return;
+
+    if (overlayNumber >= 0)
+        accessibleName = __('%d: %s').format(overlayNumber, accessibleName);
+
+    if (urgent)
+        accessibleName = __('%s, needs attention').format(accessibleName);
+
+    if (indicatorCount > 0) {
+        accessibleName = ngettext('%s, %d unread notification',
+            '%s, %d unread notifications', indicatorCount)
+            .format(accessibleName, indicatorCount);
+    }
+
+    if (progress >= 0) {
+        accessibleName = __('%s, %d%% complete')
+            .format(accessibleName, Math.round(progress * 100));
+    }
+
+    if (typeof icon.set === 'function')
+        icon.set({accessibleName});
+    else
+        icon.accessible_name = accessibleName;
+    icon.labelActor?.set?.({accessibleName});
 }
