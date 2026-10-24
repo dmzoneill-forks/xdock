@@ -134,6 +134,7 @@ jobs:
             mkdir -p ~/.local/share/gnome-shell/extensions/'"${UUID}"'
             cd ~/.local/share/gnome-shell/extensions/'"${UUID}"'
             unzip -qo ~/'"${UUID}"'.zip
+            glib-compile-schemas schemas
           '
 
           # Start gnome-shell headless with extension enabled
@@ -218,6 +219,7 @@ jobs:
             mkdir -p ~/.local/share/gnome-shell/extensions/'"${UUID}"'
             cd ~/.local/share/gnome-shell/extensions/'"${UUID}"'
             unzip -qo ~/'"${UUID}"'.zip
+            glib-compile-schemas schemas
           '
 
           # Copy test runner (automation script must be on disk)
