@@ -974,6 +974,16 @@ class WindowPreviewMenuItem extends PopupMenu.PopupBaseMenuItem {
         this._hideCloseButton();
     }
 
+    vfunc_button_press_event(buttonEvent) {
+        if (buttonEvent.button === Clutter.BUTTON_MIDDLE) {
+            if (this._windowCanClose())
+                this._closeWindow();
+            return Clutter.EVENT_STOP;
+        }
+
+        return super.vfunc_button_press_event(buttonEvent);
+    }
+
     vfunc_enter_event(crossingEvent) {
         this._showCloseButton();
         this._startAeroPeek();

@@ -1223,7 +1223,6 @@ export const DockAbstractAppIcon = GObject.registerClass({
         } else {
             this._previewMenu.fromHover = false;
             this._previewMenu.popup();
-            this._previewMenu.actor.navigate_focus(null, St.DirectionType.TAB_FORWARD, false);
         }
 
         return false;
