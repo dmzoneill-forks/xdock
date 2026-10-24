@@ -8,13 +8,12 @@
     },
     {
       "rule_id": "EGO-L-002",
-      "paths": ["docking.js", "locations.js"],
+      "paths": ["locations.js"],
       "snippets": [
         "        this._background = new St.Widget({\n            style_class: 'dash-background',\n            x_expand: true,\n            y_expand: true,\n        })",
         "        this._boxContainer = new St.BoxLayout({\n            name: 'dashtodockBoxContainer',\n            x_align: Clutter.ActorAlign.FILL,\n            y_align: Clutter.ActorAlign.FILL,\n            orientation: Clutter.Orientation.VERTICAL,\n        })",
         "        this._dashActor = new St.Widget({\n            name: 'dash',\n            layout_manager: new Clutter.BinLayout(),\n            x_expand: true,\n            y_expand: true,\n        })",
-        "        this._dashContainer = new St.BoxLayout({\n            name: 'dashtodockDashContainer',\n            x_align: Clutter.ActorAlign.CENTER,\n            y_align: Clutter.ActorAlign.CENTER,\n            orientation: Clutter.Orientation.VERTICAL,\n            x_expand: true,\n            y_expand: true,",
-        "this._staticBox = new Clutter.ActorBox()"
+        "        this._dashContainer = new St.BoxLayout({\n            name: 'dashtodockDashContainer',\n            x_align: Clutter.ActorAlign.CENTER,\n            y_align: Clutter.ActorAlign.CENTER,\n            orientation: Clutter.Orientation.VERTICAL,\n            x_expand: true,\n            y_expand: true,"
       ]
     },
     {
@@ -43,14 +42,12 @@
     },
     {
       "rule_id": "EGO-L-005",
-      "paths": ["docking.js", "locations.js"],
+      "paths": ["locations.js"],
       "snippets": [
         "        this._background = new St.Widget({\n            style_class: 'dash-background',\n            x_expand: true,\n            y_expand: true,\n        })",
         "        this._boxContainer = new St.BoxLayout({\n            name: 'dashtodockBoxContainer',\n            x_align: Clutter.ActorAlign.FILL,\n            y_align: Clutter.ActorAlign.FILL,\n            orientation: Clutter.Orientation.VERTICAL,\n        })",
         "        this._dashActor = new St.Widget({\n            name: 'dash',\n            layout_manager: new Clutter.BinLayout(),\n            x_expand: true,\n            y_expand: true,\n        })",
-        "        this._dashContainer = new St.BoxLayout({\n            name: 'dashtodockDashContainer',\n            x_align: Clutter.ActorAlign.CENTER,\n            y_align: Clutter.ActorAlign.CENTER,\n            orientation: Clutter.Orientation.VERTICAL,\n            x_expand: true,\n            y_expand: true,",
-        "this._mutterSettings = new Gio.Settings({schema_id: MUTTER_SCHEMA})",
-        "this._staticBox = new Clutter.ActorBox()"
+        "        this._dashContainer = new St.BoxLayout({\n            name: 'dashtodockDashContainer',\n            x_align: Clutter.ActorAlign.CENTER,\n            y_align: Clutter.ActorAlign.CENTER,\n            orientation: Clutter.Orientation.VERTICAL,\n            x_expand: true,\n            y_expand: true,"
       ]
     },
     {
