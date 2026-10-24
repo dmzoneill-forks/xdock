@@ -3749,10 +3749,12 @@ describe('DockManager full instantiation', () => {
 
         dock._resetPosition();
 
+        const fraction = Settings.get('height-fraction');
         expect(Main.layoutManager.getWorkAreaForMonitor).not.toHaveBeenCalled();
-        expect(dock.width).toBe(Math.round(0.95 * 1920));
-        expect(dock.x).toBe(100 + Math.round(0.025 * 1920));
-        expect(dock.y).toBe(50);
+        expect(dock.width).toBe(Math.round(fraction * 1920));
+        expect(dock.x).toBe(100 + Math.round((1 - fraction) / 2 * 1920));
+        const expectedY = dock._position === St.Side.BOTTOM ? 50 + 1080 : 50;
+        expect(dock.y).toBe(expectedY);
         Main.layoutManager.getWorkAreaForMonitor = getWorkArea;
     });
 
