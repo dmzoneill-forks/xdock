@@ -87,8 +87,10 @@ export class AppIconIndicator {
         const badgeDisabled = badgeOverride &&
             (badgeOverride.enabled === false || badgeOverride.source === 'none');
 
+        const dockManager = Docking.DockManager.getDefault();
         if (settings.showIconsEmblems &&
-            !Docking.DockManager.getDefault()?.notificationsMonitor?.dndMode &&
+            !dockManager?.notificationsMonitor?.dndMode &&
+            dockManager?.remoteModel &&
             !badgeDisabled) {
             const unityIndicator = new UnityIndicator(source);
             this._indicators.push(unityIndicator);
