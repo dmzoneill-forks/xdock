@@ -4385,6 +4385,37 @@ describe('Coverage boost — real instance exercises', () => {
         expect(dock._dockState === State.HIDING || dock._dockState === State.HIDDEN).toBe(true);
     });
 
+    test('_isAnyWindowFullscreen detects display fullscreen when monitor flag is false', () => {
+        const ext = _createCoverageMockExtension();
+        manager = new DockManager(ext);
+        const dock = manager.mainDock;
+        const getMonitorInFullscreen = global.display.get_monitor_in_fullscreen;
+        global.display.get_monitor_in_fullscreen = jest.fn(() => true);
+        try {
+            dock._monitor = {inFullscreen: false, index: 0};
+            expect(dock._isAnyWindowFullscreen()).toBe(true);
+        } finally {
+            global.display.get_monitor_in_fullscreen = getMonitorInFullscreen;
+        }
+    });
+
+    test('fullscreen decisions use display fullscreen state when monitor flag is false', () => {
+        const ext = _createCoverageMockExtension();
+        manager = new DockManager(ext);
+        const dock = manager.mainDock;
+        const getMonitorInFullscreen = global.display.get_monitor_in_fullscreen;
+        global.display.get_monitor_in_fullscreen = jest.fn(() => true);
+        try {
+            dock._monitor = {inFullscreen: false, index: 0, x: 0, y: 0, width: 1920, height: 1080};
+            Settings.set('autohide-in-fullscreen', false);
+            dock._dockState = State.HIDDEN;
+            dock._updateBarrier();
+            expect(dock._barrier).toBeNull();
+        } finally {
+            global.display.get_monitor_in_fullscreen = getMonitorInFullscreen;
+        }
+    });
+
     test('_updateDashVisibility intellihide + overlap + hover + autohide skips', () => {
         const ext = _createCoverageMockExtension();
         manager = new DockManager(ext);
@@ -8784,4 +8815,3 @@ describe('Coverage boost phase 2', () => {
         expect(manager._allDocks.length).toBe(0);
     });
 });
-

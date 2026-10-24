@@ -903,7 +903,7 @@ const DockedDash = GObject.registerClass({
         // The dock should not need to be rendered on top of a fullscreen
         // surface anyway (unless autohide-in-fullscreen is explicitly
         // enabled, which has its own visibility logic) (#62).
-        if (this._monitor?.inFullscreen)
+        if (this._isAnyWindowFullscreen())
             return;
 
         if (!this._unredirectDisabled) {
@@ -1012,13 +1012,13 @@ const DockedDash = GObject.registerClass({
         // fullscreen, force-hide the dock.  Some apps (notably Firefox)
         // use client-side fullscreen which may not be detected by the
         // Chrome tracking layer, so we check explicitly here.
-        if (Settings.get('autohide-in-fullscreen') && this._monitor.inFullscreen) {
+        if (Settings.get('autohide-in-fullscreen') && this._isAnyWindowFullscreen()) {
             this._ignoreHover = false;
             this._animateOut(animationTime, 0);
             return;
         }
 
-        if (this._monitor.inFullscreen) {
+        if (this._isAnyWindowFullscreen()) {
             this._ignoreHover = true;
             this._removeAnimations();
             this._animateOut(0, 0);
@@ -1169,7 +1169,7 @@ const DockedDash = GObject.registerClass({
             // Never show the dock via hover when the monitor is in fullscreen
             // and autohide-in-fullscreen is enabled (multi-monitor case).
             if (Settings.get('autohide-in-fullscreen') &&
-                this._monitor.inFullscreen) {
+                this._isAnyWindowFullscreen()) {
                 this._hide();
                 return;
             }
@@ -1430,7 +1430,7 @@ const DockedDash = GObject.registerClass({
         this._dockDwellTimeoutId = 0;
 
         if (!Settings.get('autohide-in-fullscreen') &&
-            this._monitor.inFullscreen)
+            this._isAnyWindowFullscreen())
             return GLib.SOURCE_REMOVE;
 
         // We don't want to open the tray when a modal dialog
@@ -1474,7 +1474,7 @@ const DockedDash = GObject.registerClass({
                 pressureThreshold, Settings.get('show-delay') * 1000,
                 Shell.ActionMode.NORMAL | Shell.ActionMode.OVERVIEW);
             this._pressureBarrier.connectObject('trigger', () => {
-                if (!Settings.get('autohide-in-fullscreen') && this._monitor.inFullscreen)
+                if (!Settings.get('autohide-in-fullscreen') && this._isAnyWindowFullscreen())
                     return;
                 this._onPressureSensed();
             }, this);
@@ -1570,7 +1570,7 @@ const DockedDash = GObject.registerClass({
 
         // The barrier needs to be removed in fullscreen with autohide disabled
         // otherwise the mouse can get trapped on monitor.
-        if (this._monitor.inFullscreen &&
+        if (this._isAnyWindowFullscreen() &&
             !Settings.get('autohide-in-fullscreen'))
             return;
 
