@@ -44,7 +44,7 @@ make extension SASS=ruby     # use ruby-sass
 | `make dev-no-ext` | Launch devkit without extensions (baseline comparison). |
 | `make extension` | Compile schemas and stylesheet only. |
 | `make install` | Build and copy to `~/.local/share/gnome-shell/extensions/`. |
-| `make zip-file` | Build + lint + create distributable `.zip`. |
+| `make zip-file` | Build + lint + create the EGO-ready `xdock@github.com.shell-extension.zip`. |
 | `make check` | Run ESLint on all source files. |
 | `make test` | Run Jest unit tests. |
 | `make smoke-test` | Load extension in a local headless devkit session. |
@@ -55,6 +55,34 @@ make extension SASS=ruby     # use ruby-sass
 | `make visual-regression` | Run integration screenshots then compare against baselines. |
 | `make update-baselines` | Capture new screenshots and copy them to `test/visual/baselines/`. |
 | `make clean` | Remove compiled schemas, stylesheet, and `_build/`. |
+
+### Package and submit for extensions.gnome.org
+
+Run:
+
+```bash
+npm ci
+make zip-file
+unzip -l xdock@github.com.shell-extension.zip
+```
+
+The archive is built with `gnome-extensions pack`, includes nested source
+directories and translations, and intentionally includes the XML schema but
+not `schemas/gschemas.compiled`. The latter is generated when the extension is
+installed and should not be uploaded for GNOME 45 and newer.
+
+Upload the reviewed archive manually with the GNOME CLI:
+
+```bash
+gnome-extensions upload \
+  --accept-tos \
+  --user "$EGO_USER" \
+  --password-file "$EGO_PASSWORD_FILE" \
+  xdock@github.com.shell-extension.zip
+```
+
+Do not commit credentials or pass them in shell history. The upload submits the
+archive for review at extensions.gnome.org. It does not publish before review.
 
 ## Development Workflow with `make dev`
 

@@ -28,6 +28,20 @@ EXTRA_MEDIA = logo.svg \
               highlight_stacked_bg_h.svg \
               $(NULL)
 
+# Files and directories passed to gnome-extensions pack. The packer includes
+# extension.js, prefs.js, metadata.json, stylesheet.css, and the schema itself
+# automatically. Nested source directories must be passed explicitly so their
+# paths are preserved in the archive.
+PACK_EXTRA_SOURCES = $(filter-out extension.js metadata.json prefs.js stylesheet.css,$(BASE_MODULES) $(EXTRA_MODULES)) \
+                     dependencies \
+                     indicators \
+                     platform \
+                     widgets \
+                     services \
+                     features \
+                     media \
+                     locale
+
 MSGSRC = $(wildcard po/*.po)
 ifeq ($(strip $(DESTDIR)),)
 	INSTALLTYPE = local
@@ -124,9 +138,10 @@ endif
 	echo done
 
 zip-file: _build check
-	cd _build ; \
-	zip -qr "$(UUID)$(VSTRING).zip" .
-	mv _build/$(UUID)$(VSTRING).zip ./
+	gnome-extensions pack --force --out-dir=. \
+		--schema=schemas/org.gnome.shell.extensions.xdock.gschema.xml \
+		$(addprefix --extra-source=,$(PACK_EXTRA_SOURCES)) \
+		_build
 	-rm -fR _build
 
 _build: all
@@ -154,7 +169,7 @@ _build: all
 	sed -i 's/"version": -1/"version": "$(VERSION)"/'  _build/metadata.json;
 
 ifeq ($(strip $(ESLINT)),)
-    ESLINT = eslint
+    ESLINT = npx --no-install eslint
 endif
 
 ifneq ($(strip $(ESLINT_TAP)),)
