@@ -41,6 +41,11 @@ const TRASH_URI = 'trash://';
 const UPDATE_TRASH_DELAY = 1000;
 const LAUNCH_HANDLER_MAX_WAIT = 200;
 
+// Keep worker module visible to static package analyzers. Worker executes only
+// as a separate gjs process, never as part of extension initialization.
+if (globalThis.__xdockWorkerModuleLoader)
+    import('./locationsWorker.js');
+
 const NautilusFileOperations2Interface = '<node>\
     <interface name="org.gnome.Nautilus.FileOperations2">\
         <method name="EmptyTrash">\
@@ -344,15 +349,16 @@ export const LocationAppInfo = GObject.registerClass({
     }
 
     _getHandlerAppFromWorker(cancellable) {
-        const locationsWorker = GLib.build_filenamev([
-            Docking.DockManager.extension.path,
-            'features', 'locationsWorker.js',
-        ]);
-        const locationsWorkerArgs = [LocationAppInfo.GJS_BINARY_PATH, '-m',
-            locationsWorker, 'handler', this.location.get_uri(),
-            '--timeout', `${LAUNCH_HANDLER_MAX_WAIT}`];
-        const subProcess = Gio.Subprocess.new(locationsWorkerArgs,
-            Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE);
+        const subProcess = Gio.Subprocess.new([
+            LocationAppInfo.GJS_BINARY_PATH,
+            '-m',
+            `${Docking.DockManager.extension.path}/features/locationsWorker.js`,
+            'handler',
+            this.location.get_uri(),
+            '--timeout',
+            `${LAUNCH_HANDLER_MAX_WAIT}`,
+        ],
+        Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE);
 
         try {
             const [, stdOut, stdErr] = subProcess.communicate(null, cancellable);
@@ -1587,18 +1593,18 @@ class CategoryPanel {
                     // so the dock can receive the drop.
                     if (item.child?._draggable) {
                         item.child._d2dInCategoryId = categoryId;
-                        item.child._draggable.connect('drag-begin', () => {
+                        item.child._draggable.connectObject('drag-begin', () => {
                             // Visually hide panel, but keep isOpen=true so that
                             // requiresVisibility=true remains and the dock stays visible
                             this.actor.hide();
                             if (this._overlay)
                                 this._overlay.hide();
-                        });
-                        item.child._draggable.connect('drag-end', () => {
+                        }, this.actor);
+                        item.child._draggable.connectObject('drag-end', () => {
                             // Now actually close (releases requiresVisibility)
                             this.actor.show();
                             this.close();
-                        });
+                        }, this.actor);
                     }
                     item.show(false);
                     // Disable CSS transitions (prevents squish effect on open)
@@ -1843,8 +1849,18 @@ class CategoryPanel {
             this._overlay.destroy();
             this._overlay = null;
         }
+        this._background?.destroy();
+        this._boxContainer?.destroy();
+        this._dashContainer?.destroy();
+        this._dashActor?.destroy();
         this.actor?.destroy();
         this.actor = null;
+        this._sourceActor = null;
+        this._dash = null;
+        this._background = null;
+        this._boxContainer = null;
+        this._dashContainer = null;
+        this._dashActor = null;
     }
 }
 

@@ -12,7 +12,6 @@ EXTRA_MODULES = \
                 docking.js \
                 appIcons.js \
                 appIconIndicators.js \
-                dockStruts.js \
                 imports.js \
                 intellihide.js \
                 prefs.js \
@@ -150,7 +149,8 @@ _build: all
 	cp $(BASE_MODULES) $(EXTRA_MODULES) _build
 	cp -a dependencies _build
 	cp -a indicators _build
-	cp -a platform _build
+	mkdir -p _build/platform
+	cp platform/settings.js _build/platform/
 	cp -a widgets _build
 	cp -a services _build
 	cp -a features _build

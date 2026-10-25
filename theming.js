@@ -143,7 +143,9 @@ export class ThemeManager {
         }
         this.emit('destroy');
         this._destroyWallpaperExtractor();
-        this._transparency.destroy();
+        this._transparency?.destroy();
+        this._transparency = null;
+        this._signalsHandler.destroy();
         this._destroyed = true;
     }
 
@@ -763,7 +765,7 @@ class Transparency {
         this._trackedWindows = new Map();
 
         this._destroyed = false;
-        dock.connect('destroy', () => (this._destroyed = true));
+        this._dockDestroyId = dock.connect('destroy', () => (this._destroyed = true));
     }
 
     enable() {
@@ -844,6 +846,10 @@ class Transparency {
     destroy() {
         this._destroyed = true;
         this.disable();
+        if (this._dockDestroyId) {
+            this._dock?.disconnect(this._dockDestroyId);
+            this._dockDestroyId = 0;
+        }
         if (this._solidStyleUpdateId) {
             GLib.source_remove(this._solidStyleUpdateId);
             this._solidStyleUpdateId = 0;

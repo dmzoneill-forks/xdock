@@ -71,7 +71,12 @@ DBusMenuUtils.haveDBusMenu().then(m => {
     DBusMenu = m;
 }).catch(e => logError(e, 'XDock: Failed to load DBusMenu'));
 
-const tracker = Shell.WindowTracker.get_default();
+let tracker;
+function getTracker() {
+    if (!tracker)
+        tracker = Shell.WindowTracker.get_default();
+    return tracker;
+}
 
 const Labels = Object.freeze({
     ISOLATE_MONITORS: Symbol('isolate-monitors'),
@@ -600,7 +605,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (this.window)
             return this.window === window;
 
-        return this.app === tracker.get_window_app(window);
+        return this.app === getTracker().get_window_app(window);
     }
 
     _onWindowEntered(metaScreen, monitorIndex, metaWin) {
@@ -700,7 +705,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (this.window) {
             isFocused = global.display.focus_window === this.window;
         } else {
-            isFocused = tracker.focus_app === this.app;
+            isFocused = getTracker().focus_app === this.app;
             // Fallback: if tracker.focus_app does not match, check
             // whether the focused window belongs to this app.  This
             // covers cases where the tracker's focus_app is stale or
@@ -708,7 +713,7 @@ export const DockAbstractAppIcon = GObject.registerClass({
             if (!isFocused) {
                 const focusWin = global.display.focus_window;
                 if (focusWin)
-                    isFocused = this.app === tracker.get_window_app(focusWin);
+                    isFocused = this.app === getTracker().get_window_app(focusWin);
             }
             // When isolate-monitors is active, only show focus if the
             // focused window actually belongs to this monitor (#105).
@@ -1600,7 +1605,7 @@ const DockAppIcon = GObject.registerClass({
             this._signalsHandler.add(global.display, 'notify::focus-window',
                 () => this._updateFocusState());
         } else {
-            this._signalsHandler.add(tracker, 'notify::focus-app', () => this._updateFocusState());
+            this._signalsHandler.add(getTracker(), 'notify::focus-app', () => this._updateFocusState());
             // Also listen for focus-window changes so that focus state is
             // updated even when the tracker's focus_app does not change
             // (e.g. pinned apps whose focused window is already set) (#122).
@@ -1623,7 +1628,7 @@ const DockLocationAppIcon = GObject.registerClass({
             this.popupMenu = () => {};
         } else {
             if (Settings.get('isolate-locations')) {
-                this._signalsHandler.add(tracker, 'notify::focus-app', () => this._updateFocusState());
+                this._signalsHandler.add(getTracker(), 'notify::focus-app', () => this._updateFocusState());
             } else {
                 this._signalsHandler.add(global.display, 'notify::focus-window',
                     () => this._updateFocusState());

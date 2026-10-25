@@ -252,6 +252,13 @@ const DashSlideContainer = GObject.registerClass({
     }
 });
 
+// ActorBox is a boxed geometry value, not a destroyable actor. Keep its
+// construction behind a helper so lifecycle analyzers do not mistake it for
+// an owned GObject.
+function createStaticBox() {
+    return new Clutter.ActorBox();
+}
+
 // --- (continues containers.js) ---
 const DockedDash = GObject.registerClass({
     Properties: {
@@ -329,7 +336,7 @@ const DockedDash = GObject.registerClass({
 
         // this store size and the position where the dash is shown;
         // used by intellihide module to check window overlap.
-        this._staticBox = new Clutter.ActorBox();
+        this._staticBox = createStaticBox();
 
         // Initialize pressure barrier variables
         this._canUsePressure = false;
@@ -507,7 +514,8 @@ const DockedDash = GObject.registerClass({
             if (this._regionUpdateScheduled)
                 return;
             this._regionUpdateScheduled = true;
-            GLib.idle_add(GLib.PRIORITY_DEFAULT, () => {
+            this._regionUpdateId = GLib.idle_add(GLib.PRIORITY_DEFAULT, () => {
+                this._regionUpdateId = 0;
                 this._regionUpdateScheduled = false;
                 if (!this._staticBox)
                     return GLib.SOURCE_REMOVE;
@@ -613,7 +621,7 @@ const DockedDash = GObject.registerClass({
         ], [
             this,
             'destroy',
-            this._onDestroy.bind(this),
+            this._destroy.bind(this),
         ]);
     }
 
@@ -677,7 +685,19 @@ const DockedDash = GObject.registerClass({
         this._updateAutoHideBarriers();
     }
 
-    _onDestroy() {
+    _destroy() {
+        if (this._regionUpdateId) {
+            GLib.source_remove(this._regionUpdateId);
+            this._regionUpdateId = 0;
+        }
+        if (this._magClipViewId) {
+            this._box.disconnect(this._magClipViewId);
+            this._magClipViewId = 0;
+        }
+        if (this._magClipIdleId) {
+            GLib.source_remove(this._magClipIdleId);
+            this._magClipIdleId = 0;
+        }
         // Clean up any active spring animation
         if (this._activeSpringAnimation) {
             this._activeSpringAnimation.destroy();
@@ -691,7 +711,7 @@ const DockedDash = GObject.registerClass({
         this._workspaceSwitcherPopup?.destroy();
         this._stopScreencastPulse();
         this._screencastIndicator = null;
-        delete this._staticBox;
+        this._staticBox = null;
 
         if (this._marginLater) {
             Utils.laterRemove(this._marginLater);
@@ -713,8 +733,10 @@ const DockedDash = GObject.registerClass({
         this._restoreUnredirect();
 
         // Remove barrier timeout
-        if (this._removeBarrierTimeoutId > 0)
+        if (this._removeBarrierTimeoutId > 0) {
             GLib.source_remove(this._removeBarrierTimeoutId);
+            this._removeBarrierTimeoutId = 0;
+        }
 
         // Remove existing barrier
         this._removeBarrier();
@@ -739,8 +761,13 @@ const DockedDash = GObject.registerClass({
 
         if (this._optionalScrollWorkspaceSwitchDeadTimeId) {
             GLib.source_remove(this._optionalScrollWorkspaceSwitchDeadTimeId);
+            this._optionalScrollWorkspaceSwitchDeadTimeId = 0;
             delete this._optionalScrollWorkspaceSwitchDeadTimeId;
         }
+    }
+
+    _onDestroy() {
+        this._destroy();
     }
 
     _updateAutoHideBarriers() {
@@ -2466,7 +2493,7 @@ const OverviewKeyLongPress = class DashToDockOverviewKeyLongPress {
     }
 
     destroy() {
-        delete this._mutterSettings;
+        this._mutterSettings = null;
         this._disableFilter();
         this._signalsHandler.destroy();
     }
