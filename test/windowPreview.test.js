@@ -354,7 +354,6 @@ describe('WindowPreviewMenu', () => {
 
         expect(menu.blockSourceEvents).toBe(false);
         expect(menu._source).toBe(source);
-        expect(menu._app).toBe(source.app);
         expect(menu.fromHover).toBe(false);
         expect(menu._hoverOpenTimeoutId).toBeNull();
         expect(menu._hoverCloseTimeoutId).toBeNull();
@@ -860,6 +859,7 @@ describe('WindowPreviewMenu', () => {
 
         expect(closeSpy).toHaveBeenCalled();
         expect(menu.isOpen).toBe(false);
+        expect(menu.fromHover).toBe(false);
     });
 
     test('hoverClose calls standard close when not fromHover', () => {
@@ -964,83 +964,6 @@ describe('WindowPreviewMenu', () => {
 
         expect(forceUpdateSpy).toHaveBeenCalled();
         Docking.DockManager.allDocks = origDocks;
-    });
-
-    // --- _onWindowsChanged ---
-    test('_onWindowsChanged opens popup when conditions met', () => {
-        const win = createMockWindow();
-        const source = createMockSource({
-            getInterestingWindows: () => [win],
-            has_pointer: true,
-        });
-        const menu = new WindowPreviewMenu(source);
-        menu.fromHover = true;
-        menu.isOpen = false;
-
-        menu._onWindowsChanged();
-
-        expect(menu._hoverOpenTimeoutId).not.toBeNull();
-    });
-
-    test('_onWindowsChanged does nothing when no windows', () => {
-        const source = createMockSource({
-            getInterestingWindows: () => [],
-            has_pointer: true,
-        });
-        const menu = new WindowPreviewMenu(source);
-        menu.fromHover = true;
-        menu.isOpen = false;
-
-        menu._onWindowsChanged();
-
-        // Should not set a timeout
-        expect(menu._hoverOpenTimeoutId).toBeNull();
-    });
-
-    test('_onWindowsChanged does nothing when already open', () => {
-        const win = createMockWindow();
-        const source = createMockSource({
-            getInterestingWindows: () => [win],
-            has_pointer: true,
-        });
-        const menu = new WindowPreviewMenu(source);
-        menu.fromHover = true;
-        menu.isOpen = true;
-
-        menu._onWindowsChanged();
-
-        // Should not set a timeout since already open
-        expect(menu._hoverOpenTimeoutId).toBeNull();
-    });
-
-    test('_onWindowsChanged does nothing when not from hover', () => {
-        const win = createMockWindow();
-        const source = createMockSource({
-            getInterestingWindows: () => [win],
-            has_pointer: true,
-        });
-        const menu = new WindowPreviewMenu(source);
-        menu.fromHover = false;
-        menu.isOpen = false;
-
-        menu._onWindowsChanged();
-
-        expect(menu._hoverOpenTimeoutId).toBeNull();
-    });
-
-    test('_onWindowsChanged does nothing when source has no pointer', () => {
-        const win = createMockWindow();
-        const source = createMockSource({
-            getInterestingWindows: () => [win],
-            has_pointer: false,
-        });
-        const menu = new WindowPreviewMenu(source);
-        menu.fromHover = true;
-        menu.isOpen = false;
-
-        menu._onWindowsChanged();
-
-        expect(menu._hoverOpenTimeoutId).toBeNull();
     });
 
     // --- _onDestroy ---
@@ -2712,40 +2635,35 @@ describe('WindowPreviewMenu — coverage gaps', () => {
             h => h.length >= 4 && h[1] === menu._boxPointer.bin && h[2] === 'leave-event'
         );
         const windowsChangedHandler = handlers.find(
-            h => h.length >= 4 && h[1] === menu._app && h[2] === 'windows-changed'
+            h => h.length >= 4 && h[1] === source.app && h[2] === 'windows-changed'
         );
-
         expect(enterSourceHandler).toBeDefined();
         expect(leaveSourceHandler).toBeDefined();
         expect(enterMenuHandler).toBeDefined();
         expect(leaveMenuHandler).toBeDefined();
-        expect(windowsChangedHandler).toBeDefined();
+        expect(windowsChangedHandler).toBeUndefined();
 
         // Spy on the methods that should be called
         const onEnterSpy = jest.spyOn(menu, '_onEnter').mockImplementation(() => {});
         const onLeaveSpy = jest.spyOn(menu, '_onLeave').mockImplementation(() => {});
         const onMenuEnterSpy = jest.spyOn(menu, '_onMenuEnter').mockImplementation(() => {});
         const onMenuLeaveSpy = jest.spyOn(menu, '_onMenuLeave').mockImplementation(() => {});
-        const onWindowsChangedSpy = jest.spyOn(menu, '_onWindowsChanged').mockImplementation(() => {});
 
         // Call each lambda (last arg in each handler array)
         enterSourceHandler[enterSourceHandler.length - 1]();
         leaveSourceHandler[leaveSourceHandler.length - 1]();
         enterMenuHandler[enterMenuHandler.length - 1]();
         leaveMenuHandler[leaveMenuHandler.length - 1]();
-        windowsChangedHandler[windowsChangedHandler.length - 1]();
 
         expect(onEnterSpy).toHaveBeenCalled();
         expect(onLeaveSpy).toHaveBeenCalled();
         expect(onMenuEnterSpy).toHaveBeenCalled();
         expect(onMenuLeaveSpy).toHaveBeenCalled();
-        expect(onWindowsChangedSpy).toHaveBeenCalled();
 
         onEnterSpy.mockRestore();
         onLeaveSpy.mockRestore();
         onMenuEnterSpy.mockRestore();
         onMenuLeaveSpy.mockRestore();
-        onWindowsChangedSpy.mockRestore();
     });
 });
 
@@ -3298,42 +3216,6 @@ describe('WindowPreviewMenu — branch coverage', () => {
         // forceUpdate should NOT have been called for either dock
         expect(forceUpdateSpy).not.toHaveBeenCalled();
         Docking.DockManager.allDocks = origDocks;
-    });
-
-    // --- Branch 42: _onWindowsChanged timeout fires but source loses pointer ---
-    test('_onWindowsChanged timeout callback skips popup when source loses pointer', () => {
-        const win = createMockWindow();
-        const source = createMockSource({
-            getInterestingWindows: () => [win],
-            has_pointer: true, // true initially to enter the if block
-        });
-        const menu = new WindowPreviewMenu(source);
-        menu.fromHover = true;
-        menu.isOpen = false;
-
-        // Override GLib.timeout_add to capture the callback without calling it
-        let capturedCb = null;
-        const origTimeoutAdd = GLib.timeout_add;
-        GLib.timeout_add = (_prio, _ms, cb) => { capturedCb = cb; return 999; };
-
-        menu._onWindowsChanged();
-
-        // Restore
-        GLib.timeout_add = origTimeoutAdd;
-
-        expect(capturedCb).not.toBeNull();
-
-        // Now set has_pointer to false before calling the callback
-        source.has_pointer = false;
-
-        const popupSpy = jest.spyOn(menu, 'popup').mockImplementation(() => {});
-        capturedCb();
-
-        // popup should NOT be called because has_pointer is now false
-        expect(popupSpy).not.toHaveBeenCalled();
-        expect(menu._hoverOpenTimeoutId).toBeNull();
-
-        popupSpy.mockRestore();
     });
 
     // --- Branch 43: WindowPreviewList default arg isHoverMenu ---

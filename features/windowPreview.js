@@ -33,7 +33,6 @@ import * as Settings from '../platform/settings.js';
 const MAX_PREVIEW_GENERATION_ATTEMPTS = 15;
 
 const MENU_MARGINS = 10;
-const WINDOW_INIT_TIMEOUT = 200;
 
 const Labels = Object.freeze({
     HOVER: Symbol('hover'),
@@ -109,7 +108,6 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
         this.blockSourceEvents = false;
 
         this._source = source;
-        this._app = this._source.app;
         const workArea = Main.layoutManager.getWorkAreaForMonitor(
             this._source.monitorIndex);
         // NOTE: scaleFactor from ThemeContext is global; for per-monitor scale
@@ -255,9 +253,6 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
             this._boxPointer.bin, 'enter-event', () => this._onMenuEnter());
         this._signalsHandler.addWithLabel(Labels.HOVER,
             this._boxPointer.bin, 'leave-event', () => this._onMenuLeave());
-
-        this._signalsHandler.addWithLabel(Labels.HOVER,
-            this._app, 'windows-changed', () => this._onWindowsChanged());
     }
 
     disableHover() {
@@ -270,6 +265,7 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
 
         this.cancelOpen();
         this.cancelClose();
+        this.fromHover = false;
 
         this._signalsHandler.removeWithLabel(Labels.HOVER);
     }
@@ -358,6 +354,7 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
                 this._boxPointer.close(BoxPointer.PopupAnimation.FADE, () => {
                     this.actor.hide();
                     this.isOpen = false;
+                    this.fromHover = false;
                     if (this._previewBox) {
                         this._previewBox.destroy();
                         this._previewBox = null;
@@ -373,6 +370,8 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
             } else {
                 this.close(BoxPointer.PopupAnimation.FADE);
             }
+        } else {
+            this.fromHover = false;
         }
     }
 
@@ -395,27 +394,6 @@ export class WindowPreviewMenu extends PopupMenu.PopupMenu {
                 return GLib.SOURCE_REMOVE;
             }
         );
-    }
-
-    _onWindowsChanged() {
-        const windows = this._source.getInterestingWindows();
-
-        if (this.fromHover && !this.isOpen && windows.length > 0 &&
-            this._source.has_pointer) {
-            this.cancelOpen();
-            this.cancelClose();
-
-            this._hoverOpenTimeoutId = GLib.timeout_add(
-                GLib.PRIORITY_DEFAULT,
-                WINDOW_INIT_TIMEOUT,
-                () => {
-                    if (this._source.has_pointer)
-                        this.popup();
-                    this._hoverOpenTimeoutId = null;
-                    return GLib.SOURCE_REMOVE;
-                }
-            );
-        }
     }
 
     _onDestroy() {
