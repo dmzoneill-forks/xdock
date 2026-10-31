@@ -61,6 +61,7 @@ Log out and back in, then enable via GNOME Extensions.
 | **[Architecture](docs/ARCHITECTURE.md)** | Code structure, actor tree, settings system |
 | **[Contributing](docs/CONTRIBUTING.md)** | How to contribute, code style, PR process |
 | **[Integration Test Plan](docs/INTEGRATION_TEST_PLAN.md)** | Test specifications and coverage |
+| **[Dash to Dock documentation](https://ubuntu.github.io/dash-to-dock/)** | Upstream extension documentation and release history |
 
 ## Want to help?
 
