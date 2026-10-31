@@ -1279,6 +1279,15 @@ describe('DockAbstractAppIcon', () => {
         expect(app.activate).toHaveBeenCalled();
     });
 
+    test('launchNewWindow launches a running single-instance app with no windows', () => {
+        app = createMockApp({state: 2, windows: []});
+        app.can_open_new_window = () => false;
+        icon = new DockAbstractAppIcon(app, 0, animator);
+        icon.launchNewWindow();
+        expect(app.launch).toHaveBeenCalled();
+        expect(app.activate).not.toHaveBeenCalled();
+    });
+
     test('launchNewWindow shows OSD when updating', () => {
         icon = new DockAbstractAppIcon(app, 0, animator);
         icon.updating = true;

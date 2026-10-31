@@ -1320,7 +1320,13 @@ export const DockAbstractAppIcon = GObject.registerClass({
             if (windows.length > 0) {
                 Main.activateWindow(windows[0]);
             } else {
-                this.app.activate();
+                // A single-instance app can remain RUNNING without exposing a
+                // window. Launch it again so the desktop entry can forward the
+                // activation request to the existing process.
+                if (this.app.state === Shell.AppState.RUNNING)
+                    this.app.launch();
+                else
+                    this.app.activate();
                 this.animateLaunch();
             }
         }
