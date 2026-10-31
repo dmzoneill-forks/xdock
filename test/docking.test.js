@@ -36,6 +36,7 @@ globalThis.global.display = globalThis.global.display ?? (() => {
         },
         connectObject: () => [],
         disconnectObject: () => {},
+        get_n_monitors: () => Main.layoutManager.monitors.length,
         unset_input_focus: () => {},
         emit: (name, ...args) => {
             if (!signals[name]) return;
@@ -114,8 +115,28 @@ beforeEach(() => {
 });
 
 // ---------------------------------------------------------------------------
-// State enum
+// Removed-monitor guards
 // ---------------------------------------------------------------------------
+
+describe('DockedDash removed-monitor guards', () => {
+    test('recognizes monitor as unavailable after it is removed', () => {
+        const monitor = {index: 1, inFullscreen: false};
+        Main.layoutManager.monitors = [monitor];
+        expect(monitor.index < Main.layoutManager.monitors.length).toBe(false);
+        Main.layoutManager.monitors = [{x: 0, y: 0, width: 1920, height: 1080, index: 0}];
+    });
+
+    test('does not treat removed fullscreen monitor as fullscreen', () => {
+        const monitor = {index: 1, inFullscreen: true};
+        Main.layoutManager.monitors = [monitor];
+        const isFullscreen = monitor &&
+            monitor.index < Main.layoutManager.monitors.length &&
+            monitor.inFullscreen;
+        expect(isFullscreen).toBe(false);
+        Main.layoutManager.monitors = [{x: 0, y: 0, width: 1920, height: 1080, index: 0}];
+    });
+});
+
 
 describe('State enum (exported from docking.js)', () => {
     test('exports all four states', () => {
@@ -4827,7 +4848,7 @@ describe('Coverage boost — real instance exercises', () => {
         manager = new DockManager(ext);
         const dock = manager.mainDock;
         dock._dockDwellTimeoutId = 1;
-        dock._monitor = {inFullscreen: true};
+        dock._monitor = {index: 0, inFullscreen: true};
         Settings.set('autohide-in-fullscreen', false);
         dock._dockDwellTimeout();
     });
@@ -4970,7 +4991,7 @@ describe('Coverage boost — real instance exercises', () => {
         const ext = _createCoverageMockExtension();
         manager = new DockManager(ext);
         const dock = manager.mainDock;
-        dock._monitor = {inFullscreen: true};
+        dock._monitor = {index: 0, inFullscreen: true};
         dock._unredirectDisabled = false;
         dock._disableUnredirect();
         expect(dock._unredirectDisabled).toBe(false);

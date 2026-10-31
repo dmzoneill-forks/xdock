@@ -1087,8 +1087,10 @@ const DockedDash = GObject.registerClass({
      * overview visibility
      */
     _isAnyWindowFullscreen() {
-        return this._monitor?.inFullscreen ||
-            global.display.get_monitor_in_fullscreen?.(this.monitorIndex);
+        return !!(this._monitor &&
+            this._monitor.index < global.display.get_n_monitors() &&
+            (this._monitor.inFullscreen ||
+                global.display.get_monitor_in_fullscreen?.(this.monitorIndex)));
     }
 
     _updateDashVisibility() {
@@ -1737,6 +1739,10 @@ const DockedDash = GObject.registerClass({
         // Remove existing barrier
         this._removeBarrier();
 
+        // Monitor removed (e.g. HDMI unplugged): skip until docks are recreated
+        if (!this._monitor || this._monitor.index >= global.display.get_n_monitors())
+            return;
+
         // The barrier needs to be removed in fullscreen with autohide disabled
         // otherwise the mouse can get trapped on monitor.
         if (this._isAnyWindowFullscreen() &&
@@ -1850,6 +1856,10 @@ const DockedDash = GObject.registerClass({
     }
 
     _resetPosition() {
+        // Monitor removed (e.g. HDMI unplugged): skip until docks are recreated
+        if (this.monitorIndex >= global.display.get_n_monitors())
+            return;
+
         // Ensure variables linked to settings are updated.
         this._updateVisibilityMode();
 
