@@ -914,17 +914,17 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (buttonEvent.button === Clutter.BUTTON_PRIMARY)
             this._startWiggleLongPress();
 
-        return super.vfunc_button_press_event(buttonEvent);
+        return super.vfunc_button_press_event?.(buttonEvent) ?? Clutter.EVENT_PROPAGATE;
     }
 
     vfunc_button_release_event(buttonEvent) {
         this._cancelWiggleLongPress();
-        return super.vfunc_button_release_event(buttonEvent);
+        return super.vfunc_button_release_event?.(buttonEvent) ?? Clutter.EVENT_PROPAGATE;
     }
 
     vfunc_leave_event(crossingEvent) {
         this._cancelWiggleLongPress();
-        return super.vfunc_leave_event(crossingEvent);
+        return super.vfunc_leave_event?.(crossingEvent) ?? Clutter.EVENT_PROPAGATE;
     }
 
     activate(button) {
