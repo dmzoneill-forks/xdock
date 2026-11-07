@@ -652,6 +652,12 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
         if (!item || !this.actor)
             return;
 
+        // GNOME Shell 51 can open the popup before its children finish mapping.
+        // Translating an unmapped actor then feeds Clutter an invalid allocation.
+        if (item.mapped === false || this.box?.mapped === false ||
+            item.is_destroyed?.() || this.box?.is_destroyed?.())
+            return;
+
         const adjustment = this.isHorizontal
             ? this.actor.hadjustment
             : this.actor.vadjustment;
@@ -665,6 +671,10 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
 
         const itemPos = this.isHorizontal ? x : y;
         const itemSize = this.isHorizontal ? item.get_width() : item.get_height();
+
+        // Unallocated actors can report sentinel geometry during popup startup.
+        if (!Number.isFinite(itemPos) || !Number.isFinite(itemSize) || itemSize < 0)
+            return;
 
         // If the item is already fully visible, do nothing.
         if (itemPos >= value && itemPos + itemSize <= value + pageSize)

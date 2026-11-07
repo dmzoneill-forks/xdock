@@ -2248,6 +2248,34 @@ describe('WindowPreviewList', () => {
         previewBox._scrollToItem(null);
     });
 
+    test('_scrollToItem ignores unmapped or invalid geometry', () => {
+        const source = createMockSource();
+        const menu = new WindowPreviewMenu(source);
+        menu.fromHover = true;
+        menu._redisplay();
+
+        const previewBox = menu._previewBox;
+        const setValue = jest.fn();
+        previewBox.actor.vadjustment = {
+            get_values: () => [0, 0, 500, 0, 0, 200],
+            set_value: setValue,
+        };
+        previewBox.actor.hadjustment = previewBox.actor.vadjustment;
+
+        previewBox._scrollToItem({
+            mapped: false,
+            translate_coordinates: jest.fn(() => [true, 0, 300]),
+            get_height: () => 50,
+        });
+        previewBox._scrollToItem({
+            translate_coordinates: () => [true, Number.NaN, 300],
+            get_width: () => 50,
+            get_height: () => 50,
+        });
+
+        expect(setValue).not.toHaveBeenCalled();
+    });
+
     test('_scrollToItem adjusts value for vertical layout', () => {
         const source = createMockSource();
         const menu = new WindowPreviewMenu(source);
