@@ -69,7 +69,9 @@ export function disconnect(id) {
  * @returns {Gio.Settings}
  */
 export function getGSettings() {
-    return _instance?._gioSettings ?? null;
+    // DockManager exposes the Gio.Settings instance directly. Keep supporting
+    // wrappers that store it under _gioSettings for callers outside XDock.
+    return _instance?._gioSettings ?? _instance ?? null;
 }
 
 /**

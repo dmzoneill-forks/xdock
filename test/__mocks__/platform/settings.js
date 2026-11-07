@@ -57,6 +57,7 @@ const _defaults = {
 };
 
 let _store = {};
+let _instance = null;
 const _listeners = new Map();
 let _nextId = 1;
 
@@ -95,15 +96,16 @@ export function disconnect(id) {
 }
 
 export function getGSettings() {
-    return null;
+    return _instance?._gioSettings ?? _instance ?? null;
 }
 
-export function init(_settingsObj) {
-    // In tests, we use the in-memory store
+export function init(settingsObj) {
+    _instance = settingsObj;
 }
 
 export function destroy() {
     _store = {};
+    _instance = null;
     _listeners.clear();
 }
 
@@ -112,6 +114,7 @@ export function destroy() {
  */
 export function _reset() {
     _store = {};
+    _instance = null;
     _listeners.clear();
     _nextId = 1;
 }
