@@ -664,6 +664,9 @@ class WindowPreviewList extends PopupMenu.PopupMenuSection {
 
         const [value, , upper, , , pageSize] = adjustment.get_values();
 
+        if (typeof item.translate_coordinates !== 'function')
+            return;
+
         // Get the item's position relative to the scrollable box.
         const [ok, x, y] = item.translate_coordinates(this.box, 0, 0);
         if (!ok)

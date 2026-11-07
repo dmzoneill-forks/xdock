@@ -2330,6 +2330,27 @@ describe('WindowPreviewList', () => {
         expect(setValue).not.toHaveBeenCalled();
     });
 
+    test('_scrollToItem returns early when item lacks coordinate translation', () => {
+        const source = createMockSource();
+        const menu = new WindowPreviewMenu(source);
+        menu.fromHover = true;
+        menu._redisplay();
+
+        const previewBox = menu._previewBox;
+        previewBox.isHorizontal = false;
+        const setValue = jest.fn();
+        previewBox.actor.vadjustment = {
+            get_values: () => [0, 0, 500, 0, 0, 200],
+            set_value: setValue,
+        };
+
+        previewBox._scrollToItem({
+            get_width: () => 100,
+            get_height: () => 50,
+        });
+
+        expect(setValue).not.toHaveBeenCalled();
+    });
     test('_scrollToItem returns early if translate_coordinates fails', () => {
         const source = createMockSource();
         const menu = new WindowPreviewMenu(source);
