@@ -324,14 +324,17 @@ export const DockDash = GObject.registerClass({
             this._quickSettingsButton.visible = Settings.get('show-quick-settings');
             this._updateQuickSettingsButton();
         }).catch(e => logError(e, 'XDock: Failed to load QuickSettings'));
-        this._signalsHandler.add(Settings.getGSettings(),
-            'changed::show-quick-settings', () => {
-                if (this._quickSettingsButton) {
-                    this._quickSettingsButton.visible =
-                        Settings.get('show-quick-settings');
-                    this._updateQuickSettingsButton();
-                }
-            });
+        const settings = Settings.getGSettings();
+        if (settings) {
+            this._signalsHandler.add(settings,
+                'changed::show-quick-settings', () => {
+                    if (this._quickSettingsButton) {
+                        this._quickSettingsButton.visible =
+                            Settings.get('show-quick-settings');
+                        this._updateQuickSettingsButton();
+                    }
+                });
+        }
 
         this._background = new St.Widget({
             style_class: 'dash-background',
