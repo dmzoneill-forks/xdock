@@ -14,7 +14,6 @@
             <child>
               <object class="GtkImage" id="logo">
                 <property name="can_focus">0</property>
-                <property name="file">./media/logo.svg</property>
               </object>
             </child>
             <child>
