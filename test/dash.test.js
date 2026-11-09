@@ -3552,6 +3552,7 @@ describe('DockDash._redisplay (full path)', () => {
         dockManager.settings = {
             ...dockManager.settings,
             showFavorites: true,
+            showFavoritesOnlyOnPrimary: false,
             showRunning: true,
             isolateWorkspaces: false,
             isolateMonitors: false,
@@ -3631,6 +3632,24 @@ describe('DockDash._redisplay (full path)', () => {
         expect(ctx._createAppItem).toHaveBeenCalledWith(favApp, null);
         expect(ctx._adjustIconSize).toHaveBeenCalled();
         expect(ctx._updateNumberOverlay).toHaveBeenCalled();
+        AppFavorites.getAppFavorites = origGetFavs;
+    });
+
+    test('hides favorites on secondary monitor when configured', () => {
+        const favApp = {get_id: () => 'fav.desktop', get_name: () => 'FavApp', get_windows: () => []};
+        const {ctx, dockManager} = makeRedisplayContext({_monitorIndex: 1});
+        dockManager.settings.showFavoritesOnlyOnPrimary = true;
+        dockManager.getDockOrder = () => ['fav.desktop'];
+        const origGetFavs = AppFavorites.getAppFavorites;
+        AppFavorites.getAppFavorites = () => ({
+            getFavoriteMap: () => ({'fav.desktop': favApp}),
+            getFavorites: () => [favApp],
+            reload: () => {},
+        });
+
+        DockDash.prototype._redisplay.call(ctx);
+
+        expect(ctx._createAppItem).not.toHaveBeenCalledWith(favApp, null);
         AppFavorites.getAppFavorites = origGetFavs;
     });
 

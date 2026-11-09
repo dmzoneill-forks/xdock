@@ -42,6 +42,7 @@ function getTests() {
         assertDefault('aero-peek-opacity', 3, 'i'),
         assertDefault('aero-peek-duration', 200, 'i'),
         assertDefault('group-apps', true, 'b'),
+        assertDefault('show-favorites-only-on-primary', false, 'b'),
         assertDefault('intellihide-check-interval', 100, 'i'),
         assertDefault('scroll-cycle-debounce', 250, 'i'),
         assertDefault('scroll-workspace-deadtime', 250, 'i'),

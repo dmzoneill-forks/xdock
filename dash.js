@@ -2262,7 +2262,9 @@ export const DockDash = GObject.registerClass({
             newApps.push(app);
             newAppsSet.add(app);
         };
-        const {showFavorites} = settings;
+        const showFavorites = settings.showFavorites &&
+            (!settings.showFavoritesOnlyOnPrimary ||
+             this._monitorIndex === Main.layoutManager.primaryIndex);
 
         // ── Phase 1+2: Favorites + Category Icons from dock-order ────────
         // dock-order is the single authoritative source for persistent ordering.
