@@ -1308,10 +1308,11 @@ export const DockAbstractAppIcon = GObject.registerClass({
         if (this.app.state === Shell.AppState.RUNNING &&
             this.app.can_open_new_window()) {
             this.animateLaunch();
-            // Launch on the monitor where the dock icon was clicked,
-            // rather than always on the primary display (issue #13).
-            const monitorIndex = Main.layoutManager.findIndexForActor(this);
-            this.app.open_new_window(monitorIndex >= 0 ? monitorIndex : -1);
+            // Shell.App.open_new_window() expects a workspace index, not a
+            // monitor index.  Passing the dock monitor here opens new windows
+            // on the wrong workspace when the dock is clicked elsewhere.
+            const workspaceIndex = global.workspace_manager.get_active_workspace_index?.() ?? -1;
+            this.app.open_new_window(workspaceIndex);
         } else {
             // Try to manually activate the first window. Otherwise, when the
             // app is activated by switching to a different workspace, a launch

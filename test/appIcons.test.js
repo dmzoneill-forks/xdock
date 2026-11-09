@@ -1260,7 +1260,21 @@ describe('DockAbstractAppIcon', () => {
     test('launchNewWindow opens new window for running app', () => {
         icon = new DockAbstractAppIcon(app, 0, animator);
         icon.launchNewWindow();
-        expect(app.open_new_window).toHaveBeenCalled();
+        expect(app.open_new_window).toHaveBeenCalledWith(0);
+    });
+
+    test('launchNewWindow opens new window on active workspace', () => {
+        const getActiveWorkspaceIndex = global.workspace_manager.get_active_workspace_index;
+        global.workspace_manager.get_active_workspace_index = () => 2;
+
+        try {
+            icon = new DockAbstractAppIcon(app, 1, animator);
+            icon.launchNewWindow();
+        } finally {
+            global.workspace_manager.get_active_workspace_index = getActiveWorkspaceIndex;
+        }
+
+        expect(app.open_new_window).toHaveBeenCalledWith(2);
     });
 
     test('launchNewWindow activates existing window when cannot open new', () => {
