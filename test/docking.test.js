@@ -6199,6 +6199,47 @@ describe('Coverage boost phase 2', () => {
         slider.vfunc_allocate(new Clutter.ActorBox(0, 0, 1920, 48));
     });
 
+    test('DashSlideContainer TOP uses panelBox monitor, not panel coordinates', () => {
+        Settings.set('dock-position', 0); // TOP
+        Settings.set('dock-fixed', true);
+        const originalMonitors = Main.layoutManager.monitors;
+        const originalPanelX = Main.panel.x;
+        const originalPanelY = Main.panel.y;
+        const originalPanelBoxX = Main.layoutManager.panelBox.x;
+        const originalPanelBoxY = Main.layoutManager.panelBox.y;
+        Main.layoutManager.monitors = [
+            {x: 0, y: 0, width: 1920, height: 1080, index: 0, geometry_scale: 1},
+            {x: 1920, y: 0, width: 1920, height: 1080, index: 1, geometry_scale: 1},
+        ];
+        Main.panel.x = 0;
+        Main.panel.y = 0;
+        Main.layoutManager.panelBox.x = 1920;
+        Main.layoutManager.panelBox.y = 0;
+
+        const ext = _createCoverageMockExtension();
+        manager = new DockManager(ext);
+        const slider = manager.mainDock._slider;
+        slider.side = St.Side.TOP;
+        slider.child._width = 1920;
+        slider.child._height = 48;
+        slider.slideX = 1;
+        slider.monitorIndex = 0;
+        slider.child.allocate = jest.fn(slider.child.allocate);
+        const box = new Clutter.ActorBox(0, 0, 1920, 48);
+        try {
+            slider.vfunc_allocate(box);
+
+            expect(slider.child.allocate).toHaveBeenCalledWith(
+                expect.objectContaining({y1: 0, y2: 48}));
+        } finally {
+            Main.layoutManager.monitors = originalMonitors;
+            Main.panel.x = originalPanelX;
+            Main.panel.y = originalPanelY;
+            Main.layoutManager.panelBox.x = originalPanelBoxX;
+            Main.layoutManager.panelBox.y = originalPanelBoxY;
+        }
+    });
+
     // --- Signal handler callbacks: in-fullscreen-changed (lines 380-382) ---
 
     test('in-fullscreen-changed callback exercises barrier and visibility', () => {
