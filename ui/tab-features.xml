@@ -241,6 +241,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set how strongly spring animations pull toward their target.</property>
                                 <property name="adjustment">spring_stiffness_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -274,6 +275,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set how quickly spring animation movement settles.</property>
                                 <property name="adjustment">spring_damping_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -307,6 +309,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set how many neighboring icons are affected by magnification.</property>
                                 <property name="adjustment">magnification_spread_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -340,6 +343,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set how quickly magnification transitions complete.</property>
                                 <property name="adjustment">magnification_easing_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -373,6 +377,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set the duration of the dock startup animation.</property>
                                 <property name="adjustment">startup_animation_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -406,6 +411,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set the duration of application launch animations.</property>
                                 <property name="adjustment">icon_animator_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -439,6 +445,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set how far spring animations overshoot their target.</property>
                                 <property name="adjustment">spring_overshoot_adjustment</property>
                                 <property name="digits">2</property>
                                 <property name="draw_value">1</property>
@@ -501,6 +508,7 @@
                               <object class="GtkSwitch" id="command_palette_enabled_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Enable the dock command palette for quick actions.</property>
                               </object>
                             </child>
                           </object>
@@ -528,6 +536,7 @@
                               <object class="GtkSwitch" id="show_workspace_minimap_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Show a workspace overview minimap in the dock.</property>
                               </object>
                             </child>
                           </object>
@@ -555,6 +564,7 @@
                               <object class="GtkComboBoxText" id="workspace_minimap_position_combo">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Choose which side of the dock contains the workspace minimap.</property>
                                 <items>
                                   <item translatable="yes">Start</item>
                                   <item translatable="yes">End</item>
@@ -586,6 +596,7 @@
                               <object class="GtkSwitch" id="default_preview_to_open_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Open window previews automatically when an application icon is activated.</property>
                               </object>
                             </child>
                           </object>
@@ -613,6 +624,7 @@
                               <object class="GtkSwitch" id="drag_to_focus_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Focus a window when its preview is hovered during a drag.</property>
                               </object>
                             </child>
                           </object>
@@ -640,6 +652,7 @@
                               <object class="GtkSwitch" id="show_recent_files_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Show recent files in application menus opened from the dock.</property>
                               </object>
                             </child>
                           </object>
@@ -667,6 +680,7 @@
                               <object class="GtkSwitch" id="show_pinned_commands_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Show pinned terminal commands in the dock.</property>
                               </object>
                             </child>
                           </object>
@@ -694,6 +708,7 @@
                               <object class="GtkSwitch" id="dock_tiling_enabled_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Enable window tiling actions from the dock.</property>
                               </object>
                             </child>
                           </object>
@@ -813,6 +828,7 @@
                               <object class="GtkSwitch" id="show_media_controls_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Show media playback controls in application menus.</property>
                               </object>
                             </child>
                           </object>
@@ -840,6 +856,7 @@
                               <object class="GtkSwitch" id="show_volume_control_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Show per-application volume controls in application menus.</property>
                               </object>
                             </child>
                           </object>
@@ -867,6 +884,7 @@
                               <object class="GtkSwitch" id="show_screencast_indicator_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Show an indicator when the screen is being recorded or shared.</property>
                               </object>
                             </child>
                           </object>
@@ -894,6 +912,7 @@
                               <object class="GtkSwitch" id="show_quick_settings_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Show a quick settings panel from the dock.</property>
                               </object>
                             </child>
                           </object>

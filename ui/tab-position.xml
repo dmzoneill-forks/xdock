@@ -213,6 +213,7 @@
                                     <property name="receives_default">1</property>
                                     <property name="halign">center</property>
                                     <property name="valign">center</property>
+                                    <property name="tooltip-text" translatable="yes">Open advanced intelligent autohide settings.</property>
 
                                     <child>
                                       <object class="GtkImage" id="image">
@@ -229,6 +230,7 @@
                                   <object class="GtkSwitch" id="intelligent_autohide_switch">
                                     <property name="halign">end</property>
                                     <property name="valign">center</property>
+                                    <property name="tooltip-text" translatable="yes">Hide the dock automatically when it would obstruct a window.</property>
                                   </object>
                                 </child>
                                 <layout>
@@ -284,6 +286,7 @@
                                 <property name="draw-value">1</property>
                                 <property name="valign">baseline</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set the maximum dock size relative to available screen space.</property>
                                 <property name="adjustment">dock_size_adjustment</property>
                                 <property name="round_digits">0</property>
                                 <property name="digits">2</property>
@@ -307,6 +310,7 @@
                             <child>
                               <object class="GtkCheckButton" id="dock_center_icons_check">
                                 <property name="label" translatable="yes">Place icons to the center</property>
+                                <property name="tooltip-text" translatable="yes">Keep dock icons centered instead of placing them from the edge.</property>
                                 <layout>
                                   <property name="column">0</property>
                                   <property name="row">2</property>
@@ -343,6 +347,7 @@
                                 <property name="draw-value">1</property>
                                 <property name="valign">baseline</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set the gap between the dock and the screen edge.</property>
                                 <property name="adjustment">dock_margin_size_adjustment</property>
                                 <property name="round_digits">0</property>
                                 <property name="digits">0</property>
@@ -384,6 +389,7 @@
                                 <property name="draw-value">1</property>
                                 <property name="valign">baseline</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set extra spacing between the pointer edge and the dock reveal area.</property>
                                 <property name="adjustment">dock_edge_margin_adjustment</property>
                                 <property name="round_digits">0</property>
                                 <property name="digits">0</property>
@@ -424,6 +430,7 @@
                                 <property name="draw-value">1</property>
                                 <property name="valign">baseline</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set the maximum application icon size.</property>
                                 <property name="adjustment">icon_size_adjustment</property>
                                 <property name="round_digits">1</property>
                                 <property name="digits">0</property>
@@ -438,6 +445,7 @@
                             <child>
                               <object class="GtkCheckButton" id="icon_size_fixed_checkbutton">
                                 <property name="label" translatable="yes">Fixed icon size: scroll to reveal other icons</property>
+                                <property name="tooltip-text" translatable="yes">Keep icon size fixed and scroll the dock when more icons exist than fit.</property>
                                 <property name="margin_top">12</property>
 
                                 <layout>
@@ -477,6 +485,7 @@
                               <object class="GtkScale" id="preview_size_scale">
                                 <property name="hexpand">1</property>
                                 <property name="draw-value">1</property>
+                                <property name="tooltip-text" translatable="yes">Scale the size of window preview thumbnails.</property>
                                 <property name="adjustment">preview_size_adjustment</property>
                                 <property name="restrict_to_fill_level">0</property>
                                 <property name="fill_level">0</property>
@@ -517,6 +526,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set the width of the edge area used for dock dwell activation.</property>
                                 <property name="adjustment">dock_dwell_width_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -550,6 +560,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set how often the dock checks for edge dwell activation.</property>
                                 <property name="adjustment">dock_dwell_interval_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -583,6 +594,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set how long pointer pressure must be held before the dock appears.</property>
                                 <property name="adjustment">pressure_timeout_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>

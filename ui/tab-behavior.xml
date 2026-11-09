@@ -70,6 +70,7 @@
                                     <property name="receives_default">1</property>
                                     <property name="halign">center</property>
                                     <property name="valign">center</property>
+                                    <property name="tooltip-text" translatable="yes">Configure the Super plus number shortcut behavior.</property>
 
                                     <child>
                                       <object class="GtkImage" id="image_overlay">
@@ -165,6 +166,7 @@
                                   <object class="GtkButton" id="middle_click_options_button">
                                     <property name="receives_default">1</property>
                                     <property name="valign">center</property>
+                                    <property name="tooltip-text" translatable="yes">Configure the middle-click action.</property>
                                     <child>
                                       <object class="GtkImage" id="middle_click_image">
                                         <property name="can_focus">0</property>
@@ -286,6 +288,7 @@
                                   <object class="GtkComboBoxText" id="scroll_action_combo">
                                     <property name="can_focus">0</property>
                                     <property name="valign">center</property>
+                                    <property name="tooltip-text" translatable="yes">Choose what scrolling over an application icon does.</property>
                                     <items>
                                       <item translatable="yes">Do nothing</item>
                                       <item translatable="yes">Cycle through windows</item>

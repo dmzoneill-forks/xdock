@@ -187,6 +187,7 @@
                               <object class="GtkSwitch" id="scroll_to_icon_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Keep the focused application visible while the dock scrolls.</property>
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">0</property>
@@ -229,6 +230,7 @@
                             <child>
                               <object class="GtkComboBoxText" id="app_order_combo">
                                 <property name="halign">end</property>
+                                <property name="tooltip-text" translatable="yes">Choose whether running icons follow dock order or their window positions.</property>
                                 <items>
                                   <item id="stable" translatable="yes">Dock order</item>
                                   <item id="coordinates" translatable="yes">Window coordinates</item>
@@ -254,6 +256,7 @@
                               <object class="GtkSwitch" id="show_applications_button_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Show the Applications button in the dock.</property>
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">0</property>
@@ -294,6 +297,7 @@
                             <child>
                               <object class="GtkCheckButton" id="application_button_first_button">
                                 <property name="label" translatable="yes">Move at beginning of the dock</property>
+                                <property name="tooltip-text" translatable="yes">Place the Applications button before other dock items.</property>
                                 <property name="halign">start</property>
                                 <property name="margin_top">12</property>
 
@@ -306,6 +310,7 @@
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="application_button_animation_button">
+                                <property name="tooltip-text" translatable="yes">Animate the Applications button when opening the overview.</property>
                                 <style>
                                 <class name="text-button"/>
                                 </style>
@@ -327,6 +332,7 @@
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="show_apps_always_in_the_edge">
+                                <property name="tooltip-text" translatable="yes">Keep the Applications button at a dock edge when Panel mode is enabled.</property>
                                 <style>
                                   <class name="text-button"/>
                                 </style>
@@ -364,6 +370,7 @@
                               <object class="GtkSwitch" id="show_trash_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Show the Trash icon in the dock.</property>
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">0</property>
@@ -401,6 +408,7 @@
                               <object class="GtkSwitch" id="show_mounts_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Show mounted volumes and removable devices in the dock.</property>
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">0</property>
@@ -423,6 +431,7 @@
                             <child>
                               <object class="GtkCheckButton" id="show_only_mounted_devices_check">
                                 <property name="label" translatable="yes">Only if mounted</property>
+                                <property name="tooltip-text" translatable="yes">Hide devices that are available but not currently mounted.</property>
                                 <property name="halign">start</property>
                                 <property name="margin_top">12</property>
 
@@ -436,6 +445,7 @@
                             <child>
                               <object class="GtkCheckButton" id="show_network_volumes_check">
                                 <property name="label" translatable="yes">Include network volumes</property>
+                                <property name="tooltip-text" translatable="yes">Include network locations in the volumes list.</property>
                                 <property name="halign">start</property>
                                 <property name="margin_top">12</property>
 
@@ -464,6 +474,7 @@
                               <object class="GtkSwitch" id="isolate_locations_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Keep volume, device, and Trash windows separate from normal file-manager windows.</property>
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">0</property>
@@ -501,6 +512,7 @@
                               <object class="GtkSwitch" id="wiggle_urgent_applications_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Animate icons when applications request attention.</property>
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">0</property>
@@ -538,6 +550,7 @@
                               <object class="GtkSwitch" id="bounce_icons_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Bounce icons when an application launches or needs attention.</property>
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">0</property>
@@ -575,6 +588,7 @@
                               <object class="GtkSwitch" id="hide_tooltip_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Disable application name tooltips when hovering over dock icons.</property>
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">0</property>
@@ -612,6 +626,7 @@
                               <object class="GtkSpinButton" id="tooltip_max_width_spinbutton">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Set the maximum width of application name tooltips.</property>
                                 <property name="width_request">90</property>
                                 <property name="adjustment">tooltip_max_width_adjustment</property>
                                 <property name="digits">0</property>
@@ -651,6 +666,7 @@
                               <object class="GtkSwitch" id="preview_hover_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Open window previews when the pointer rests on an application icon.</property>
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">0</property>
@@ -708,6 +724,7 @@
                                 </items>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Choose the animation used when window previews open and close.</property>
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">0</property>
@@ -740,6 +757,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Limit the height of the window preview list.</property>
                                 <property name="adjustment">preview_max_height_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -773,6 +791,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set how long preview open and close animations take.</property>
                                 <property name="adjustment">preview_animation_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -806,6 +825,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set how long the pointer must hover before previews open.</property>
                                 <property name="adjustment">preview_hover_enter_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -839,6 +859,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set how long previews remain open after the pointer leaves.</property>
                                 <property name="adjustment">preview_hover_leave_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -872,6 +893,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set the opacity of other windows during preview peek.</property>
                                 <property name="adjustment">aero_peek_opacity_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -905,6 +927,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set how long preview peek remains active.</property>
                                 <property name="adjustment">aero_peek_duration_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>

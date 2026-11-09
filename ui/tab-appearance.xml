@@ -37,6 +37,7 @@
                             </child>
                             <child>
                               <object class="GtkComboBoxText" id="dock_style_combo">
+                                <property name="tooltip-text" translatable="yes">Choose the overall visual style of the dock.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <items>
@@ -71,6 +72,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="shelf_gradient_top_scale">
+                                <property name="tooltip-text" translatable="yes">Set the opacity of the shelf gradient at its top edge.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -104,6 +106,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="shelf_gradient_bottom_scale">
+                                <property name="tooltip-text" translatable="yes">Set the opacity of the shelf gradient at its bottom edge.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -137,6 +140,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="shelf_highlight_scale">
+                                <property name="tooltip-text" translatable="yes">Set the opacity of the highlight drawn on the dock shelf.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -170,6 +174,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="shelf_border_scale">
+                                <property name="tooltip-text" translatable="yes">Set the opacity of the dock shelf border.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -203,6 +208,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="shelf_angle_scale">
+                                <property name="tooltip-text" translatable="yes">Set the angle of the dock shelf gradient.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -236,6 +242,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="shelf_height_scale">
+                                <property name="tooltip-text" translatable="yes">Set the height of the dock shelf.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -269,6 +276,7 @@
                             </child>
                             <child>
                               <object class="GtkSwitch" id="shelf_reflection_switch">
+                                <property name="tooltip-text" translatable="yes">Show a reflection effect beneath the dock shelf.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                               </object>
@@ -296,6 +304,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="shelf_reflection_opacity_scale">
+                                <property name="tooltip-text" translatable="yes">Set the opacity of the shelf reflection.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -329,6 +338,7 @@
                             </child>
                             <child>
                               <object class="GtkColorButton" id="shelf_gradient_top_color_button">
+                                <property name="tooltip-text" translatable="yes">Choose the color at the top of the shelf gradient.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="use_alpha">1</property>
@@ -357,6 +367,7 @@
                             </child>
                             <child>
                               <object class="GtkColorButton" id="shelf_gradient_bottom_color_button">
+                                <property name="tooltip-text" translatable="yes">Choose the color at the bottom of the shelf gradient.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="use_alpha">1</property>
@@ -385,6 +396,7 @@
                             </child>
                             <child>
                               <object class="GtkColorButton" id="shelf_highlight_color_button">
+                                <property name="tooltip-text" translatable="yes">Choose the shelf highlight color.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="use_alpha">1</property>
@@ -413,6 +425,7 @@
                             </child>
                             <child>
                               <object class="GtkColorButton" id="shelf_shadow_color_button">
+                                <property name="tooltip-text" translatable="yes">Choose the shelf shadow color.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="use_alpha">1</property>
@@ -441,6 +454,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="shelf_shadow_scale_ctrl">
+                                <property name="tooltip-text" translatable="yes">Set the opacity of the shelf shadow.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -474,6 +488,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="shelf_highlight_width_ctrl">
+                                <property name="tooltip-text" translatable="yes">Set the width of the shelf highlight.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -507,6 +522,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="shelf_shadow_width_ctrl">
+                                <property name="tooltip-text" translatable="yes">Set the width of the shelf shadow.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -541,6 +557,7 @@
                             </child>
                             <child>
                               <object class="GtkColorButton" id="flat_border_color_button">
+                                <property name="tooltip-text" translatable="yes">Choose the dock border color.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="use_alpha">1</property>
@@ -569,6 +586,7 @@
                             </child>
                             <child>
                               <object class="GtkSpinButton" id="flat_border_width_spin">
+                                <property name="tooltip-text" translatable="yes">Set the dock border width.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="adjustment">flat_border_width_adjustment</property>
@@ -597,6 +615,7 @@
                             </child>
                             <child>
                               <object class="GtkSwitch" id="flat_box_shadow_switch">
+                                <property name="tooltip-text" translatable="yes">Show a shadow around the dock.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                               </object>
@@ -624,6 +643,7 @@
                             </child>
                             <child>
                               <object class="GtkColorButton" id="flat_box_shadow_color_button">
+                                <property name="tooltip-text" translatable="yes">Choose the dock box shadow color.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="use_alpha">1</property>
@@ -652,6 +672,7 @@
                             </child>
                             <child>
                               <object class="GtkSpinButton" id="flat_box_shadow_spread_spin">
+                                <property name="tooltip-text" translatable="yes">Set how far the dock shadow spreads.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="adjustment">flat_shadow_spread_adjustment</property>
@@ -680,6 +701,7 @@
                             </child>
                             <child>
                               <object class="GtkSpinButton" id="flat_box_shadow_blur_spin">
+                                <property name="tooltip-text" translatable="yes">Set how softly the dock shadow is blurred.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="adjustment">flat_shadow_blur_adjustment</property>
@@ -709,6 +731,7 @@
                             </child>
                             <child>
                               <object class="GtkColorButton" id="glass_tint_color_button">
+                                <property name="tooltip-text" translatable="yes">Choose the translucent glass tint color.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="use_alpha">1</property>
@@ -737,6 +760,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="glass_tint_opacity_ctrl">
+                                <property name="tooltip-text" translatable="yes">Set the opacity of the glass tint.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -771,6 +795,7 @@
                             </child>
                             <child>
                               <object class="GtkColorButton" id="floating_shadow_color_button">
+                                <property name="tooltip-text" translatable="yes">Choose the floating dock shadow color.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="use_alpha">1</property>
@@ -799,6 +824,7 @@
                             </child>
                             <child>
                               <object class="GtkSpinButton" id="floating_shadow_spread_spin">
+                                <property name="tooltip-text" translatable="yes">Set how far the floating shadow spreads.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="adjustment">floating_shadow_spread_adjustment</property>
@@ -827,6 +853,7 @@
                             </child>
                             <child>
                               <object class="GtkSpinButton" id="floating_shadow_blur_spin">
+                                <property name="tooltip-text" translatable="yes">Set how softly the floating shadow is blurred.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="adjustment">floating_shadow_blur_adjustment</property>
@@ -856,6 +883,7 @@
                             </child>
                             <child>
                               <object class="GtkSpinButton" id="dock_inner_padding_spin">
+                                <property name="tooltip-text" translatable="yes">Set the inner padding between dock content and its border.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="adjustment">dock_inner_padding_adjustment</property>
@@ -884,6 +912,7 @@
                             </child>
                             <child>
                               <object class="GtkColorButton" id="separator_color_button">
+                                <property name="tooltip-text" translatable="yes">Choose the separator color between dock sections.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="use_alpha">1</property>
@@ -912,6 +941,7 @@
                             </child>
                             <child>
                               <object class="GtkSpinButton" id="separator_thickness_spin">
+                                <property name="tooltip-text" translatable="yes">Set the thickness of dock separators.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="adjustment">separator_thickness_adjustment</property>
@@ -1059,6 +1089,7 @@
                             </child>
                             <child>
                               <object class="GtkSpinButton" id="custom_border_radius_spinbutton">
+                                <property name="tooltip-text" translatable="yes">Set the dock corner radius. Use the default value to follow the theme.</property>
                                 <property name="valign">center</property>
                                 <property name="adjustment">
                                   <object class="GtkAdjustment" id="custom_border_radius_adjustment">
@@ -1124,6 +1155,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="shelf_corner_radius_top_scale">
+                                <property name="tooltip-text" translatable="yes">Set the radius of the shelf top corners.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -1157,6 +1189,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="shelf_corner_radius_bottom_scale">
+                                <property name="tooltip-text" translatable="yes">Set the radius of the shelf bottom corners.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -1190,6 +1223,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="reflection_size_scale">
+                                <property name="tooltip-text" translatable="yes">Set the size of the dock reflection.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -1223,6 +1257,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="progress_arc_width_scale">
+                                <property name="tooltip-text" translatable="yes">Set the width of application progress arcs.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -1256,6 +1291,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="hotkey_label_scale_ctrl">
+                                <property name="tooltip-text" translatable="yes">Set the size of shortcut number labels shown on icons.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -1289,6 +1325,7 @@
                             </child>
                             <child>
                               <object class="GtkScale" id="tooltip_max_width_scale">
+                                <property name="tooltip-text" translatable="yes">Set the maximum width of dock tooltips.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
@@ -1424,6 +1461,7 @@
                                     <property name="spacing">6</property>
                                     <child>
                                       <object class="GtkButton" id="running_indicators_advance_settings_button">
+                                        <property name="tooltip-text" translatable="yes">Open advanced running indicator settings.</property>
                                         <property name="receives_default">1</property>
                                         <property name="halign">center</property>
                                         <property name="valign">center</property>
@@ -1441,6 +1479,7 @@
                                     </child>
                                     <child>
                                       <object class="GtkComboBoxText" id="running_indicators_combo">
+                                        <property name="tooltip-text" translatable="yes">Choose how running applications are marked on the dock.</property>
                                         <property name="can_focus">0</property>
                                         <items>
                                           <item translatable="yes">Default</item>
@@ -1518,6 +1557,7 @@
                                     <property name="spacing">6</property>
                                     <child>
                                       <object class="GtkColorButton" id="custom_background_color">
+                                        <property name="tooltip-text" translatable="yes">Choose the custom dock background color.</property>
                                         <property name="receives_default">1</property>
                                         <property name="halign">center</property>
                                         <property name="valign">center</property>
@@ -1526,6 +1566,7 @@
                                     </child>
                                     <child>
                                       <object class="GtkSwitch" id="custom_background_color_switch">
+                                        <property name="tooltip-text" translatable="yes">Enable a custom dock background color.</property>
                                         <property name="halign">end</property>
                                         <property name="valign">center</property>
                                       </object>
@@ -1590,6 +1631,7 @@
                                         <property name="spacing">6</property>
                                         <child>
                                           <object class="GtkButton" id="dynamic_opacity_button">
+                                            <property name="tooltip-text" translatable="yes">Open advanced opacity settings for dock states.</property>
                                             <property name="receives_default">1</property>
                                             <property name="halign">center</property>
                                             <property name="valign">center</property>
@@ -1606,6 +1648,7 @@
                                         </child>
                                         <child>
                                           <object class="GtkComboBoxText" id="customize_opacity_combo">
+                                            <property name="tooltip-text" translatable="yes">Choose which dock opacity state to edit.</property>
                                             <property name="can_focus">0</property>
                                             <property name="valign">center</property>
                                             <items>
@@ -1640,6 +1683,7 @@
                                     </child>
                                     <child>
                                       <object class="GtkScale" id="custom_opacity_scale">
+                                        <property name="tooltip-text" translatable="yes">Set the opacity for the selected dock state.</property>
                                         <property name="hexpand">1</property>
                                         <property name="draw-value">1</property>
                                         <property name="adjustment">custom_opacity_adjustement</property>
@@ -1806,6 +1850,7 @@
                             </child>
                             <child>
                               <object class="GtkSwitch" id="show_icons_emblems_switch">
+                                <property name="tooltip-text" translatable="yes">Show notification badges and emblems on application icons.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <layout>
@@ -1816,6 +1861,7 @@
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="notifications_counter_check">
+                                <property name="tooltip-text" translatable="yes">Show notification counts on application icons.</property>
                                 <property name="label" translatable="yes">Show the number of unread notifications</property>
                                 <property name="halign">start</property>
                                 <layout>
@@ -1827,6 +1873,7 @@
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="applications_override_counter">
+                                <property name="tooltip-text" translatable="yes">Allow per-application notification count overrides.</property>
                                 <property name="label" translatable="yes">Application-provided counter overrides notifications counter</property>
                                 <property name="halign">start</property>
                                 <layout>
@@ -1838,6 +1885,7 @@
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="clear_notifications_on_focus_check">
+                                <property name="tooltip-text" translatable="yes">Clear an application's notification count when it receives focus.</property>
                                 <property name="label" translatable="yes">Clear notification counter when app gets focus</property>
                                 <property name="halign">start</property>
                                 <layout>
@@ -1849,6 +1897,7 @@
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="show_icons_progress_check">
+                                <property name="tooltip-text" translatable="yes">Show task progress indicators on application icons.</property>
                                 <property name="label" translatable="yes">Show progress indicator</property>
                                 <property name="halign">start</property>
                                 <layout>
@@ -1871,6 +1920,7 @@
                             </child>
                             <child>
                               <object class="GtkComboBoxText" id="progress_indicator_style_combo">
+                                <property name="tooltip-text" translatable="yes">Choose the visual style of task progress indicators.</property>
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <items>

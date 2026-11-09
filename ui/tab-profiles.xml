@@ -40,6 +40,7 @@
                               <object class="GtkComboBoxText" id="profile_combo">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Choose the active saved settings profile.</property>
                               </object>
                             </child>
                           </object>
@@ -61,12 +62,14 @@
                               <object class="GtkButton" id="profile_save_button">
                                 <property name="label" translatable="yes">Save Current</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Save current settings as a profile.</property>
                               </object>
                             </child>
                             <child>
                               <object class="GtkButton" id="profile_delete_button">
                                 <property name="label" translatable="yes">Delete</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Delete the selected saved profile.</property>
                                 <property name="sensitive">0</property>
                               </object>
                             </child>
