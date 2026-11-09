@@ -260,6 +260,688 @@ msgstr ""
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"Wybierz, który monitor będzie właścicielem podstawowej stacji dokującej. "
+"Dodatkowe monitory mogą wyświetlać dodatkowe doki."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"Ukryj stację dokującą, zamiast przenosić ją na inny monitor, gdy preferowany "
+"monitor jest odłączony."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "Umieść stację dokującą wzdłuż lewej krawędzi ekranu."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "Umieść stację dokującą wzdłuż dolnej krawędzi ekranu."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "Umieść stację dokującą wzdłuż górnej krawędzi ekranu."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "Umieść stację dokującą wzdłuż prawej krawędzi ekranu."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "Otwórz zaawansowane inteligentne ustawienia automatycznego ukrywania."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "Ukryj stację dokującą automatycznie, jeśli zasłaniałaby okno."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr ""
+"Ustaw maksymalny rozmiar stacji dokującej w stosunku do dostępnej "
+"przestrzeni na ekranie."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr ""
+"Ustaw stację dokującą na krawędzi pełnego ekranu, zamiast dopasowywać się do "
+"jej zawartości."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr "Trzymaj ikony doków wyśrodkowane, zamiast umieszczać je od krawędzi."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "Ustaw odstęp między stacją dokującą a krawędzią ekranu."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr ""
+"Ustaw dodatkowe odstępy między krawędzią wskaźnika a obszarem odsłonięcia "
+"doku."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "Ustaw maksymalny rozmiar ikony aplikacji."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"Zachowaj stały rozmiar ikon i przewiń stację dokującą, gdy istnieje więcej "
+"ikon niż się mieści."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "Skaluj rozmiar miniatur podglądu okna."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr ""
+"Ustaw szerokość obszaru krawędzi używanego do aktywacji zatrzymania w doku."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr ""
+"Ustaw, jak często stacja dokująca sprawdza aktywację zatrzymania na krawędzi."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr ""
+"Ustaw, jak długo musi być utrzymywany nacisk wskaźnika, zanim pojawi się "
+"stacja dokująca."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "Pokaż aplikacje przypięte do stacji dokującej."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"W przypadku wielu monitorów przypięte aplikacje można wyświetlać tylko w "
+"stacji dokującej głównego monitora."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "Pokaż aplikacje z otwartymi oknami."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr ""
+"Wyświetlaj aplikację tylko wtedy, gdy ma ona okna w bieżącym obszarze "
+"roboczym."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"Zachowaj widoczność aplikacji z pilnymi oknami, nawet jeśli te okna znajdują "
+"się w innym obszarze roboczym."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr ""
+"Wyświetlaj aplikację tylko w dokach należących do monitorów, na których ma "
+"ona okna."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"Pokaż menu podglądu po najechaniu kursorem na aplikację z wieloma oknami."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"Pokaż każde otwarte okno jako osobną ikonę zamiast grupować okna według "
+"aplikacji."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr ""
+"Zachowaj widoczność wybranej aplikacji podczas przewijania stacji dokującej."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"Wybierz, czy działające ikony mają być zgodne z kolejnością dokowania, czy z "
+"położeniem okna."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "Pokaż przycisk Aplikacje w stacji dokującej."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "Umieść przycisk Aplikacje przed innymi elementami dokowania."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "Animuj przycisk Aplikacje podczas otwierania przeglądu."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr ""
+"Trzymaj przycisk Aplikacje na krawędzi doku, gdy włączony jest tryb Panelu."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "Pokaż ikonę Kosza w doku."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "Pokaż zamontowane woluminy i urządzenia wymienne w stacji dokującej."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr "Ukryj urządzenia, które są dostępne, ale aktualnie nie są zamontowane."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "Uwzględnij lokalizacje sieciowe na liście woluminów."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"Trzymaj okna woluminu, urządzenia i Kosza oddzielnie od zwykłych okien "
+"menedżera plików."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "Animuj ikony, gdy aplikacje żądają uwagi."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr "Odbijaj ikony, gdy aplikacja jest uruchamiana lub wymaga uwagi."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"Wyłącz podpowiedzi nazw aplikacji po najechaniu kursorem na ikony stacji "
+"dokującej."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "Ustaw maksymalną szerokość podpowiedzi nazw aplikacji."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr ""
+"Otwieranie podglądu okna po umieszczeniu wskaźnika na ikonie aplikacji."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr "Wybierz animację używaną podczas otwierania i zamykania podglądu okna."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "Ogranicz wysokość listy podglądu okna."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr "Ustaw czas trwania animacji otwierania i zamykania podglądu."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr ""
+"Ustaw, jak długo wskaźnik musi się znajdować, zanim otworzy się podgląd."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr "Ustaw, jak długo podgląd pozostaje otwarty po opuszczeniu wskaźnika."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "Ustaw przezroczystość innych okien podczas podglądu."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "Ustaw, jak długo podgląd podglądu pozostaje aktywny."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "Skonfiguruj zachowanie skrótu Super Plus."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr "Włącz skróty numeryczne Super Plus dla aplikacji dokujących."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "Skonfiguruj akcję środkowego kliknięcia."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr ""
+"Wybierz działanie głównego kliknięcia, gdy aplikacja jest już uruchomiona."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "Wybierz działanie przewijania ikony aplikacji."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr ""
+"Ustaw, jak często XDock sprawdza, czy stacja dokująca zachodzi na okno."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr ""
+"Minimalne opóźnienie między zdarzeniami przewijania, które przełączają okna "
+"aplikacji."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr ""
+"Zapobiegaj powtarzającym się zmianom obszarów roboczych podczas szybkiego "
+"przewijania."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr ""
+"Czas, przez który wskaźnik musi przytrzymywać ikonę, zanim rozpocznie się "
+"tryb zmiany kolejności."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr "Zapamiętaj ostatnie wybrane okno podczas przeglądania okien aplikacji."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "Wybierz ogólny styl wizualny stacji dokującej."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "Ustaw przezroczystość gradientu półki na jej górnej krawędzi."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "Ustaw przezroczystość gradientu półki przy jej dolnej krawędzi."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "Ustaw przezroczystość podświetlenia narysowanego na półce dokującej."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "Ustaw przezroczystość krawędzi półki dokującej."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "Ustaw kąt nachylenia półki dokującej."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "Ustaw wysokość półki dokującej."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "Pokaż efekt odbicia pod półką dokującą."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "Ustaw przezroczystość odbicia półki."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "Wybierz kolor u góry gradientu półki."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "Wybierz kolor na dole gradientu półki."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "Wybierz kolor wyróżnienia półki."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "Wybierz kolor cienia półki."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "Ustaw przezroczystość cienia półki."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "Ustaw szerokość podświetlenia półki."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "Ustaw szerokość cienia półki."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "Wybierz kolor obramowania doku."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "Ustaw szerokość obramowania doku."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "Pokaż cień wokół stacji dokującej."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "Wybierz kolor cienia stacji dokującej."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "Ustaw, jak daleko rozprzestrzenia się cień doku."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "Ustaw stopień rozmycia cienia stacji dokującej."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "Wybierz kolor przezroczystego szkła."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "Ustaw nieprzezroczystość odcienia szkła."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "Wybierz kolor cienia pływającego doku."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "Ustaw, jak daleko rozprzestrzenia się pływający cień."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "Ustaw stopień rozmycia pływającego cienia."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr ""
+"Ustaw wewnętrzne wypełnienie pomiędzy zawartością doku a jego obramowaniem."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "Wybierz kolor separatora pomiędzy sekcjami doku."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "Ustaw grubość separatorów doków."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr ""
+"Zmniejsz wyściółkę stacji dokującej i promień narożników, aby zaoszczędzić "
+"miejsce na ekranie."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "Wyłącz zaokrąglone rogi stacji dokującej."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+"Ustaw promień narożnika doku. Użyj wartości domyślnej, aby podążać za "
+"motywem."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "Otwórz przegląd GNOME po rozpoczęciu sesji."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "Ustaw promień górnych rogów półki."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "Ustaw promień dolnych rogów półki."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "Ustaw rozmiar odbicia doku."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "Ustaw szerokość łuków postępu aplikacji."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr "Ustaw rozmiar etykiet numerów skrótów wyświetlanych na ikonach."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "Ustaw maksymalną szerokość etykiet narzędzi dokowania."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"Użyj domyślnych domyślnych motywów zintegrowanych z XDock zamiast poniższych "
+"niestandardowych elementów sterujących wyglądem."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "Otwórz zaawansowane ustawienia wskaźników biegu."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "Wybierz sposób oznaczania uruchomionych aplikacji na stacji dokującej."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "Wybierz niestandardowy kolor tła stacji dokującej."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "Włącz niestandardowy kolor tła stacji dokującej."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr "Otwórz zaawansowane ustawienia krycia dla stanów dokowania."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "Wybierz stan krycia doku, który chcesz edytować."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "Ustaw przezroczystość wybranego stanu dokowania."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "Uzyskaj kolory stacji dokującej z bieżącej tapety pulpitu."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "Dostosuj wpływ kolorów tapety na stację dokującą."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr "Pokazuj plakietki i emblematy powiadomień na ikonach aplikacji."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "Pokaż liczbę powiadomień na ikonach aplikacji."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr ""
+"Zezwalaj na zastępowanie liczby powiadomień dla poszczególnych aplikacji."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr "Wyczyść licznik powiadomień aplikacji po uzyskaniu fokusu."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "Pokaż wskaźniki postępu zadania na ikonach aplikacji."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "Wybierz styl wizualny wskaźników postępu zadania."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "Powiększ ikony doków, gdy wskaźnik znajduje się nad nimi."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr ""
+"Ustaw maksymalny rozmiar ikony podczas powiększania po najechaniu myszką."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "Podczas powiększenia podświetl ikonę znajdującą się pod wskaźnikiem."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+"Powiększ elementy stacji dokującej inne niż aplikacje, takie jak przycisk "
+"kosza i aplikacji."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr "Użyj fizyki sprężyny do ruchu doków i animacji ikon."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr ""
+"Zezwalaj na przeciąganie ikon w celu zmiany ich rozmieszczenia w stacji "
+"dokującej."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+"Zamiast ikon statycznych używaj miniatur okien wyświetlanych na żywo jako "
+"ikon aplikacji."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr "Ustaw, jak mocno animacje sprężyn przyciągają cel."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "Ustaw, jak szybko ustala się ruch animacji wiosny."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "Ustaw, na ile sąsiadujących ikon ma wpływ powiększenie."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "Ustaw szybkość wykonywania przejść powiększenia."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "Ustaw czas trwania animacji uruchamiania stacji dokującej."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "Ustaw czas trwania animacji uruchamiania aplikacji."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr "Ustaw, jak daleko animacje wiosenne przekraczają swój cel."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "Włącz paletę poleceń dokowania, aby uzyskać szybkie działania."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "Pokaż minimapę przeglądu obszaru roboczego w stacji dokującej."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr ""
+"Wybierz, po której stronie stacji dokującej znajduje się minimapa obszaru "
+"roboczego."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr "Otwórz podgląd okna automatycznie po aktywowaniu ikony aplikacji."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr "Aktywuj okno, gdy jego podgląd jest najechany podczas przeciągania."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr "Pokaż najnowsze pliki w menu aplikacji otwieranym z Docka."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "Pokaż przypięte polecenia terminala w stacji dokującej."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "Włącz działania polegające na układaniu okien w panelu dokującym."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr "Wyświetlaj doki na monitorach dodatkowych z uruchomionymi aplikacjami."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr ""
+"Wybierz, gdzie mają się pojawiać stacje dokujące dla dodatkowego monitora."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "Pokaż elementy sterujące odtwarzaniem multimediów w menu aplikacji."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr ""
+"Pokaż elementy sterujące głośnością poszczególnych aplikacji w menu "
+"aplikacji."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "Pokaż wskaźnik, gdy ekran jest nagrywany lub udostępniany."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "Pokaż panel szybkich ustawień ze stacji dokującej."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "Wybierz aktywny profil zapisanych ustawień."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "Zapisz bieżące ustawienia jako profil."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "Usuń wybrany zapisany profil."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "Otwórz stronę internetową projektu XDock."
+
 #~ msgid ""
 #~ "When set to minimize, double clicking minimizes all the windows of the "
 #~ "application."

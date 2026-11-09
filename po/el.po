@@ -256,6 +256,710 @@ msgstr ""
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"Επιλέξτε σε ποια οθόνη ανήκει η κύρια βάση σύνδεσης. Οι πρόσθετες οθόνες "
+"μπορούν να εμφανίζουν δευτερεύουσες αποβάθρες."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"Απόκρυψη της βάσης σύνδεσης αντί να τη μετακινήσετε σε άλλη οθόνη όταν η "
+"προτιμώμενη οθόνη είναι αποσυνδεδεμένη."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "Τοποθετήστε τη βάση κατά μήκος της αριστερής άκρης της οθόνης."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "Τοποθετήστε τη βάση κατά μήκος της κάτω άκρης της οθόνης."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "Τοποθετήστε τη βάση κατά μήκος της επάνω άκρης της οθόνης."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "Τοποθετήστε τη βάση κατά μήκος της δεξιάς άκρης της οθόνης."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "Ανοίξτε τις προηγμένες έξυπνες ρυθμίσεις αυτόματης απόκρυψης."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "Απόκρυψη της βάσης αυτόματα όταν θα εμπόδιζε ένα παράθυρο."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr "Ορίστε το μέγιστο μέγεθος βάσης σε σχέση με τον διαθέσιμο χώρο οθόνης."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr ""
+"Κάντε το dock να εκτείνεται σε όλη την άκρη της οθόνης αντί να χωράει το "
+"περιεχόμενό του."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr ""
+"Κρατήστε τα εικονίδια βάσης στο κέντρο αντί να τα τοποθετήσετε από την άκρη."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "Ρυθμίστε το κενό μεταξύ της βάσης και της άκρης της οθόνης."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr ""
+"Ορίστε επιπλέον απόσταση μεταξύ της άκρης του δείκτη και της περιοχής "
+"αποκάλυψης βάσης."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "Ορίστε το μέγιστο μέγεθος εικονιδίου εφαρμογής."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"Διατηρήστε το μέγεθος του εικονιδίου σταθερό και κάντε κύλιση στο dock όταν "
+"υπάρχουν περισσότερα εικονίδια από όσα ταιριάζουν."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "Κλιμακώστε το μέγεθος των μικρογραφιών προεπισκόπησης παραθύρων."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr ""
+"Ρυθμίστε το πλάτος της περιοχής άκρων που χρησιμοποιείται για την "
+"ενεργοποίηση της βάσης."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr "Ρυθμίστε πόσο συχνά το dock ελέγχει για ενεργοποίηση άκρων."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr ""
+"Ρυθμίστε πόσο χρόνο πρέπει να διατηρείται η πίεση του δείκτη πριν εμφανιστεί "
+"η βάση."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "Εμφάνιση εφαρμογών καρφιτσωμένων στο dock."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"Με πολλές οθόνες, εμφανίστε καρφιτσωμένες εφαρμογές μόνο στη βάση της κύριας "
+"οθόνης."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "Εμφάνιση εφαρμογών με ανοιχτά παράθυρα."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr ""
+"Εμφάνιση μιας εφαρμογής μόνο όταν έχει παράθυρα στον τρέχοντα χώρο εργασίας."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"Διατηρήστε τις εφαρμογές με επείγοντα παράθυρα ορατές ακόμα και όταν αυτά τα "
+"παράθυρα βρίσκονται σε άλλο χώρο εργασίας."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr ""
+"Εμφάνιση μιας εφαρμογής μόνο σε docks που ανήκουν σε οθόνες όπου έχει "
+"παράθυρα."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"Εμφάνιση μενού προεπισκόπησης όταν τοποθετείτε το δείκτη του ποντικιού πάνω "
+"από μια εφαρμογή με πολλά παράθυρα."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"Εμφάνιση κάθε ανοιχτού παραθύρου ως ξεχωριστό εικονίδιο αντί για ομαδοποίηση "
+"παραθύρων ανά εφαρμογή."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "Διατηρήστε την εστιασμένη εφαρμογή ορατή ενώ η βάση κύλισης."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"Επιλέξτε εάν τα εικονίδια που εκτελούνται ακολουθούν τη σειρά σύνδεσης ή τις "
+"θέσεις των παραθύρων τους."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "Εμφάνιση του κουμπιού Εφαρμογές στο dock."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "Τοποθετήστε το κουμπί Εφαρμογές πριν από άλλα στοιχεία βάσης."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "Κάντε κίνηση στο κουμπί Εφαρμογές όταν ανοίγετε την επισκόπηση."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr ""
+"Διατηρήστε το κουμπί Εφαρμογές στην άκρη της βάσης όταν είναι ενεργοποιημένη "
+"η λειτουργία πίνακα."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "Εμφάνιση του εικονιδίου του Κάδου απορριμμάτων στο dock."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "Εμφάνιση τοποθετημένων τόμων και αφαιρούμενων συσκευών στο dock."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr ""
+"Απόκρυψη συσκευών που είναι διαθέσιμες αλλά δεν είναι τοποθετημένες αυτήν τη "
+"στιγμή."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "Συμπεριλάβετε τοποθεσίες δικτύου στη λίστα τόμων."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"Διατηρήστε τα παράθυρα όγκου, συσκευής και Κάδος απορριμμάτων ξεχωριστά από "
+"τα κανονικά παράθυρα διαχείρισης αρχείων."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "Δημιουργήστε κινούμενα εικονίδια όταν οι εφαρμογές ζητούν προσοχή."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr ""
+"Εικονίδια αναπήδησης όταν εκκινείται μια εφαρμογή ή χρειάζεται προσοχή."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"Απενεργοποιήστε τις συμβουλές εργαλείων ονόματος εφαρμογής όταν τοποθετείτε "
+"το δείκτη του ποντικιού πάνω από τα εικονίδια βάσης."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "Ορίστε το μέγιστο πλάτος των συμβουλών εργαλείων ονόματος εφαρμογής."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr ""
+"Ανοίξτε το παράθυρο προεπισκόπησης όταν ο δείκτης βρίσκεται σε ένα εικονίδιο "
+"εφαρμογής."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr ""
+"Επιλέξτε την κινούμενη εικόνα που χρησιμοποιείται όταν ανοίγουν και κλείνουν "
+"οι προεπισκοπήσεις παραθύρων."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "Περιορίστε το ύψος της λίστας προεπισκόπησης παραθύρου."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr ""
+"Ρυθμίστε τη διάρκεια της προεπισκόπησης για το άνοιγμα και το κλείσιμο των "
+"κινούμενων εικόνων."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr ""
+"Ορίστε πόσο χρόνο θα πρέπει να αιωρείται ο δείκτης πριν ανοίξουν οι "
+"προεπισκοπήσεις."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr ""
+"Ρυθμίστε πόσο καιρό οι προεπισκοπήσεις θα παραμένουν ανοιχτές μετά την "
+"αποχώρηση του δείκτη."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "Ρυθμίστε την αδιαφάνεια των άλλων παραθύρων κατά την προεπισκόπηση."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr ""
+"Ρυθμίστε για πόσο χρονικό διάστημα η προεπισκόπηση θα παραμείνει ενεργή."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "Διαμορφώστε τη συμπεριφορά συντόμευσης αριθμού Super plus."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr "Ενεργοποιήστε τις συντομεύσεις αριθμού Super plus για εφαρμογές βάσης."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "Διαμορφώστε την ενέργεια μεσαίου κλικ."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr "Επιλέξτε τι κάνει ένα κύριο κλικ όταν μια εφαρμογή εκτελείται ήδη."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "Επιλέξτε τι κάνει η κύλιση πάνω από ένα εικονίδιο εφαρμογής."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr ""
+"Ορίστε πόσο συχνά το XDock ελέγχει εάν το dock επικαλύπτει ένα παράθυρο."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr ""
+"Ελάχιστη καθυστέρηση μεταξύ συμβάντων κύλισης που ανακυκλώνουν τα παράθυρα "
+"της εφαρμογής."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr ""
+"Αποτρέψτε τους επαναλαμβανόμενους διακόπτες χώρου εργασίας κατά τη γρήγορη "
+"κύλιση."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr ""
+"Χρόνος που ο δείκτης πρέπει να κρατά ένα εικονίδιο πριν ξεκινήσει η "
+"λειτουργία αναδιάταξης."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr ""
+"Θυμηθείτε το τελευταίο παράθυρο που επιλέχθηκε όταν κάνετε ποδήλατο στα "
+"παράθυρα μιας εφαρμογής."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "Επιλέξτε το συνολικό οπτικό στυλ της αποβάθρας."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr ""
+"Ρυθμίστε την αδιαφάνεια της διαβάθμισης του ραφιού στην επάνω άκρη του."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "Ρυθμίστε την αδιαφάνεια της διαβάθμισης του ραφιού στο κάτω άκρο του."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr ""
+"Ρυθμίστε την αδιαφάνεια της επισήμανσης που σχεδιάζεται στο ράφι της βάσης."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "Ρυθμίστε την αδιαφάνεια του περιγράμματος του ραφιού βάσης."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "Ρυθμίστε τη γωνία της κλίσης του ραφιού βάσης."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "Ρυθμίστε το ύψος του ράφι της βάσης."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "Εμφάνιση εφέ ανάκλασης κάτω από το ράφι της βάσης."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "Ρυθμίστε την αδιαφάνεια της αντανάκλασης του ραφιού."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "Επιλέξτε το χρώμα στην κορυφή της κλίσης του ραφιού."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "Επιλέξτε το χρώμα στο κάτω μέρος της κλίσης του ραφιού."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "Επιλέξτε το χρώμα τονισμού του ραφιού."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "Επιλέξτε το χρώμα της σκιάς του ραφιού."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "Ρυθμίστε την αδιαφάνεια της σκιάς του ραφιού."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "Ορίστε το πλάτος της επισήμανσης του ραφιού."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "Ρυθμίστε το πλάτος της σκιάς του ραφιού."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "Επιλέξτε το χρώμα περιγράμματος βάσης."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "Ορίστε το πλάτος του περιγράμματος βάσης."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "Δείξτε μια σκιά γύρω από την αποβάθρα."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "Επιλέξτε το χρώμα σκιάς του dock box."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "Ρυθμίστε πόσο μακριά απλώνεται η σκιά της αποβάθρας."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "Ρυθμίστε πόσο απαλά θα είναι θολή η σκιά του dock."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "Επιλέξτε το ημιδιαφανές χρώμα απόχρωσης γυαλιού."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "Ρυθμίστε την αδιαφάνεια της απόχρωσης του γυαλιού."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "Επιλέξτε το χρώμα σκιάς αιωρούμενης αποβάθρας."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "Ορίστε πόσο μακριά απλώνεται η αιωρούμενη σκιά."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "Ρυθμίστε πόσο απαλά είναι θολή η αιωρούμενη σκιά."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr ""
+"Ρυθμίστε την εσωτερική επένδυση μεταξύ του περιεχομένου της βάσης και του "
+"περιγράμματός της."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "Επιλέξτε το διαχωριστικό χρώμα μεταξύ των τμημάτων βάσης."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "Ρυθμίστε το πάχος των διαχωριστών αποβάθρας."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr ""
+"Μειώστε την επένδυση βάσης και την ακτίνα γωνίας για εξοικονόμηση χώρου στην "
+"οθόνη."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "Απενεργοποιήστε τις στρογγυλεμένες γωνίες για τη βάση."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+"Ρυθμίστε την ακτίνα γωνίας βάσης. Χρησιμοποιήστε την προεπιλεγμένη τιμή για "
+"να ακολουθήσετε το θέμα."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "Ανοίξτε την επισκόπηση του GNOME όταν ξεκινήσει η συνεδρία."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "Ρυθμίστε την ακτίνα των επάνω γωνιών του ραφιού."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "Ρυθμίστε την ακτίνα των κάτω γωνιών του ραφιού."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "Ρυθμίστε το μέγεθος της αντανάκλασης της βάσης."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "Ορίστε το πλάτος των τόξων προόδου της εφαρμογής."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr ""
+"Ορίστε το μέγεθος των ετικετών αριθμών συντομεύσεων που εμφανίζονται στα "
+"εικονίδια."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "Ορίστε το μέγιστο πλάτος των συμβουλών εργαλείων βάσης."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"Χρησιμοποιήστε τις προεπιλογές ενσωματωμένων θεμάτων του XDock αντί για τα "
+"παρακάτω στοιχεία ελέγχου προσαρμοσμένης εμφάνισης."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "Ανοίξτε τις προηγμένες ρυθμίσεις ένδειξης λειτουργίας."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "Επιλέξτε τον τρόπο επισήμανσης των εφαρμογών που εκτελούνται στο dock."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "Επιλέξτε το προσαρμοσμένο χρώμα φόντου βάσης."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "Ενεργοποιήστε ένα προσαρμοσμένο χρώμα φόντου βάσης."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr ""
+"Ανοίξτε τις σύνθετες ρυθμίσεις αδιαφάνειας για τις καταστάσεις σύνδεσης."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "Επιλέξτε ποια κατάσταση αδιαφάνειας βάσης θα επεξεργαστείτε."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "Ορίστε την αδιαφάνεια για την επιλεγμένη κατάσταση σύνδεσης."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "Εξάγετε χρώματα βάσης από την τρέχουσα ταπετσαρία επιφάνειας εργασίας."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "Προσαρμόστε πόσο έντονα επηρεάζουν τα χρώματα της ταπετσαρίας τη βάση."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr "Εμφάνιση σημάτων ειδοποιήσεων και εμβλημάτων στα εικονίδια εφαρμογών."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "Εμφάνιση αριθμού ειδοποιήσεων στα εικονίδια εφαρμογών."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "Να επιτρέπονται οι παρακάμψεις του αριθμού ειδοποιήσεων ανά εφαρμογή."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr ""
+"Διαγράψτε τον αριθμό ειδοποιήσεων μιας εφαρμογής όταν λαμβάνει εστίαση."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "Εμφάνιση ενδείξεων προόδου εργασιών στα εικονίδια εφαρμογών."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "Επιλέξτε το οπτικό στυλ των δεικτών προόδου της εργασίας."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "Μεγεθύνετε τα εικονίδια βάσης ενώ ο δείκτης είναι πάνω τους."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr ""
+"Ορίστε το μέγιστο μέγεθος ενός εικονιδίου κατά τη μεγέθυνση του δείκτη."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "Επισημάνετε το εικονίδιο κάτω από τον δείκτη κατά τη μεγέθυνση."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+"Μεγεθύνετε στοιχεία βάσης που δεν αφορούν εφαρμογές, όπως το κουμπί "
+"απορριμμάτων και εφαρμογών."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr ""
+"Χρησιμοποιήστε τη φυσική της άνοιξης για κινήσεις αποβάθρας και κινούμενα "
+"σχέδια εικονιδίων."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "Επιτρέψτε τη μεταφορά εικονιδίων για την αναδιάταξη τους στο dock."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+"Χρησιμοποιήστε ζωντανές μικρογραφίες παραθύρων για εικονίδια εφαρμογών αντί "
+"για στατικά εικονίδια."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr "Καθορίστε πόσο δυνατά κινούνται τα ελατήρια προς τον στόχο τους."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "Ρυθμίστε πόσο γρήγορα θα εγκατασταθεί η ανοιξιάτικη κίνηση."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "Ορίστε πόσα γειτονικά εικονίδια επηρεάζονται από τη μεγέθυνση."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "Ορίστε πόσο γρήγορα ολοκληρώνονται οι μεταβάσεις μεγέθυνσης."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "Ρυθμίστε τη διάρκεια της κίνησης εκκίνησης της βάσης σύνδεσης."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "Ορίστε τη διάρκεια των κινούμενων εικόνων εκκίνησης της εφαρμογής."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr ""
+"Ορίστε πόσο μακριά τα ανοιξιάτικα κινούμενα σχέδια ξεπερνούν τον στόχο τους."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "Ενεργοποιήστε την παλέτα εντολών dock για γρήγορες ενέργειες."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "Εμφάνιση ενός μίνι χάρτη επισκόπησης χώρου εργασίας στο dock."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr ""
+"Επιλέξτε ποια πλευρά της βάσης θα περιέχει τον μίνι χάρτη του χώρου εργασίας."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr ""
+"Ανοίξτε αυτόματα τις προεπισκοπήσεις παραθύρου όταν ενεργοποιείται ένα "
+"εικονίδιο εφαρμογής."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr ""
+"Εστιάστε ένα παράθυρο όταν η προεπισκόπηση του τοποθετείται κατά τη διάρκεια "
+"μιας μεταφοράς."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr ""
+"Εμφάνιση πρόσφατων αρχείων στα μενού εφαρμογών που έχουν ανοίξει από το dock."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "Εμφάνιση καρφιτσωμένων εντολών τερματικού στο dock."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "Ενεργοποιήστε τις ενέργειες παράθεσης παραθύρου από το dock."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr ""
+"Εμφάνιση αποβάθρων σε δευτερεύουσες οθόνες με εφαρμογές που εκτελούνται."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "Επιλέξτε πού εμφανίζονται οι βάσεις δευτερεύουσας οθόνης."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "Εμφάνιση στοιχείων ελέγχου αναπαραγωγής πολυμέσων στα μενού εφαρμογών."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr ""
+"Εμφάνιση των στοιχείων ελέγχου έντασης ανά εφαρμογή στα μενού εφαρμογών."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "Εμφάνιση ένδειξης κατά την εγγραφή ή κοινή χρήση της οθόνης."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "Εμφάνιση ενός πίνακα γρήγορων ρυθμίσεων από το dock."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "Επιλέξτε το ενεργό προφίλ αποθηκευμένων ρυθμίσεων."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "Αποθηκεύστε τις τρέχουσες ρυθμίσεις ως προφίλ."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "Διαγράψτε το επιλεγμένο αποθηκευμένο προφίλ."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "Ανοίξτε την ιστοσελίδα του έργου XDock."
+
 #~ msgid "Customize indicator style"
 #~ msgstr "Προσαρμογή του στυλ του δείκτη"
 

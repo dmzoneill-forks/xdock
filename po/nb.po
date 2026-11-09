@@ -256,6 +256,658 @@ msgstr ""
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"Velg hvilken skjerm som eier den primære dokken. Ekstra skjermer kan vise "
+"sekundære dokker."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"Skjul dokken i stedet for å flytte den til en annen skjerm når dens "
+"foretrukne skjerm er frakoblet."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "Plasser dokken langs venstre kant av skjermen."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "Plasser dokken langs den nedre kanten av skjermen."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "Plasser dokken langs den øvre kanten av skjermen."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "Plasser dokken langs høyre kant av skjermen."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "Åpne avanserte intelligente autohide-innstillinger."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "Skjul dokken automatisk når den hindrer et vindu."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr "Angi maksimal dokkingstørrelse i forhold til tilgjengelig skjermplass."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr ""
+"Få dokken til å spenne over hele skjermen i stedet for å passe innholdet."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr "Hold dockikonene sentrert i stedet for å plassere dem fra kanten."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "Still inn gapet mellom dokken og skjermkanten."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr "Angi ekstra avstand mellom pekerkanten og dokkingområdet."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "Angi maksimal applikasjonsikonstørrelse."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"Hold ikonstørrelsen fast og rull i dokken når det finnes flere ikoner enn "
+"det passer."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "Skaler størrelsen på forhåndsvisning av vinduer."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr "Still inn bredden på kantområdet som brukes for aktivering av dokk."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr "Angi hvor ofte dokken skal se etter aktivering av edge dwell."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr "Still inn hvor lenge pekertrykket må holdes før dokken vises."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "Vis apper som er festet til dokken."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"Med flere skjermer, vis festede applikasjoner bare på hovedskjermdokken."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "Vis programmer med åpne vinduer."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr ""
+"Vis et program bare når det har vinduer på det gjeldende arbeidsområdet."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"Hold programmer med hastevinduer synlige selv når disse vinduene er på et "
+"annet arbeidsområde."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr ""
+"Vis en applikasjon bare på dokker som tilhører skjermer der den har vinduer."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"Vis en forhåndsvisningsmeny når du holder markøren over et program med flere "
+"vinduer."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"Vis hvert åpne vindu som et eget ikon i stedet for å gruppere vinduer etter "
+"applikasjon."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "Hold den fokuserte applikasjonen synlig mens dokken ruller."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"Velg om løpende ikoner følger dokkefølgen eller deres vindusposisjoner."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "Vis applikasjonsknappen i dokken."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "Plasser applikasjonsknappen før andre dockelementer."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "Animer applikasjonsknappen når du åpner oversikten."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr "Hold applikasjonsknappen ved en dockkant når panelmodus er aktivert."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "Vis papirkurvikonet i dokken."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "Vis monterte volumer og flyttbare enheter i dokken."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr ""
+"Skjul enheter som er tilgjengelige, men som ikke er montert for øyeblikket."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "Inkluder nettverksplasseringer i volumlisten."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"Hold volum, enhet og papirkurv adskilt fra vanlige filbehandlingsvinduer."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "Animer ikoner når applikasjoner ber om oppmerksomhet."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr "Sprett ikoner når en applikasjon starter eller trenger oppmerksomhet."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"Deaktiver verktøytips for programnavn når du holder markøren over "
+"dokkeikoner."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "Angi maksimal bredde på verktøytips for programnavn."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr ""
+"Åpne forhåndsvisninger av vinduer når pekeren hviler på et programikon."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr ""
+"Velg animasjonen som brukes når forhåndsvisninger av vinduer åpnes og lukkes."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "Begrens høyden på forhåndsvisningslisten for vinduer."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr "Angi hvor lang tid forhåndsvisning av åpne og lukkede animasjoner tar."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr "Angi hvor lenge pekeren må sveve før forhåndsvisninger åpnes."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr "Angi hvor lenge forhåndsvisninger skal være åpne etter at pekeren går."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "Angi opasiteten til andre vinduer under forhåndsvisning."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "Angi hvor lenge forhåndsvisningen skal være aktiv."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "Konfigurer Super pluss tall-snarveien."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr "Aktiver Super pluss tall-snarveier for dock-applikasjoner."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "Konfigurer mellomklikkhandlingen."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr "Velg hva et primærklikk gjør når et program allerede kjører."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "Velg hva rulling over et programikon gjør."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr "Angi hvor ofte XDock skal sjekke om dokken overlapper et vindu."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr ""
+"Minimumsforsinkelse mellom rullehendelser som går gjennom programvinduer."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr "Forhindre gjentatte arbeidsområdebrytere under rask rulling."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr "Tid pekeren må holde et ikon før omorganiseringsmodus starter."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr ""
+"Husk det siste vinduet som ble valgt når du sykler gjennom et programs "
+"vinduer."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "Velg den generelle visuelle stilen til dokken."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "Still inn opasiteten til hyllegradienten på dens øvre kant."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "Still inn opasiteten til hyllegradienten i den nedre kanten."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "Still inn opasiteten til høydepunktet som er tegnet på bryggehyllen."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "Angi opasiteten til kanthyllekanten."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "Still inn vinkelen på gradienten til dockhyllen."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "Still inn høyden på bryggehyllen."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "Vis en refleksjonseffekt under bryggehyllen."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "Still inn opasiteten til hyllerefleksjonen."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "Velg fargen øverst på hyllegradienten."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "Velg fargen nederst på hyllegradienten."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "Velg fargen på hyllehøydepunktet."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "Velg fargen på hylleskyggen."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "Still inn opasiteten til hylleskyggen."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "Still inn bredden på hyllehøydepunktet."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "Still inn bredden på hylleskyggen."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "Velg kantfargen på dokken."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "Angi bredden på kaiens kantlinje."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "Vis en skygge rundt kaien."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "Velg dokkeboksens skyggefarge."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "Angi hvor langt dokkeskyggen sprer seg."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "Angi hvor mykt dokkeskyggen skal gjøres uskarp."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "Velg den gjennomsiktige glassfargen."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "Still inn opasiteten til glassfargen."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "Velg skyggefargen for flytebryggen."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "Still inn hvor langt den flytende skyggen sprer seg."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "Still inn hvor mykt den flytende skyggen er uskarp."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr "Still inn den indre polstringen mellom dokkeninnhold og kanten."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "Velg skillefargen mellom dokkeseksjonene."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "Still inn tykkelsen på dokkeskillere."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr "Reduser dokking- og hjørneradius for å spare plass på skjermen."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "Deaktiver avrundede hjørner for dokken."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+"Still inn dokkens hjørneradius. Bruk standardverdien for å følge temaet."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "Åpne GNOME-oversikten når økten starter."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "Still inn radiusen til hyllens øvre hjørner."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "Still inn radiusen til hyllens nederste hjørner."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "Still inn størrelsen på refleksjonen til dokken."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "Angi bredden på programfremdriftsbuene."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr "Angi størrelsen på nummeretiketter for snarveier som vises på ikoner."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "Still inn den maksimale bredden på dokkingverktøyspisser."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"Bruk XDocks integrerte temastandarder i stedet for de tilpassede "
+"utseendekontrollene nedenfor."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "Åpne avanserte kjøreindikatorinnstillinger."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "Velg hvordan kjørende applikasjoner skal merkes på dokken."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "Velg den egendefinerte bakgrunnsfargen for dokken."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "Aktiver en egendefinert dokkingbakgrunnsfarge."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr "Åpne avanserte opasitetsinnstillinger for dock-tilstander."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "Velg hvilken dokkeopasitetstilstand du vil redigere."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "Angi opasiteten for den valgte dock-tilstanden."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "Få dokkefarger fra gjeldende skrivebordsbakgrunn."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "Juster hvor sterkt bakgrunnsfarger påvirker dokken."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr "Vis varslingsmerker og emblemer på applikasjonsikoner."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "Vis antall varsler på programikoner."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "Tillat overstyring av antall varsler per applikasjon."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr "Fjern en applikasjons varslingstall når den får fokus."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "Vis oppgavefremdriftsindikatorer på programikoner."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "Velg den visuelle stilen til oppgavefremdriftsindikatorer."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "Forstørre dokkeikoner mens pekeren er over dem."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr "Angi maksimal størrelse på et ikon under sveveforstørrelse."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "Uthev ikonet under pekeren under forstørrelse."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+"Forstørre ikke-applikasjonsdokkingselementer som søppel- og "
+"applikasjonsknappen."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr "Bruk vårfysikk for dokkebevegelser og ikonanimasjoner."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "Tillat å dra ikoner for å omorganisere dem i dokken."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+"Bruk aktive vinduminiatyrbilder for programikoner i stedet for statiske "
+"ikoner."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr "Angi hvor sterkt våranimasjoner trekker mot målet."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "Angi hvor raskt våranimasjonsbevegelsen setter seg."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "Angi hvor mange nærliggende ikoner som påvirkes av forstørrelse."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "Angi hvor raskt forstørrelsesoverganger fullføres."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "Angi varigheten for oppstartsanimasjonen for docking."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "Angi varigheten for animasjoner for programstart."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr "Angi hvor langt våranimasjoner overskrider målet."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "Aktiver dock-kommandopaletten for raske handlinger."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "Vis et minikart for arbeidsområdeoversikt i dokken."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr ""
+"Velg hvilken side av dokken som inneholder minikartet for arbeidsområdet."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr ""
+"Åpne forhåndsvisninger av vinduer automatisk når et programikon er aktivert."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr "Fokuser et vindu når forhåndsvisningen holdes under en dra."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr "Vis nylige filer i programmenyer åpnet fra dokken."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "Vis festede terminalkommandoer i dokken."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "Aktiver vindusflising fra dokken."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr "Vis dokker på sekundære skjermer med kjørende applikasjoner."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "Velg hvor dokker for sekundære skjermer skal vises."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "Vis medieavspillingskontroller i applikasjonsmenyene."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr "Vis volumkontroller per applikasjon i applikasjonsmenyene."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "Vis en indikator når skjermen tas opp eller deles."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "Vis et hurtiginnstillingspanel fra dokken."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "Velg den aktive lagrede innstillingsprofilen."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "Lagre gjeldende innstillinger som en profil."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "Slett den valgte lagrede profilen."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "Åpne XDock-prosjektets nettside."
+
 #~ msgid ""
 #~ "When set to minimize, double clicking minimizes all the windows of the "
 #~ "application."

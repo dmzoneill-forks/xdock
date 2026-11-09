@@ -255,6 +255,672 @@ msgstr ""
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"Vyberte, ktorý monitor vlastní primárnu dokovaciu stanicu. Ďalšie monitory "
+"môžu zobrazovať sekundárne doky."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"Skryte dok namiesto toho, aby ste ho presunuli na iný monitor, keď je jeho "
+"preferovaný monitor odpojený."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "Umiestnite dok pozdĺž ľavého okraja obrazovky."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "Umiestnite dok pozdĺž spodného okraja obrazovky."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "Umiestnite dok pozdĺž horného okraja obrazovky."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "Umiestnite dok pozdĺž pravého okraja obrazovky."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "Otvorte pokročilé nastavenia inteligentného automatického skrývania."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "Automaticky skryť dok, keď by prekážal v okne."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr ""
+"Nastavte maximálnu veľkosť doku vzhľadom na dostupný priestor na obrazovke."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr ""
+"Zabezpečte, aby dok presahoval celý okraj obrazovky namiesto toho, aby sa "
+"zmestil do jeho obsahu."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr ""
+"Ikony doku ponechajte vycentrované, namiesto toho, aby ste ich umiestňovali "
+"od okraja."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "Nastavte medzeru medzi dokom a okrajom obrazovky."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr ""
+"Nastavte dodatočnú vzdialenosť medzi okrajom ukazovateľa a oblasťou "
+"odhalenia doku."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "Nastavte maximálnu veľkosť ikony aplikácie."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"Udržujte veľkosť ikony pevnú a posúvajte dok, keď existuje viac ikon, ako sa "
+"zmestí."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "Zmeniť veľkosť miniatúr náhľadu okna."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr "Nastavte šírku okrajovej oblasti použitej na aktiváciu zotrvania doku."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr ""
+"Nastavte, ako často bude dok kontrolovať aktiváciu zotrvania na okraji."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr ""
+"Nastavte, ako dlho sa musí držať stlačený ukazovateľ, kým sa objaví dok."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "Zobraziť aplikácie pripnuté v doku."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"Pri viacerých monitoroch zobrazujte pripnuté aplikácie iba na základni "
+"primárneho monitora."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "Zobraziť aplikácie s otvorenými oknami."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr ""
+"Zobrazte aplikáciu iba vtedy, keď má okná na aktuálnom pracovnom priestore."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"Udržujte aplikácie s naliehavými oknami viditeľné, aj keď sú tieto okná v "
+"inom pracovnom priestore."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr ""
+"Zobrazte aplikáciu iba na dokoch patriacich k monitorom, na ktorých sú okná."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"Zobrazte ponuku ukážky pri umiestnení kurzora myši nad aplikáciu s viacerými "
+"oknami."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"Zobrazte každé otvorené okno ako samostatnú ikonu namiesto zoskupovania "
+"okien podľa aplikácie."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "Udržujte zameranú aplikáciu viditeľnú počas posúvania doku."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"Vyberte, či sa spustené ikony budú riadiť poradím ukotvení alebo umiestnením "
+"okna."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "Zobrazte tlačidlo Aplikácie v doku."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "Umiestnite tlačidlo Aplikácie pred ostatné položky doku."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "Pri otváraní prehľadu animujte tlačidlo Aplikácie."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr ""
+"Keď je aktivovaný režim Panel, ponechajte tlačidlo Aplikácie na okraji doku."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "Zobrazte ikonu koša v doku."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "Zobraziť pripojené zväzky a vymeniteľné zariadenia v doku."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr "Skryť zariadenia, ktoré sú dostupné, ale momentálne nie sú pripojené."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "Zahrňte sieťové umiestnenia do zoznamu zväzkov."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"Okná zväzku, zariadenia a koša uchovávajte oddelene od bežných okien správcu "
+"súborov."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "Animujte ikony, keď aplikácie vyžadujú pozornosť."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr "Ikony odrazu, keď sa aplikácia spustí alebo vyžaduje pozornosť."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"Zakázať popisy názvov aplikácií pri umiestnení kurzora myši na ikony doku."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "Nastavte maximálnu šírku popisov názvu aplikácie."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr "Ukážky otvoreného okna, keď ukazovateľ spočíva na ikone aplikácie."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr "Vyberte animáciu použitú pri otváraní a zatváraní náhľadov okien."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "Obmedzte výšku zoznamu ukážok okna."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr "Nastavte, ako dlho trvá animácia otvárania a zatvárania ukážky."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr ""
+"Nastavte, ako dlho sa musí ukazovateľ pohybovať, kým sa ukážky otvoria."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr "Nastavte, ako dlho zostanú náhľady otvorené po opustení ukazovateľa."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "Počas náhľadu nastavte nepriehľadnosť ostatných okien."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "Nastavte, ako dlho zostane náhľad náhľadu aktívny."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "Nakonfigurujte správanie skratky Super plus číslo."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr "Povoliť skratky čísla Super plus pre aplikácie doku."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "Nakonfigurujte akciu stredného kliknutia."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr "Vyberte, čo robí primárne kliknutie, keď je aplikácia už spustená."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "Vyberte, čo robí rolovanie cez ikonu aplikácie."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr "Nastavte, ako často má XDock kontrolovať, či dok prekrýva okno."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr ""
+"Minimálne oneskorenie medzi udalosťami posúvania, ktoré cyklujú okná "
+"aplikácií."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr ""
+"Zabráňte opakovanému prepínaniu pracovného priestoru počas rýchleho "
+"rolovania."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr ""
+"Čas, kedy musí ukazovateľ držať ikonu pred spustením režimu preusporiadania."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr "Zapamätajte si posledné vybraté okno pri prechádzaní oknami aplikácie."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "Vyberte si celkový vizuálny štýl doku."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "Nastavte nepriehľadnosť prechodu police na jej hornom okraji."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "Nastavte nepriehľadnosť prechodu police na jej spodnom okraji."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "Nastavte nepriehľadnosť zvýraznenia nakresleného na poličke doku."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "Nastavte nepriehľadnosť okraja police doku."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "Nastavte uhol sklonu dokovacej police."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "Nastavte výšku dokovacej police."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "Ukážte odrazový efekt pod dokovou policou."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "Nastavte nepriehľadnosť odrazu police."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "Vyberte farbu v hornej časti prechodu police."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "Vyberte farbu v spodnej časti prechodu police."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "Vyberte si farbu zvýraznenia police."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "Vyberte si farbu tieňa police."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "Nastavte krytie tieňa police."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "Nastavte šírku zvýraznenia police."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "Nastavte šírku tieňa police."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "Vyberte farbu okraja doku."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "Nastavte šírku okraja doku."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "Ukážte tieň okolo doku."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "Vyberte farbu tieňa dokovacieho boxu."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "Nastavte, ako ďaleko sa rozšíri tieň doku."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "Nastavte, ako jemne sa rozmaže tieň doku."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "Vyberte si farbu priesvitného skla."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "Nastavte nepriehľadnosť odtieňa skla."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "Vyberte farbu tieňa plávajúceho doku."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "Nastavte, ako ďaleko sa rozšíri plávajúci tieň."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "Nastavte, ako jemne bude plávajúci tieň rozmazaný."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr "Nastavte vnútornú výplň medzi obsahom doku a jeho okrajom."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "Vyberte farbu oddeľovača medzi časťami doku."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "Nastavte hrúbku oddeľovačov doku."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr ""
+"Znížte polstrovanie doku a polomer rohov, aby ste ušetrili miesto na "
+"obrazovke."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "Zakázať zaoblené rohy doku."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+"Nastavte polomer rohu doku. Ak chcete sledovať tému, použite predvolenú "
+"hodnotu."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "Po spustení relácie otvorte prehľad GNOME."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "Nastavte polomer horných rohov police."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "Nastavte polomer spodných rohov police."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "Nastavte veľkosť odrazu doku."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "Nastavte šírku oblúkov priebehu aplikácie."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr "Nastavte veľkosť číselných skratiek zobrazených na ikonách."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "Nastavte maximálnu šírku popisov doku."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"Namiesto ovládacích prvkov vlastného vzhľadu nižšie použite predvolené "
+"predvolené hodnoty integrovaného motívu XDock."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "Otvorte rozšírené nastavenia indikátora chodu."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "Vyberte spôsob označenia spustených aplikácií na doku."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "Vyberte si vlastnú farbu pozadia doku."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "Povoliť vlastnú farbu pozadia doku."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr "Otvorte rozšírené nastavenia nepriehľadnosti pre stavy doku."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "Vyberte, ktorý stav nepriehľadnosti doku chcete upraviť."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "Nastavte nepriehľadnosť pre vybratý stav doku."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "Odvodiť farby doku z aktuálnej tapety pracovnej plochy."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "Upravte, ako silno ovplyvňujú farby tapety dok."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr "Zobrazovať odznaky a emblémy upozornení na ikonách aplikácií."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "Zobrazovať počty upozornení na ikonách aplikácií."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "Povoliť prepísanie počtu upozornení pre jednotlivé aplikácie."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr "Vymažte počet upozornení aplikácie, keď dostane zameranie."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "Zobraziť indikátory priebehu úlohy na ikonách aplikácií."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "Vyberte vizuálny štýl indikátorov priebehu úlohy."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "Zväčšite ikony doku, keď je nad nimi ukazovateľ."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr ""
+"Nastavte maximálnu veľkosť ikony počas zväčšenia umiestnením kurzora myši."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr ""
+"Počas zväčšovania zvýraznite ikonu, ktorá je momentálne pod ukazovateľom."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr "Zväčšite neaplikačné položky doku, ako je kôš a tlačidlo aplikácií."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr "Použite fyziku pružiny na pohyb doku a animácie ikon."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "Povoľte presúvanie ikon na ich usporiadanie v doku."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+"Namiesto statických ikon použite pre ikony aplikácií živé miniatúry okien."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr "Nastavte, ako silne sa pružinové animácie pritiahnu k svojmu cieľu."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "Nastavte, ako rýchlo sa pohyb jarnej animácie ustáli."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "Nastavte, koľko susedných ikon bude ovplyvnených zväčšením."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "Nastavte, ako rýchlo sa dokončia prechody zväčšenia."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "Nastavte trvanie animácie spustenia doku."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "Nastavte trvanie animácií spúšťania aplikácie."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr "Nastavte, ako ďaleko jarné animácie presahujú svoj cieľ."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "Povoľte paletu príkazov doku pre rýchle akcie."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "Zobrazte minimapu prehľadu pracovného priestoru v doku."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr "Vyberte, ktorá strana doku obsahuje minimapu pracovného priestoru."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr ""
+"Pri aktivácii ikony aplikácie sa automaticky zobrazí náhľad otvoreného okna."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr "Zamerajte okno, keď sa jeho ukážka umiestni počas ťahania."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr "Zobraziť posledné súbory v ponukách aplikácií otvorených z doku."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "Zobraziť príkazy pripnutého terminálu v doku."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "Povoliť akcie dlaždicových okien z doku."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr "Zobraziť doky na sekundárnych monitoroch so spustenými aplikáciami."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "Vyberte, kde sa objavia doky sekundárneho monitora."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "Zobraziť ovládacie prvky prehrávania médií v ponukách aplikácií."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr ""
+"Zobraziť ovládacie prvky hlasitosti pre jednotlivé aplikácie v ponukách "
+"aplikácií."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "Zobrazte indikátor pri nahrávaní alebo zdieľaní obrazovky."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "Zobraziť panel rýchlych nastavení z doku."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "Vyberte aktívny profil uložených nastavení."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "Uložte aktuálne nastavenia ako profil."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "Odstráňte vybraný uložený profil."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "Otvorte webovú stránku projektu XDock."
+
 #~ msgid "Customize indicator style"
 #~ msgstr "Prispôsobenie štýlu indikátorov"
 

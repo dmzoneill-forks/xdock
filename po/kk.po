@@ -252,6 +252,700 @@ msgstr "“%s” жөнелту сәтсіз аяқталды"
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"Қай монитордың негізгі док иесі екенін таңдаңыз. Қосымша мониторлар қосымша "
+"доктарды көрсете алады."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"Қажетті монитор ажыратылған кезде оны басқа мониторға жылжытудың орнына "
+"қондырманы жасырыңыз."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "Докты экранның сол жақ жиегіне орналастырыңыз."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "Докты экранның төменгі жиегіне орналастырыңыз."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "Докты экранның үстіңгі жиегіне орналастырыңыз."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "Қондырғышты экранның оң жақ шетіне орналастырыңыз."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "Жетілдірілген интеллектуалды автоматты жасыру параметрлерін ашыңыз."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "Терезеге кедергі келтіретін кезде докты автоматты түрде жасырыңыз."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr "Қол жетімді экран кеңістігіне қатысты ең үлкен док өлшемін орнатыңыз."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr "Доктың мазмұнын емес, экранның толық жиегіне дейін созыңыз."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr "Док белгішелерін шетінен емес, ортасында ұстаңыз."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "Док пен экран жиегі арасындағы алшақтықты орнатыңыз."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr ""
+"Меңзер жиегі мен қондырманың ашылатын аймағы арасында қосымша қашықтықты "
+"орнатыңыз."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "Қолданба белгішесінің максималды өлшемін орнатыңыз."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"Белгіше өлшемін тұрақты етіп сақтаңыз және сәйкестен көп белгішелер болған "
+"кезде докты айналдырыңыз."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "Терезенің алдын ала қарау нобайларының өлшемін масштабтаңыз."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr ""
+"Қондырғышты іске қосу үшін пайдаланылатын жиек аймағының енін орнатыңыз."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr "Док жиекте тұруды белсендіруді қаншалықты жиі тексеретінін орнатыңыз."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr ""
+"Док пайда болғанға дейін көрсеткіш қысымын қанша уақыт ұстау керектігін "
+"орнатыңыз."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "Докқа бекітілген қолданбаларды көрсету."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"Бірнеше мониторлармен бекітілген қолданбаларды тек негізгі монитор "
+"қондырмасында көрсетіңіз."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "Ашық терезелері бар қолданбаларды көрсету."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr ""
+"Қолданбаны тек оның ағымдағы жұмыс кеңістігінде терезелері болғанда ғана "
+"көрсетіңіз."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"Шұғыл терезелері бар қолданбаларды сол терезелер басқа жұмыс кеңістігінде "
+"болса да көрінетін етіп сақтаңыз."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr ""
+"Қолданбаны терезелері бар мониторларға тиесілі доктарда ғана көрсетіңіз."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"Бірнеше терезесі бар қолданбаның үстіне меңзерді апарған кезде алдын ала "
+"қарау мәзірін көрсетіңіз."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"Терезелерді қолданба бойынша топтаудың орнына әрбір ашық терезені бөлек "
+"белгіше ретінде көрсетіңіз."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "Қондырма жылжытқанда, фокусталған қолданбаны көрінетін етіп ұстаңыз."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"Іске қосылған белгішелердің қондырма ретіне немесе олардың терезе орындарына "
+"сәйкес келетінін таңдаңыз."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "Доктағы Қолданбалар түймесін көрсетіңіз."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "Қолданбалар түймесін басқа док элементтерінің алдына қойыңыз."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "Шолуды ашқан кезде «Қолданбалар» түймесін анимациялаңыз."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr ""
+"Панель режимі қосылған кезде Қолданбалар түймесін қондырманың шетінде "
+"ұстаңыз."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "Доктағы Себет белгішесін көрсетіңіз."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "Бекітілген көлемдер мен алынбалы құрылғыларды докта көрсетіңіз."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr "Қол жетімді, бірақ қазір орнатылмаған құрылғыларды жасырыңыз."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "Томдар тізіміне желі орындарын қосыңыз."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"Дыбыс деңгейін, құрылғыны және Себет терезелерін қалыпты файл басқарушы "
+"терезелерінен бөлек ұстаңыз."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "Қолданбалар назар аударуды сұраған кезде белгішелерді жандандырыңыз."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr ""
+"Қолданба іске қосылғанда немесе назар аударуды қажет еткенде белгішелерді "
+"жылжытыңыз."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"Меңзерді док белгішелерінің үстіне апарған кезде қолданба атауының "
+"кеңестерін өшіріңіз."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "Қолданба атауының құралдар кеңестерінің ең үлкен енін орнатыңыз."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr ""
+"Меңзер қолданба белгішесінде тұрғанда терезені алдын ала қарауды ашыңыз."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr ""
+"Терезені алдын ала қарау ашық және жабылған кезде қолданылатын анимацияны "
+"таңдаңыз."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "Терезені алдын ала қарау тізімінің биіктігін шектеңіз."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr "Ашық және жабу анимацияларының алдын ала қарау ұзақтығын орнатыңыз."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr ""
+"Алдын ала қараулар ашылғанға дейін меңзерді қанша уақытқа апару керектігін "
+"орнатыңыз."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr ""
+"Көрсеткіш кеткеннен кейін алдын ала қараулардың қанша уақыт ашық болатынын "
+"орнатыңыз."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "Алдын ала қарау кезінде басқа терезелердің мөлдірлігін орнатыңыз."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr ""
+"Алдын ала қараудың қанша уақыт бойы белсенді болып қалатынын орнатыңыз."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "Super plus санының таңбаша әрекетін конфигурациялаңыз."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr "Док қолданбалары үшін Super plus сан таңбашаларын қосыңыз."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "Орташа басу әрекетін конфигурациялаңыз."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr ""
+"Қолданба әлдеқашан іске қосылған кезде негізгі басу не істейтінін таңдаңыз."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "Қолданба белгішесін жылжыту не істейтінін таңдаңыз."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr ""
+"XDock қондырманың тереземен қабаттасатынын қаншалықты жиі тексеретінін "
+"орнатыңыз."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr ""
+"Қолданба терезелерін айналдыратын айналдыру оқиғалары арасындағы ең аз "
+"кідіріс."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr ""
+"Жылдам айналдыру кезінде қайталанатын жұмыс кеңістігінің қосқыштарын "
+"болдырмаңыз."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr ""
+"Қайта реттеу режимі басталғанға дейін меңзер белгішені ұстап тұруы керек "
+"уақыт."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr ""
+"Бағдарлама терезелері арқылы өту кезінде таңдалған соңғы терезені есте "
+"сақтаңыз."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "Доктың жалпы визуалды стилін таңдаңыз."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "Сөре градиентінің мөлдірлігін оның жоғарғы жиегіне орнатыңыз."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "Сөре градиентінің мөлдірлігін оның төменгі жиегіне орнатыңыз."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "Док сөресінде сызылған ерекшелеудің мөлдірлігін орнатыңыз."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "Док сөре шекарасының мөлдірлігін орнатыңыз."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "Док сөре градиентінің бұрышын орнатыңыз."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "Док сөресінің биіктігін орнатыңыз."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "Док сөресінің астында шағылысу әсерін көрсетіңіз."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "Сөре шағылысуы мөлдірлігін орнатыңыз."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "Сөре градиентінің жоғарғы жағындағы түсті таңдаңыз."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "Сөре градиентінің төменгі жағындағы түсті таңдаңыз."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "Сөрені бөлектеу түсін таңдаңыз."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "Сөре көлеңкесінің түсін таңдаңыз."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "Сөре көлеңкесінің мөлдірлігін орнатыңыз."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "Сөрені бөлектеу енін орнатыңыз."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "Сөре көлеңкесінің енін орнатыңыз."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "Док жиегінің түсін таңдаңыз."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "Док шекарасының енін орнатыңыз."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "Док айналасында көлеңке көрсетіңіз."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "Док қорапшасының көлеңке түсін таңдаңыз."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "Док көлеңкесінің қаншалықты таралатынын орнатыңыз."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "Док көлеңкесінің бұлыңғырлану дәрежесін орнатыңыз."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "Мөлдір шыны реңк түсін таңдаңыз."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "Шыны реңкінің мөлдірлігін орнатыңыз."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "Қалқымалы док көлеңкесінің түсін таңдаңыз."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "Қалқымалы көлеңке қаншалықты таралатынын орнатыңыз."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "Қалқымалы көлеңке қаншалықты жұмсақ болатынын орнатыңыз."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr "Док мазмұны мен оның шекарасы арасындағы ішкі толтырғышты орнатыңыз."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "Док бөлімдері арасындағы бөлгіш түсін таңдаңыз."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "Док сепараторларының қалыңдығын орнатыңыз."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr ""
+"Экрандағы орынды үнемдеу үшін қондырма төсемі мен бұрыш радиусын азайтыңыз."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "Док үшін дөңгелектелген бұрыштарды өшіріңіз."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+"Док бұрышының радиусын орнатыңыз. Тақырыпты орындау үшін әдепкі мәнді "
+"пайдаланыңыз."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "Сеанс басталған кезде GNOME шолуын ашыңыз."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "Сөренің үстіңгі бұрыштарының радиусын орнатыңыз."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "Сөренің төменгі бұрыштарының радиусын орнатыңыз."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "Док шағылысының өлшемін орнатыңыз."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "Қолданбаның орындалу доғаларының енін орнатыңыз."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr ""
+"Белгішелерде көрсетілген таңбаша сандар белгілерінің өлшемін орнатыңыз."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "Док құралдар кеңестерінің ең үлкен енін орнатыңыз."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"Төмендегі реттелетін сыртқы көріністі басқару элементтерінің орнына XDock "
+"біріктірілген тақырып әдепкі мәндерін пайдаланыңыз."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "Жетілдірілген жүгіру көрсеткішінің параметрлерін ашыңыз."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "Іске қосылған қолданбалардың қондырмада қалай белгіленетінін таңдаңыз."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "Пайдаланушы док фонының түсін таңдаңыз."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "Реттелетін док фон түсін қосыңыз."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr "Док күйлері үшін кеңейтілген мөлдірлік параметрлерін ашыңыз."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "Қай қондырманың мөлдірлік күйін өңдеу керек екенін таңдаңыз."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "Таңдалған док күйі үшін мөлдірлікті орнатыңыз."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "Ағымдағы жұмыс үстелінің тұсқағазынан док түстерін алыңыз."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "Түсқағаз түсінің қондырмаға қаншалықты әсер ететінін реттеңіз."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr ""
+"Қолданба белгішелерінде хабарландыру белгішелері мен эмблемаларын көрсетіңіз."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "Қолданба белгішелерінде хабарландырулар санын көрсету."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "Әр қолданба үшін хабарландырулар санын қайта анықтауға рұқсат беріңіз."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr "Қолданба фокус алған кезде оның хабарландырулар санын өшіріңіз."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "Қолданба белгішелерінде тапсырма орындалу көрсеткіштерін көрсету."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "Тапсырма орындалу көрсеткіштерінің көрнекі стилін таңдаңыз."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "Меңзер олардың үстінде тұрғанда док белгішелерін үлкейтіңіз."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr "Меңзерді үлкейту кезінде белгішенің ең үлкен өлшемін орнатыңыз."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "Үлкейту кезінде меңзердің астындағы белгішені бөлектеңіз."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+"Себет және қолданбалар түймесі сияқты қолданбалы емес док элементтерін "
+"үлкейтіңіз."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr ""
+"Док қозғалысы мен белгішелердің анимациялары үшін көктемгі физиканы "
+"пайдаланыңыз."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "Белгішелерді докта қайта реттеу үшін сүйреп апаруға рұқсат беріңіз."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+"Статикалық белгішелердің орнына қолданба белгішелері үшін тірі терезе "
+"нобайларын пайдаланыңыз."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr ""
+"Көктемгі анимациялардың мақсатына қаншалықты күшті тартылатынын орнатыңыз."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr ""
+"Көктемгі анимация қозғалысының қаншалықты жылдам реттелетінін орнатыңыз."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "Ұлғайту арқылы қанша көрші белгішеге әсер ететінін орнатыңыз."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "Үлкейту ауысуларының қаншалықты жылдам аяқталатынын орнатыңыз."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "Докты іске қосу анимациясының ұзақтығын орнатыңыз."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "Қолданбаны іске қосу анимацияларының ұзақтығын орнатыңыз."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr ""
+"Көктемгі анимациялардың мақсатынан қаншалықты асып түсетінін орнатыңыз."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "Жылдам әрекеттер үшін док пәрмендер палитрасын қосыңыз."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "Доктағы жұмыс кеңістігіне шолу шағын картасын көрсетіңіз."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr ""
+"Доктың қай жағында жұмыс кеңістігінің шағын картасы бар екенін таңдаңыз."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr ""
+"Қолданба белгішесі белсендірілген кезде терезені алдын ала қарауды автоматты "
+"түрде ашыңыз."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr ""
+"Сүйреп апару кезінде оның алдын ала көрінісі меңзермен апарылғанда, терезеге "
+"назар аударыңыз."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr "Доктан ашылған қолданба мәзірлерінде соңғы файлдарды көрсету."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "Бекітілген терминал командаларын докта көрсетіңіз."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "Доктан терезе төсеу әрекеттерін қосыңыз."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr ""
+"Жұмыс істеп тұрған қолданбалары бар қосымша мониторларда доктарды көрсету."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "Қосымша монитор доктары қай жерде пайда болатынын таңдаңыз."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr ""
+"Қолданба мәзірлерінде мультимедианы ойнатуды басқару элементтерін көрсету."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr ""
+"Қолданба мәзірлерінде әр қолданбаның дыбыс деңгейін басқару элементтерін "
+"көрсету."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr ""
+"Экран жазылған немесе ортақ пайдаланылған кезде индикаторды көрсетіңіз."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "Доктан жылдам параметрлер тақтасын көрсетіңіз."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "Белсенді сақталған параметрлер профилін таңдаңыз."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "Ағымдағы параметрлерді профиль ретінде сақтаңыз."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "Таңдалған сақталған профильді жойыңыз."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "XDock жобасының веб-бетін ашыңыз."
+
 #~ msgid ""
 #~ "When set to minimize, double clicking minimizes all the windows of the "
 #~ "application."

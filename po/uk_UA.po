@@ -253,6 +253,693 @@ msgstr "Не вдалося запустити “%s”"
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"Виберіть, якому монітору належить основна док-станція. Додаткові монітори "
+"можуть показувати додаткові доки."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"Приховайте док-станцію замість того, щоб переміщати її на інший монітор, "
+"коли бажаний монітор від’єднано."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "Розмістіть док-станцію вздовж лівого краю екрана."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "Розмістіть док-станцію вздовж нижнього краю екрана."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "Розмістіть док-станцію вздовж верхнього краю екрана."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "Розмістіть док-станцію вздовж правого краю екрана."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "Відкрийте розширені налаштування інтелектуального автоприховування."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "Автоматично приховувати док-станцію, коли вона закриває вікно."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr ""
+"Установіть максимальний розмір док-станції відносно доступного простору на "
+"екрані."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr ""
+"Зробіть так, щоб док-станція охоплювала весь край екрана замість того, щоб "
+"відповідати його вмісту."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr ""
+"Тримайте піктограми док-станції по центру замість того, щоб розміщувати їх з "
+"краю."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "Встановіть відстань між док-станцією та краєм екрана."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr ""
+"Установіть додатковий відстань між краєм вказівника та зоною розкриття док-"
+"станції."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "Встановіть максимальний розмір значка програми."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"Зберігайте розмір піктограми фіксованим і прокручуйте док, коли піктограм "
+"більше, ніж вміщується."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "Змінити розмір ескізів попереднього перегляду вікон."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr ""
+"Встановіть ширину крайової області, яка використовується для активації "
+"зупинки док-станції."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr "Установіть, як часто док-станція перевіряє активацію зупинки на краю."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr ""
+"Установіть, як довго потрібно утримувати вказівник, перш ніж з’явиться док-"
+"станція."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "Показати програми, закріплені на панелі."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"З кількома моніторами відображайте закріплені програми лише на док-станції "
+"основного монітора."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "Показувати програми з відкритими вікнами."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr ""
+"Відображати програму, лише якщо вона має вікна в поточній робочій області."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"Тримайте програми з терміновими вікнами видимими, навіть якщо ці вікна "
+"знаходяться в іншій робочій області."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr ""
+"Показувати програму лише на доках, що належать до моніторів, де у неї є "
+"вікна."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"Показувати меню попереднього перегляду під час наведення курсора на програму "
+"з кількома вікнами."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"Показувати кожне відкрите вікно як окрему піктограму замість групування "
+"вікон за програмами."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "Тримайте вибрану програму видимою під час прокручування док-станції."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"Виберіть, чи будуть піктограми відповідати порядку док-станції чи позиціям "
+"вікон."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "Показати кнопку «Програми» в док-станції."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "Розмістіть кнопку «Програми» перед іншими елементами док-станції."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "Анімація кнопки «Програми» під час відкриття огляду."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr ""
+"Тримайте кнопку «Програми» на краю док-станції, коли ввімкнено режим панелі."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "Показати піктограму кошика на панелі."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "Показати підключені томи та знімні пристрої в док-станції."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr "Приховати пристрої, які доступні, але наразі не підключені."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "Включіть мережеві розташування в список томів."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"Зберігайте вікна тому, пристрою та кошика окремо від звичайних вікон "
+"диспетчера файлів."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "Анімуйте значки, коли програми вимагають уваги."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr ""
+"Піктограми відбиваються, коли програма запускається або потребує уваги."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"Вимкніть спливаючі підказки назв програм під час наведення курсора на "
+"піктограми док-станції."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "Установіть максимальну ширину підказок назв програми."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr ""
+"Відкривати попередні перегляди вікон, коли вказівник знаходиться на "
+"піктограмі програми."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr ""
+"Виберіть анімацію, яка використовуватиметься під час відкриття та закриття "
+"вікон попереднього перегляду."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "Обмежте висоту списку попереднього перегляду вікна."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr ""
+"Встановіть тривалість анімації відкриття та закриття попереднього перегляду."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr ""
+"Установіть, як довго вказівник має наводитися, перш ніж відкрити попередній "
+"перегляд."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr ""
+"Установіть, як довго попередній перегляд залишатиметься відкритим після "
+"того, як вказівник залишить."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "Установіть непрозорість інших вікон під час попереднього перегляду."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "Установіть, як довго попередній перегляд залишається активним."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "Налаштуйте поведінку швидкого доступу до номера Super plus."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr "Увімкніть ярлики номерів Super plus для док-станцій."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "Налаштуйте дію середньої кнопки миші."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr "Виберіть, що робить основний клацання, коли програма вже запущена."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "Виберіть, що робити, прокручуючи піктограму програми."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr "Встановіть, як часто XDock перевіряє, чи док-станція перекриває вікно."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr ""
+"Мінімальна затримка між подіями прокручування, які змінюють вікна програми."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr ""
+"Запобігайте повторним перемиканням робочої області під час швидкого "
+"прокручування."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr ""
+"Час, коли покажчик має утримувати піктограму, перш ніж запуститься режим "
+"перевпорядкування."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr ""
+"Запам'ятовувати останнє вибране вікно під час циклічного переходу між "
+"вікнами програми."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "Виберіть загальний візуальний стиль док-станції."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "Встановіть непрозорість градієнта полиці на її верхньому краю."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "Встановіть непрозорість градієнта полиці на її нижній край."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr ""
+"Встановіть непрозорість виділення, намальованого на полиці док-станції."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "Установіть непрозорість межі полиці док-станції."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "Встановіть кут градієнта полиці док-станції."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "Встановіть висоту док-полки."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "Покажіть ефект відображення під полицею док-станції."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "Встановіть непрозорість відображення полиці."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "Виберіть колір у верхній частині градієнта полиці."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "Виберіть колір у нижній частині градієнта полиці."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "Виберіть колір підсвічування полиці."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "Виберіть колір тіні полиці."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "Встановіть непрозорість тіні полиці."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "Встановіть ширину підсвічування полиці."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "Встановіть ширину тіні полиці."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "Виберіть колір рамки док-станції."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "Встановіть ширину рамки док-станції."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "Покажіть тінь навколо доку."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "Виберіть колір тіні док-бокса."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "Установіть, наскільки далеко поширюється тінь дока."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "Установіть, наскільки м’яко розмивається тінь дока."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "Виберіть колір тонування напівпрозорого скла."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "Встановіть непрозорість відтінку скла."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "Виберіть колір тіні плаваючої док-станції."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "Установіть, наскільки далеко поширюється плаваюча тінь."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "Встановіть, наскільки м’яко буде розмита плаваюча тінь."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr "Установіть внутрішній відступ між вмістом дока та його межею."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "Виберіть колір роздільника між розділами дока."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "Встановіть товщину док-сепараторів."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr ""
+"Зменшіть відступ док-станції та радіус кутів, щоб заощадити місце на екрані."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "Вимкніть закруглені кути для док-станції."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+"Встановіть радіус кута дока. Використовуйте значення за замовчуванням, щоб "
+"слідувати темі."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "Відкрийте огляд GNOME, коли розпочнеться сеанс."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "Встановіть радіус верхніх кутів полиці."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "Встановіть радіус нижніх кутів полиці."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "Встановіть розмір відображення док-станції."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "Встановіть ширину дуг прогресу програми."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr "Установіть розмір ярликів номерів, що відображаються на піктограмах."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "Установіть максимальну ширину підказок дока."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"Використовуйте стандартні налаштування інтегрованої теми XDock замість "
+"користувацьких елементів керування виглядом, наведених нижче."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "Відкрийте розширені налаштування індикатора бігу."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "Виберіть спосіб позначення запущених програм на док-станції."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "Виберіть власний колір тла док-станції."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "Увімкніть спеціальний колір тла док-станції."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr "Відкрийте розширені параметри прозорості для станів дока."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "Виберіть стан непрозорості дока для редагування."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "Установіть непрозорість для вибраного стану дока."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "Отримайте кольори док-станції з поточних шпалер робочого столу."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "Налаштуйте, наскільки сильно кольори шпалер впливають на док-станцію."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr "Показувати значки сповіщень і емблеми на значках програм."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "Показувати кількість сповіщень на піктограмах додатків."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "Дозволити перевизначення кількості сповіщень для кожної програми."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr "Очистити кількість сповіщень програми, коли вона отримує фокус."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "Показувати індикатори виконання завдання на піктограмах програм."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "Виберіть візуальний стиль індикаторів виконання завдання."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "Збільште піктограми док-станції, поки вказівник знаходиться над ними."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr ""
+"Установіть максимальний розмір піктограми під час збільшення при наведенні."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "Виділіть піктограму під вказівником під час збільшення."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+"Збільште елементи док-станції, які не належать до програми, наприклад кнопку "
+"кошика та програм."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr ""
+"Використовуйте фізику пружини для руху док-станції та анімації значків."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "Дозвольте перетягувати піктограми, щоб змінити їх порядок у доці."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+"Використовуйте живі мініатюри вікон для піктограм програм замість статичних "
+"піктограм."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr "Установіть, наскільки сильно анімація пружини тягнеться до своєї мети."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "Встановіть, як швидко встановлюється пружинна анімація."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "Встановіть кількість сусідніх піктограм, на які впливає збільшення."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "Установіть швидкість завершення переходів збільшення."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "Встановіть тривалість анімації запуску док-станції."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "Встановити тривалість анімації запуску програми."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr "Установіть, наскільки пружинні анімації перевищують ціль."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "Увімкніть панель команд дока для швидких дій."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "Показати оглядову міні-карту робочого простору в доці."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr ""
+"Виберіть, з якого боку док-станції міститься міні-карта робочої області."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr ""
+"Автоматичний попередній перегляд відкритих вікон, коли активовано значок "
+"програми."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr ""
+"Фокус вікна, коли його попередній перегляд наведено під час перетягування."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr "Показувати останні файли в меню програм, відкритих із док-станції."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "Показати закріплені команди терміналу в док-станції."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "Увімкніть дії з мозаїкою вікон із док-станції."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr "Показувати доки на додаткових моніторах із запущеними програмами."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "Виберіть місце відображення док-станцій для додаткового монітора."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "Показувати елементи керування відтворенням медіа в меню програми."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr ""
+"Показувати елементи керування гучністю для кожної програми в меню програми."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "Показувати індикатор, коли екран записується або ділиться."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "Показати панель швидких налаштувань із док-станції."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "Виберіть активний збережений профіль налаштувань."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "Зберегти поточні налаштування як профіль."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "Видалити вибраний збережений профіль."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "Відкрийте веб-сторінку проекту XDock."
+
 #~ msgid ""
 #~ "When set to minimize, double clicking minimizes all the windows of the "
 #~ "application."

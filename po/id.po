@@ -253,6 +253,654 @@ msgstr ""
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"Pilih monitor mana yang memiliki dok utama. Monitor tambahan dapat "
+"menampilkan dok sekunder."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"Sembunyikan dok alih-alih memindahkannya ke monitor lain saat monitor "
+"pilihannya terputus."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "Tempatkan dok di sepanjang tepi kiri layar."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "Tempatkan dok di sepanjang tepi bawah layar."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "Tempatkan dok di sepanjang tepi atas layar."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "Tempatkan dok di sepanjang tepi kanan layar."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "Buka pengaturan sembunyikan otomatis cerdas tingkat lanjut."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "Sembunyikan dok secara otomatis jika menghalangi jendela."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr "Atur ukuran dok maksimum relatif terhadap ruang layar yang tersedia."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr "Jadikan dok menjangkau tepi layar penuh alih-alih menyesuaikan isinya."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr ""
+"Jaga agar ikon dok tetap berada di tengah alih-alih menempatkannya di tepi."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "Atur jarak antara dok dan tepi layar."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr "Atur jarak ekstra antara tepi penunjuk dan area pengungkapan dok."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "Atur ukuran ikon aplikasi maksimum."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"Pertahankan ukuran ikon tetap dan gulir dok ketika ada lebih banyak ikon "
+"daripada yang sesuai."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "Skala ukuran thumbnail pratinjau jendela."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr "Atur lebar area tepi yang digunakan untuk aktivasi dock diam."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr "Atur seberapa sering dok memeriksa aktivasi edge live."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr "Atur berapa lama tekanan penunjuk harus ditahan sebelum dock muncul."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "Tampilkan aplikasi yang disematkan ke dok."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"Dengan beberapa monitor, tampilkan aplikasi yang disematkan hanya pada dok "
+"monitor utama."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "Tampilkan aplikasi dengan jendela terbuka."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr ""
+"Tampilkan aplikasi hanya jika aplikasi tersebut memiliki jendela di ruang "
+"kerja saat ini."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"Jaga agar aplikasi dengan jendela mendesak tetap terlihat meskipun jendela "
+"tersebut berada di ruang kerja lain."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr "Tampilkan aplikasi hanya di dok milik monitor yang memiliki jendela."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"Menampilkan menu pratinjau saat mengarahkan kursor ke aplikasi dengan banyak "
+"jendela."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"Tampilkan setiap jendela yang terbuka sebagai ikon terpisah alih-alih "
+"mengelompokkan jendela berdasarkan aplikasi."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "Jaga agar aplikasi yang terfokus tetap terlihat saat dok bergulir."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"Pilih apakah ikon yang berjalan mengikuti urutan dok atau posisi jendelanya."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "Tampilkan tombol Aplikasi di dok."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "Tempatkan tombol Aplikasi sebelum item dok lainnya."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "Menganimasikan tombol Aplikasi saat membuka ikhtisar."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr "Simpan tombol Aplikasi di tepi dok saat mode Panel diaktifkan."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "Tampilkan ikon Sampah di dok."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "Tampilkan volume terpasang dan perangkat yang dapat dilepas di dok."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr "Sembunyikan perangkat yang tersedia tetapi saat ini belum terpasang."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "Sertakan lokasi jaringan dalam daftar volume."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"Pisahkan jendela volume, perangkat, dan Sampah dari jendela pengelola file "
+"normal."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "Menganimasikan ikon ketika aplikasi meminta perhatian."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr "Pantulkan ikon saat aplikasi diluncurkan atau memerlukan perhatian."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"Nonaktifkan tooltips nama aplikasi saat mengarahkan kursor ke ikon dok."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "Tetapkan lebar maksimum tooltips nama aplikasi."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr "Buka pratinjau jendela saat penunjuk berada pada ikon aplikasi."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr ""
+"Pilih animasi yang digunakan saat pratinjau jendela membuka dan menutup."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "Batasi ketinggian daftar pratinjau jendela."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr ""
+"Menyetel berapa lama waktu yang dibutuhkan animasi buka dan tutup pratinjau."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr "Atur berapa lama penunjuk harus melayang sebelum pratinjau dibuka."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr "Atur berapa lama pratinjau tetap terbuka setelah penunjuk keluar."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "Atur opacity jendela lain selama pratinjau mengintip."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "Atur berapa lama cuplikan pratinjau tetap aktif."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "Konfigurasikan perilaku pintasan nomor Super plus."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr "Aktifkan pintasan nomor Super plus untuk aplikasi dok."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "Konfigurasikan tindakan klik tengah."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr "Pilih apa yang dilakukan klik utama saat aplikasi sudah berjalan."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "Pilih fungsi menggulir ikon aplikasi."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr ""
+"Atur seberapa sering XDock memeriksa apakah dok tumpang tindih dengan "
+"jendela."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr ""
+"Penundaan minimum antara peristiwa gulir yang memutar jendela aplikasi."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr "Cegah peralihan ruang kerja berulang kali selama pengguliran cepat."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr "Waktu penunjuk harus menahan ikon sebelum mode penataan ulang dimulai."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr "Ingat jendela terakhir yang dipilih saat menelusuri jendela aplikasi."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "Pilih gaya visual keseluruhan dok."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "Atur opacity gradien rak di tepi atasnya."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "Atur opacity gradien rak di tepi bawahnya."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "Atur opacity dari sorotan yang digambar di rak dok."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "Atur opacity batas rak dok."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "Atur sudut gradien rak dok."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "Atur ketinggian rak dok."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "Tampilkan efek refleksi di bawah rak dermaga."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "Atur opacity refleksi rak."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "Pilih warna di bagian atas gradien rak."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "Pilih warna di bagian bawah gradien rak."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "Pilih warna highlight rak."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "Pilih warna bayangan rak."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "Atur opacity bayangan rak."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "Atur lebar sorotan rak."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "Atur lebar bayangan rak."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "Pilih warna batas dok."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "Atur lebar batas dok."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "Tampilkan bayangan di sekitar dermaga."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "Pilih warna bayangan kotak dok."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "Atur seberapa jauh bayangan dermaga menyebar."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "Atur seberapa lembut bayangan dok menjadi kabur."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "Pilih warna kaca bening."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "Atur opacity warna kaca."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "Pilih warna bayangan dermaga mengambang."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "Atur seberapa jauh penyebaran bayangan mengambang."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "Atur seberapa lembut bayangan mengambang menjadi kabur."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr "Atur padding bagian dalam antara konten dok dan batasnya."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "Pilih warna pemisah antar bagian dok."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "Atur ketebalan pemisah dok."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr "Kurangi bantalan dok dan radius sudut untuk menghemat ruang layar."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "Nonaktifkan sudut membulat untuk dok."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr "Atur radius sudut dok. Gunakan nilai default untuk mengikuti tema."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "Buka ikhtisar GNOME saat sesi dimulai."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "Atur radius sudut atas rak."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "Atur radius sudut bawah rak."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "Atur ukuran pantulan dok."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "Atur lebar busur kemajuan aplikasi."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr "Atur ukuran label nomor pintasan yang ditampilkan pada ikon."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "Atur lebar maksimum tooltip dock."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"Gunakan default tema terintegrasi XDock alih-alih kontrol tampilan khusus di "
+"bawah."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "Buka pengaturan indikator lari lanjutan."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "Pilih bagaimana aplikasi yang berjalan ditandai di dok."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "Pilih warna latar belakang dok khusus."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "Aktifkan warna latar belakang dok khusus."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr "Buka pengaturan opasitas lanjutan untuk status dok."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "Pilih status opasitas dok mana yang akan diedit."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "Atur opacity untuk status dock yang dipilih."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "Dapatkan warna dok dari wallpaper desktop saat ini."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "Sesuaikan seberapa kuat pengaruh warna wallpaper terhadap dok."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr "Tampilkan lencana dan lambang pemberitahuan pada ikon aplikasi."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "Tampilkan jumlah notifikasi pada ikon aplikasi."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "Izinkan penggantian jumlah notifikasi per aplikasi."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr "Hapus jumlah notifikasi aplikasi saat menerima fokus."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "Tampilkan indikator kemajuan tugas pada ikon aplikasi."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "Pilih gaya visual indikator kemajuan tugas."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "Perbesar ikon dok saat penunjuk berada di atasnya."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr "Tetapkan ukuran maksimum ikon selama pembesaran hover."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "Sorot ikon yang saat ini berada di bawah penunjuk selama pembesaran."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr "Memperbesar item dok non-aplikasi seperti tombol sampah dan aplikasi."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr "Gunakan fisika pegas untuk pergerakan dermaga dan animasi ikon."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "Izinkan menyeret ikon untuk mengatur ulang ikon di dok."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+"Gunakan thumbnail jendela langsung untuk ikon aplikasi, bukan ikon statis."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr "Tetapkan seberapa kuat animasi pegas mencapai targetnya."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "Mengatur seberapa cepat gerakan animasi pegas diselesaikan."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "Atur berapa banyak ikon tetangga yang terpengaruh oleh pembesaran."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "Atur seberapa cepat transisi pembesaran selesai."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "Atur durasi animasi pengaktifan dok."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "Atur durasi animasi peluncuran aplikasi."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr "Tetapkan seberapa jauh animasi pegas melampaui targetnya."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "Aktifkan palet perintah dok untuk tindakan cepat."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "Tampilkan minimap ikhtisar ruang kerja di dok."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr "Pilih sisi dok mana yang berisi peta mini ruang kerja."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr ""
+"Buka pratinjau jendela secara otomatis ketika ikon aplikasi diaktifkan."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr "Fokuskan jendela saat pratinjaunya diarahkan selama drag."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr "Tampilkan file terbaru di menu aplikasi yang dibuka dari dock."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "Tampilkan perintah terminal yang disematkan di dok."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "Aktifkan tindakan penataan jendela dari dok."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr ""
+"Tampilkan dok pada monitor sekunder dengan aplikasi yang sedang berjalan."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "Pilih di mana dok monitor sekunder muncul."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "Tampilkan kontrol pemutaran media di menu aplikasi."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr "Tampilkan kontrol volume per aplikasi di menu aplikasi."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "Tampilkan indikator saat layar sedang direkam atau dibagikan."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "Tampilkan panel pengaturan cepat dari dok."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "Pilih profil pengaturan tersimpan yang aktif."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "Simpan pengaturan saat ini sebagai profil."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "Hapus profil tersimpan yang dipilih."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "Buka halaman web proyek XDock."
+
 #~ msgid "Customize indicator style"
 #~ msgstr "Sesuaikan gaya indikator"
 

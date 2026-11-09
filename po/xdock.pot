@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: XDock\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-24 16:26+0100\n"
+"POT-Creation-Date: 2026-11-09 16:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,260 +18,260 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: prefs.js:407
+#: prefs.js:410
 msgid "Primary monitor"
 msgstr ""
 
-#: prefs.js:408
+#: prefs.js:411
 msgid "All monitors"
 msgstr ""
 
 #. TRANSLATORS: This will be followed by Display Name - Connector.
-#: prefs.js:420
+#: prefs.js:423
 msgid "Primary monitor: "
 msgstr ""
 
 #. TRANSLATORS: Followed by monitor index, Display Name - Connector.
-#: prefs.js:425
+#: prefs.js:428
 msgid "Secondary monitor "
 msgstr ""
 
-#: prefs.js:544 Settings.ui:941 Settings.ui:5424
+#: prefs.js:547 Settings.ui:946 Settings.ui:5605
 msgid "Right"
 msgstr ""
 
-#: prefs.js:545 Settings.ui:913 Settings.ui:5426
+#: prefs.js:548 Settings.ui:915 Settings.ui:5607
 msgid "Left"
 msgstr ""
 
-#: prefs.js:601
+#: prefs.js:604
 msgid "Intelligent autohide customization"
 msgstr ""
 
-#: prefs.js:609 prefs.js:1076 prefs.js:1157
+#: prefs.js:612 prefs.js:1102 prefs.js:1183
 msgid "Reset to defaults"
 msgstr ""
 
-#: prefs.js:805
+#: prefs.js:823
 msgid "Follows GNOME Multitasking's Application Switching setting."
 msgstr ""
 
-#: prefs.js:1068
+#: prefs.js:1094
 msgid "Show dock and application numbers"
 msgstr ""
 
-#: prefs.js:1149
+#: prefs.js:1175
 msgid "Customize middle-click behavior"
 msgstr ""
 
-#: prefs.js:1250
+#: prefs.js:1276
 msgid "Customize running indicators"
 msgstr ""
 
-#: prefs.js:1365 Settings.ui:4343
+#: prefs.js:1391 Settings.ui:4489
 msgid "Customize opacity"
 msgstr ""
 
-#: prefs.js:1900
+#: prefs.js:1926
 msgid "Save profile"
 msgstr ""
 
-#: prefs.js:1906
+#: prefs.js:1932
 msgid "Cancel"
 msgstr ""
 
-#: prefs.js:1907
+#: prefs.js:1933
 msgid "Save"
 msgstr ""
 
-#: prefs.js:1918
+#: prefs.js:1944
 msgid "Profile name:"
 msgstr ""
 
-#: docking.js:2029
+#: docking.js:2097
 msgid "Dash"
 msgstr ""
 
-#: docking.js:4200 appIcons.js:2010
+#: docking.js:4276 appIcons.js:2022
 msgid "Unpin"
 msgstr ""
 
-#: docking.js:4200 appIcons.js:2016
+#: docking.js:4276 appIcons.js:2028
 msgid "Pin to Dock"
 msgstr ""
 
-#: appIcons.js:835
+#: appIcons.js:840
 #, javascript-format
 msgid "%s is updating, try again later"
 msgstr ""
 
-#: appIcons.js:1760
+#: appIcons.js:1772
 msgid "Run"
 msgstr ""
 
-#: appIcons.js:1767
+#: appIcons.js:1779
 msgid "Remove from Dock"
 msgstr ""
 
-#: appIcons.js:1889
+#: appIcons.js:1901
 #, javascript-format
 msgid "%s is being updated…"
 msgstr ""
 
-#: appIcons.js:1900
+#: appIcons.js:1912
 msgid "All Windows"
 msgstr ""
 
-#: appIcons.js:1912
+#: appIcons.js:1924
 msgid "Open Windows"
 msgstr ""
 
-#: appIcons.js:1929
+#: appIcons.js:1941
 msgid "Recent Files"
 msgstr ""
 
-#: appIcons.js:1961
+#: appIcons.js:1973
 msgid "New Window"
 msgstr ""
 
-#: appIcons.js:1980
+#: appIcons.js:1992
 msgid "Launch using Integrated Graphics Card"
 msgstr ""
 
-#: appIcons.js:1981
+#: appIcons.js:1993
 msgid "Launch using Discrete Graphics Card"
 msgstr ""
 
-#: appIcons.js:2028 appIcons.js:2054
+#: appIcons.js:2040 appIcons.js:2066
 msgid "App Details"
 msgstr ""
 
-#: appIcons.js:2068
+#: appIcons.js:2080
 msgid "Show Desktop File"
 msgstr ""
 
-#: appIcons.js:2145 appIcons.js:2231 Settings.ui:348 Settings.ui:420
+#: appIcons.js:2157 appIcons.js:2243 Settings.ui:348 Settings.ui:420
 #: Settings.ui:492
 msgid "Quit"
 msgstr ""
 
-#: appIcons.js:2157
+#: appIcons.js:2169
 msgid "Badge Settings"
 msgstr ""
 
-#: appIcons.js:2162
+#: appIcons.js:2174
 msgid "Badge: Shown"
 msgstr ""
 
-#: appIcons.js:2162
+#: appIcons.js:2174
 msgid "Badge: Hidden"
 msgstr ""
 
-#: appIcons.js:2185
+#: appIcons.js:2197
 msgid "Badge Source"
 msgstr ""
 
-#: appIcons.js:2189
+#: appIcons.js:2201
 msgid "Auto (default)"
 msgstr ""
 
-#: appIcons.js:2190
+#: appIcons.js:2202
 msgid "Notifications only"
 msgstr ""
 
-#: appIcons.js:2191
+#: appIcons.js:2203
 msgid "App counter only"
 msgstr ""
 
-#: appIcons.js:2192 Settings.ui:4220
+#: appIcons.js:2204 Settings.ui:4364
 msgid "None"
 msgstr ""
 
-#: appIcons.js:2234
+#: appIcons.js:2246
 #, javascript-format
 msgid "Quit %d Window"
 msgid_plural "Quit %d Windows"
 msgstr[0] ""
 msgstr[1] ""
 
-#: appIcons.js:2570
+#: appIcons.js:2582
 msgid "XDock"
 msgstr ""
 
-#: appIcons.js:2572
+#: appIcons.js:2584
 msgid "Settings"
 msgstr ""
 
-#: appIcons.js:2693
+#: appIcons.js:2705
 #, javascript-format
 msgid "%d: %s"
 msgstr ""
 
-#: appIcons.js:2696
+#: appIcons.js:2708
 #, javascript-format
 msgid "%s, needs attention"
 msgstr ""
 
-#: appIcons.js:2699
+#: appIcons.js:2711
 #, javascript-format
 msgid "%s, %d unread notification"
 msgid_plural "%s, %d unread notifications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: appIcons.js:2705
+#: appIcons.js:2717
 #, javascript-format
 msgid "%s, %d%% complete"
 msgstr ""
 
-#: features/locations.js:535
+#: features/locations.js:541
 msgid "Mount"
 msgstr ""
 
-#: features/locations.js:537
+#: features/locations.js:543
 msgid "Unmount"
 msgstr ""
 
-#: features/locations.js:539
+#: features/locations.js:545
 msgid "Eject"
 msgstr ""
 
-#: features/locations.js:605
+#: features/locations.js:611
 #, javascript-format
 msgid "Failed to mount “%s”"
 msgstr ""
 
-#: features/locations.js:610
+#: features/locations.js:616
 #, javascript-format
 msgid "Failed to unmount “%s”"
 msgstr ""
 
-#: features/locations.js:615
+#: features/locations.js:621
 #, javascript-format
 msgid "Failed to eject “%s”"
 msgstr ""
 
-#: features/locations.js:628
+#: features/locations.js:634
 msgid "Mount operation already in progress"
 msgstr ""
 
-#: features/locations.js:633
+#: features/locations.js:639
 msgid "Unmount operation already in progress"
 msgstr ""
 
-#: features/locations.js:638
+#: features/locations.js:644
 msgid "Eject operation already in progress"
 msgstr ""
 
-#: features/locations.js:764
+#: features/locations.js:770
 msgid "Trash"
 msgstr ""
 
-#: features/locations.js:818
+#: features/locations.js:824
 msgid "Empty Trash"
 msgstr ""
 
-#: features/locations.js:1088
+#: features/locations.js:1094
 #, javascript-format
 msgid "Failed to launch “%s”"
 msgstr ""
@@ -286,7 +286,7 @@ msgstr ""
 msgid "Shift+Click action"
 msgstr ""
 
-#: Settings.ui:336 Settings.ui:408 Settings.ui:480 Settings.ui:2472
+#: Settings.ui:336 Settings.ui:408 Settings.ui:480 Settings.ui:2567
 msgid "Raise window"
 msgstr ""
 
@@ -294,44 +294,44 @@ msgstr ""
 msgid "Minimize window"
 msgstr ""
 
-#: Settings.ui:338 Settings.ui:410 Settings.ui:482 Settings.ui:2474
+#: Settings.ui:338 Settings.ui:410 Settings.ui:482 Settings.ui:2569
 msgid "Launch new instance"
 msgstr ""
 
-#: Settings.ui:339 Settings.ui:411 Settings.ui:483 Settings.ui:2475
-#: Settings.ui:2578
+#: Settings.ui:339 Settings.ui:411 Settings.ui:483 Settings.ui:2570
+#: Settings.ui:2674
 msgid "Cycle through windows"
 msgstr ""
 
-#: Settings.ui:340 Settings.ui:412 Settings.ui:484 Settings.ui:2476
+#: Settings.ui:340 Settings.ui:412 Settings.ui:484 Settings.ui:2571
 msgid "Minimize or overview"
 msgstr ""
 
-#: Settings.ui:341 Settings.ui:413 Settings.ui:485 Settings.ui:2477
+#: Settings.ui:341 Settings.ui:413 Settings.ui:485 Settings.ui:2572
 msgid "Show window previews"
 msgstr ""
 
-#: Settings.ui:342 Settings.ui:414 Settings.ui:486 Settings.ui:2478
+#: Settings.ui:342 Settings.ui:414 Settings.ui:486 Settings.ui:2573
 msgid "Minimize or show previews"
 msgstr ""
 
-#: Settings.ui:343 Settings.ui:415 Settings.ui:487 Settings.ui:2479
+#: Settings.ui:343 Settings.ui:415 Settings.ui:487 Settings.ui:2574
 msgid "Focus or show previews"
 msgstr ""
 
-#: Settings.ui:344 Settings.ui:416 Settings.ui:488 Settings.ui:2480
+#: Settings.ui:344 Settings.ui:416 Settings.ui:488 Settings.ui:2575
 msgid "Focus or app spread"
 msgstr ""
 
-#: Settings.ui:345 Settings.ui:417 Settings.ui:489 Settings.ui:2481
+#: Settings.ui:345 Settings.ui:417 Settings.ui:489 Settings.ui:2576
 msgid "Focus, minimize or show previews"
 msgstr ""
 
-#: Settings.ui:346 Settings.ui:418 Settings.ui:490 Settings.ui:2482
+#: Settings.ui:346 Settings.ui:418 Settings.ui:490 Settings.ui:2577
 msgid "Focus, minimize or app spread"
 msgstr ""
 
-#: Settings.ui:347 Settings.ui:419 Settings.ui:491 Settings.ui:2483
+#: Settings.ui:347 Settings.ui:419 Settings.ui:491 Settings.ui:2578
 msgid "Cycle or minimize"
 msgstr ""
 
@@ -371,7 +371,7 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
-#: Settings.ui:664 Settings.ui:3306
+#: Settings.ui:664 Settings.ui:3423
 msgid "Border color"
 msgstr ""
 
@@ -387,785 +387,1414 @@ msgstr ""
 msgid "Show the dock on"
 msgstr ""
 
-#: Settings.ui:867
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+
+#: Settings.ui:868
 msgid "Hide dock when preferred monitor is unavailable"
 msgstr ""
 
-#: Settings.ui:903
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+
+#: Settings.ui:905
 msgid "Global position on screen"
 msgstr ""
 
-#: Settings.ui:922 Settings.ui:5425
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr ""
+
+#: Settings.ui:925 Settings.ui:5606
 msgid "Bottom"
 msgstr ""
 
-#: Settings.ui:931 Settings.ui:5423
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr ""
+
+#: Settings.ui:935 Settings.ui:5604
 msgid "Top"
 msgstr ""
 
-#: Settings.ui:985
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr ""
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr ""
+
+#: Settings.ui:991
 msgid ""
 "Hide the dock when it obstructs a window of the current application. More "
 "refined settings are available."
 msgstr ""
 
-#: Settings.ui:1002
+#: Settings.ui:1008
 msgid "Intelligent autohide"
 msgstr ""
 
-#: Settings.ui:1077
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr ""
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr ""
+
+#: Settings.ui:1085
 msgid "Dock size limit"
 msgstr ""
 
-#: Settings.ui:1099
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr ""
+
+#: Settings.ui:1108
 msgid "Panel mode: extend to the screen edge"
 msgstr ""
 
-#: Settings.ui:1111
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr ""
+
+#: Settings.ui:1121
 msgid "Place icons to the center"
 msgstr ""
 
-#: Settings.ui:1136
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr ""
+
+#: Settings.ui:1147
 msgid "Dock margin size"
 msgstr ""
 
-#: Settings.ui:1177
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr ""
+
+#: Settings.ui:1189
 msgid "Extra edge spacing"
 msgstr ""
 
-#: Settings.ui:1216
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr ""
+
+#: Settings.ui:1229
 msgid "Icon size limit"
 msgstr ""
 
 #: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr ""
+
+#: Settings.ui:1256
 msgid "Fixed icon size: scroll to reveal other icons"
 msgstr ""
 
-#: Settings.ui:1270
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+
+#: Settings.ui:1285
 msgid "Preview size scale"
 msgstr ""
 
-#: Settings.ui:1313
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr ""
+
+#: Settings.ui:1329
 msgid "Edge dwell width (px)"
 msgstr ""
 
-#: Settings.ui:1346
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr ""
+
+#: Settings.ui:1363
 msgid "Dwell check interval (ms)"
 msgstr ""
 
-#: Settings.ui:1379
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr ""
+
+#: Settings.ui:1397
 msgid "Pressure show timeout (ms)"
 msgstr ""
 
-#: Settings.ui:1413
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr ""
+
+#: Settings.ui:1432
 msgid "Applications"
 msgstr ""
 
-#: Settings.ui:1456
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr ""
+
+#: Settings.ui:1476
 msgid "Show pinned applications"
 msgstr ""
 
-#: Settings.ui:1493
+#: Settings.ui:1486
+msgid "Only on the primary monitor"
+msgstr ""
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr ""
+
+#: Settings.ui:1526
 msgid "Show running applications"
 msgstr ""
 
-#: Settings.ui:1503
+#: Settings.ui:1536
 msgid "Isolate workspaces"
 msgstr ""
 
-#: Settings.ui:1516
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr ""
+
+#: Settings.ui:1550
 msgid "Show urgent windows despite current workspace"
 msgstr ""
 
-#: Settings.ui:1529
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+
+#: Settings.ui:1564
 msgid "Isolate monitors"
 msgstr ""
 
-#: Settings.ui:1543
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr ""
+
+#: Settings.ui:1579
 msgid "Show open windows' previews"
 msgstr ""
 
-#: Settings.ui:1554
-msgid "Ungroup applications"
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
 msgstr ""
 
 #: Settings.ui:1591
+msgid "Ungroup applications"
+msgstr ""
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr ""
+
+#: Settings.ui:1630
 msgid "Keep the focused application always visible in the dash"
 msgstr ""
 
-#: Settings.ui:1628
+#: Settings.ui:1653
+msgid "Running application icon order"
+msgstr ""
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+
+#: Settings.ui:1663
+msgid "Dock order"
+msgstr ""
+
+#: Settings.ui:1664
+msgid "Window coordinates"
+msgstr ""
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr ""
+
+#: Settings.ui:1699
 msgid ""
 "If disabled, these settings are accessible from gnome-tweak-tool or the "
 "extension website."
 msgstr ""
 
-#: Settings.ui:1645
+#: Settings.ui:1716
 msgid "Show <i>Applications</i> icon"
 msgstr ""
 
-#: Settings.ui:1656
+#: Settings.ui:1727
 msgid "Move at beginning of the dock"
 msgstr ""
 
-#: Settings.ui:1677
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr ""
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr ""
+
+#: Settings.ui:1750
 msgid "Animate <i>Show Applications</i>"
 msgstr ""
 
-#: Settings.ui:1698
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr ""
+
+#: Settings.ui:1772
 msgid "Put <i>Show Applications</i> in a dock edge when using Panel mode"
 msgstr ""
 
-#: Settings.ui:1738
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr ""
+
+#: Settings.ui:1813
 msgid "Show trash can"
 msgstr ""
 
-#: Settings.ui:1775
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr ""
+
+#: Settings.ui:1851
 msgid "Show volumes and devices"
 msgstr ""
 
-#: Settings.ui:1785
+#: Settings.ui:1861
 msgid "Only if mounted"
 msgstr ""
 
-#: Settings.ui:1798
-msgid "Include network volumes"
-msgstr ""
-
-#: Settings.ui:1838
-msgid "Isolate volumes, devices and trash windows from file manager"
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
 msgstr ""
 
 #: Settings.ui:1875
+msgid "Include network volumes"
+msgstr ""
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr ""
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+
+#: Settings.ui:1917
+msgid "Isolate volumes, devices and trash windows from file manager"
+msgstr ""
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr ""
+
+#: Settings.ui:1955
 msgid "Wiggle urgent applications"
 msgstr ""
 
-#: Settings.ui:1912
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr ""
+
+#: Settings.ui:1993
 msgid "Icons bounce when launching?"
 msgstr ""
 
-#: Settings.ui:1949
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+
+#: Settings.ui:2031
 msgid "Hide application tooltip"
 msgstr ""
 
-#: Settings.ui:1989
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr ""
+
+#: Settings.ui:2072
 msgid "Tooltip max width (%)"
 msgstr ""
 
-#: Settings.ui:2025
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr ""
+
+#: Settings.ui:2109
 msgid "Show window previews on mouse hover"
 msgstr ""
 
-#: Settings.ui:2051
+#: Settings.ui:2135
 msgid "Preview animation style"
 msgstr ""
 
-#: Settings.ui:2061
+#: Settings.ui:2145
 msgid "Instant"
 msgstr ""
 
-#: Settings.ui:2062
+#: Settings.ui:2146
 msgid "Fade"
 msgstr ""
 
-#: Settings.ui:2063
+#: Settings.ui:2147
 msgid "Slide"
 msgstr ""
 
-#: Settings.ui:2064
+#: Settings.ui:2148
 msgid "Scale"
 msgstr ""
 
-#: Settings.ui:2065
+#: Settings.ui:2149
 msgid "Expand"
 msgstr ""
 
-#: Settings.ui:2066
+#: Settings.ui:2150
 msgid "Dissolve"
 msgstr ""
 
-#: Settings.ui:2067
+#: Settings.ui:2151
 msgid "Cascade"
 msgstr ""
 
-#: Settings.ui:2094
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr ""
+
+#: Settings.ui:2179
 msgid "Preview max height (px)"
 msgstr ""
 
-#: Settings.ui:2127
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr ""
+
+#: Settings.ui:2213
 msgid "Preview animation (ms)"
 msgstr ""
 
-#: Settings.ui:2160
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr ""
+
+#: Settings.ui:2247
 msgid "Preview hover delay (ms)"
 msgstr ""
 
-#: Settings.ui:2193
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr ""
+
+#: Settings.ui:2281
 msgid "Preview close delay (ms)"
 msgstr ""
 
-#: Settings.ui:2226
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr ""
+
+#: Settings.ui:2315
 msgid "Aero Peek opacity"
 msgstr ""
 
-#: Settings.ui:2259
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr ""
+
+#: Settings.ui:2349
 msgid "Aero Peek duration (ms)"
 msgstr ""
 
-#: Settings.ui:2293
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr ""
+
+#: Settings.ui:2384
 msgid "Behavior"
 msgstr ""
 
-#: Settings.ui:2326
+#: Settings.ui:2417
 msgid ""
 "Enable Super+(0-9) as shortcuts to activate apps. It can also be used "
 "together with Shift and Ctrl."
 msgstr ""
 
-#: Settings.ui:2345
+#: Settings.ui:2436
 msgid "Use keyboard shortcuts to activate apps"
 msgstr ""
 
-#: Settings.ui:2421
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr ""
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr ""
+
+#: Settings.ui:2514
 msgid "Behaviour when clicking on the icon of a running application."
 msgstr ""
 
-#: Settings.ui:2439
+#: Settings.ui:2532
 msgid "Click action"
 msgstr ""
 
-#: Settings.ui:2473
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr ""
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr ""
+
+#: Settings.ui:2568
 msgid "Minimize"
 msgstr ""
 
-#: Settings.ui:2528
+#: Settings.ui:2623
 msgid "Behaviour when scrolling on the icon of an application."
 msgstr ""
 
-#: Settings.ui:2546
+#: Settings.ui:2641
 msgid "Scroll action"
 msgstr ""
 
-#: Settings.ui:2560
+#: Settings.ui:2655
 msgid "Won't work over icons because 'Fixed icon size' is enabled."
 msgstr ""
 
-#: Settings.ui:2577
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr ""
+
+#: Settings.ui:2673
 msgid "Do nothing"
 msgstr ""
 
-#: Settings.ui:2579
+#: Settings.ui:2675
 msgid "Switch workspace"
 msgstr ""
 
-#: Settings.ui:2606
+#: Settings.ui:2702
 msgid "Intellihide check interval (ms)"
 msgstr ""
 
-#: Settings.ui:2639
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr ""
+
+#: Settings.ui:2736
 msgid "Scroll cycle debounce (ms)"
 msgstr ""
 
-#: Settings.ui:2672
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr ""
+
+#: Settings.ui:2770
 msgid "Workspace switch deadtime (ms)"
 msgstr ""
 
-#: Settings.ui:2705
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr ""
+
+#: Settings.ui:2804
 msgid "Wiggle long-press (ms)"
 msgstr ""
 
-#: Settings.ui:2738
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr ""
+
+#: Settings.ui:2838
 msgid "Window cycle memory (ms)"
 msgstr ""
 
-#: Settings.ui:2772
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr ""
+
+#: Settings.ui:2873
 msgid "Dock Style"
 msgstr ""
 
-#: Settings.ui:2802
+#: Settings.ui:2903
 msgid "Style"
 msgstr ""
 
-#: Settings.ui:2811
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr ""
+
+#: Settings.ui:2913
 msgid "Flat"
 msgstr ""
 
-#: Settings.ui:2812
+#: Settings.ui:2914
 msgid "Shelf"
 msgstr ""
 
-#: Settings.ui:2813
+#: Settings.ui:2915
 msgid "Glass"
 msgstr ""
 
-#: Settings.ui:2814
+#: Settings.ui:2916
 msgid "Pill"
 msgstr ""
 
-#: Settings.ui:2815
+#: Settings.ui:2917
 msgid "Floating"
 msgstr ""
 
-#: Settings.ui:2836
+#: Settings.ui:2938
 msgid "Gradient top opacity"
 msgstr ""
 
-#: Settings.ui:2869
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr ""
+
+#: Settings.ui:2972
 msgid "Gradient bottom opacity"
 msgstr ""
 
-#: Settings.ui:2902
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr ""
+
+#: Settings.ui:3006
 msgid "Highlight opacity"
 msgstr ""
 
-#: Settings.ui:2935
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr ""
+
+#: Settings.ui:3040
 msgid "Border opacity"
 msgstr ""
 
-#: Settings.ui:2968
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr ""
+
+#: Settings.ui:3074
 msgid "Shelf angle"
 msgstr ""
 
-#: Settings.ui:3001
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr ""
+
+#: Settings.ui:3108
 msgid "Shelf height"
 msgstr ""
 
-#: Settings.ui:3034
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr ""
+
+#: Settings.ui:3142
 msgid "Reflection"
 msgstr ""
 
-#: Settings.ui:3061
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr ""
+
+#: Settings.ui:3170
 msgid "Reflection opacity"
 msgstr ""
 
-#: Settings.ui:3094
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr ""
+
+#: Settings.ui:3204
 msgid "Gradient top color"
 msgstr ""
 
-#: Settings.ui:3122
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr ""
+
+#: Settings.ui:3233
 msgid "Gradient bottom color"
 msgstr ""
 
-#: Settings.ui:3150
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr ""
+
+#: Settings.ui:3262
 msgid "Highlight color"
 msgstr ""
 
-#: Settings.ui:3178 Settings.ui:3536
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr ""
+
+#: Settings.ui:3291 Settings.ui:3661
 msgid "Shadow color"
 msgstr ""
 
-#: Settings.ui:3206
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr ""
+
+#: Settings.ui:3320
 msgid "Shadow scale"
 msgstr ""
 
-#: Settings.ui:3239
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr ""
+
+#: Settings.ui:3354
 msgid "Highlight width"
 msgstr ""
 
-#: Settings.ui:3272
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr ""
+
+#: Settings.ui:3388
 msgid "Shadow width"
 msgstr ""
 
-#: Settings.ui:3334
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr ""
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr ""
+
+#: Settings.ui:3452
 msgid "Border width (-1 for default)"
 msgstr ""
 
-#: Settings.ui:3362
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr ""
+
+#: Settings.ui:3481
 msgid "Box shadow"
 msgstr ""
 
-#: Settings.ui:3389
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr ""
+
+#: Settings.ui:3509
 msgid "Box shadow color"
 msgstr ""
 
-#: Settings.ui:3417
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr ""
+
+#: Settings.ui:3538
 msgid "Box shadow spread"
 msgstr ""
 
-#: Settings.ui:3445
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr ""
+
+#: Settings.ui:3567
 msgid "Box shadow blur"
 msgstr ""
 
-#: Settings.ui:3474
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr ""
+
+#: Settings.ui:3597
 msgid "Tint color"
 msgstr ""
 
-#: Settings.ui:3502
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr ""
+
+#: Settings.ui:3626
 msgid "Tint opacity"
 msgstr ""
 
-#: Settings.ui:3564
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr ""
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr ""
+
+#: Settings.ui:3690
 msgid "Shadow spread"
 msgstr ""
 
-#: Settings.ui:3592
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr ""
+
+#: Settings.ui:3719
 msgid "Shadow blur"
 msgstr ""
 
-#: Settings.ui:3621
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr ""
+
+#: Settings.ui:3749
 msgid "Inner padding (-1 for default)"
 msgstr ""
 
-#: Settings.ui:3649
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr ""
+
+#: Settings.ui:3778
 msgid "Separator color"
 msgstr ""
 
-#: Settings.ui:3677
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr ""
+
+#: Settings.ui:3807
 msgid "Separator thickness (-1 for default)"
 msgstr ""
 
-#: Settings.ui:3704
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr ""
+
+#: Settings.ui:3835
 msgid "Layout"
 msgstr ""
 
-#: Settings.ui:3747
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr ""
+
+#: Settings.ui:3879
 msgid "Save space reducing padding and border radius."
 msgstr ""
 
-#: Settings.ui:3763
+#: Settings.ui:3895
 msgid "Shrink the dash"
 msgstr ""
 
-#: Settings.ui:3792
+#: Settings.ui:3924
 msgid "Force straight corner"
 msgstr ""
 
-#: Settings.ui:3823
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr ""
+
+#: Settings.ui:3956
 msgid "Border radius (-1 for theme default)"
 msgstr ""
 
-#: Settings.ui:3860
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+
+#: Settings.ui:3994
 msgid "Show overview on startup"
 msgstr ""
 
-#: Settings.ui:3886
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr ""
+
+#: Settings.ui:4021
 msgid "Shelf top corner radius (px)"
 msgstr ""
 
-#: Settings.ui:3919
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr ""
+
+#: Settings.ui:4055
 msgid "Shelf bottom corner radius (px)"
 msgstr ""
 
-#: Settings.ui:3952
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr ""
+
+#: Settings.ui:4089
 msgid "Reflection size (px)"
 msgstr ""
 
-#: Settings.ui:3985
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr ""
+
+#: Settings.ui:4123
 msgid "Progress arc width (px)"
 msgstr ""
 
-#: Settings.ui:4018
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr ""
+
+#: Settings.ui:4157
 msgid "Hotkey label scale"
 msgstr ""
 
-#: Settings.ui:4051
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr ""
+
+#: Settings.ui:4191
 msgid "Tooltip max width (px)"
 msgstr ""
 
-#: Settings.ui:4085
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr ""
+
+#: Settings.ui:4226
 msgid "Theme & Indicators"
 msgstr ""
 
-#: Settings.ui:4117
+#: Settings.ui:4258
 msgid ""
 "Few customizations meant to integrate the dock with the default GNOME theme. "
 "Alternatively, specific options can be enabled below."
 msgstr ""
 
-#: Settings.ui:4135
+#: Settings.ui:4276
 msgid "Use built-in theme"
 msgstr ""
 
-#: Settings.ui:4177
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+
+#: Settings.ui:4319
 msgid "Customize windows counter indicators"
 msgstr ""
 
-#: Settings.ui:4210 Settings.ui:4376
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr ""
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr ""
+
+#: Settings.ui:4354 Settings.ui:4524
 msgid "Default"
 msgstr ""
 
-#: Settings.ui:4211
+#: Settings.ui:4355
 msgid "Dots"
 msgstr ""
 
-#: Settings.ui:4212
+#: Settings.ui:4356
 msgid "Squares"
 msgstr ""
 
-#: Settings.ui:4213
+#: Settings.ui:4357
 msgid "Dashes"
 msgstr ""
 
-#: Settings.ui:4214
+#: Settings.ui:4358
 msgid "Segmented"
 msgstr ""
 
-#: Settings.ui:4215
+#: Settings.ui:4359
 msgid "Solid"
 msgstr ""
 
-#: Settings.ui:4216
+#: Settings.ui:4360
 msgid "Ciliora"
 msgstr ""
 
-#: Settings.ui:4217
+#: Settings.ui:4361
 msgid "Metro"
 msgstr ""
 
-#: Settings.ui:4218
+#: Settings.ui:4362
 msgid "Binary"
 msgstr ""
 
-#: Settings.ui:4219
+#: Settings.ui:4363
 msgid "Dot"
 msgstr ""
 
-#: Settings.ui:4253
+#: Settings.ui:4397
 msgid "Set the background color for the dash."
 msgstr ""
 
-#: Settings.ui:4271
+#: Settings.ui:4415
 msgid "Customize the dash color"
 msgstr ""
 
-#: Settings.ui:4327
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr ""
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr ""
+
+#: Settings.ui:4473
 msgid "Tune the dash background opacity."
 msgstr ""
 
-#: Settings.ui:4377
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr ""
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr ""
+
+#: Settings.ui:4525
 msgid "Fixed"
 msgstr ""
 
-#: Settings.ui:4378
+#: Settings.ui:4526
 msgid "Dynamic"
 msgstr ""
 
-#: Settings.ui:4402
+#: Settings.ui:4550
 msgid "Opacity"
 msgstr ""
 
-#: Settings.ui:4441
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr ""
+
+#: Settings.ui:4590
 msgid "Colors & Opacity"
 msgstr ""
 
-#: Settings.ui:4471
+#: Settings.ui:4620
 msgid "Wallpaper-adaptive dock color"
 msgstr ""
 
-#: Settings.ui:4498
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr ""
+
+#: Settings.ui:4648
 msgid "Wallpaper color intensity"
 msgstr ""
 
-#: Settings.ui:4530
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr ""
+
+#: Settings.ui:4681
 msgid "Emblems & Badges"
 msgstr ""
 
-#: Settings.ui:4562
+#: Settings.ui:4713
 msgid "Show icon emblems"
 msgstr ""
 
-#: Settings.ui:4581
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr ""
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr ""
+
+#: Settings.ui:4734
 msgid "Show the number of unread notifications"
 msgstr ""
 
-#: Settings.ui:4592
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr ""
+
+#: Settings.ui:4746
 msgid "Application-provided counter overrides notifications counter"
 msgstr ""
 
-#: Settings.ui:4603
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr ""
+
+#: Settings.ui:4758
 msgid "Clear notification counter when app gets focus"
 msgstr ""
 
-#: Settings.ui:4614
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr ""
+
+#: Settings.ui:4770
 msgid "Show progress indicator"
 msgstr ""
 
-#: Settings.ui:4627
+#: Settings.ui:4783
 msgid "Progress indicator style"
 msgstr ""
 
-#: Settings.ui:4639
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr ""
+
+#: Settings.ui:4796
 msgid "Horizontal bar"
 msgstr ""
 
-#: Settings.ui:4640
+#: Settings.ui:4797
 msgid "Circular arc"
 msgstr ""
 
-#: Settings.ui:4653
+#: Settings.ui:4810
 msgid ""
 "Per-app badge settings are available via right-click context menu on each "
 "dock icon."
 msgstr ""
 
-#: Settings.ui:4682
+#: Settings.ui:4839
 msgid "Visual Effects"
 msgstr ""
 
-#: Settings.ui:4712
+#: Settings.ui:4869
 msgid "Icon magnification on hover"
 msgstr ""
 
-#: Settings.ui:4739
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr ""
+
+#: Settings.ui:4897
 msgid "Magnification factor"
 msgstr ""
 
-#: Settings.ui:4771
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr ""
+
+#: Settings.ui:4930
 msgid "Hover highlight with magnification"
 msgstr ""
 
-#: Settings.ui:4798
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr ""
+
+#: Settings.ui:4958
 msgid "Magnify all dock elements"
 msgstr ""
 
-#: Settings.ui:4825
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+
+#: Settings.ui:4986
 msgid "Spring-physics animations"
 msgstr ""
 
-#: Settings.ui:4852
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr ""
+
+#: Settings.ui:5014
 msgid "Wiggle mode for icon rearranging"
 msgstr ""
 
-#: Settings.ui:4879
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr ""
+
+#: Settings.ui:5042
 msgid "Live window thumbnails as icons"
 msgstr ""
 
-#: Settings.ui:4906
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+
+#: Settings.ui:5070
 msgid "Spring stiffness"
 msgstr ""
 
-#: Settings.ui:4939
-msgid "Spring damping"
-msgstr ""
-
-#: Settings.ui:4972
-msgid "Magnification spread"
-msgstr ""
-
-#: Settings.ui:5005
-msgid "Magnification easing (ms)"
-msgstr ""
-
-#: Settings.ui:5038
-msgid "Startup animation (ms)"
-msgstr ""
-
-#: Settings.ui:5071
-msgid "Launch animation (ms)"
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
 msgstr ""
 
 #: Settings.ui:5104
+msgid "Spring damping"
+msgstr ""
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr ""
+
+#: Settings.ui:5138
+msgid "Magnification spread"
+msgstr ""
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr ""
+
+#: Settings.ui:5172
+msgid "Magnification easing (ms)"
+msgstr ""
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr ""
+
+#: Settings.ui:5206
+msgid "Startup animation (ms)"
+msgstr ""
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr ""
+
+#: Settings.ui:5240
+msgid "Launch animation (ms)"
+msgstr ""
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr ""
+
+#: Settings.ui:5274
 msgid "Spring overshoot"
 msgstr ""
 
-#: Settings.ui:5137
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr ""
+
+#: Settings.ui:5308
 msgid "Productivity"
 msgstr ""
 
-#: Settings.ui:5167
+#: Settings.ui:5338
 msgid "Dock command palette"
 msgstr ""
 
-#: Settings.ui:5194
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr ""
+
+#: Settings.ui:5366
 msgid "Workspace minimap in dock"
 msgstr ""
 
-#: Settings.ui:5221
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr ""
+
+#: Settings.ui:5394
 msgid "Workspace minimap position"
 msgstr ""
 
-#: Settings.ui:5230
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr ""
+
+#: Settings.ui:5404
 msgid "Start"
 msgstr ""
 
-#: Settings.ui:5231
+#: Settings.ui:5405
 msgid "End"
 msgstr ""
 
-#: Settings.ui:5252
+#: Settings.ui:5426
 msgid "Open window previews by default"
 msgstr ""
 
-#: Settings.ui:5279
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr ""
+
+#: Settings.ui:5454
 msgid "Focus window on drag hover"
 msgstr ""
 
-#: Settings.ui:5306
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr ""
+
+#: Settings.ui:5482
 msgid "Recent files on hover"
 msgstr ""
 
-#: Settings.ui:5333
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr ""
+
+#: Settings.ui:5510
 msgid "Pinned terminal commands"
 msgstr ""
 
-#: Settings.ui:5360
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr ""
+
+#: Settings.ui:5538
 msgid "Window tiling from dock"
 msgstr ""
 
-#: Settings.ui:5387
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr ""
+
+#: Settings.ui:5566
 msgid "Secondary dock (running apps)"
 msgstr ""
 
-#: Settings.ui:5414
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr ""
+
+#: Settings.ui:5594
 msgid "Secondary dock position"
 msgstr ""
 
-#: Settings.ui:5447
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr ""
+
+#: Settings.ui:5628
 msgid "Startup & Behavior"
 msgstr ""
 
-#: Settings.ui:5477
+#: Settings.ui:5658
 msgid "Media transport controls"
 msgstr ""
 
-#: Settings.ui:5504
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr ""
+
+#: Settings.ui:5686
 msgid "Per-app volume control"
 msgstr ""
 
-#: Settings.ui:5531
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr ""
+
+#: Settings.ui:5714
 msgid "Screen recording indicator"
 msgstr ""
 
-#: Settings.ui:5558
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr ""
+
+#: Settings.ui:5742
 msgid "Quick settings panel"
 msgstr ""
 
-#: Settings.ui:5585
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr ""
+
+#: Settings.ui:5770
 msgid "Profiles"
 msgstr ""
 
-#: Settings.ui:5616
+#: Settings.ui:5801
 msgid "Active profile"
 msgstr ""
 
-#: Settings.ui:5643
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr ""
+
+#: Settings.ui:5829
 msgid "Save Current"
 msgstr ""
 
-#: Settings.ui:5649
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr ""
+
+#: Settings.ui:5836
 msgid "Delete"
 msgstr ""
 
-#: Settings.ui:5672
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr ""
+
+#: Settings.ui:5860
 msgid "About"
 msgstr ""
 
-#: Settings.ui:5703
+#: Settings.ui:5890
 msgid "version: "
 msgstr ""
 
-#: Settings.ui:5718
+#: Settings.ui:5905
 msgid "A community-driven dock for the GNOME Shell"
 msgstr ""
 
-#: Settings.ui:5732
-msgid "Originally created by"
-msgstr ""
-
-#: Settings.ui:5745
+#: Settings.ui:5922
 msgid "Webpage"
 msgstr ""
 
-#: Settings.ui:5756
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr ""
+
+#: Settings.ui:5934
 msgid ""
 "<span size=\"small\">This program comes with ABSOLUTELY NO WARRANTY.\n"
 "See the <a href=\"https://www.gnu.org/licenses/old-licenses/"
@@ -1173,125 +1802,125 @@ msgid ""
 "details.</span>"
 msgstr ""
 
-#: Settings.ui:5836
+#: Settings.ui:6014
 msgid "Customize minimum and maximum opacity values"
 msgstr ""
 
-#: Settings.ui:5858
+#: Settings.ui:6036
 msgid "Minimum opacity"
 msgstr ""
 
-#: Settings.ui:5888
+#: Settings.ui:6066
 msgid "Maximum opacity"
 msgstr ""
 
-#: Settings.ui:5974
+#: Settings.ui:6152
 msgid "Number overlay"
 msgstr ""
 
-#: Settings.ui:5985
+#: Settings.ui:6163
 msgid ""
 "Temporarily show the application numbers over the icons, corresponding to "
 "the shortcut."
 msgstr ""
 
-#: Settings.ui:6030
+#: Settings.ui:6208
 msgid "Show the dock if it is hidden"
 msgstr ""
 
-#: Settings.ui:6041
+#: Settings.ui:6219
 msgid ""
 "If using autohide, the dock will appear for a short time when triggering the "
 "shortcut."
 msgstr ""
 
-#: Settings.ui:6087
+#: Settings.ui:6265
 msgid "Trigger the actions by holding the Overview key"
 msgstr ""
 
-#: Settings.ui:6097
+#: Settings.ui:6275
 msgid ""
 "Holding the overview key reveals the dock and shows the numbers, so the "
 "shortcut can be completed with Super+number. A quick tap still opens the "
 "overview."
 msgstr ""
 
-#: Settings.ui:6141
+#: Settings.ui:6319
 msgid "Reveal the dock after (s)"
 msgstr ""
 
-#: Settings.ui:6165
+#: Settings.ui:6343
 msgid "Show the numbers after (s)"
 msgstr ""
 
-#: Settings.ui:6201
+#: Settings.ui:6379
 msgid "Shortcut for the options above"
 msgstr ""
 
-#: Settings.ui:6212
+#: Settings.ui:6390
 msgid "Syntax: <Shift>, <Ctrl>, <Alt>, <Super>"
 msgstr ""
 
-#: Settings.ui:6259 Settings.ui:6568
+#: Settings.ui:6437 Settings.ui:6746
 msgid "Hide timeout (s)"
 msgstr ""
 
-#: Settings.ui:6316
+#: Settings.ui:6494
 msgid "Show the dock by mouse hover on the screen edge."
 msgstr ""
 
-#: Settings.ui:6333
+#: Settings.ui:6511
 msgid "Autohide"
 msgstr ""
 
-#: Settings.ui:6354
+#: Settings.ui:6532
 msgid "Push to show: require pressure to show the dock"
 msgstr ""
 
-#: Settings.ui:6365
+#: Settings.ui:6543
 msgid "Only reveal from the edge area covered by the dock"
 msgstr ""
 
-#: Settings.ui:6376
+#: Settings.ui:6554
 msgid "Enable in fullscreen mode"
 msgstr ""
 
-#: Settings.ui:6388
+#: Settings.ui:6566
 msgid "Show dock for urgent notifications"
 msgstr ""
 
-#: Settings.ui:6417
+#: Settings.ui:6595
 msgid "Show the dock when it doesn't obstruct application windows."
 msgstr ""
 
-#: Settings.ui:6434
+#: Settings.ui:6612
 msgid "Dodge windows"
 msgstr ""
 
-#: Settings.ui:6459
+#: Settings.ui:6637
 msgid "All windows"
 msgstr ""
 
-#: Settings.ui:6467
+#: Settings.ui:6645
 msgid "Only focused application's windows"
 msgstr ""
 
-#: Settings.ui:6474
+#: Settings.ui:6652
 msgid "Only maximized windows"
 msgstr ""
 
-#: Settings.ui:6481
+#: Settings.ui:6659
 msgid "Always on top"
 msgstr ""
 
-#: Settings.ui:6524
+#: Settings.ui:6702
 msgid "Animation duration (s)"
 msgstr ""
 
-#: Settings.ui:6580
+#: Settings.ui:6758
 msgid "Show timeout (s)"
 msgstr ""
 
-#: Settings.ui:6592
+#: Settings.ui:6770
 msgid "Pressure threshold"
 msgstr ""

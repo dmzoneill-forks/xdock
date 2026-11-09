@@ -252,6 +252,689 @@ msgstr "%s-ის გაშვების შეცდომა"
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"აირჩიეთ, რომელ მონიტორს ეკუთვნის ძირითადი დოკი. დამატებით მონიტორებს "
+"შეუძლიათ მეორადი დოკების ჩვენება."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"დამალეთ დოკი სხვა მონიტორზე გადატანის ნაცვლად, როდესაც სასურველი მონიტორი "
+"გათიშულია."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "მოათავსეთ დოკი ეკრანის მარცხენა კიდეზე."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "მოათავსეთ დოკი ეკრანის ქვედა კიდეზე."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "მოათავსეთ დოკი ეკრანის ზედა კიდეზე."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "მოათავსეთ დოკი ეკრანის მარჯვენა კიდეზე."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "გახსენით გაფართოებული ინტელექტუალური ავტომატური დამალვის პარამეტრები."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "დამალეთ დოკი ავტომატურად, როდესაც ის დაბრკოლებს ფანჯარას."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr ""
+"დააყენეთ დოკის მაქსიმალური ზომა ეკრანის ხელმისაწვდომ სივრცესთან შედარებით."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr "გააკეთეთ დოკი მთელ ეკრანზე, მის შიგთავსის ნაცვლად."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr "შეინახეთ დოკის ხატულები ცენტრში, კიდედან განლაგების ნაცვლად."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "დააყენეთ უფსკრული დოკსა და ეკრანის კიდეს შორის."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr ""
+"დააყენეთ დამატებითი მანძილი მაჩვენებლის კიდესა და დოკის გამოვლენის ზონას "
+"შორის."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "დააყენეთ აპლიკაციის პიქტოგრამის მაქსიმალური ზომა."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"შეინახეთ ხატის ზომა ფიქსირებული და გადაახვიეთ დოკზე, როცა მეტი ხატი "
+"არსებობს, ვიდრე ვარგისია."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "გააფართოვეთ ფანჯრის გადახედვის ესკიზების ზომა."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr ""
+"დააყენეთ კიდეების არეალის სიგანე, რომელიც გამოიყენება დოკში საცხოვრებლის "
+"გასააქტიურებლად."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr ""
+"დააყენეთ რამდენად ხშირად ამოწმებს დოკი კიდეზე მდებარეობის გააქტიურებას."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr ""
+"დააყენეთ, რამდენ ხანს უნდა შენარჩუნდეს მაჩვენებლის წნევა დოკის გამოჩენამდე."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "დოკზე მიმაგრებული აპლიკაციების ჩვენება."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"მრავალი მონიტორის საშუალებით, აჩვენეთ დამაგრებული აპლიკაციები მხოლოდ "
+"პირველადი მონიტორის დოკზე."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "აჩვენეთ აპლიკაციები ღია ფანჯრებით."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr ""
+"აპლიკაციის ჩვენება მხოლოდ მაშინ, როდესაც მას აქვს Windows მიმდინარე სამუშაო "
+"სივრცეში."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"შეინახეთ აპლიკაციები გადაუდებელი ფანჯრებით ხილული მაშინაც კი, როცა ეს "
+"ფანჯრები სხვა სამუშაო სივრცეშია."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr ""
+"განაცხადის ჩვენება მხოლოდ მონიტორების კუთვნილ დოკებზე, სადაც მას აქვს "
+"Windows."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"აჩვენეთ წინასწარი გადახედვის მენიუ, როდესაც ატრიალებთ აპლიკაციას რამდენიმე "
+"ფანჯრით."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"ყოველი ღია ფანჯრის ჩვენება, როგორც ცალკე ხატულა, აპლიკაციის მიხედვით "
+"ფანჯრების დაჯგუფების ნაცვლად."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "შეინახეთ ფოკუსირებული აპლიკაცია ხილული, სანამ დოკი გადახვევს."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"აირჩიეთ, გაშვებული ხატები მიჰყვება დოკის წესრიგს თუ მათ ფანჯრის პოზიციებს."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "აჩვენეთ აპლიკაციების ღილაკი დოკში."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "მოათავსეთ აპლიკაციების ღილაკი სხვა დოკის ელემენტების წინ."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "მიმოხილვის გახსნისას აპლიკაციების ღილაკის ანიმაცია."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr ""
+"შეინახეთ აპლიკაციების ღილაკი დოკის კიდეზე, როდესაც ჩართულია პანელის რეჟიმი."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "აჩვენეთ ნაგვის ხატულა დოკში."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "აჩვენეთ დამონტაჟებული ტომები და მოსახსნელი მოწყობილობები დოკში."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr ""
+"დამალეთ მოწყობილობები, რომლებიც ხელმისაწვდომია, მაგრამ ამჟამად არ არის "
+"დამონტაჟებული."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "ჩართეთ ქსელის მდებარეობები ტომების სიაში."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"შეინახეთ მოცულობის, მოწყობილობისა და ნაგვის ფანჯრები განცალკევებით "
+"ჩვეულებრივი ფაილების მენეჯერის ფანჯრებისგან."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "ხატების ანიმაცია, როდესაც აპლიკაციები ყურადღებას ითხოვენ."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr "Bounce ხატები, როდესაც აპლიკაცია გაშვება ან საჭიროებს ყურადღებას."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"გამორთეთ აპლიკაციის სახელის ინსტრუმენტების რჩევები დოკის ხატულებზე "
+"გადასვლისას."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr ""
+"დააყენეთ აპლიკაციის სახელის ინსტრუმენტების რჩევების მაქსიმალური სიგანე."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr ""
+"გახსენით ფანჯრის გადახედვა, როდესაც მაჩვენებელი ეყრდნობა აპლიკაციის ხატულას."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr ""
+"აირჩიეთ ანიმაცია, რომელიც გამოიყენება ფანჯრის გადახედვისას გახსნისა და "
+"დახურვისას."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "შეზღუდეთ ფანჯრის გადახედვის სიის სიმაღლე."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr ""
+"დააყენეთ რამდენი ხანი სჭირდება ანიმაციის გახსნისა და დახურვის წინასწარ "
+"გადახედვას."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr ""
+"დააყენეთ, რამდენ ხანს უნდა აჩერებდეს კურსორი წინასწარი გადახედვის გახსნამდე."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr ""
+"დააყენეთ, რამდენი ხანი დარჩება ღია გადახედვები მაჩვენებლის გასვლის შემდეგ."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "დააყენეთ სხვა ფანჯრების გამჭვირვალობა წინასწარი გადახედვისას."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "დააყენეთ, რამდენ ხანს დარჩება აქტიური გადახედვისას."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "Super plus ნომრის მალსახმობის ქცევის კონფიგურაცია."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr "ჩართეთ Super plus ნომრის მალსახმობები დოკ აპლიკაციებისთვის."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "შუა დაწკაპუნების მოქმედების კონფიგურაცია."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr ""
+"აირჩიეთ, რას აკეთებს პირველადი დაწკაპუნება, როდესაც აპლიკაცია უკვე "
+"გაშვებულია."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "აირჩიეთ, რას აკეთებს აპლიკაციის ხატულაზე გადახვევა."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr ""
+"დააყენეთ რამდენად ხშირად XDock ამოწმებს, გადაფარავს თუ არა დოკი ფანჯარას."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr ""
+"მინიმალური შეფერხება გადახვევის მოვლენებს შორის, რომლებიც აპლიკაციის "
+"ფანჯრებს ატრიალებენ."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr ""
+"თავიდან აიცილეთ სამუშაო სივრცის განმეორებითი გადართვა სწრაფი გადახვევის დროს."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr ""
+"დრო, როდესაც მაჩვენებელი უნდა დაიჭიროს ხატულა გადაწყობის რეჟიმის დაწყებამდე."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr ""
+"დაიმახსოვრეთ ბოლო არჩეული ფანჯარა აპლიკაციის ფანჯრებში ველოსიპედით "
+"გადაადგილებისას."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "აირჩიეთ დოკის საერთო ვიზუალური სტილი."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "დააყენეთ თაროს გრადიენტის გამჭვირვალობა მის ზედა კიდეზე."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "დააყენეთ თაროს გრადიენტის გამჭვირვალობა მის ქვედა კიდეზე."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "დააყენეთ დოკის თაროზე დახატული მონიშვნის გამჭვირვალობა."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "დააყენეთ დოკის თაროს საზღვრის გამჭვირვალობა."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "დააყენეთ დოკის თაროს გრადიენტის კუთხე."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "დააყენეთ დოკის თაროს სიმაღლე."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "აჩვენეთ ასახვის ეფექტი დოკის თაროს ქვეშ."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "დააყენეთ თაროს ასახვის გამჭვირვალობა."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "აირჩიეთ ფერი თაროზე გრადიენტის ზედა ნაწილში."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "აირჩიეთ ფერი თაროზე გრადიენტის ბოლოში."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "აირჩიეთ თაროზე მონიშვნის ფერი."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "აირჩიეთ თაროს ჩრდილის ფერი."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "დააყენეთ თაროს ჩრდილის გამჭვირვალობა."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "დააყენეთ თაროზე მონიშვნის სიგანე."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "დააყენეთ თაროს ჩრდილის სიგანე."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "აირჩიეთ დოკის საზღვრის ფერი."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "დააყენეთ დოკის საზღვრის სიგანე."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "აჩვენეთ ჩრდილი დოკის გარშემო."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "აირჩიეთ დოკ ყუთის ჩრდილის ფერი."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "დააყენეთ რამდენად შორს ვრცელდება დოკის ჩრდილი."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "დააყენეთ რამდენად რბილად იქნება ბუნდოვანი დოკის ჩრდილი."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "აირჩიეთ გამჭვირვალე მინის ელფერის ფერი."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "დააყენეთ შუშის ელფერის გამჭვირვალობა."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "აირჩიეთ მცურავი დოკის ჩრდილის ფერი."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "დააყენეთ რამდენად შორს ვრცელდება მცურავი ჩრდილი."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "დააყენეთ რამდენად რბილად არის ბუნდოვანი მცურავი ჩრდილი."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr "დააყენეთ შიდა ბალიშები დოკის შიგთავსსა და მის საზღვრებს შორის."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "აირჩიეთ გამყოფის ფერი დოკის განყოფილებებს შორის."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "დააყენეთ დოკის გამყოფების სისქე."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr ""
+"ეკრანის სივრცის დაზოგვის მიზნით შეამცირეთ დოკის შიგთავსი და კუთხის რადიუსი."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "გამორთეთ მომრგვალებული კუთხეები დოკისთვის."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+"დააყენეთ დოკის კუთხის რადიუსი. გამოიყენეთ ნაგულისხმევი მნიშვნელობა თემის "
+"შესასრულებლად."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "გახსენით GNOME-ის მიმოხილვა სესიის დაწყებისას."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "დააყენეთ თაროების ზედა კუთხეების რადიუსი."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "დააყენეთ თაროების ქვედა კუთხეების რადიუსი."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "დააყენეთ დოკის ასახვის ზომა."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "დააყენეთ განაცხადის პროგრესის რკალების სიგანე."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr "დააყენეთ ხატებზე ნაჩვენები მალსახმობების ნომრების ეტიკეტების ზომა."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "დააყენეთ დოკის ხელსაწყოების მაქსიმალური სიგანე."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"გამოიყენეთ XDock-ის ინტეგრირებული თემის ნაგულისხმევი პარამეტრები ქვემოთ "
+"მორგებული გარეგნობის კონტროლის ნაცვლად."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "გახსენით გაშვებული ინდიკატორის გაფართოებული პარამეტრები."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "აირჩიეთ, როგორ მოინიშნოს გაშვებული აპლიკაციები დოკზე."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "აირჩიეთ დოკის მორგებული ფონის ფერი."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "ჩართეთ მორგებული დოკის ფონის ფერი."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr ""
+"გახსენით გამჭვირვალობის გაფართოებული პარამეტრები დოკის მდგომარეობებისთვის."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "აირჩიეთ დოკის გამჭვირვალობის რომელი მდგომარეობა უნდა შეცვალოთ."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "დააყენეთ გამჭვირვალობა შერჩეული დოკის მდგომარეობისთვის."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "მიიღეთ დოკის ფერები მიმდინარე დესკტოპის ფონიდან."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "დაარეგულირეთ რამდენად ძლიერად მოქმედებს ფონის ფერები დოკზე."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr ""
+"აჩვენეთ შეტყობინებების სამკერდე ნიშნები და ემბლემები აპლიკაციის ხატულებზე."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "აჩვენეთ შეტყობინებების რაოდენობა აპლიკაციის ხატულებზე."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "დაუშვით თითო განაცხადის შეტყობინებების რაოდენობის უგულებელყოფა."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr ""
+"გაასუფთავეთ აპლიკაციის შეტყობინებების რაოდენობა, როდესაც ის მიიღებს ფოკუსს."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "დავალების პროგრესის ინდიკატორების ჩვენება აპლიკაციის ხატულებზე."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "ამოცანების პროგრესის ინდიკატორების ვიზუალური სტილის არჩევა."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "გაადიდეთ დოკის ხატები, სანამ მაჩვენებელი მათზეა."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr "დააყენეთ ხატის მაქსიმალური ზომა ჰოვერის გადიდების დროს."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "გადიდებისას მონიშნეთ ხატულა, რომელიც ამჟამად მაჩვენებლის ქვეშ არის."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+"გაადიდეთ არააპლიკაციური დოკის ელემენტები, როგორიცაა ნაგავი და აპლიკაციების "
+"ღილაკი."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr ""
+"გამოიყენეთ გაზაფხულის ფიზიკა დოკის მოძრაობისა და ხატების ანიმაციისთვის."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "ნება მიეცით ხატების გადმოზიდვას, რომ გადააწყონ ისინი დოკში."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+"გამოიყენეთ ცოცხალი ფანჯრის ესკიზები აპლიკაციის ხატულებისთვის სტატიკური "
+"ხატულების ნაცვლად."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr "დააყენეთ რამდენად ძლიერად იზიდავს საგაზაფხულო ანიმაციები სამიზნისკენ."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "დააყენეთ რამდენად სწრაფად წყდება საგაზაფხულო ანიმაციური მოძრაობა."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "დააყენეთ რამდენ მეზობელ ხატზე გავლენას ახდენს გადიდება."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "დააყენეთ რამდენად სწრაფად დასრულდება გადიდების გადასვლები."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "დააყენეთ დოკის გაშვების ანიმაციის ხანგრძლივობა."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "დააყენეთ აპლიკაციის გაშვების ანიმაციების ხანგრძლივობა."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr "დააყენეთ რამდენად სცდება საგაზაფხულო ანიმაციები მიზანს."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "ჩართეთ დოკის ბრძანების პალიტრა სწრაფი მოქმედებებისთვის."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "სამუშაო სივრცის მიმოხილვის მინიმაპის ჩვენება დოკში."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr "აირჩიეთ დოკის რომელი მხარე შეიცავს სამუშაო სივრცის მინიმაპს."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr ""
+"ავტომატურად გახსენით ფანჯრის გადახედვა, როდესაც აპლიკაციის ხატულა "
+"გააქტიურებულია."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr ""
+"ფანჯრის ფოკუსირება, როდესაც მისი გადახედვისას მოძრაობს გადაადგილებისას."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr "ბოლო ფაილების ჩვენება აპლიკაციის მენიუში, რომელიც გახსნილია დოკიდან."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "ჩამაგრებული ტერმინალის ბრძანებების ჩვენება დოკში."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "ფანჯრის მოპირკეთების მოქმედებების ჩართვა დოკიდან."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr "აჩვენეთ დოკები მეორად მონიტორებზე გაშვებული აპლიკაციებით."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "აირჩიეთ სად გამოჩნდება მეორადი მონიტორის დოკები."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "აპლიკაციის მენიუში მედიის დაკვრის კონტროლის ჩვენება."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr "აპლიკაციის მენიუში აჩვენეთ თითო აპლიკაციის ხმის კონტროლი."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "აჩვენეთ ინდიკატორი, როდესაც ხდება ეკრანის ჩაწერა ან გაზიარება."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "აჩვენეთ სწრაფი პარამეტრების პანელი დოკიდან."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "აირჩიეთ აქტიური შენახული პარამეტრების პროფილი."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "შეინახეთ მიმდინარე პარამეტრები პროფილად."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "არჩეული შენახული პროფილის წაშლა."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "გახსენით XDock პროექტის ვებგვერდი."
+
 #~ msgid ""
 #~ "When set to minimize, double clicking minimizes all the windows of the "
 #~ "application."

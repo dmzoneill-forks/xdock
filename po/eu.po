@@ -254,6 +254,684 @@ msgstr "Ezin izan da “%s” muntatu"
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"Aukeratu zein monitore den kaia nagusia. Monitore gehigarriek bigarren "
+"mailako kaiak erakutsi ditzakete."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"Ezkutatu kaia beste monitore batera eraman beharrean bere hobetsitako "
+"monitorea deskonektatuta dagoenean."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "Jarri kaia pantailaren ezkerreko ertzean."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "Jarri kaia pantailaren beheko ertzean."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "Jarri kaia pantailaren goiko ertzean."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "Jarri kaia pantailaren eskuineko ertzean."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "Ireki automatikoki ezkutatzeko ezarpen adimentsu aurreratuak."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "Ezkutatu kaia automatikoki leiho bat oztopatzen duenean."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr ""
+"Ezarri gehienezko kaiaren tamaina pantailako espazio erabilgarriarekiko."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr ""
+"Egin kaia pantaila osoko ertza zabaltzea bere edukiari egokitu beharrean."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr "Mantendu dock ikonoak erdiratuta ertzetik jarri beharrean."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "Ezarri kaiaren eta pantailaren ertzaren arteko tartea."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr ""
+"Ezarri tarte gehigarria erakuslearen ertzaren eta kaia erakusteko eremuaren "
+"artean."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "Ezarri aplikazioaren ikonoaren gehienezko tamaina."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"Mantendu ikonoaren tamaina finkoa eta mugitu kaia ondo baino ikono gehiago "
+"daudenean."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "Eskalatu leihoen aurrebista txikien tamaina."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr "Ezarri kaia aktibatzeko erabiltzen den ertz-eremuaren zabalera."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr ""
+"Ezarri kaiak zenbateko maiztasuna egiaztatzen duen ertzean dagoen aktibazioa."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr ""
+"Ezarri zenbat denbora eduki behar den erakuslearen presioa kaia agertu "
+"aurretik."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "Erakutsi kaira ainguratuta dauden aplikazioak."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"Monitore anitzekin, erakutsi ainguratutako aplikazioak monitore nagusiko "
+"kaian soilik."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "Erakutsi leihoak irekita dituzten aplikazioak."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr "Erakutsi aplikazio bat uneko lan-eremuan leihoak dituenean soilik."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"Mantendu ikusgai leiho premiazkoak dituzten aplikazioak leiho horiek beste "
+"lan-eremu batean egon arren."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr "Erakutsi aplikazio bat leihoak dituen monitoreen kaietan soilik."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"Erakutsi aurrebista menu bat leiho anitz dituen aplikazio baten gainean "
+"pasatzean."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"Erakutsi irekitako leiho bakoitza ikono bereizi gisa, leihoak aplikazioaren "
+"arabera taldekatu beharrean."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "Mantendu fokatutako aplikazioa ikusgai kaia mugitzen den bitartean."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"Aukeratu exekutatzen ari diren ikonoek kai-ordenari edo haien leihoen "
+"posizioei jarraitzen dieten."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "Erakutsi Aplikazioen botoia kaian."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "Jarri Aplikazioak botoia beste dock elementuen aurretik."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "Animatu Aplikazioak botoia ikuspegi orokorra irekitzean."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr ""
+"Mantendu Aplikazioen botoia dock ertzean Panel modua gaituta dagoenean."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "Erakutsi zakarrontziaren ikonoa kaian."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "Erakutsi muntatutako bolumenak eta alda daitezkeen gailuak kaian."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr ""
+"Ezkutatu erabilgarri dauden baina une honetan muntatuta ez dauden gailuak."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "Sartu sare-kokapenak bolumenen zerrendan."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"Mantendu bolumena, gailua eta Zaborrontzi-leihoak fitxategi-kudeatzailearen "
+"leiho arruntetatik bereizita."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "Animatu ikonoak aplikazioek arreta eskatzen dutenean."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr ""
+"Errebote ikonoak aplikazio bat abiarazten denean edo arreta behar duenean."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"Desgaitu aplikazioaren izenaren aholku-aholkuak dock ikonoen gainetik "
+"pasatzean."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "Ezarri aplikazioaren izenaren argibideen gehieneko zabalera."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr ""
+"Ireki leihoen aurrebista erakuslea aplikazioaren ikono batean kokatzen "
+"denean."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr ""
+"Aukeratu leihoen aurrebistak ireki eta ixten direnean erabilitako animazioa."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "Mugatu leihoaren aurrebista zerrendaren altuera."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr ""
+"Ezarri zenbat denbora irauten duten aurrebista ireki eta ixteko animazioak."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr ""
+"Ezarri erakusleak zenbat denbora pasa behar duen aurrebistak ireki aurretik."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr ""
+"Ezarri erakuslea irten ondoren zenbat denboran egongo diren irekita "
+"aurrebistak."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "Ezarri beste leihoen opakutasuna aurrebistaren begiradan."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "Ezarri zenbat denbora iraungo duen aktibo aurrebista."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "Konfiguratu Super plus zenbaki lasterbidearen portaera."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr "Gaitu Super plus zenbaki lasterbideak dock aplikazioetarako."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "Konfiguratu erdiko klikaren ekintza."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr ""
+"Aukeratu klik nagusi batek zer egiten duen aplikazio bat dagoeneko martxan "
+"dagoenean."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "Aukeratu aplikazioaren ikono baten gainean mugitzeak zer egiten duen."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr ""
+"Ezarri XDock-ek zenbateko maiztasuna egiaztatzen duen kaia leiho batean "
+"gainjartzen den ala ez."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr ""
+"Gutxieneko atzerapena aplikazioaren leihoak ibiltzen dituzten korritze-"
+"gertaeren artean."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr ""
+"Saihestu laneko eremuaren etengailuak errepikatzen diren korritze azkarrean."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr ""
+"Erakusleak ikono bat eduki behar duen denbora berrantolatzeko modua hasi "
+"aurretik."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr ""
+"Gogoratu aplikazio baten leihoetatik bizikletaz ibiltzean hautatutako azken "
+"leihoa."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "Aukeratu kaiaren estilo bisual orokorra."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "Ezarri apalaren gradientearen opakotasuna goiko ertzean."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "Ezarri apalaren gradientearen opakotasuna beheko ertzean."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "Ezarri kaiaren apalean marraztutako nabarmentasunaren opakutasuna."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "Ezarri kai-apalaren ertzaren opakotasuna."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "Ezarri kaia apalategiaren gradientearen angelua."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "Ezarri kai-apalaren altuera."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "Erakutsi isla-efektua kai-apalaren azpian."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "Ezarri apalaren islaren opakotasuna."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "Aukeratu kolorea apal-gradientearen goiko aldean."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "Aukeratu apalaren gradientearen beheko kolorea."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "Aukeratu apaleko nabarmentzeko kolorea."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "Aukeratu apaleko itzalaren kolorea."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "Ezarri apaleko itzalaren opakotasuna."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "Ezarri apalaren zabalera nabarmentzeko."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "Ezarri apaleko itzalaren zabalera."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "Aukeratu kaiaren ertzaren kolorea."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "Ezarri kaiaren ertzaren zabalera."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "Erakutsi itzal bat kaiaren inguruan."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "Aukeratu kaia kutxaren itzalaren kolorea."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "Ezarri kaiaren itzala noraino hedatzen den."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "Ezarri kaiaren itzala nola lausotu den."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "Aukeratu beira zeharrargiaren kolorea."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "Ezarri beira kolorearen opakutasuna."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "Aukeratu flotatzaile kaiaren itzalaren kolorea."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "Ezarri noraino hedatzen den itzal mugikorra."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "Ezarri itzal mugikorra nola lausotu den."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr ""
+"Ezarri barruko betegarria dock-aren edukiaren eta haren ertzaren artean."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "Aukeratu bereizlearen kolorea kaiaren atalen artean."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "Ezarri kaia bereizleen lodiera."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr ""
+"Murriztu kaia betegarria eta izkinaren erradioa pantailako lekua aurrezteko."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "Desgaitu kairako ertz biribilduak."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+"Ezarri kaia izkinan erradioa. Erabili balio lehenetsia gaiari jarraitzeko."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "Ireki GNOMEren ikuspegi orokorra saioa hasten denean."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "Ezarri apalaren goiko izkinen erradioa."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "Ezarri apalaren beheko izkinen erradioa."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "Ezarri kaiaren islaren tamaina."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "Ezarri aplikazioaren aurrerapen-arkuen zabalera."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr "Ezarri ikonoetan agertzen diren lasterbide-zenbakien etiketen tamaina."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "Ezarri kaiaren argibideen gehienezko zabalera."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"Erabili XDock-en gai integratuaren lehenetsiak beheko itxura "
+"pertsonalizatuen kontrolen ordez."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "Ireki korrika-adierazleen ezarpen aurreratuak."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "Aukeratu exekutatzen ari diren aplikazioak kaian nola markatzen diren."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "Aukeratu kaiaren atzeko planoaren kolore pertsonalizatua."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "Gaitu kaiaren atzeko planoko kolore pertsonalizatua."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr "Ireki opakutasun-ezarpen aurreratuak dock-egoeretarako."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "Aukeratu zein dock-aren opakutasun-egoera editatu."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "Ezarri opakutasuna hautatutako dock egoerarako."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "Eratorri dock koloreak uneko mahaigaineko horma-papertik."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "Egokitu horma-paperen koloreek zer-nolako eragina duten kaian."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr "Erakutsi jakinarazpen-txapak eta ikurrak aplikazioen ikonoetan."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "Erakutsi jakinarazpena aplikazioaren ikonoetan zenbatzen da."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "Baimendu aplikazio bakoitzeko jakinarazpenen kopurua gainidaztea."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr "Garbitu aplikazio baten jakinarazpenen kopurua fokua jasotzen duenean."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "Erakutsi zereginen aurrerapen-adierazleak aplikazioaren ikonoetan."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "Aukeratu zereginen aurrerapen-adierazleen estilo bisuala."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "Handitu dock ikonoak erakuslea haien gainean dagoen bitartean."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr "Ezarri ikono baten tamaina maximoa pasatzean handitzean."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "Nabarmendu erakuslearen azpian dagoen ikonoa handitzean."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+"Handitu aplikazioak ez diren dock elementuak, hala nola zaborrontzia eta "
+"aplikazioen botoia."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr ""
+"Erabili udaberriko fisika kaia mugimendurako eta ikonoen animazioetarako."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "Baimendu arrastatzea ikonoak dockean berrantolatzeko."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+"Erabili zuzeneko leihoen koadro txikiak aplikazioaren ikonoetarako, ikono "
+"estatikoen ordez."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr ""
+"Ezarri udaberriko animazioak beren helburura zenbateraino heltzen diren."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "Ezarri udaberriko animazioaren mugimendua zein azkar finkatzen den."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "Ezarri zenbat ikono aldameneko eragina duten handitzeak."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "Ezarri zein azkar burutzen diren handitze-trantsizioak."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "Ezarri kaia abiarazteko animazioaren iraupena."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "Ezarri aplikazioa abiarazteko animazioen iraupena."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr "Ezarri udaberriko animazioek beren helburua noraino gainditzen duten."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "Gaitu dock komandoen paleta ekintza azkarrak egiteko."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "Erakutsi lan-eremuaren ikuspegi orokorraren minimapa kaian."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr "Aukeratu kaiaren zein alde dagoen lan-eremuaren minimapa."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr ""
+"Ireki leihoaren aurrebista automatikoki aplikazioaren ikono bat aktibatuta "
+"dagoenean."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr "Fokatu leiho bat arrastatzean aurrebista pasatzean."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr "Erakutsi azken fitxategiak kaitik irekitako aplikazioen menuetan."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "Erakutsi ainguratutako terminal komandoak dockean."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "Gaitu leihoen teilakako ekintzak kaitik."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr "Erakutsi kaiak martxan dauden aplikazioekin bigarren monitoreetan."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "Aukeratu non agertzen diren bigarren mailako monitoreen kaiak."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "Erakutsi multimedia erreproduzitzeko kontrolak aplikazioen menuetan."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr "Erakutsi aplikazio bakoitzeko bolumen kontrolak aplikazioen menuetan."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "Erakutsi adierazle bat pantaila grabatzen edo partekatzen ari denean."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "Erakutsi ezarpenen panel azkar bat kaitik."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "Aukeratu gordetako ezarpenen profil aktiboa."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "Gorde uneko ezarpenak profil gisa."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "Ezabatu gordetako hautatutako profila."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "Ireki XDock proiektuaren webgunea."
+
 #~ msgid ""
 #~ "When set to minimize, double clicking minimizes all the windows of the "
 #~ "application."

@@ -255,6 +255,704 @@ msgstr "Nem sikerült a(z) „%s” csatolása"
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"Válassza ki, hogy melyik monitorhoz tartozik az elsődleges dokkoló. További "
+"monitorok mutathatnak másodlagos dokkolót."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"Ahelyett, hogy másik monitorra helyezné át, rejtse el a dokkolót, ha a "
+"kívánt monitort leválasztják."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "Helyezze a dokkolót a képernyő bal széle mentén."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "Helyezze a dokkolót a képernyő alsó széle mentén."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "Helyezze a dokkolót a képernyő felső széle mentén."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "Helyezze a dokkolót a képernyő jobb széle mentén."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr ""
+"Nyissa meg a speciális intelligens automatikus elrejtési beállításokat."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "A dokkoló automatikus elrejtése, ha az ablakot akadályozna."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr ""
+"Állítsa be a maximális dokkolóméretet a rendelkezésre álló "
+"képernyőterülethez viszonyítva."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr ""
+"Tegye a dokkolót a teljes képernyő szélére, ahelyett, hogy a tartalmát "
+"beilleszti."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr ""
+"A dokkolóikonokat tartsa középen, ahelyett, hogy a széléről helyezné el őket."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "Állítsa be a rést a dokkoló és a képernyő széle között."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr ""
+"Állítson be extra távolságot a mutató éle és a dokk felfedő területe között."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "Állítsa be az alkalmazásikon maximális méretét."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"Tartsa rögzítve az ikonméretet, és görgessen a dokkolón, ha több ikon van, "
+"mint amennyi elfér."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "Az ablak előnézeti bélyegképeinek méretének átméretezése."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr "Állítsa be a dokkolás aktiválásához használt élterület szélességét."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr ""
+"Állítsa be, hogy a dokkoló milyen gyakran ellenőrizze az élen tartózkodás "
+"aktiválását."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr ""
+"Állítsa be, mennyi ideig kell tartani a mutató nyomását, mielőtt a dokkoló "
+"megjelenik."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "A dokkolóhoz rögzített alkalmazások megjelenítése."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"Több monitor esetén csak az elsődleges monitor dokkolóján jelenítse meg a "
+"rögzített alkalmazásokat."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "Alkalmazások megjelenítése nyitott ablakokkal."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr ""
+"Egy alkalmazás csak akkor jelenjen meg, ha az aktuális munkaterületen van "
+"ablak."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"A sürgős ablakokkal rendelkező alkalmazások akkor is láthatóak legyenek, ha "
+"ezek az ablakok egy másik munkaterületen vannak."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr ""
+"Egy alkalmazás megjelenítése csak olyan monitorokhoz tartozó dokkon, ahol "
+"ablakokkal rendelkezik."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"Az előnézeti menü megjelenítése, ha az egérmutatót egy több ablakot "
+"tartalmazó alkalmazás fölé viszi."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"Minden megnyitott ablakot külön ikonként jelenítsen meg az ablakok "
+"alkalmazás szerinti csoportosítása helyett."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "Tartsa láthatóan a fókuszált alkalmazást, miközben a dokkoló görgeti."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"Válassza ki, hogy a futó ikonok a dokksorrendet vagy az ablakpozíciót "
+"követik-e."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "Jelenítse meg az Alkalmazások gombot a dokkban."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "Helyezze az Alkalmazások gombot a többi dokkolóelem elé."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "Az áttekintés megnyitásakor animálja az Alkalmazások gombot."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr ""
+"Tartsa az Alkalmazások gombot a dokkoló szélén, ha a Panel mód engedélyezve "
+"van."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "Jelenítse meg a Kuka ikont a dokkban."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "A beépített kötetek és eltávolítható eszközök megjelenítése a dokkban."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr "Az elérhető, de jelenleg nem csatlakoztatott eszközök elrejtése."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "Vegye fel a hálózati helyeket a kötetlistába."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"Tartsa elkülönítve a kötet-, az eszköz- és a Kuka ablakokat a normál "
+"fájlkezelő ablakoktól."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "Animálja az ikonokat, amikor az alkalmazások figyelmet kérnek."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr ""
+"Visszapattanó ikonok, amikor egy alkalmazás elindul vagy figyelmet igényel."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"Az alkalmazásnév eszköztippek letiltása, amikor az egérmutatót a dokk ikonok "
+"fölé viszi."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "Állítsa be az alkalmazásnév eszköztippek maximális szélességét."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr ""
+"Az ablak előnézetének megnyitása, amikor a mutató egy alkalmazásikonon áll."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr ""
+"Válassza ki az ablak előnézetének megnyitásakor és bezárásakor használt "
+"animációt."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "Korlátozza az ablak előnézeti lista magasságát."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr ""
+"Állítsa be, hogy mennyi ideig tartson az előnézet megnyitása és bezárása."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr ""
+"Állítsa be, mennyi ideig kell a mutatónak lebegnie az előnézetek megnyitása "
+"előtt."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr ""
+"Állítsa be, hogy mennyi ideig maradjanak nyitva az előnézetek a mutató "
+"távozása után."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr ""
+"Állítsa be a többi ablak átlátszatlanságát az előnézeti betekintés során."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "Állítsa be, hogy mennyi ideig maradjon aktív az előnézeti betekintés."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "Konfigurálja a Super plus szám parancsikon viselkedését."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr ""
+"Engedélyezze a Super plus szám parancsikonokat a dokkoló alkalmazásokhoz."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "Konfigurálja a középső kattintás műveletét."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr ""
+"Válassza ki, mit tegyen az elsődleges kattintás, amikor egy alkalmazás már "
+"fut."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "Válassza ki, hogy mit tegyen az alkalmazásikon feletti görgetés."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr ""
+"Állítsa be, hogy az XDock milyen gyakran ellenőrizze, hogy a dokkoló "
+"átfedésben van-e egy ablakkal."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr ""
+"Minimális késleltetés az alkalmazások ablakait ciklusba hozó görgetési "
+"események között."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr ""
+"Akadályozza meg az ismételt munkaterület-váltásokat gyors görgetés közben."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr ""
+"Az idő, amikor a mutatónak egy ikont kell tartania, mielőtt az átrendezési "
+"mód elindulna."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr ""
+"Emlékezzen az utoljára kiválasztott ablakra, amikor egy alkalmazás ablakain "
+"keresztül lépeget."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "Válassza ki a dokkoló általános vizuális stílusát."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "Állítsa be a polc színátmenetének átlátszatlanságát a felső szélén."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "Állítsa be a polc színátmenetének átlátszatlanságát az alsó szélén."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "Állítsa be a dokkpolcra rajzolt kiemelés átlátszatlanságát."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "Állítsa be a dokkpolc szegélyének átlátszatlanságát."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "Állítsa be a dokkolópolc gradiensének szögét."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "Állítsa be a dokkolópolc magasságát."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "Mutasson visszatükrözési hatást a dokkolópolc alatt."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "Állítsa be a polc tükröződésének átlátszatlanságát."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "Válassza ki a színt a polc színátmenetének tetején."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "Válassza ki a színt a polc színátmenet alján."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "Válassza ki a polc kiemelési színét."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "Válassza ki a polc árnyékának színét."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "Állítsa be a polc árnyékának átlátszatlanságát."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "Állítsa be a polc kiemelésének szélességét."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "Állítsa be a polc árnyékának szélességét."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "Válassza ki a dokkszegély színét."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "Állítsa be a dokkszegély szélességét."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "Mutasson árnyékot a dokk körül."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "Válassza ki a dokkolódoboz árnyékszínét."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "Állítsa be, milyen messzire terjedjen a dokk árnyéka."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "Állítsa be, hogy milyen lágyan legyen elmosva a dokk árnyéka."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "Válassza ki az áttetsző üvegszínt."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "Állítsa be az üveg árnyalatának átlátszatlanságát."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "Válassza ki a lebegő dokk árnyékszínét."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "Állítsa be, hogy a lebegő árnyék meddig terjedjen."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "Állítsa be, hogy milyen lágyan legyen elmosva a lebegő árnyék."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr "Állítsa be a belső párnázást a dokkolótartalom és a szegély között."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "Válassza ki az elválasztó színt a dokkoló szakaszok között."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "Állítsa be a dokkolóelválasztók vastagságát."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr ""
+"Csökkentse a dokkoló párnázását és a sarok sugarát, hogy helyet takarítson "
+"meg a képernyőn."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "A dokkoló lekerekített sarkainak letiltása."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+"Állítsa be a dokkoló sarok sugarát. Használja az alapértelmezett értéket a "
+"téma követéséhez."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "A munkamenet indításakor nyissa meg a GNOME áttekintést."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "Állítsa be a polc felső sarkainak sugarát."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "Állítsa be a polc alsó sarkainak sugarát."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "Állítsa be a dokkoló tükröződésének méretét."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "Állítsa be az alkalmazás előrehaladási íveinek szélességét."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr "Állítsa be az ikonokon megjelenő hivatkozási számcímkék méretét."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "Állítsa be a dokkoló eszköztippek maximális szélességét."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"Használja az XDock integrált téma alapértelmezett beállításait az alábbi "
+"egyéni megjelenésvezérlők helyett."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "Nyissa meg a haladó futásjelző beállításokat."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr ""
+"Válassza ki, hogy a futó alkalmazások hogyan legyenek megjelölve a dokkon."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "Válassza ki az egyéni dokkoló háttérszínét."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "Egyéni dokkoló háttérszín engedélyezése."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr ""
+"Nyissa meg a speciális átlátszatlansági beállításokat a dokkoló állapotokhoz."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "Válassza ki a szerkeszteni kívánt dokk átlátszatlansági állapotát."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "Állítsa be az átlátszóságot a kiválasztott dokkállapothoz."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "A dokkolószínek származtatása az aktuális asztali háttérképből."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr ""
+"Állítsa be, hogy a tapéta színei milyen erősen befolyásolják a dokkolót."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr ""
+"Értesítési jelvények és emblémák megjelenítése az alkalmazások ikonjain."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "Az értesítések számának megjelenítése az alkalmazások ikonjain."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "Alkalmazásonkénti értesítésszám felülírásának engedélyezése."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr "Törölje az alkalmazás értesítéseinek számát, amikor fókuszba kerül."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr ""
+"A feladat előrehaladásának jelzőinek megjelenítése az alkalmazások ikonjain."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "Válassza ki a feladat előrehaladását jelző jelzők vizuális stílusát."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "A dokk ikonok nagyítása, miközben a mutató felettük van."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr "Állítsa be az ikonok maximális méretét az egérmutató nagyítása közben."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "Nagyítás közben jelölje ki a mutató alatti ikont."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+"Nagyítsa fel az alkalmazáson kívüli dokkolóelemeket, például a kuka és az "
+"alkalmazások gombot."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr "Használja a rugófizikát a dokkmozgásokhoz és az ikonanimációkhoz."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "Az ikonok húzásával átrendezheti őket a dokkban."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+"Használjon élő ablak miniatűröket az alkalmazásikonokhoz a statikus ikonok "
+"helyett."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr ""
+"Állítsa be, hogy a tavaszi animációk milyen erősen húzzanak a céljuk felé."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "Állítsa be, hogy a tavaszi animáció milyen gyorsan dőljön be."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "Állítsa be, hogy hány szomszédos ikonra legyen hatással a nagyítás."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "Állítsa be, hogy a nagyítási átmenetek milyen gyorsan fejeződjenek be."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "Állítsa be a dokkoló indítási animációjának időtartamát."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "Állítsa be az alkalmazásindítási animációk időtartamát."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr "Állítsa be, hogy a tavaszi animációk mennyivel lépjék túl a célt."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "A gyors műveletekhez engedélyezze a dokk parancspalettáját."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "Munkaterület-áttekintő minitérkép megjelenítése a dokkban."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr ""
+"Válassza ki, hogy a dokkoló melyik oldalán található a munkaterület-minimap."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr ""
+"Az ablak előnézetének automatikus megnyitása az alkalmazás ikonjának "
+"aktiválásakor."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr "Fókuszálása egy ablakra, amikor az előnézete húzás közben lebeg."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr ""
+"A legutóbbi fájlok megjelenítése a dokkolóból megnyitott alkalmazásmenükben."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "Rögzített terminálparancsok megjelenítése a dokkban."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "Az ablakcsempézési műveletek engedélyezése a dokkból."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr ""
+"Dokkok megjelenítése futó alkalmazásokkal rendelkező másodlagos monitorokon."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "Válassza ki, hol jelenjenek meg a másodlagos monitor dokkolói."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "A médialejátszás vezérlőinek megjelenítése az alkalmazásmenükben."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr ""
+"Alkalmazásonkénti hangerőszabályzók megjelenítése az alkalmazásmenükben."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "Jelző megjelenítése, amikor a képernyőt rögzítik vagy megosztják."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "Gyorsbeállítási panel megjelenítése a dokkolóból."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "Válassza ki az aktív mentett beállítási profilt."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "Mentse el az aktuális beállításokat profilként."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "Törölje a kiválasztott mentett profilt."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "Nyissa meg az XDock projekt weboldalát."
+
 #~ msgid ""
 #~ "When set to minimize, double clicking minimizes all the windows of the "
 #~ "application."

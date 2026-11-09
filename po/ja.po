@@ -263,6 +263,685 @@ msgstr ""
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"どのモニターがプライマリ ドックを所有するかを選択します。追加のモニターにはセ"
+"カンダリ ドックを表示できます。"
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"優先モニターが切断されている場合、ドックを別のモニターに移動する代わりに非表"
+"示にします。"
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "ドックを画面の左端に沿って配置します。"
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "ドックを画面の下端に沿って配置します。"
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "ドックを画面の上端に沿って配置します。"
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "ドックを画面の右端に沿って配置します。"
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "高度なインテリジェント自動非表示設定を開きます。"
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "ドックがウィンドウを妨げる場合、ドックを自動的に非表示にします。"
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr "利用可能な画面スペースに応じてドックの最大サイズを設定します。"
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr "ドックの内容を合わせるのではなく、画面の端全体にドックを広げます。"
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr "ドックアイコンを端から配置するのではなく、中央に配置します。"
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "ドックと画面端の間のギャップを設定します。"
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr "ポインタの端とドックの表示領域の間に余分な間隔を設定します。"
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "アプリケーションアイコンの最大サイズを設定します。"
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"アイコンのサイズを固定し、アイコンが収まらない場合はドックをスクロールしま"
+"す。"
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "ウィンドウのプレビューのサムネイルのサイズを調整します。"
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr "ドックドウェルのアクティブ化に使用されるエッジ領域の幅を設定します。"
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr "ドックがエッジドウェルのアクティブ化をチェックする頻度を設定します。"
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr "ドックが表示されるまでにポインターを押し続ける時間を設定します。"
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "ドックに固定されたアプリケーションを表示します。"
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"複数のモニターを使用している場合は、固定されたアプリケーションをプライマリ モ"
+"ニター ドックにのみ表示します。"
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "ウィンドウが開いているアプリケーションを表示します。"
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr ""
+"現在のワークスペースにウィンドウがある場合にのみアプリケーションを表示しま"
+"す。"
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"緊急ウィンドウを含むアプリケーションは、それらのウィンドウが別のワークスペー"
+"スにある場合でも表示されたままになります。"
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr ""
+"アプリケーションを、ウィンドウのあるモニターに属するドックにのみ表示します。"
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"複数のウィンドウを持つアプリケーション上にマウスを移動すると、プレビュー メ"
+"ニューが表示されます。"
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"アプリケーションごとにウィンドウをグループ化するのではなく、開いている各ウィ"
+"ンドウを個別のアイコンとして表示します。"
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr ""
+"ドックがスクロールしている間、フォーカスされているアプリケーションを表示した"
+"ままにします。"
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"実行中のアイコンがドック順序に従うか、ウィンドウの位置に従うかを選択します。"
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "ドックに「アプリケーション」ボタンを表示します。"
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "「アプリケーション」ボタンを他のドック項目の前に配置します。"
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "概要を開くときにアプリケーション ボタンをアニメーション化します。"
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr ""
+"パネル モードが有効になっている場合は、アプリケーション ボタンをドックの端に"
+"置いてください。"
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "ドックにゴミ箱アイコンを表示します。"
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "ドックにマウントされたボリュームとリムーバブル デバイスを表示します。"
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr "使用可能だが現在マウントされていないデバイスを非表示にします。"
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "ボリューム リストにネットワークの場所を含めます。"
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"ボリューム、デバイス、およびゴミ箱ウィンドウを通常のファイル マネージャー "
+"ウィンドウとは別にしてください。"
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr ""
+"アプリケーションが注意を要求したときにアイコンをアニメーション化します。"
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr ""
+"アプリケーションが起動したとき、または注意が必要なときにアイコンをバウンスし"
+"ます。"
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"ドックアイコンの上にマウスを移動すると、アプリケーション名のツールチップが表"
+"示されなくなります。"
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "アプリケーション名のツールチップの最大幅を設定します。"
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr ""
+"ポインターがアプリケーション アイコンの上にあると、ウィンドウのプレビューが開"
+"きます。"
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr ""
+"ウィンドウのプレビューを開いたり閉じたりするときに使用するアニメーションを選"
+"択します。"
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "ウィンドウのプレビュー リストの高さを制限します。"
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr "プレビューの開閉アニメーションにかかる時間を設定します。"
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr "プレビューが開くまでにポインターをホバリングする時間を設定します。"
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr "ポインタが離れた後、プレビューを開いたままにする時間を設定します。"
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "プレビュー ピーク中に他のウィンドウの不透明度を設定します。"
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "プレビュー ピークをアクティブにしておく時間を設定します。"
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "スーパー プラス番号のショートカットの動作を構成します。"
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr ""
+"ドック アプリケーションのスーパー プラス番号ショートカットを有効にします。"
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "中クリックのアクションを設定します。"
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr ""
+"アプリケーションがすでに実行されている場合の主なクリックの動作を選択します。"
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "アプリケーションアイコンをスクロールしたときの動作を選択します。"
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr ""
+"XDock がドックがウィンドウと重なっているかどうかをチェックする頻度を設定しま"
+"す。"
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr "アプリケーションウィンドウを循環させるスクロールイベント間の最小遅延。"
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr "高速スクロール中にワークスペースが繰り返し切り替えられるのを防ぎます。"
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr ""
+"再配置モードが開始される前に、ポインタがアイコンを保持する必要がある時間。"
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr ""
+"アプリケーションのウィンドウを順に切り替えるときに、最後に選択したウィンドウ"
+"を覚えておいてください。"
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "ドック全体の視覚スタイルを選択します。"
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "棚の上端のグラデーションの不透明度を設定します。"
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "棚の下端のグラデーションの不透明度を設定します。"
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "ドックシェルフに描画されるハイライトの不透明度を設定します。"
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "ドックシェルフの境界線の不透明度を設定します。"
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "ドックシェルフのグラデーションの角度を設定します。"
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "ドックシェルフの高さを設定します。"
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "ドックシェルフの下に反射効果を表示します。"
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "シェルフ反射の不透明度を設定します。"
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "棚のグラデーションの上部の色を選択します。"
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "棚のグラデーションの下部の色を選択します。"
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "棚のハイライトの色を選択します。"
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "棚の影の色を選択します。"
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "棚の影の不透明度を設定します。"
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "棚のハイライトの幅を設定します。"
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "棚の影の幅を設定します。"
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "ドックの境界線の色を選択します。"
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "ドックの境界線の幅を設定します。"
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "ドックの周りに影を表示します。"
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "ドックボックスの影の色を選択します。"
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "ドックの影がどこまで広がるかを設定します。"
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "ドックの影をぼかす程度を設定します。"
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "半透明のガラスの色合いを選択します。"
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "ガラスの色合いの不透明度を設定します。"
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "フローティング ドックの影の色を選択します。"
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "浮遊影の広がりを設定します。"
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "浮いた影のぼかし具合を設​​定します。"
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr "ドックのコンテンツとその境界線の間に内側のパディングを設定します。"
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "ドックセクション間のセパレーターの色を選択します。"
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "ドックセパレーターの厚さを設定します。"
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr "ドックのパディングと角の半径を減らして、画面スペースを節約します。"
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "ドックの丸い角を無効にします。"
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+"ドックの角の半径を設定します。テーマに従うにはデフォルト値を使用します。"
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "セッションの開始時に GNOME の概要を開きます。"
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "棚上部の角の半径を設定します。"
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "棚の下隅の半径を設定します。"
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "ドックの反射のサイズを設定します。"
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "アプリケーションの進行状況の円弧の幅を設定します。"
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr "アイコンに表示されるショートカット番号ラベルのサイズを設定します。"
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "ドックのツールチップの最大幅を設定します。"
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"以下のカスタム外観コントロールの代わりに、XDock の統合テーマのデフォルトを使"
+"用してください。"
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "詳細なランニングインジケーター設定を開きます。"
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "実行中のアプリケーションをドック上でマークする方法を選択します。"
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "カスタムドックの背景色を選択します。"
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "カスタムドックの背景色を有効にします。"
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr "ドック状態の詳細な不透明度設定を開きます。"
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "編集するドックの不透明度状態を選択します。"
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "選択したドック状態の不透明度を設定します。"
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "現在のデスクトップの壁紙からドックの色を取得します。"
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "壁紙の色がドックに与える影響の強さを調整します。"
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr "アプリケーションアイコンに通知バッジとエンブレムを表示します。"
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "アプリケーションアイコンに通知数を表示します。"
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "アプリケーションごとの通知数の上書きを許可します。"
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr ""
+"アプリケーションがフォーカスを受け取ったときに、アプリケーションの通知数をク"
+"リアします。"
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "アプリケーションアイコンにタスクの進行状況インジケーターを表示します。"
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "タスクの進行状況インジケーターの視覚的なスタイルを選択します。"
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "ポインタがドックアイコンの上にあるときにドックアイコンを拡大します。"
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr "ホバー拡大時のアイコンの最大サイズを設定します。"
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "拡大中に現在ポインターの下にあるアイコンを強調表示します。"
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+"ゴミ箱やアプリケーション ボタンなど、アプリケーション以外のドック項目を拡大し"
+"ます。"
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr ""
+"ドックの動きとアイコンのアニメーションにはスプリングの物理学を使用します。"
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "アイコンをドラッグしてドック内で再配置できるようにします。"
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+"アプリケーションアイコンには、静的なアイコンではなく、ライブウィンドウのサム"
+"ネイルを使用します。"
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr ""
+"スプリング アニメーションがターゲットに向かってどれだけ強く引っ張られるかを設"
+"定します。"
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr ""
+"スプリング アニメーションの動きがどのくらい早く安定するかを設定します。"
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "拡大の影響を受ける隣接するアイコンの数を設定します。"
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "倍率の移行が完了するまでの時間を設定します。"
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "ドック起動アニメーションの長さを設定します。"
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "アプリケーション起動アニメーションの長さを設定します。"
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr ""
+"スプリング アニメーションがターゲットをどの程度オーバーシュートするかを設定し"
+"ます。"
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "クイックアクションのためにドックコマンドパレットを有効にします。"
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "ドックにワークスペース概要のミニマップを表示します。"
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr "ドックのどちら側にワークスペース ミニマップが含まれるかを選択します。"
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr ""
+"アプリケーションアイコンがアクティブ化されると、ウィンドウのプレビューが自動"
+"的に開きます。"
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr ""
+"ドラッグ中にプレビューをホバーすると、ウィンドウにフォーカスが当てられます。"
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr ""
+"ドックから開いたアプリケーション メニューに最近使用したファイルを表示します。"
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "ドックに固定された端末コマンドを表示します。"
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "ドックからのウィンドウタイリングアクションを有効にします。"
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr ""
+"アプリケーションが実行されているセカンダリ モニターにドックを表示します。"
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "セカンダリ モニター ドックが表示される場所を選択します。"
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "アプリケーション メニューにメディア再生コントロールを表示します。"
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr ""
+"アプリケーションメニューにアプリケーションごとのボリュームコントロールを表示"
+"します。"
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "画面が録画または共有されているときにインジケーターを表示します。"
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "ドックからクイック設定パネルを表示します。"
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "アクティブな保存済み設定プロファイルを選択します。"
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "現在の設定をプロファイルとして保存します。"
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "選択した保存済みプロファイルを削除します。"
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "XDock プロジェクトの Web ページを開きます。"
+
 #~ msgid "Add to Favorites"
 #~ msgstr "お気に入りに追加"
 

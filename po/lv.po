@@ -252,6 +252,687 @@ msgstr "Neizdevās palaist “%s”"
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"Izvēlieties, kuram monitoram pieder primārais doks. Papildu monitori var "
+"parādīt sekundāros dokus."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"Paslēpiet doku, nevis pārvietojiet to uz citu monitoru, kad izvēlētais "
+"monitors ir atvienots."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "Novietojiet doku gar ekrāna kreiso malu."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "Novietojiet doku gar ekrāna apakšējo malu."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "Novietojiet doku gar ekrāna augšējo malu."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "Novietojiet doku gar ekrāna labo malu."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "Atveriet uzlabotos viedos automātiskās slēpšanas iestatījumus."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "Automātiski paslēpiet doku, ja tas aizsprosto logu."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr ""
+"Iestatiet maksimālo dokstacijas izmēru attiecībā pret pieejamo ekrāna vietu."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr ""
+"Nodrošiniet, lai doks aptvertu pilnekrāna malu, nevis iekļaujiet tā saturu."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr "Turiet doka ikonas centrā, nevis novietojiet tās no malas."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "Iestatiet atstarpi starp doku un ekrāna malu."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr ""
+"Iestatiet papildu atstarpi starp rādītāja malu un dokstacijas atklāšanas "
+"zonu."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "Iestatiet maksimālo lietojumprogrammas ikonas izmēru."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"Saglabājiet nemainīgu ikonas izmēru un ritiniet doku, ja ir vairāk ikonu, "
+"nekā ir piemērots."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "Mērogojiet loga priekšskatījuma sīktēlu izmēru."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr ""
+"Iestatiet malas apgabala platumu, kas tiek izmantots dokstacijas "
+"aktivizēšanai."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr ""
+"Iestatiet, cik bieži doks pārbauda, ​​vai ir aktivizēta malas aizturēšana."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr ""
+"Iestatiet, cik ilgi rādītāja spiediens ir jāuztur, pirms tiek parādīts doks."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "Rādīt dokā piespraustās lietojumprogrammas."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"Ja izmantojat vairākus monitorus, rādīt piespraustās lietojumprogrammas "
+"tikai primārā monitora dokstacijā."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "Rādīt programmas ar atvērtiem logiem."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr ""
+"Rādīt lietojumprogrammu tikai tad, ja tai ir logi pašreizējā darbvietā."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"Saglabājiet lietojumprogrammas ar steidzamiem logiem redzamas pat tad, ja "
+"šie logi atrodas citā darbvietā."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr ""
+"Rādīt lietojumprogrammu tikai dokos, kas pieder monitoriem, kur tai ir logi."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"Rādīt priekšskatījuma izvēlni, virzot kursoru virs lietojumprogrammas ar "
+"vairākiem logiem."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"Rādīt katru atvērto logu kā atsevišķu ikonu, nevis grupēt logus pēc "
+"lietojumprogrammām."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "Turiet fokusēto lietojumprogrammu redzamu, kamēr doks ritina."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"Izvēlieties, vai palaistās ikonas atbilst doku secībai vai to logu pozīcijām."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "Parādiet dokā pogu Lietojumprogrammas."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "Novietojiet pogu Programmas pirms citiem dokstacijas vienumiem."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "Atverot pārskatu, animējiet pogu Lietojumprogrammas."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr ""
+"Kad ir iespējots paneļa režīms, turiet pogu Lietojumprogrammas dokstacijas "
+"malā."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "Parādiet dokā miskastes ikonu."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "Rādīt uzstādītos sējumus un noņemamās ierīces dokā."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr "Slēpt ierīces, kas ir pieejamas, bet pašlaik nav pievienotas."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "Sējumu sarakstā iekļaujiet tīkla atrašanās vietas."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"Turiet skaļuma, ierīces un atkritnes logus atsevišķi no parastajiem failu "
+"pārvaldnieka logiem."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "Animējiet ikonas, kad lietojumprogrammas pieprasa uzmanību."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr ""
+"Atlēcienu ikonas, kad tiek palaista lietojumprogramma vai tai nepieciešama "
+"uzmanība."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"Atspējojiet lietojumprogrammas nosaukuma rīka padomus, virzot kursoru virs "
+"doka ikonām."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "Iestatiet maksimālo lietojumprogrammas nosaukuma rīka padomu platumu."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr ""
+"Atveriet loga priekšskatījumus, kad rādītājs atrodas uz lietojumprogrammas "
+"ikonas."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr ""
+"Izvēlieties animāciju, kas tiek izmantota, atverot un aizverot loga "
+"priekšskatījumu."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "Ierobežojiet loga priekšskatījuma saraksta augstumu."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr ""
+"Iestatiet, cik ilgi nepieciešams priekšskatījuma atvēršana un aizvēršana."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr ""
+"Iestatiet, cik ilgi rādītājam jāvirza kursors, pirms tiek atvērti "
+"priekšskatījumi."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr ""
+"Iestatiet, cik ilgi priekšskatījumi paliek atvērti pēc rādītāja aiziešanas."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "Priekšskatījuma apskates laikā iestatiet citu logu necaurredzamību."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "Iestatiet, cik ilgi priekšskatījuma apskate paliek aktīva."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "Konfigurējiet Super plus numura saīsnes darbību."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr "Iespējot Super plus numuru saīsnes doka lietojumprogrammām."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "Konfigurējiet vidējā klikšķa darbību."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr ""
+"Izvēlieties, ko veic primārais klikšķis, kad lietojumprogramma jau darbojas."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "Izvēlieties, ko dara, ritinot pa lietojumprogrammas ikonu."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr "Iestatiet, cik bieži XDock pārbauda, ​​vai doks pārklājas ar logu."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr ""
+"Minimālā aizkave starp ritināšanas notikumiem, kas cikliski veic "
+"lietojumprogrammu logus."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr "Ātrās ritināšanas laikā novērsiet atkārtotu darbvietas pārslēgšanu."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr ""
+"Laiks, kurā rādītājam ir jātur ikona, pirms tiek sākts pārkārtošanas režīms."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr ""
+"Atcerieties pēdējo atlasīto logu, pārvietojoties pa lietojumprogrammas "
+"logiem."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "Izvēlieties doka kopējo vizuālo stilu."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "Iestatiet plaukta gradienta necaurredzamību tā augšējā malā."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "Iestatiet plaukta gradienta necaurredzamību tā apakšējā malā."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "Iestatiet dokstacijas plauktā uzzīmētā izcēluma necaurredzamību."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "Iestatiet dokstacijas plaukta apmales necaurredzamību."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "Iestatiet dokstacijas plaukta gradienta leņķi."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "Iestatiet dokstacijas plaukta augstumu."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "Parādiet atstarošanas efektu zem dokstacijas plaukta."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "Iestatiet plaukta atspoguļojuma necaurredzamību."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "Izvēlieties krāsu plaukta gradienta augšpusē."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "Izvēlieties krāsu plaukta gradienta apakšā."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "Izvēlieties plaukta izcelšanas krāsu."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "Izvēlieties plaukta ēnas krāsu."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "Iestatiet plaukta ēnas necaurredzamību."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "Iestatiet plaukta izcēluma platumu."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "Iestatiet plaukta ēnas platumu."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "Izvēlieties doka apmales krāsu."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "Iestatiet doka apmales platumu."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "Parādiet ēnu ap doku."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "Izvēlieties doka kastes ēnu krāsu."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "Iestatiet, cik tālu doka ēna izplatās."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "Iestatiet, cik maigi tiek izplūdusi doka ēna."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "Izvēlieties caurspīdīgu stikla nokrāsu."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "Iestatiet stikla nokrāsas necaurredzamību."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "Izvēlieties peldošā doka ēnu krāsu."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "Iestatiet, cik tālu izplatās peldošā ēna."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "Iestatiet, cik maigi tiek izplūdusi peldošā ēna."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr "Iestatiet iekšējo polsterējumu starp dokstacijas saturu un tā apmali."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "Izvēlieties atdalīšanas krāsu starp doka sekcijām."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "Iestatiet doku separatoru biezumu."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr ""
+"Samaziniet dokstacijas polsterējumu un stūra rādiusu, lai ietaupītu vietu "
+"ekrānā."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "Atspējojiet doka noapaļotos stūrus."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+"Iestatiet doka stūra rādiusu. Izmantojiet noklusējuma vērtību, lai sekotu "
+"motīvam."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "Sesijas sākumā atveriet GNOME pārskatu."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "Iestatiet plaukta augšējo stūru rādiusu."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "Iestatiet plaukta apakšējo stūru rādiusu."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "Iestatiet doka atspulga izmēru."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "Iestatiet lietojumprogrammas progresa loku platumu."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr "Iestatiet ikonās redzamo īsceļu numuru uzlīmju izmērus."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "Iestatiet maksimālo doka rīka padomu platumu."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"Izmantojiet XDock integrētos motīvu noklusējuma iestatījumus, nevis tālāk "
+"norādītās pielāgotās izskata vadīklas."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "Atveriet papildu skriešanas indikatora iestatījumus."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "Izvēlieties, kā dokstacijā tiek atzīmētas darbojošās programmas."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "Izvēlieties pielāgotu doka fona krāsu."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "Iespējot pielāgotu doka fona krāsu."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr "Atveriet papildu necaurredzamības iestatījumus doka stāvokļiem."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "Izvēlieties, kuru doka necaurredzamības stāvokli rediģēt."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "Iestatiet atlasītā doka stāvokļa necaurredzamību."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "Iegūstiet doka krāsas no pašreizējās darbvirsmas fona tapetes."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "Pielāgojiet, cik spēcīgi tapetes krāsas ietekmē doku."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr "Rādīt paziņojumu emblēmas un emblēmas uz lietojumprogrammu ikonām."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "Rādīt paziņojumu skaitu uz lietojumprogrammu ikonām."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "Atļaut katras lietojumprogrammas paziņojumu skaita ignorēšanu."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr "Notīriet lietojumprogrammas paziņojumu skaitu, kad tā saņem fokusu."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "Rādīt uzdevumu progresa indikatorus uz lietojumprogrammu ikonām."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "Izvēlieties uzdevuma progresa indikatoru vizuālo stilu."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "Palieliniet doka ikonas, kamēr kursors atrodas virs tām."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr "Iestatiet maksimālo ikonas lielumu kursora palielināšanas laikā."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr ""
+"Palielināšanas laikā iezīmējiet ikonu, kas pašlaik atrodas zem rādītāja."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+"Palieliniet ar lietojumprogrammu nesaistītus dokstacijas vienumus, piemēram, "
+"atkritnes un programmu pogu."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr "Izmantojiet pavasara fiziku doku kustībām un ikonu animācijām."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "Atļaut velkot ikonas, lai tās dokā pārkārtotu."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+"Izmantojiet reāllaika loga sīktēlus lietojumprogrammu ikonām, nevis "
+"statiskām ikonām."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr "Iestatiet, cik spēcīgi pavasara animācijas virzās uz savu mērķi."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "Iestatiet, cik ātri notiek pavasara animācijas kustība."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "Iestatiet, cik blakus esošo ikonu ietekmē palielinājums."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "Iestatiet, cik ātri tiek pabeigtas palielināšanas pārejas."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "Iestatiet doka startēšanas animācijas ilgumu."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "Iestatiet lietojumprogrammas palaišanas animācijas ilgumu."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr "Iestatiet, cik tālu pavasara animācijas pārspēj savu mērķi."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "Ātrām darbībām iespējojiet doka komandu paleti."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "Rādīt darbvietas pārskata minikarti dokā."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr "Izvēlieties, kurā doka pusē ir darbvietas minikarte."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr ""
+"Atvērt loga priekšskatījumus automātiski, kad tiek aktivizēta "
+"lietojumprogrammas ikona."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr ""
+"Fokusējiet logu, kad tā priekšskatījums vilkšanas laikā tiek novietots "
+"kursorā."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr ""
+"Rādīt jaunākos failus lietojumprogrammu izvēlnēs, kas atvērtas no doka."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "Rādīt piespraustās termināļa komandas dokā."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "Iespējot logu flīzēšanas darbības no doka."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr "Rādīt dokus sekundārajos monitoros, kuros darbojas lietojumprogrammas."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "Izvēlieties, kur parādās sekundāro monitoru doki."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "Rādīt multivides atskaņošanas vadīklas lietojumprogrammu izvēlnēs."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr ""
+"Rādīt katras lietojumprogrammas skaļuma vadīklas lietojumprogrammu izvēlnēs."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "Parādiet indikatoru, kad ekrāns tiek ierakstīts vai koplietots."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "Rādīt ātro iestatījumu paneli no doka."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "Izvēlieties aktīvo saglabāto iestatījumu profilu."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "Saglabājiet pašreizējos iestatījumus kā profilu."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "Dzēst atlasīto saglabāto profilu."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "Atveriet XDock projekta tīmekļa lapu."
+
 #~ msgid ""
 #~ "When set to minimize, double clicking minimizes all the windows of the "
 #~ "application."

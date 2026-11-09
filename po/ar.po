@@ -260,6 +260,646 @@ msgstr "تعذَّر تشغيل «%s»"
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"اختر جهاز العرض الذي يمتلك قاعدة الإرساء الأساسية. يمكن للشاشات الإضافية "
+"إظهار الأرصفة الثانوية."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"قم بإخفاء الإرساء بدلاً من نقله إلى شاشة أخرى عند فصل الشاشة المفضلة لديه."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "ضع الرصيف على طول الحافة اليسرى من الشاشة."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "ضع الرصيف على طول الحافة السفلية للشاشة."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "ضع الرصيف على طول الحافة العلوية من الشاشة."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "ضع الرصيف على طول الحافة اليمنى من الشاشة."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "افتح إعدادات الإخفاء التلقائي الذكية المتقدمة."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "إخفاء قفص الاتهام تلقائيا عندما يعيق النافذة."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr "قم بتعيين الحد الأقصى لحجم الإرساء بالنسبة لمساحة الشاشة المتاحة."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr "اجعل المرسى يمتد على حافة الشاشة بأكملها بدلاً من ملاءمة محتوياته."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr "احتفظ بأيقونات الإرساء في المنتصف بدلاً من وضعها من الحافة."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "اضبط الفجوة بين الرصيف وحافة الشاشة."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr "قم بتعيين مسافة إضافية بين حافة المؤشر ومنطقة كشف الإرساء."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "ضبط الحد الأقصى لحجم أيقونة التطبيق."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"حافظ على حجم الأيقونة ثابتًا وقم بالتمرير في شريط الإرساء عند وجود عدد أكبر "
+"من الرموز غير الملائمة."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "قم بقياس حجم الصور المصغرة لمعاينة النافذة."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr "قم بتعيين عرض منطقة الحافة المستخدمة لتنشيط مسكن الإرساء."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr "قم بتعيين عدد المرات التي يقوم فيها Dock بالتحقق من تنشيط Edge Live."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr "قم بتعيين المدة التي يجب أن يستمر فيها ضغط المؤشر قبل ظهور الرصيف."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "إظهار التطبيقات المثبتة في قفص الاتهام."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"مع الشاشات المتعددة، يمكنك عرض التطبيقات المثبتة على منصة المراقبة الأساسية "
+"فقط."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "إظهار التطبيقات ذات النوافذ المفتوحة."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr "إظهار التطبيق فقط عندما يكون به نوافذ في مساحة العمل الحالية."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"احتفظ بالتطبيقات ذات النوافذ العاجلة مرئية حتى عندما تكون تلك النوافذ موجودة "
+"في مساحة عمل أخرى."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr "إظهار التطبيق فقط على الأرصفة التابعة للشاشات التي تحتوي على نوافذ."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr "إظهار قائمة المعاينة عند المرور فوق تطبيق به نوافذ متعددة."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr "إظهار كل نافذة مفتوحة كرمز منفصل بدلاً من تجميع النوافذ حسب التطبيق."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "أبقِ التطبيق الذي تم التركيز عليه مرئيًا أثناء تمرير شريط الإرساء."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"اختر ما إذا كانت الرموز قيد التشغيل تتبع ترتيب الإرساء أو مواضع النوافذ "
+"الخاصة بها."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "إظهار زر التطبيقات في قفص الاتهام."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "ضع زر التطبيقات قبل عناصر الإرساء الأخرى."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "قم بتحريك زر التطبيقات عند فتح النظرة العامة."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr "احتفظ بزر التطبيقات على حافة الإرساء عند تمكين وضع اللوحة."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "إظهار أيقونة سلة المهملات في قفص الاتهام."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "إظهار وحدات التخزين المثبتة والأجهزة القابلة للإزالة في قفص الاتهام."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr "إخفاء الأجهزة المتوفرة ولكن غير المثبتة حاليًا."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "تضمين مواقع الشبكة في قائمة وحدات التخزين."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"احتفظ بنوافذ وحدة التخزين والجهاز وسلة المهملات منفصلة عن نوافذ مدير الملفات "
+"العادية."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "تحريك الرموز عندما تطلب التطبيقات الاهتمام."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr "ترتد الرموز عند تشغيل التطبيق أو عند حاجته إلى الاهتمام."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr "قم بتعطيل تلميحات أدوات اسم التطبيق عند المرور فوق أيقونات الإرساء."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "قم بتعيين الحد الأقصى لعرض تلميحات أدوات اسم التطبيق."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr "فتح معاينات النافذة عندما يستقر المؤشر على أيقونة التطبيق."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr "اختر الرسم المتحرك المستخدم عند فتح معاينات النوافذ وإغلاقها."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "تحديد ارتفاع قائمة معاينة النافذة."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr ""
+"قم بتعيين المدة التي تستغرقها معاينة الرسوم المتحركة المفتوحة والمغلقة."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr "قم بتعيين المدة التي يجب أن يمرر فيها المؤشر قبل فتح المعاينات."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr "قم بتعيين المدة التي تظل فيها المعاينات مفتوحة بعد مغادرة المؤشر."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "ضبط عتامة النوافذ الأخرى أثناء نظرة خاطفة للمعاينة."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "قم بتعيين المدة التي تظل فيها نظرة المعاينة الخاطفة نشطة."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "قم بتكوين سلوك اختصار رقم Super plus."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr "تمكين اختصارات أرقام Super plus لتطبيقات الإرساء."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "قم بتكوين إجراء النقر الأوسط."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr "اختر ما تفعله النقرة الأساسية عندما يكون التطبيق قيد التشغيل بالفعل."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "اختر ما يفعله التمرير فوق أيقونة التطبيق."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr ""
+"قم بتعيين عدد المرات التي يتحقق فيها XDock مما إذا كان الإرساء يتداخل مع "
+"النافذة."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr "الحد الأدنى من التأخير بين أحداث التمرير التي تدور حول نوافذ التطبيق."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr "منع التبديل المتكرر لمساحة العمل أثناء التمرير السريع."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr "الوقت الذي يجب أن يحمل فيه المؤشر أيقونة قبل بدء وضع إعادة الترتيب."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr "تذكر النافذة الأخيرة التي تم تحديدها عند التنقل عبر نوافذ التطبيق."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "اختر النمط المرئي العام للرصيف."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "اضبط عتامة تدرج الرف عند حافته العلوية."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "اضبط عتامة تدرج الرف عند حافته السفلية."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "اضبط عتامة التمييز المرسوم على رف الإرساء."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "اضبط عتامة حدود رف الإرساء."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "اضبط زاوية تدرج رف الرصيف."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "اضبط ارتفاع رف الرصيف."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "أظهر تأثير الانعكاس أسفل رف الرصيف."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "ضبط عتامة انعكاس الرف."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "اختيار اللون في الجزء العلوي من الرف التدرج."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "اختيار اللون في الجزء السفلي من التدرج الرف."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "اختر لون تمييز الرف."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "اختر لون ظل الرف."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "اضبط عتامة ظل الرف."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "اضبط عرض تسليط الضوء على الرف."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "اضبط عرض ظل الرف."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "اختر لون حدود الرصيف."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "قم بتعيين عرض حدود الرصيف."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "إظهار الظل حول الرصيف."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "اختر لون ظل صندوق الإرساء."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "اضبط مدى انتشار ظل الرصيف."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "اضبط مدى وضوح ظل الرصيف."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "اختر لون لون الزجاج الشفاف."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "ضبط عتامة لون الزجاج."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "اختر لون ظل الرصيف العائم."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "اضبط مدى انتشار الظل العائم."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "اضبط مدى وضوح الظل العائم."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr "قم بتعيين المساحة الداخلية بين محتوى الإرساء وحدوده."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "اختر اللون الفاصل بين أقسام الرصيف."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "ضبط سمك فواصل قفص الاتهام."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr "قم بتقليل حشوة الإرساء ونصف قطر الزاوية لتوفير مساحة الشاشة."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "تعطيل الزوايا الدائرية للرصيف."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+"قم بتعيين نصف قطر زاوية الرصيف. استخدم القيمة الافتراضية لمتابعة الموضوع."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "افتح نظرة عامة على جنوم عند بدء الجلسة."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "اضبط نصف قطر زوايا الرف العلوي."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "اضبط نصف قطر الزوايا السفلية للجرف."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "اضبط حجم انعكاس الرصيف."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "قم بتعيين عرض أقواس تقدم التطبيق."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr "ضبط حجم تسميات أرقام الاختصارات الظاهرة على الأيقونات."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "قم بتعيين الحد الأقصى لعرض تلميحات أدوات الإرساء."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"استخدم الإعدادات الافتراضية للموضوع المدمج في XDock بدلاً من عناصر التحكم "
+"المخصصة في المظهر أدناه."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "افتح إعدادات مؤشر التشغيل المتقدمة."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "اختر كيفية تمييز التطبيقات قيد التشغيل على شريط الإرساء."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "اختر لون خلفية الإرساء المخصص."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "تمكين لون خلفية قفص الاتهام المخصص."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr "افتح إعدادات العتامة المتقدمة لحالات الإرساء."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "اختر حالة عتامة الإرساء المراد تحريرها."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "قم بتعيين العتامة لحالة الإرساء المحددة."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "اشتقاق ألوان الإرساء من خلفية سطح المكتب الحالية."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "اضبط مدى قوة تأثير ألوان الخلفية على الإرساء."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr "إظهار شارات الإشعارات والشعارات على أيقونات التطبيقات."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "إظهار عدد الإشعارات على أيقونات التطبيقات."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "السماح بتجاوز عدد الإشعارات لكل تطبيق."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr "مسح عدد إشعارات التطبيق عندما يتلقى التركيز."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "إظهار مؤشرات تقدم المهمة على أيقونات التطبيق."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "اختر النمط المرئي لمؤشرات تقدم المهمة."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "قم بتكبير أيقونات الإرساء أثناء وجود المؤشر فوقها."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr "قم بتعيين الحد الأقصى لحجم الأيقونة أثناء التكبير."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "قم بتمييز الرمز الموجود حاليًا أسفل المؤشر أثناء التكبير."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+"قم بتكبير عناصر الإرساء غير المتعلقة بالتطبيقات مثل زر سلة المهملات "
+"والتطبيقات."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr "استخدم فيزياء الربيع لحركة الإرساء والرسوم المتحركة للأيقونات."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "السماح بسحب الرموز لإعادة ترتيبها في قفص الاتهام."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+"استخدم الصور المصغرة للنافذة المباشرة لأيقونات التطبيقات بدلاً من الرموز "
+"الثابتة."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr "قم بتعيين مدى قوة سحب الرسوم المتحركة الربيعية نحو هدفها."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "اضبط مدى سرعة استقرار حركة الرسوم المتحركة الربيعية."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "قم بتعيين عدد الرموز المجاورة التي تتأثر بالتكبير."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "اضبط مدى سرعة اكتمال انتقالات التكبير."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "قم بتعيين مدة الرسوم المتحركة لبدء تشغيل الإرساء."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "ضبط مدة الرسوم المتحركة لبدء تشغيل التطبيق."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr "قم بتعيين مدى تجاوز الرسوم المتحركة الربيعية لهدفها."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "قم بتمكين لوحة أوامر الإرساء لاتخاذ إجراءات سريعة."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "إظهار خريطة مصغرة للنظرة العامة على مساحة العمل في قفص الاتهام."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr "اختر أي جانب من الرصيف يحتوي على الخريطة المصغرة لمساحة العمل."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr "فتح معاينات النافذة تلقائيًا عند تنشيط أيقونة التطبيق."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr "قم بتركيز النافذة عند تمرير مؤشر الماوس فوق معاينتها أثناء السحب."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr "عرض الملفات الحديثة في قوائم التطبيقات المفتوحة من الرصيف."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "إظهار أوامر المحطة المثبتة في قفص الاتهام."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "تمكين إجراءات تبليط النوافذ من الرصيف."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr "إظهار الإرساء على الشاشات الثانوية مع التطبيقات قيد التشغيل."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "اختر مكان ظهور أرصفة أجهزة العرض الثانوية."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "إظهار عناصر التحكم في تشغيل الوسائط في قوائم التطبيقات."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr "إظهار عناصر التحكم في مستوى الصوت لكل تطبيق في قوائم التطبيقات."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "إظهار مؤشر عند تسجيل الشاشة أو مشاركتها."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "إظهار لوحة الإعدادات السريعة من قفص الاتهام."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "اختر ملف تعريف الإعدادات المحفوظة النشط."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "حفظ الإعدادات الحالية كملف تعريف."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "حذف ملف التعريف المحفوظ المحدد."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "افتح صفحة ويب مشروع XDock."
+
 #~ msgid ""
 #~ "When set to minimize, double clicking minimizes all the windows of the "
 #~ "application."

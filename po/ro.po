@@ -254,6 +254,710 @@ msgstr "Lansarea “%s” a eșuat"
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"Alegeți ce monitor deține docul principal. Monitoare suplimentare pot afișa "
+"docuri secundare."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"Ascundeți stația de andocare în loc să-l mutați pe alt monitor când "
+"monitorul preferat este deconectat."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "Așezați dock-ul de-a lungul marginii din stânga a ecranului."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "Așezați dock-ul de-a lungul marginii de jos a ecranului."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "Așezați docul de-a lungul marginii de sus a ecranului."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "Așezați docul de-a lungul marginii din dreapta a ecranului."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "Deschideți setările de ascundere automată inteligente avansate."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "Ascundeți automat docul atunci când ar bloca o fereastră."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr ""
+"Setați dimensiunea maximă de andocare în raport cu spațiul disponibil pe "
+"ecran."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr ""
+"Faceți ca dock-ul să se întindă pe marginea întregului ecran în loc să se "
+"potrivească cu conținutul său."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr ""
+"Păstrați pictogramele de andocare centrate în loc să le plasați de la "
+"margine."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "Setați distanța dintre andocare și marginea ecranului."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr ""
+"Setați o distanță suplimentară între marginea indicatorului și zona de "
+"dezvăluire a andocării."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "Setați dimensiunea maximă a pictogramei aplicației."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"Păstrați dimensiunea pictogramei fixă ​​și derulați dock-ul când există mai "
+"multe pictograme decât se potrivesc."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "Scalați dimensiunea miniaturilor de previzualizare a ferestrei."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr ""
+"Setați lățimea zonei de margine utilizată pentru activarea stației de "
+"andocare."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr ""
+"Setați cât de des verifică andocarea pentru activarea timpului pe margine."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr ""
+"Setați cât timp trebuie menținută presiunea indicatorului înainte de "
+"apariția dock-ului."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "Afișați aplicațiile fixate pe andocare."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"Cu mai multe monitoare, afișați aplicațiile fixate numai pe stația de "
+"andocare a monitorului principal."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "Afișați aplicațiile cu ferestrele deschise."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr ""
+"Afișați o aplicație numai atunci când are ferestre în spațiul de lucru "
+"curent."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"Păstrați aplicațiile cu ferestre urgente vizibile chiar și atunci când acele "
+"ferestre sunt pe alt spațiu de lucru."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr ""
+"Afișați o aplicație numai pe andocuri aparținând monitoarelor unde are "
+"ferestre."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"Afișați un meniu de previzualizare când treceți cu mouse-ul peste o "
+"aplicație cu mai multe ferestre."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"Afișați fiecare fereastră deschisă ca o pictogramă separată în loc să "
+"grupați ferestrele după aplicație."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "Păstrați aplicația focalizată vizibilă în timp ce andocarea derulează."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"Alegeți dacă pictogramele de rulare urmează ordinea de andocare sau "
+"pozițiile lor ferestre."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "Afișați butonul Aplicații în dock."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "Plasați butonul Aplicații înaintea altor elemente de andocare."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "Animați butonul Aplicații când deschideți prezentarea generală."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr ""
+"Țineți butonul Aplicații la marginea andocării când modul Panou este activat."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "Afișați pictograma Coș de gunoi în dock."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "Afișați volumele montate și dispozitivele detașabile în dock."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr ""
+"Ascundeți dispozitivele disponibile, dar care nu sunt montate în prezent."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "Includeți locațiile rețelei în lista de volume."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"Păstrați ferestrele de volum, dispozitiv și Coș de gunoi separate de "
+"ferestrele normale de gestionare a fișierelor."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "Animați pictogramele atunci când aplicațiile solicită atenție."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr ""
+"Treceți pictogramele când o aplicație se lansează sau necesită atenție."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"Dezactivați sfaturile explicative pentru numele aplicației când treceți cu "
+"mouse-ul peste pictogramele de andocare."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "Setați lățimea maximă a indicațiilor pentru numele aplicației."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr ""
+"Deschideți previzualizările ferestrei când indicatorul se sprijină pe "
+"pictograma unei aplicații."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr ""
+"Alegeți animația folosită atunci când previzualizările ferestrelor se "
+"deschid și se închid."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "Limitați înălțimea listei de previzualizare a ferestrei."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr "Setați cât durează previzualizarea animațiilor deschise și închise."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr ""
+"Setați cât timp trebuie să treacă cursorul înainte ca previzualizările să se "
+"deschidă."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr ""
+"Setați cât timp rămân deschise previzualizările după ce indicatorul pleacă."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "Setați opacitatea altor ferestre în timpul previzualizării."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "Setați cât timp rămâne activă previzualizarea."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "Configurați comportamentul comenzii rapide pentru numărul Super plus."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr ""
+"Activați comenzile rapide numerice Super plus pentru aplicațiile de andocare."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "Configurați acțiunea de clic din mijloc."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr ""
+"Alegeți ce face un clic principal atunci când o aplicație rulează deja."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "Alegeți ce face derularea peste pictograma unei aplicații."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr ""
+"Setați cât de des verifică XDock dacă andocarea se suprapune pe o fereastră."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr ""
+"Întârziere minimă între evenimentele de defilare care parcurg ferestrele "
+"aplicației."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr ""
+"Preveniți comutările repetate ale spațiului de lucru în timpul derulării "
+"rapide."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr ""
+"Timp în care indicatorul trebuie să țină o pictogramă înainte de a începe "
+"modul de rearanjare."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr ""
+"Amintiți-vă de ultima fereastră selectată când parcurgeți ferestrele unei "
+"aplicații."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "Alegeți stilul vizual general al docului."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "Setați opacitatea gradientului raftului la marginea superioară."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "Setați opacitatea gradientului raftului la marginea de jos."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "Setați opacitatea evidențierii desenate pe raftul de andocare."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "Setați opacitatea chenarului raftului de andocare."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "Setați unghiul gradientului raftului de andocare."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "Setați înălțimea raftului de andocare."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "Afișați un efect de reflexie sub raftul de andocare."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "Setați opacitatea reflectării raftului."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "Alegeți culoarea din partea de sus a gradientului de raft."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "Alegeți culoarea din partea de jos a gradientului de raft."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "Alegeți culoarea de evidențiere a raftului."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "Alegeți culoarea umbrei raftului."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "Setați opacitatea umbrei raftului."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "Setați lățimea evidențierii raftului."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "Setați lățimea umbrei raftului."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "Alegeți culoarea chenarului de andocare."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "Setați lățimea chenarului de andocare."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "Arată o umbră în jurul docului."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "Alegeți culoarea umbrei casetei de andocare."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "Setați cât de departe se răspândește umbra de andocare."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "Setați cât de ușor este încețoșată umbra de andocare."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "Alegeți culoarea nuanței de sticlă translucidă."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "Setați opacitatea nuanței sticlei."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "Alegeți culoarea umbrei docului plutitor."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "Setați cât de departe se extinde umbra plutitoare."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "Setați cât de ușor este încețoșată umbra plutitoare."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr ""
+"Setați căptușeala interioară între conținutul de andocare și marginea "
+"acestuia."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "Alegeți culoarea separatorului între secțiunile de andocare."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "Setați grosimea separatoarelor de andocare."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr ""
+"Reduceți umplutura de andocare și raza colțului pentru a economisi spațiu pe "
+"ecran."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "Dezactivează colțurile rotunjite pentru andocare."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+"Setați raza colțului andocului. Utilizați valoarea implicită pentru a urmări "
+"tema."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "Deschideți prezentarea generală a GNOME când începe sesiunea."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "Setați raza colțurilor superioare ale raftului."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "Setați raza colțurilor inferioare raftului."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "Setați dimensiunea reflexiei de andocare."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "Setați lățimea arcurilor de progres al aplicației."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr ""
+"Setați dimensiunea etichetelor numerelor de comenzi rapide afișate pe "
+"pictograme."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "Setați lățimea maximă a indicațiilor de andocare."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"Utilizați setările implicite ale temei integrate XDock în loc de controalele "
+"de aspect personalizate de mai jos."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "Deschideți setările avansate ale indicatorului de alergare."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr ""
+"Alegeți modul în care aplicațiile care rulează sunt marcate pe andocare."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "Alegeți culoarea de fundal personalizată pentru andocare."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "Activați o culoare de fundal personalizată pentru andocare."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr "Deschideți setările avansate de opacitate pentru stările de andocare."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "Alegeți starea de opacitate a andocării pe care doriți să o editați."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "Setați opacitatea pentru starea de andocare selectată."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr ""
+"Derivați culorile de andocare din imaginea de fundal actuală a desktopului."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr ""
+"Reglați cât de puternic afectează culorile tapetului stația de andocare."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr "Afișați insigne și embleme de notificare pe pictogramele aplicației."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "Afișarea notificărilor contează pe pictogramele aplicației."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "Permiteți înlocuirea numărului de notificări pentru fiecare aplicație."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr ""
+"Ștergeți numărul de notificări al unei aplicații când primește focalizare."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "Afișați indicatorii de progres a sarcinii pe pictogramele aplicației."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "Alegeți stilul vizual al indicatorilor de progres al sarcinii."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "Măriți pictogramele de andocare în timp ce cursorul este deasupra lor."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr ""
+"Setați dimensiunea maximă a unei pictograme în timpul măririi cu mouse-ul."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "Evidențiați pictograma aflată sub indicator în timpul măririi."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+"Măriți elementele care nu aparțin aplicațiilor, cum ar fi coșul de gunoi și "
+"butonul de aplicații."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr ""
+"Utilizați fizica primăverii pentru mișcarea andocului și animațiile "
+"pictogramelor."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "Permite tragerea pictogramelor pentru a le rearanja în dock."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr ""
+"Utilizați miniaturi live ale ferestrelor pentru pictogramele aplicației în "
+"loc de pictogramele statice."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr "Setați cât de puternic trage animațiile de primăvară către ținta lor."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "Setați cât de repede se instalează mișcarea animației de primăvară."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "Setați câte pictograme învecinate sunt afectate de mărire."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "Setați cât de repede se finalizează tranzițiile de mărire."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "Setați durata animației de pornire a andocării."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "Setați durata animațiilor de lansare a aplicației."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr "Stabiliți cât de mult depășesc ținta animațiile de primăvară."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "Activați paleta de comenzi de andocare pentru acțiuni rapide."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr ""
+"Afișați o minihartă de prezentare generală a spațiului de lucru în dock."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr "Alegeți ce parte a andocării conține minimapa spațiului de lucru."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr ""
+"Deschideți previzualizările ferestrei automat când este activată pictograma "
+"unei aplicații."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr ""
+"Focalizează o fereastră atunci când previzualizarea acesteia este plasată cu "
+"mouse-ul în timpul tragerii."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr ""
+"Afișați fișierele recente în meniurile aplicațiilor deschise din andocare."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "Afișați comenzile terminale fixate în dock."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "Activați acțiunile de tiling ferestre din andocare."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr "Afișați docuri pe monitoare secundare cu aplicații care rulează."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "Alegeți unde apar stațiile de andocare pentru monitorul secundar."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "Afișați comenzile de redare media în meniurile aplicațiilor."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr ""
+"Afișați controalele de volum pentru fiecare aplicație în meniurile "
+"aplicațiilor."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "Afișează un indicator când ecranul este înregistrat sau partajat."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "Afișați un panou de setări rapide din andocare."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "Alegeți profilul activ de setări salvate."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "Salvați setările curente ca profil."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "Ștergeți profilul salvat selectat."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "Deschideți pagina web a proiectului XDock."
+
 #~ msgid ""
 #~ "When set to minimize, double clicking minimizes all the windows of the "
 #~ "application."

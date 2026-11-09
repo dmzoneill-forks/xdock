@@ -254,6 +254,643 @@ msgstr "%s을(를) 시작하지 못했습니다"
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"기본 도크를 소유한 모니터를 선택합니다. 추가 모니터에 보조 도크가 표시될 수 "
+"있습니다."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"기본 모니터의 연결이 끊어진 경우 다른 모니터로 이동하는 대신 도크를 숨기세요."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "화면 왼쪽 가장자리를 따라 도크를 배치합니다."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "화면 하단 가장자리를 따라 도크를 배치합니다."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "화면 상단 가장자리를 따라 도크를 배치합니다."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "화면 오른쪽 가장자리를 따라 도크를 배치합니다."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "고급 지능형 자동 숨기기 설정을 엽니다."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "창을 가리는 경우 자동으로 도크를 숨깁니다."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr "사용 가능한 화면 공간을 기준으로 최대 도크 크기를 설정합니다."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr "내용을 맞추는 대신 도크를 전체 화면 가장자리에 걸쳐 만듭니다."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr "도크 아이콘을 가장자리에 배치하는 대신 중앙에 배치하세요."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "도크와 화면 가장자리 사이의 간격을 설정합니다."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr "포인터 가장자리와 도크 표시 영역 사이에 추가 간격을 설정합니다."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "최대 애플리케이션 아이콘 크기를 설정합니다."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr "아이콘 크기를 고정하고 아이콘이 너무 많으면 도크를 스크롤하세요."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "창 미리보기 축소판의 크기를 조정합니다."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr "도크 드웰 활성화에 사용되는 가장자리 영역의 너비를 설정합니다."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr "도크가 엣지 드웰 활성화를 확인하는 빈도를 설정합니다."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr "도크가 나타나기 전에 포인터를 누르고 있어야 하는 시간을 설정합니다."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "도크에 고정된 애플리케이션을 표시합니다."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"다중 모니터를 사용하는 경우 기본 모니터 도크에만 고정된 애플리케이션을 표시합"
+"니다."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "열려 있는 창에 애플리케이션을 표시합니다."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr "현재 작업 공간에 창이 있는 경우에만 응용 프로그램을 표시합니다."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"해당 창이 다른 작업 공간에 있는 경우에도 긴급 창이 있는 응용 프로그램을 계속 "
+"표시합니다."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr "창이 있는 모니터에 속한 도크에만 애플리케이션을 표시합니다."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"여러 창이 있는 애플리케이션 위로 마우스를 가져가면 미리보기 메뉴가 표시됩니"
+"다."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"응용 프로그램별로 창을 그룹화하는 대신 열려 있는 각 창을 별도의 아이콘으로 표"
+"시합니다."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "도크가 스크롤되는 동안 집중된 애플리케이션을 계속 표시합니다."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"실행 중인 아이콘이 도킹 순서를 따르는지 아니면 창 위치를 따르는지 선택합니다."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "도크에 애플리케이션 버튼을 표시합니다."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "다른 도킹 항목 앞에 응용프로그램 버튼을 배치합니다."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "개요를 열 때 응용프로그램 버튼에 애니메이션을 적용합니다."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr ""
+"패널 모드가 활성화되면 응용 프로그램 버튼을 도크 가장자리에 유지하십시오."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "도크에 휴지통 아이콘을 표시합니다."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "도크에 마운트된 볼륨과 이동식 장치를 표시합니다."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr "사용 가능하지만 현재 마운트되지 않은 장치를 숨깁니다."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "볼륨 목록에 네트워크 위치를 포함합니다."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr "볼륨, 장치 및 휴지통 창을 일반 파일 관리자 창과 별도로 유지하십시오."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "애플리케이션이 주의를 요청할 때 아이콘에 애니메이션을 적용합니다."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr "애플리케이션이 시작되거나 주의가 필요할 때 아이콘이 바운스됩니다."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"도크 아이콘 위로 마우스를 가져가면 애플리케이션 이름 도구 설명을 비활성화합니"
+"다."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "응용 프로그램 이름 도구 설명의 최대 너비를 설정합니다."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr "포인터가 응용프로그램 아이콘 위에 있으면 창 미리보기가 열립니다."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr "창 미리보기를 열고 닫을 때 사용되는 애니메이션을 선택합니다."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "창 미리보기 목록의 높이를 제한합니다."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr "미리보기 열기 및 닫기 애니메이션에 걸리는 시간을 설정합니다."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr ""
+"미리보기가 열리기 전에 포인터가 마우스를 올려 놓아야 하는 시간을 설정합니다."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr "포인터가 떠난 후 미리보기가 열려 있는 기간을 설정합니다."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "미리 보기 중에 다른 창의 불투명도를 설정합니다."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "미리보기 미리보기가 활성 상태로 유지되는 기간을 설정합니다."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "슈퍼 플러스 번호 바로가기 동작을 구성합니다."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr "도크 애플리케이션에 대한 슈퍼 플러스 번호 단축키를 활성화합니다."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "가운데 클릭 동작을 구성합니다."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr ""
+"애플리케이션이 이미 실행 중일 때 기본 클릭이 수행하는 작업을 선택합니다."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "애플리케이션 아이콘 위로 스크롤하는 동작을 선택합니다."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr "XDock이 도크가 창과 겹치는지 여부를 확인하는 빈도를 설정합니다."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr "애플리케이션 창을 순환하는 스크롤 이벤트 간의 최소 지연."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr "빠른 스크롤 중에 반복되는 작업 공간 전환을 방지합니다."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr ""
+"재정렬 모드가 시작되기 전에 포인터가 아이콘을 유지해야 하는 시간입니다."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr "응용 프로그램 창을 순환할 때 마지막으로 선택한 창을 기억하세요."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "도크의 전반적인 시각적 스타일을 선택합니다."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "상단 가장자리에서 선반 그라데이션의 불투명도를 설정합니다."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "하단 가장자리에서 선반 그라데이션의 불투명도를 설정합니다."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "도크 선반에 그려진 하이라이트의 불투명도를 설정합니다."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "도크 선반 테두리의 불투명도를 설정합니다."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "도크 선반 그라데이션 각도를 설정합니다."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "도크 선반의 높이를 설정합니다."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "도크 선반 아래에 반사 효과를 표시합니다."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "선반 반사의 불투명도를 설정합니다."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "선반 그라데이션 상단의 색상을 선택하세요."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "선반 그라데이션 하단의 색상을 선택하세요."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "선반 하이라이트 색상을 선택하세요."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "선반 그림자 색상을 선택하세요."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "선반 그림자의 불투명도를 설정합니다."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "선반 강조 표시의 너비를 설정합니다."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "선반 그림자의 너비를 설정합니다."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "도크 테두리 색상을 선택합니다."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "도크 테두리 너비를 설정합니다."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "도크 주변에 그림자를 표시합니다."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "도크 상자 그림자 색상을 선택합니다."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "도크 그림자가 퍼지는 정도를 설정합니다."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "도크 그림자가 얼마나 부드럽게 흐려지는지 설정합니다."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "반투명 유리 틴트 색상을 선택하세요."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "유리 색조의 불투명도를 설정합니다."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "플로팅 도크 그림자 색상을 선택하세요."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "떠 있는 그림자가 퍼지는 정도를 설정합니다."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "떠 있는 그림자가 얼마나 부드럽게 흐려지는지를 설정합니다."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr "도크 콘텐츠와 테두리 사이의 내부 패딩을 설정합니다."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "도크 섹션 사이의 구분 기호 색상을 선택합니다."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "도크 구분선의 두께를 설정합니다."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr "도크 패딩과 모서리 반경을 줄여 화면 공간을 절약하세요."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "도크의 둥근 모서리를 비활성화합니다."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr "도크 모서리 반경을 설정합니다. 테마를 따르려면 기본값을 사용하세요."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "세션이 시작되면 그놈 개요를 엽니다."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "선반 상단 모서리의 반경을 설정합니다."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "선반 하단 모서리의 반경을 설정합니다."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "도크 반사의 크기를 설정합니다."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "애플리케이션 진행 호의 너비를 설정합니다."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr "아이콘에 표시되는 바로가기 번호 라벨의 크기를 설정합니다."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "도크 툴팁의 최대 너비를 설정합니다."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"아래의 사용자 정의 모양 컨트롤 대신 XDock의 통합 테마 기본값을 사용하세요."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "고급 실행 표시기 설정을 엽니다."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "실행 중인 애플리케이션이 도크에 표시되는 방식을 선택합니다."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "사용자 정의 도크 배경색을 선택하십시오."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "사용자 정의 도크 배경색을 활성화합니다."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr "도킹 상태에 대한 고급 불투명도 설정을 엽니다."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "편집할 도크 불투명도 상태를 선택합니다."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "선택한 도킹 상태의 불투명도를 설정합니다."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "현재 데스크탑 배경화면에서 도크 색상을 파생시킵니다."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "배경화면 색상이 도크에 미치는 영향을 조정합니다."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr "애플리케이션 아이콘에 알림 배지와 엠블럼을 표시합니다."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "애플리케이션 아이콘에 알림 개수를 표시합니다."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "애플리케이션별 알림 수 재정의를 허용합니다."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr "포커스를 받으면 애플리케이션의 알림 수를 지웁니다."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "애플리케이션 아이콘에 작업 진행률 표시기를 표시합니다."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "작업 진행률 표시기의 시각적 스타일을 선택합니다."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "포인터가 도크 아이콘 위에 있는 동안 도크 아이콘을 확대합니다."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr "호버 확대 중 아이콘의 최대 크기를 설정합니다."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "확대 중에 현재 포인터 아래에 있는 아이콘을 강조 표시합니다."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+"휴지통, 애플리케이션 버튼 등 애플리케이션 독 항목이 아닌 항목을 확대합니다."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr "도킹 이동 및 아이콘 애니메이션에 스프링 물리학을 사용합니다."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "아이콘을 드래그하여 Dock에서 아이콘을 재정렬할 수 있습니다."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr "정적 아이콘 대신 애플리케이션 아이콘에 실시간 창 축소판을 사용합니다."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr "스프링 애니메이션이 대상을 향해 당기는 힘을 설정합니다."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "스프링 애니메이션 움직임이 얼마나 빨리 정착되는지 설정합니다."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "확대의 영향을 받는 주변 아이콘 수를 설정합니다."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "확대 전환이 완료되는 속도를 설정합니다."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "도크 시작 애니메이션의 지속 시간을 설정합니다."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "애플리케이션 실행 애니메이션의 지속 시간을 설정합니다."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr "스프링 애니메이션이 목표를 얼마나 멀리 초과하는지 설정합니다."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "빠른 작업을 위해 도킹 명령 팔레트를 활성화합니다."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "Dock에 작업 공간 개요 미니맵을 표시합니다."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr "작업 공간 미니맵이 포함된 도크의 측면을 선택합니다."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr "응용프로그램 아이콘이 활성화되면 창 미리보기가 자동으로 열립니다."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr "드래그하는 동안 미리보기를 가리킬 때 창에 초점을 맞춥니다."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr "Dock에서 열린 애플리케이션 메뉴에 최근 파일을 표시합니다."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "도크에 고정된 터미널 명령을 표시합니다."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "도크에서 창 타일링 작업을 활성화합니다."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr "실행 중인 애플리케이션이 있는 보조 모니터에 도크를 표시합니다."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "보조 모니터 도크가 나타나는 위치를 선택합니다."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "애플리케이션 메뉴에 미디어 재생 컨트롤을 표시합니다."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr "애플리케이션 메뉴에 애플리케이션별 볼륨 컨트롤을 표시합니다."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "화면이 녹화 중이거나 공유 중일 때 표시기를 표시합니다."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "Dock에서 빠른 설정 패널을 표시합니다."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "활성 저장된 설정 프로필을 선택합니다."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "현재 설정을 프로필로 저장합니다."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "선택한 저장된 프로필을 삭제합니다."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "XDock 프로젝트 웹페이지를 엽니다."
+
 #~ msgid "Add to Favorites"
 #~ msgstr "즐겨찾기에 추가"
 

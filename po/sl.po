@@ -263,6 +263,669 @@ msgstr "Priklapljanje programa »%s« je spodletelo!"
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr ""
+"Izberite, kateri monitor je lastnik primarne priklopne postaje. Dodatni "
+"monitorji lahko prikazujejo sekundarne priklopne postaje."
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr ""
+"Skrijte priklopno postajo, namesto da jo premaknete na drug monitor, ko je "
+"njen prednostni monitor prekinjen."
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "Postavite priklopno postajo ob levi rob zaslona."
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "Postavite priklopno postajo ob spodnji rob zaslona."
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "Postavite priklopno postajo vzdolž zgornjega roba zaslona."
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "Postavite priklopno postajo ob desni rob zaslona."
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "Odprite napredne nastavitve inteligentnega samodejnega skrivanja."
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "Samodejno skrij dok, ko bi oviral okno."
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr ""
+"Nastavite največjo velikost priklopne postaje glede na razpoložljiv prostor "
+"na zaslonu."
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr ""
+"Dock naj obsega celoten rob zaslona, ​​namesto da se prilega njegovi vsebini."
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr "Ikone dokov naj bodo na sredini, namesto da jih postavite z roba."
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "Nastavite razmik med priklopno postajo in robom zaslona."
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr ""
+"Nastavite dodaten razmik med robom kazalca in območjem razkrivanja priklopne "
+"postaje."
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "Nastavite največjo velikost ikone aplikacije."
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr ""
+"Naj bo velikost ikon nespremenljiva in se pomikajte po doku, ko je na voljo "
+"več ikon, kot jih je primernih."
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "Povečajte velikost sličic predogleda oken."
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr ""
+"Nastavite širino robnega območja, ki se uporablja za aktiviranje zadrževanja "
+"na priklopni postaji."
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr ""
+"Nastavite, kako pogosto priklopna postaja preverja, ali je aktivirano "
+"zadrževanje na robu."
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr ""
+"Nastavite, kako dolgo morate držati pritisk kazalca, preden se prikaže dok."
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "Prikaži aplikacije, pripete na dok."
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr ""
+"Pri več monitorjih pokažite pripete aplikacije samo na priklopni postaji "
+"primarnega monitorja."
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "Pokaži aplikacije z odprtimi okni."
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr "Prikaži aplikacijo samo, če ima okna v trenutnem delovnem prostoru."
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"Naj bodo aplikacije z nujnimi okni vidne, tudi če so ta okna v drugem "
+"delovnem prostoru."
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr ""
+"Pokaži aplikacijo samo na dokih, ki pripadajo monitorjem, kjer ima okna."
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr ""
+"Pokažite meni za predogled, ko miškin kazalec premaknete nad aplikacijo z "
+"več okni."
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr ""
+"Pokaži vsako odprto okno kot ločeno ikono namesto združevanja oken po "
+"aplikacijah."
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "Osredotočena aplikacija naj bo vidna, medtem ko se dok pomika."
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr ""
+"Izberite, ali tekoče ikone sledijo vrstnemu redu priklopa ali položajem oken."
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "Prikaži gumb Aplikacije v doku."
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "Gumb za aplikacije postavite pred druge elemente priklopa."
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "Ko odprete pregled, animirajte gumb Aplikacije."
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr ""
+"Ko je omogočen način plošče, naj bo gumb za aplikacije na robu priklopne "
+"postaje."
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "Prikažite ikono koša v doku."
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "Prikaži nameščene nosilce in odstranljive naprave v priklopni postaji."
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr "Skrij naprave, ki so na voljo, vendar trenutno niso nameščene."
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "Vključite omrežne lokacije na seznam nosilcev."
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr ""
+"Okna nosilca, naprave in koša naj bodo ločena od običajnih oken upravitelja "
+"datotek."
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "Animirajte ikone, ko aplikacije zahtevajo pozornost."
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr "Ikone se odbijajo, ko se aplikacija zažene ali potrebuje pozornost."
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr ""
+"Onemogoči namige za imena aplikacij, ko miškin kazalec premaknete nad ikone "
+"doka."
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "Nastavite največjo širino namigov za imena aplikacij."
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr "Odpiranje predogledov oken, ko kazalec stoji na ikoni aplikacije."
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr ""
+"Izberite animacijo, ki se uporablja pri odpiranju in zapiranju predogledov "
+"oken."
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "Omejite višino seznama predogleda oken."
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr ""
+"Nastavite, koliko časa traja predogled odpiranja in zapiranja animacij."
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr "Nastavite, kako dolgo mora kazalec lebdeti, preden se odpre predogled."
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr ""
+"Nastavite, kako dolgo predogledi ostanejo odprti, potem ko kazalec zapusti."
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "Med predogledom nastavite motnost drugih oken."
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "Nastavite, kako dolgo bo pokukanje predogleda aktivno."
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "Konfigurirajte vedenje bližnjice številke Super plus."
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr "Omogočite bližnjice številke Super plus za aplikacije na postaji."
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "Konfigurirajte dejanje srednjega klika."
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr "Izberite, kaj naredi primarni klik, ko se aplikacija že izvaja."
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "Izberite, kaj naredi pomikanje po ikoni aplikacije."
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr "Nastavite, kako pogosto XDock preverja, ali dok prekriva okno."
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr "Najmanjši zamik med dogodki drsenja, ki krožijo med okni aplikacije."
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr ""
+"Preprečite ponavljajoče se preklope delovnega prostora med hitrim drsenjem."
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr "Čas, ko mora kazalec držati ikono, preden se začne način preurejanja."
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr "Ko krožite med okni aplikacije, si zapomnite zadnje izbrano okno."
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "Izberite splošni vizualni slog doka."
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "Nastavite motnost preliva police na njen zgornji rob."
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "Nastavite motnost preliva police na njen spodnji rob."
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "Nastavite motnost osvetlitve, narisane na polici priklopne postaje."
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "Nastavite motnost obrobe police za priklop."
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "Nastavite kot gradienta priklopne police."
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "Nastavite višino priklopne police."
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "Pokažite učinek odseva pod polico za priklop."
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "Nastavite motnost odseva police."
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "Izberite barvo na vrhu preliva police."
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "Izberite barvo na dnu preliva police."
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "Izberite barvo osvetlitve police."
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "Izberite barvo sence police."
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "Nastavite motnost sence police."
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "Nastavite širino osvetlitve police."
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "Nastavite širino sence police."
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "Izberite barvo obrobe doka."
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "Nastavite širino obrobe doka."
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "Pokaži senco okoli doka."
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "Izberite barvo sence dock boxa."
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "Nastavite, kako daleč se razširi senca priklopa."
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "Nastavite, kako mehko je zamegljena senca doka."
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "Izberite barvo odtenka prosojnega stekla."
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "Nastavite motnost odtenka stekla."
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "Izberite barvo sence plavajoče postaje."
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "Nastavite, kako daleč se širi lebdeča senca."
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "Nastavite, kako mehko je lebdeča senca zamegljena."
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr "Nastavite notranji odmik med vsebino doka in njegovim robom."
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "Izberite barvo ločila med odseki doka."
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "Nastavite debelino ločevalnikov."
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr ""
+"Zmanjšajte oblazinjenje priklopne postaje in polmer vogalov, da prihranite "
+"prostor na zaslonu."
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "Onemogoči zaobljene vogale za dok."
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr ""
+"Nastavite radij kota priklopne postaje. Za sledenje temi uporabite privzeto "
+"vrednost."
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "Ko se seja začne, odprite pregled GNOME."
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "Nastavite polmer zgornjih vogalov police."
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "Nastavite polmer spodnjih vogalov police."
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "Nastavite velikost odseva priklopne postaje."
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "Nastavite širino lokov napredka aplikacije."
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr "Nastavite velikost oznak številk bližnjic, prikazanih na ikonah."
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "Nastavite največjo širino namigov orodij dok."
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr ""
+"Uporabite privzete integrirane teme XDock namesto spodnjih kontrolnikov "
+"videza po meri."
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "Odpri napredne nastavitve indikatorja teka."
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "Izberite, kako so delujoče aplikacije označene na doku."
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "Izberite barvo ozadja doka po meri."
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "Omogoči barvo ozadja doka po meri."
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr "Odpri napredne nastavitve motnosti za stanja priklopa."
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "Izberite, katero stanje motnosti doka želite urediti."
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "Nastavite motnost za izbrano stanje doka."
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "Izpeljite barve priklopa iz trenutnega ozadja namizja."
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "Prilagodite, kako močno barve ozadja vplivajo na dok."
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr "Pokaži značke in embleme za obvestila na ikonah aplikacij."
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "Prikaz obvestil šteje na ikonah aplikacij."
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "Dovoli preglasitev števila obvestil za posamezno aplikacijo."
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr "Počisti štetje obvestil aplikacije, ko prejme fokus."
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "Prikaži indikatorje napredka opravila na ikonah aplikacij."
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "Izberite vizualni slog indikatorjev napredka naloge."
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "Povečajte ikone doka, medtem ko je kazalec nad njimi."
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr "Nastavite največjo velikost ikone med povečavo lebdenja."
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "Med povečavo označite ikono, ki je trenutno pod kazalcem."
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr ""
+"Povečajte elemente priklopne postaje, ki niso za aplikacije, kot sta koš in "
+"gumb za aplikacije."
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr "Uporabite pomladno fiziko za gibanje doka in animacije ikon."
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "Dovolite vlečenje ikon, da jih prerazporedite v doku."
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr "Uporabite žive sličice oken za ikone aplikacij namesto statičnih ikon."
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr "Nastavite, kako močno vzmetne animacije vlečejo proti cilju."
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "Nastavite, kako hitro se vzmetno animacijsko gibanje ustali."
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "Nastavite, na koliko sosednjih ikon vpliva povečava."
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "Nastavite, kako hitro se zaključijo prehodi povečave."
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "Nastavite trajanje animacije ob zagonu doka."
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "Nastavite trajanje animacij za zagon aplikacije."
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr "Nastavite, koliko vzmetne animacije presegajo cilj."
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "Omogočite paleto ukazov za priklop za hitra dejanja."
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "Pokažite mini zemljevid s pregledom delovnega prostora v doku."
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr "Izberite, na kateri strani doka je minizemljevid delovnega prostora."
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr "Samodejni predogled odprtega okna, ko je aktivirana ikona aplikacije."
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr "Osredotočite okno, ko med vlečenjem lebdite na predogled."
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr "Prikaži nedavne datoteke v menijih aplikacij, odprtih iz doka."
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "Pokaži pripete terminalske ukaze v doku."
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "Omogoči dejanja polaganja oken iz doka."
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr "Pokaži doke na sekundarnih monitorjih z zagnanimi aplikacijami."
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "Izberite, kje se prikažejo priklopne postaje sekundarnega monitorja."
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "Prikaži kontrolnike za predvajanje medijev v menijih aplikacij."
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr ""
+"Prikaži kontrolnike glasnosti za posamezne aplikacije v menijih aplikacij."
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "Prikaz indikatorja, ko se zaslon snema ali deli."
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "Prikaži ploščo s hitrimi nastavitvami iz doka."
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "Izberite aktivni profil shranjenih nastavitev."
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "Shranite trenutne nastavitve kot profil."
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "Izbrišite izbrani shranjeni profil."
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "Odprite spletno stran projekta XDock."
+
 #~ msgid "Show favorite applications"
 #~ msgstr "Pokaži priljubljene programe"
 

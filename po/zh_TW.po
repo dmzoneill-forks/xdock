@@ -255,6 +255,624 @@ msgstr "掛載“%s”失敗"
 msgid "Volume"
 msgstr ""
 
+#: Settings.ui:858
+msgid ""
+"Choose which monitor owns the primary dock. Additional monitors can show "
+"secondary docks."
+msgstr "選擇哪個顯示器擁有主擴充座。附加顯示器可以顯示輔助塢站。"
+
+#: Settings.ui:869
+msgid ""
+"Hide the dock instead of moving it to another monitor when its preferred "
+"monitor is disconnected."
+msgstr "當首選顯示器斷開連接時，隱藏擴充座而不是將其移至另一台顯示器。"
+
+#: Settings.ui:916
+msgid "Place the dock along the left edge of the screen."
+msgstr "將擴充座放置在螢幕的左邊緣。"
+
+#: Settings.ui:926
+msgid "Place the dock along the bottom edge of the screen."
+msgstr "將擴充座放置在螢幕的底部邊緣。"
+
+#: Settings.ui:936
+msgid "Place the dock along the top edge of the screen."
+msgstr "將擴充座放置在螢幕的頂部邊緣。"
+
+#: Settings.ui:947
+msgid "Place the dock along the right edge of the screen."
+msgstr "將擴充座放置在螢幕的右邊緣。"
+
+#: Settings.ui:1025
+msgid "Open advanced intelligent autohide settings."
+msgstr "開啟進階智慧自動隱藏設定。"
+
+#: Settings.ui:1042
+msgid "Hide the dock automatically when it would obstruct a window."
+msgstr "當停靠欄擋住視窗時自動隱藏它。"
+
+#: Settings.ui:1098
+msgid "Set the maximum dock size relative to available screen space."
+msgstr "設定相對於可用螢幕空間的最大停靠尺寸。"
+
+#: Settings.ui:1109
+msgid ""
+"Make the dock span the full screen edge instead of fitting its contents."
+msgstr "使擴充座跨越整個螢幕邊緣，而不是適應其內容。"
+
+#: Settings.ui:1122
+msgid "Keep dock icons centered instead of placing them from the edge."
+msgstr "使停靠欄圖示保持居中，而不是從邊緣放置。"
+
+#: Settings.ui:1159
+msgid "Set the gap between the dock and the screen edge."
+msgstr "設定擴充塢和螢幕邊緣之間的間隙。"
+
+#: Settings.ui:1201
+msgid "Set extra spacing between the pointer edge and the dock reveal area."
+msgstr "設定指針邊緣和停靠顯示區域之間的額外間距。"
+
+#: Settings.ui:1242
+msgid "Set the maximum application icon size."
+msgstr "設定最大應用程式圖示大小。"
+
+#: Settings.ui:1257
+msgid ""
+"Keep icon size fixed and scroll the dock when more icons exist than fit."
+msgstr "保持圖示大小固定，並在存在的圖示過多時滾動停靠欄。"
+
+#: Settings.ui:1297
+msgid "Scale the size of window preview thumbnails."
+msgstr "縮放視窗預覽縮圖的大小。"
+
+#: Settings.ui:1338
+msgid "Set the width of the edge area used for dock dwell activation."
+msgstr "設定用於停靠駐留啟動的邊緣區域的寬度。"
+
+#: Settings.ui:1372
+msgid "Set how often the dock checks for edge dwell activation."
+msgstr "設定塢站檢查邊緣駐留啟動的頻率。"
+
+#: Settings.ui:1406
+msgid "Set how long pointer pressure must be held before the dock appears."
+msgstr "設定在停靠欄出現之前必須保持指針壓力的時間。"
+
+#: Settings.ui:1464
+msgid "Show applications pinned to the dock."
+msgstr "顯示固定到 Dock 的應用程式。"
+
+#: Settings.ui:1487
+msgid ""
+"With multiple monitors, show pinned applications only on the primary-monitor "
+"dock."
+msgstr "對於多個顯示器，僅在主顯示器擴充座上顯示固定的應用程式。"
+
+#: Settings.ui:1514
+msgid "Show applications with open windows."
+msgstr "顯示開啟視窗的應用程式。"
+
+#: Settings.ui:1537
+msgid "Show an application only when it has windows on the current workspace."
+msgstr "僅當應用程式在目前工作區中有視窗時才顯示該應用程式。"
+
+#: Settings.ui:1551
+msgid ""
+"Keep applications with urgent windows visible even when those windows are on "
+"another workspace."
+msgstr ""
+"即使帶有緊急視窗的應用程式位於另一個工作區，也能讓這些應用程式保持可見。"
+
+#: Settings.ui:1565
+msgid ""
+"Show an application only on docks belonging to monitors where it has windows."
+msgstr "僅在屬於具有視窗的監視器的擴充座上顯示應用程式。"
+
+#: Settings.ui:1580
+msgid ""
+"Show a preview menu when hovering over an application with multiple windows."
+msgstr "將滑鼠懸停在具有多個視窗的應用程式上時顯示預覽選單。"
+
+#: Settings.ui:1592
+msgid ""
+"Show each open window as a separate icon instead of grouping windows by "
+"application."
+msgstr "將每個開啟的視窗顯示為單獨的圖標，而不是按應用程式對視窗進行分組。"
+
+#: Settings.ui:1618
+msgid "Keep the focused application visible while the dock scrolls."
+msgstr "當擴充座滾動時，保持聚焦的應用程式可見。"
+
+#: Settings.ui:1661
+msgid ""
+"Choose whether running icons follow dock order or their window positions."
+msgstr "選擇運行圖示是否遵循停靠順序或其視窗位置。"
+
+#: Settings.ui:1687
+msgid "Show the Applications button in the dock."
+msgstr "在擴充座中顯示“應用程式”按鈕。"
+
+#: Settings.ui:1728
+msgid "Place the Applications button before other dock items."
+msgstr "將「應用程式」按鈕放在其他停靠項目之前。"
+
+#: Settings.ui:1741
+msgid "Animate the Applications button when opening the overview."
+msgstr "開啟概述時為「應用程式」按鈕設定動畫。"
+
+#: Settings.ui:1763
+msgid "Keep the Applications button at a dock edge when Panel mode is enabled."
+msgstr "啟用面板模式時，將「應用程式」按鈕保持在停靠邊緣。"
+
+#: Settings.ui:1801
+msgid "Show the Trash icon in the dock."
+msgstr "在擴充座中顯示垃圾箱圖示。"
+
+#: Settings.ui:1839
+msgid "Show mounted volumes and removable devices in the dock."
+msgstr "顯示擴充座中已安裝的磁碟區和可移動裝置。"
+
+#: Settings.ui:1862
+msgid "Hide devices that are available but not currently mounted."
+msgstr "隱藏可用但目前未安裝的設備。"
+
+#: Settings.ui:1876
+msgid "Include network locations in the volumes list."
+msgstr "在磁碟區清單中包含網路位置。"
+
+#: Settings.ui:1905
+msgid ""
+"Keep volume, device, and Trash windows separate from normal file-manager "
+"windows."
+msgstr "將磁碟區、裝置和垃圾箱視窗與普通檔案管理器視窗分開。"
+
+#: Settings.ui:1943
+msgid "Animate icons when applications request attention."
+msgstr "當應用程式請求注意時動畫圖示。"
+
+#: Settings.ui:1981
+msgid "Bounce icons when an application launches or needs attention."
+msgstr "當應用程式啟動或需要關注時彈起圖示。"
+
+#: Settings.ui:2019
+msgid "Disable application name tooltips when hovering over dock icons."
+msgstr "將滑鼠懸停在停靠圖示上時停用應用程式名稱工具提示。"
+
+#: Settings.ui:2057
+msgid "Set the maximum width of application name tooltips."
+msgstr "設定應用程式名稱工具提示的最大寬度。"
+
+#: Settings.ui:2097
+msgid "Open window previews when the pointer rests on an application icon."
+msgstr "當指針停留在應用程式圖示上時打開視窗預覽。"
+
+#: Settings.ui:2155
+msgid "Choose the animation used when window previews open and close."
+msgstr "選擇視窗預覽開啟和關閉時使用的動畫。"
+
+#: Settings.ui:2188
+msgid "Limit the height of the window preview list."
+msgstr "限制視窗預覽清單的高度。"
+
+#: Settings.ui:2222
+msgid "Set how long preview open and close animations take."
+msgstr "設定預覽開啟和關閉動畫所需的時間。"
+
+#: Settings.ui:2256
+msgid "Set how long the pointer must hover before previews open."
+msgstr "設定預覽打開之前指針必須懸停的時間。"
+
+#: Settings.ui:2290
+msgid "Set how long previews remain open after the pointer leaves."
+msgstr "設定指針離開後預覽保持開啟狀態的時間。"
+
+#: Settings.ui:2324
+msgid "Set the opacity of other windows during preview peek."
+msgstr "在預覽期間設定其他視窗的不透明度。"
+
+#: Settings.ui:2358
+msgid "Set how long preview peek remains active."
+msgstr "設定預覽查看保持活動狀態的時間。"
+
+#: Settings.ui:2453
+msgid "Configure the Super plus number shortcut behavior."
+msgstr "配置超級加號快捷方式行為。"
+
+#: Settings.ui:2470
+msgid "Enable Super plus number shortcuts for dock applications."
+msgstr "為擴充座應用程式啟用超級加號捷徑。"
+
+#: Settings.ui:2549
+msgid "Configure the middle-click action."
+msgstr "配置中鍵單擊操作。"
+
+#: Settings.ui:2565
+msgid ""
+"Choose what a primary click does when an application is already running."
+msgstr "選擇應用程式已在運行時主要點擊的作用。"
+
+#: Settings.ui:2671
+msgid "Choose what scrolling over an application icon does."
+msgstr "選擇滾動應用程式圖示的作用。"
+
+#: Settings.ui:2711
+msgid "Set how often XDock checks whether the dock overlaps a window."
+msgstr "設定 XDock 檢查停靠欄是否與視窗重疊的頻率。"
+
+#: Settings.ui:2745
+msgid "Minimum delay between scroll events that cycle application windows."
+msgstr "循環應用程式視窗的滾動事件之間的最小延遲。"
+
+#: Settings.ui:2779
+msgid "Prevent repeated workspace switches during rapid scrolling."
+msgstr "防止快速滾動期間重複工作區切換。"
+
+#: Settings.ui:2813
+msgid "Time the pointer must hold an icon before rearranging mode starts."
+msgstr "在重新排列模式開始之前，指針必須按住圖示的時間。"
+
+#: Settings.ui:2847
+msgid ""
+"Remember the last window selected when cycling through an application's "
+"windows."
+msgstr "在循環瀏覽應用程式視窗時記住最後選擇的視窗。"
+
+#: Settings.ui:2909
+msgid "Choose the overall visual style of the dock."
+msgstr "選擇擴充座的整體視覺風格。"
+
+#: Settings.ui:2944
+msgid "Set the opacity of the shelf gradient at its top edge."
+msgstr "設定架子頂部邊緣漸層的不透明度。"
+
+#: Settings.ui:2978
+msgid "Set the opacity of the shelf gradient at its bottom edge."
+msgstr "設定貨架底部邊緣漸層的不透明度。"
+
+#: Settings.ui:3012
+msgid "Set the opacity of the highlight drawn on the dock shelf."
+msgstr "設定在停靠架上繪製的突出顯示的不透明度。"
+
+#: Settings.ui:3046
+msgid "Set the opacity of the dock shelf border."
+msgstr "設定停靠架邊框的不透明度。"
+
+#: Settings.ui:3080
+msgid "Set the angle of the dock shelf gradient."
+msgstr "設定停靠架漸層的角度。"
+
+#: Settings.ui:3114
+msgid "Set the height of the dock shelf."
+msgstr "設定塢站架的高度。"
+
+#: Settings.ui:3148
+msgid "Show a reflection effect beneath the dock shelf."
+msgstr "在碼頭架下方顯示反射效果。"
+
+#: Settings.ui:3176
+msgid "Set the opacity of the shelf reflection."
+msgstr "設置架子反射的不透明度。"
+
+#: Settings.ui:3210
+msgid "Choose the color at the top of the shelf gradient."
+msgstr "選擇架子漸層頂部的顏色。"
+
+#: Settings.ui:3239
+msgid "Choose the color at the bottom of the shelf gradient."
+msgstr "選擇架子漸層底部的顏色。"
+
+#: Settings.ui:3268
+msgid "Choose the shelf highlight color."
+msgstr "選擇貨架突出顯示顏色。"
+
+#: Settings.ui:3297
+msgid "Choose the shelf shadow color."
+msgstr "選擇架子陰影顏色。"
+
+#: Settings.ui:3326
+msgid "Set the opacity of the shelf shadow."
+msgstr "設定架子陰影的不透明度。"
+
+#: Settings.ui:3360
+msgid "Set the width of the shelf highlight."
+msgstr "設定架子突出顯示的寬度。"
+
+#: Settings.ui:3394
+msgid "Set the width of the shelf shadow."
+msgstr "設定架子陰影的寬度。"
+
+#: Settings.ui:3429
+msgid "Choose the dock border color."
+msgstr "選擇停靠邊框顏色。"
+
+#: Settings.ui:3458
+msgid "Set the dock border width."
+msgstr "設定停靠欄邊框寬度。"
+
+#: Settings.ui:3487
+msgid "Show a shadow around the dock."
+msgstr "在碼頭周圍顯示陰影。"
+
+#: Settings.ui:3515
+msgid "Choose the dock box shadow color."
+msgstr "選擇停靠框陰影顏色。"
+
+#: Settings.ui:3544
+msgid "Set how far the dock shadow spreads."
+msgstr "設定停靠點陰影傳播的距離。"
+
+#: Settings.ui:3573
+msgid "Set how softly the dock shadow is blurred."
+msgstr "設定停靠點陰影的模糊程度。"
+
+#: Settings.ui:3603
+msgid "Choose the translucent glass tint color."
+msgstr "選擇半透明玻璃色調顏色。"
+
+#: Settings.ui:3632
+msgid "Set the opacity of the glass tint."
+msgstr "設定玻璃色調的不透明度。"
+
+#: Settings.ui:3667
+msgid "Choose the floating dock shadow color."
+msgstr "選擇浮動碼頭陰影顏色。"
+
+#: Settings.ui:3696
+msgid "Set how far the floating shadow spreads."
+msgstr "設定浮動陰影傳播的距離。"
+
+#: Settings.ui:3725
+msgid "Set how softly the floating shadow is blurred."
+msgstr "設定浮動陰影的模糊程度。"
+
+#: Settings.ui:3755
+msgid "Set the inner padding between dock content and its border."
+msgstr "設定停靠內容與其邊框之間的內部填滿。"
+
+#: Settings.ui:3784
+msgid "Choose the separator color between dock sections."
+msgstr "選擇停靠部分之間的分隔符號顏色。"
+
+#: Settings.ui:3813
+msgid "Set the thickness of dock separators."
+msgstr "設定停靠分隔符號的厚度。"
+
+#: Settings.ui:3866
+msgid "Reduce dock padding and corner radius to save screen space."
+msgstr "減少停靠邊距和角半徑以節省螢幕空間。"
+
+#: Settings.ui:3932
+msgid "Disable rounded corners for the dock."
+msgstr "停用擴充座的圓角。"
+
+#: Settings.ui:3961
+msgid "Set the dock corner radius. Use the default value to follow the theme."
+msgstr "設定停靠角半徑。使用預設值來遵循主題。"
+
+#: Settings.ui:4001
+msgid "Open the GNOME overview when the session starts."
+msgstr "會話開始時開啟 GNOME 概述。"
+
+#: Settings.ui:4027
+msgid "Set the radius of the shelf top corners."
+msgstr "設定架子頂角的半徑。"
+
+#: Settings.ui:4061
+msgid "Set the radius of the shelf bottom corners."
+msgstr "設定架子底角的半徑。"
+
+#: Settings.ui:4095
+msgid "Set the size of the dock reflection."
+msgstr "設定停靠點反射的大小。"
+
+#: Settings.ui:4129
+msgid "Set the width of application progress arcs."
+msgstr "設定應用程式進度弧的寬度。"
+
+#: Settings.ui:4163
+msgid "Set the size of shortcut number labels shown on icons."
+msgstr "設定圖示上顯示的快捷號碼標籤的大小。"
+
+#: Settings.ui:4197
+msgid "Set the maximum width of dock tooltips."
+msgstr "設定停靠工具提示的最大寬度。"
+
+#: Settings.ui:4288
+msgid ""
+"Use XDock's integrated theme defaults instead of the custom appearance "
+"controls below."
+msgstr "使用 XDock 的整合主題預設值而不是下面的自訂外觀控制項。"
+
+#: Settings.ui:4333
+msgid "Open advanced running indicator settings."
+msgstr "打開進階運行指示器設定。"
+
+#: Settings.ui:4351
+msgid "Choose how running applications are marked on the dock."
+msgstr "選擇如何在擴充座上標記正在運行的應用程式。"
+
+#: Settings.ui:4429
+msgid "Choose the custom dock background color."
+msgstr "選擇自訂底座背景顏色。"
+
+#: Settings.ui:4438
+msgid "Enable a custom dock background color."
+msgstr "啟用自訂停靠欄背景顏色。"
+
+#: Settings.ui:4503
+msgid "Open advanced opacity settings for dock states."
+msgstr "開啟停靠狀態的進階不透明度設定。"
+
+#: Settings.ui:4520
+msgid "Choose which dock opacity state to edit."
+msgstr "選擇要編輯的停靠列不透明度狀態。"
+
+#: Settings.ui:4555
+msgid "Set the opacity for the selected dock state."
+msgstr "設定所選停靠狀態的不透明度。"
+
+#: Settings.ui:4628
+msgid "Derive dock colors from the current desktop wallpaper."
+msgstr "從目前桌面壁紙取得底座顏色。"
+
+#: Settings.ui:4657
+msgid "Adjust how strongly wallpaper colors affect the dock."
+msgstr "調整壁紙顏色對擴充座的影響程度。"
+
+#: Settings.ui:4722
+msgid "Show notification badges and emblems on application icons."
+msgstr "在應用程式圖示上顯示通知徽章和標誌。"
+
+#: Settings.ui:4733
+msgid "Show notification counts on application icons."
+msgstr "在應用程式圖示上顯示通知計數。"
+
+#: Settings.ui:4745
+msgid "Allow per-application notification count overrides."
+msgstr "允許覆蓋每個應用程式的通知計數。"
+
+#: Settings.ui:4757
+msgid "Clear an application's notification count when it receives focus."
+msgstr "當應用程式獲得焦點時清除其通知計數。"
+
+#: Settings.ui:4769
+msgid "Show task progress indicators on application icons."
+msgstr "在應用程式圖示上顯示任務進度指示器。"
+
+#: Settings.ui:4792
+msgid "Choose the visual style of task progress indicators."
+msgstr "選擇任務進度指示器的視覺樣式。"
+
+#: Settings.ui:4877
+msgid "Enlarge dock icons while the pointer is over them."
+msgstr "當指針位於停靠圖示上方時放大它們。"
+
+#: Settings.ui:4906
+msgid "Set the maximum size of an icon during hover magnification."
+msgstr "設定懸停放大期間圖示的最大尺寸。"
+
+#: Settings.ui:4938
+msgid "Highlight the icon currently under the pointer during magnification."
+msgstr "在放大過程中反白顯示目前指標下方的圖示。"
+
+#: Settings.ui:4966
+msgid ""
+"Magnify non-application dock items such as the trash and applications button."
+msgstr "放大非應用程式停靠項，例如垃圾桶和應用程式按鈕。"
+
+#: Settings.ui:4994
+msgid "Use spring physics for dock movement and icon animations."
+msgstr "使用彈簧物理原理進行停靠移動和圖示動畫。"
+
+#: Settings.ui:5022
+msgid "Allow dragging icons to rearrange them in the dock."
+msgstr "允許拖曳圖示以在擴充座中重新排列它們。"
+
+#: Settings.ui:5050
+msgid ""
+"Use live window thumbnails for application icons instead of static icons."
+msgstr "使用應用程式圖示的即時視窗縮圖而不是靜態圖示。"
+
+#: Settings.ui:5079
+msgid "Set how strongly spring animations pull toward their target."
+msgstr "設定彈簧動畫拉向目標的強度。"
+
+#: Settings.ui:5113
+msgid "Set how quickly spring animation movement settles."
+msgstr "設定彈簧動畫運動的穩定速度。"
+
+#: Settings.ui:5147
+msgid "Set how many neighboring icons are affected by magnification."
+msgstr "設定受放大率影響的相鄰圖示的數量。"
+
+#: Settings.ui:5181
+msgid "Set how quickly magnification transitions complete."
+msgstr "設定放大過渡完成的速度。"
+
+#: Settings.ui:5215
+msgid "Set the duration of the dock startup animation."
+msgstr "設定擴充塢啟動動畫的持續時間。"
+
+#: Settings.ui:5249
+msgid "Set the duration of application launch animations."
+msgstr "設定應用程式啟動動畫的持續時間。"
+
+#: Settings.ui:5283
+msgid "Set how far spring animations overshoot their target."
+msgstr "設定彈簧動畫超出其目標的程度。"
+
+#: Settings.ui:5346
+msgid "Enable the dock command palette for quick actions."
+msgstr "啟用停靠命令面板以進行快速操作。"
+
+#: Settings.ui:5374
+msgid "Show a workspace overview minimap in the dock."
+msgstr "在擴充座中顯示工作區概覽小地圖。"
+
+#: Settings.ui:5402
+msgid "Choose which side of the dock contains the workspace minimap."
+msgstr "選擇停靠欄的哪一側包含工作區小地圖。"
+
+#: Settings.ui:5434
+msgid ""
+"Open window previews automatically when an application icon is activated."
+msgstr "啟動應用程式圖示時會自動開啟視窗預覽。"
+
+#: Settings.ui:5462
+msgid "Focus a window when its preview is hovered during a drag."
+msgstr "當拖曳過程中視窗的預覽懸停時，視窗將獲得焦點。"
+
+#: Settings.ui:5490
+msgid "Show recent files in application menus opened from the dock."
+msgstr "在從 Dock 開啟的應用程式選單中顯示最近的檔案。"
+
+#: Settings.ui:5518
+msgid "Show pinned terminal commands in the dock."
+msgstr "在擴充座中顯示固定的終端命令。"
+
+#: Settings.ui:5546
+msgid "Enable window tiling actions from the dock."
+msgstr "從 Dock 啟用視窗平鋪操作。"
+
+#: Settings.ui:5574
+msgid "Show docks on secondary monitors with running applications."
+msgstr "在輔助監視器上顯示正在運行的應用程式的擴充座。"
+
+#: Settings.ui:5602
+msgid "Choose where secondary-monitor docks appear."
+msgstr "選擇輔助顯示器底座的顯示位置。"
+
+#: Settings.ui:5666
+msgid "Show media playback controls in application menus."
+msgstr "在應用程式選單中顯示媒體播放控制項。"
+
+#: Settings.ui:5694
+msgid "Show per-application volume controls in application menus."
+msgstr "在應用程式選單中顯示每個應用程式的音量控制。"
+
+#: Settings.ui:5722
+msgid "Show an indicator when the screen is being recorded or shared."
+msgstr "錄製或分享螢幕時顯示指示器。"
+
+#: Settings.ui:5750
+msgid "Show a quick settings panel from the dock."
+msgstr "從擴充座顯示快速設定面板。"
+
+#: Settings.ui:5809
+msgid "Choose the active saved settings profile."
+msgstr "選擇活動的已儲存設定設定檔。"
+
+#: Settings.ui:5831
+msgid "Save current settings as a profile."
+msgstr "將目前設定儲存為設定檔。"
+
+#: Settings.ui:5838
+msgid "Delete the selected saved profile."
+msgstr "刪除選定的已儲存設定檔。"
+
+#: Settings.ui:5925
+msgid "Open the XDock project webpage."
+msgstr "開啟 XDock 專案網頁。"
+
 #~ msgid "Show favorite applications"
 #~ msgstr "顯示喜愛的應用程式"
 
