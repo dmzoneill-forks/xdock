@@ -866,7 +866,7 @@ msgstr "Establece a rapidez con que se completan as transicións de ampliación.
 
 #: Settings.ui:5215
 msgid "Set the duration of the dock startup animation."
-msgstr "Set the duration of the dock startup animation."
+msgstr "Establece a duración da animación de inicio do dock."
 
 #: Settings.ui:5249
 msgid "Set the duration of application launch animations."
