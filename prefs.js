@@ -782,6 +782,10 @@ const DockSettings = GObject.registerClass({
             this._builder.get_object('show_running_switch'),
             'active',
             Gio.SettingsBindFlags.DEFAULT);
+        this._settings.bind('group-apps',
+            this._builder.get_object('ungroup_applications_button'),
+            'active',
+            Gio.SettingsBindFlags.INVERT_BOOLEAN);
         const appOrderCombo = this._builder.get_object('app_order_combo');
         appOrderCombo.set_active_id(this._settings.get_enum('app-order') === 1
             ? 'coordinates' : 'stable');
