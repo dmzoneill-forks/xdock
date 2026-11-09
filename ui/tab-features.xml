@@ -39,6 +39,7 @@
                               <object class="GtkSwitch" id="icon_magnification_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Enlarge dock icons while the pointer is over them.</property>
                               </object>
                             </child>
                           </object>
@@ -67,6 +68,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set the maximum size of an icon during hover magnification.</property>
                                 <property name="adjustment">magnification_factor_adjustment</property>
                                 <property name="digits">1</property>
                                 <property name="draw_value">1</property>
@@ -98,6 +100,7 @@
                               <object class="GtkSwitch" id="magnification_hover_highlight_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Highlight the icon currently under the pointer during magnification.</property>
                               </object>
                             </child>
                           </object>
@@ -125,6 +128,7 @@
                               <object class="GtkSwitch" id="icon_magnification_all_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Magnify non-application dock items such as the trash and applications button.</property>
                               </object>
                             </child>
                           </object>
@@ -152,6 +156,7 @@
                               <object class="GtkSwitch" id="spring_animations_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Use spring physics for dock movement and icon animations.</property>
                               </object>
                             </child>
                           </object>
@@ -179,6 +184,7 @@
                               <object class="GtkSwitch" id="wiggle_mode_enabled_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Allow dragging icons to rearrange them in the dock.</property>
                               </object>
                             </child>
                           </object>
@@ -206,6 +212,7 @@
                               <object class="GtkSwitch" id="live_window_thumbnails_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Use live window thumbnails for application icons instead of static icons.</property>
                               </object>
                             </child>
                           </object>
@@ -714,6 +721,7 @@
                               <object class="GtkSwitch" id="secondary_dock_enabled_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Show docks on secondary monitors with running applications.</property>
                               </object>
                             </child>
                           </object>
@@ -741,6 +749,7 @@
                               <object class="GtkComboBoxText" id="secondary_dock_position_combo">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Choose where secondary-monitor docks appear.</property>
                                 <items>
                                   <item id="TOP" translatable="yes">Top</item>
                                   <item id="RIGHT" translatable="yes">Right</item>

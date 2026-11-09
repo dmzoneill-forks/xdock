@@ -86,6 +86,7 @@
                                   <object class="GtkSwitch" id="hot_keys_switch">
                                     <property name="halign">end</property>
                                     <property name="valign">center</property>
+                                    <property name="tooltip-text" translatable="yes">Enable Super plus number shortcuts for dock applications.</property>
                                   </object>
                                 </child>
                                 <layout>
@@ -179,6 +180,7 @@
                                   <object class="GtkComboBoxText" id="click_action_combo">
                                     <property name="can_focus">0</property>
                                     <property name="valign">center</property>
+                                    <property name="tooltip-text" translatable="yes">Choose what a primary click does when an application is already running.</property>
                                     <items>
                                       <item translatable="yes">Raise window</item>
                                       <item translatable="yes">Minimize</item>
@@ -323,6 +325,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Set how often XDock checks whether the dock overlaps a window.</property>
                                 <property name="adjustment">intellihide_interval_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -356,6 +359,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Minimum delay between scroll events that cycle application windows.</property>
                                 <property name="adjustment">scroll_cycle_debounce_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -389,6 +393,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Prevent repeated workspace switches during rapid scrolling.</property>
                                 <property name="adjustment">scroll_workspace_deadtime_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -422,6 +427,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Time the pointer must hold an icon before rearranging mode starts.</property>
                                 <property name="adjustment">wiggle_timeout_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>
@@ -455,6 +461,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Remember the last window selected when cycling through an application's windows.</property>
                                 <property name="adjustment">window_cycle_memory_adjustment</property>
                                 <property name="digits">0</property>
                                 <property name="draw_value">1</property>

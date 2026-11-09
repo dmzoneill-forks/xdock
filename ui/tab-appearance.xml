@@ -964,6 +964,7 @@
                               <object class="GtkSwitch" id="shrink_dash_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Reduce dock padding and corner radius to save screen space.</property>
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">0</property>
@@ -1029,6 +1030,7 @@
                               <object class="GtkSwitch" id="force_straight_corner_switch">
                                 <property name="valign">center</property>
                                 <property name="margin_start">3</property>
+                                <property name="tooltip-text" translatable="yes">Disable rounded corners for the dock.</property>
                               </object>
                             </child>
                           </object>
@@ -1096,6 +1098,7 @@
                               <object class="GtkSwitch" id="show_overview_on_startup_switch">
                                 <property name="valign">center</property>
                                 <property name="margin_start">3</property>
+                                <property name="tooltip-text" translatable="yes">Open the GNOME overview when the session starts.</property>
                               </object>
                             </child>
                           </object>
@@ -1376,6 +1379,7 @@
                               <object class="GtkSwitch" id="builtin_theme_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Use XDock's integrated theme defaults instead of the custom appearance controls below.</property>
                                 <layout>
                                   <property name="column">1</property>
                                   <property name="row">0</property>
@@ -1708,6 +1712,7 @@
                               <object class="GtkSwitch" id="wallpaper_adaptive_color_switch">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Derive dock colors from the current desktop wallpaper.</property>
                               </object>
                             </child>
                           </object>
@@ -1736,6 +1741,7 @@
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
                                 <property name="hexpand">1</property>
+                                <property name="tooltip-text" translatable="yes">Adjust how strongly wallpaper colors affect the dock.</property>
                                 <property name="adjustment">wallpaper_intensity_adjustment</property>
                                 <property name="digits">2</property>
                                 <property name="draw_value">1</property>
