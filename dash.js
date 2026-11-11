@@ -2247,7 +2247,8 @@ export const DockDash = GObject.registerClass({
         const children = this._box.get_children().filter(actor => {
             return actor.child &&
                    actor.child._delegate &&
-                   actor.child._delegate.app;
+                   actor.child._delegate.app &&
+                   !actor.animatingOut;
         });
         const oldItems = children.map(actor => actor.child._delegate);
         let oldApps = [];

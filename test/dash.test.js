@@ -3888,7 +3888,7 @@ describe('DockDash._redisplay (full path)', () => {
         expect(ctx._separatorFavorites).toBeNull();
     });
 
-    test('handles animatingOut actors during match', () => {
+    test('creates a replacement for animatingOut actors', () => {
         const app = {get_id: () => 'anim.desktop', get_name: () => 'Anim', get_windows: () => []};
         const {ctx, dockManager} = makeRedisplayContext();
         dockManager.getDockOrder = () => ['anim.desktop'];
@@ -3909,8 +3909,9 @@ describe('DockDash._redisplay (full path)', () => {
         };
         ctx._box._children = [existingChild];
         DockDash.prototype._redisplay.call(ctx);
-        // Animating-out actor should be recovered
-        expect(existingChild.remove_all_transitions).toHaveBeenCalled();
+        expect(ctx._createAppItem).toHaveBeenCalledWith(app, null);
+        expect(existingChild.remove_all_transitions).not.toHaveBeenCalled();
+        expect(ctx._box._children[0]).not.toBe(existingChild);
         AppFavorites.getAppFavorites = origGetFavs;
     });
 });
