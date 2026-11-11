@@ -2143,11 +2143,14 @@ const DockAppIconMenu = class DockAppIconMenu extends PopupMenu.PopupMenu {
                     this.sourceActor.app);
                 if (stream) {
                     this._appendSeparator();
-                    import('./widgets/volumeMenuItem.js').then(VolMenu => {
+                    try {
+                        const VolMenu = await import('./widgets/volumeMenuItem.js');
                         this._volumeMenuItem = new VolMenu.VolumeMenuItem(
                             stream, volumeControl);
                         this.addMenuItem(this._volumeMenuItem);
-                    }).catch(e => logError(e, 'XDock: Failed to load VolumeMenuItem'));
+                    } catch (e) {
+                        logError(e, 'XDock: Failed to load VolumeMenuItem');
+                    }
                 }
             }
         }

@@ -6026,15 +6026,27 @@ describe('DockAppIconMenu volume control', () => {
         animator = createMockIconAnimator();
     });
 
-    test('show-volume-control creates volume menu item when stream exists (lines 2088-2099)', () => {
+    test('show-volume-control waits for volume menu item before opening', async () => {
         Settings.set('show-volume-control', true);
         const dm = Docking.DockManager.getDefault();
+        const stream = {
+            connect: () => 0,
+            disconnect: () => {},
+            get_volume: () => 1,
+            get_is_muted: () => false,
+        };
         dm.volumeControl = {
-            getStreamForApp: () => ({name: 'test-stream'}),
+            getStreamForApp: () => stream,
+            getStreamVolume: () => 1,
+            getStreamMuted: () => false,
         };
         const app = createMockApp({state: 2});
         const icon = makeAppIcon(app, 0, animator);
         icon.popupMenu();
+        const open = jest.spyOn(icon._menu, 'open');
+        await icon._menu.popup();
+        expect(icon._menu._volumeMenuItem).toBeDefined();
+        expect(open).toHaveBeenCalled();
         dm.volumeControl = null;
     });
 

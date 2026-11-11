@@ -339,12 +339,26 @@ export const PopupMenu = {
     },
     PopupBaseMenuItem: class {
         constructor() { this.actor = _mockActor(); }
+        _init() {}
+        add_child() {}
         connect() { return 0; }
         disconnect() {}
         activate() {}
     },
     Ornament: {NONE: 0, DOT: 1, CHECK: 2, HIDDEN: 3},
 };
+
+export class Slider {
+    constructor(value = 0) {
+        this.value = value;
+        this._signals = {};
+    }
+
+    connect(name, callback) {
+        this._signals[name] = callback;
+        return 0;
+    }
+}
 
 export const AppFavorites = {
     getAppFavorites: () => ({
