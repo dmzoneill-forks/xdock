@@ -5353,6 +5353,7 @@ describe('Coverage boost — real instance exercises', () => {
         Main.layoutManager._startingUp = true;
         const ext = _createCoverageMockExtension();
         manager = new DockManager(ext);
+        expect(manager.overviewControls.dash.showAppsButton.checked).toBe(false);
         Main.layoutManager.emit('startup-complete');
         Main.layoutManager._startingUp = false;
     });
